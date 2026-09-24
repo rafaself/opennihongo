@@ -40,11 +40,11 @@ the [Design System contribution guide](design-system.md).
 `packages/ui/package.json` is the source of truth for the `@opennihongo/ui`
 package's public imports. Its `exports` map currently declares:
 
-| Import path                  | Public entry         | Contents                                                                                                                                                                     |
-| ---------------------------- | -------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `@opennihongo/ui`            | `src/index.ts`       | `Button`, `IconButton`, `Checkbox`, `Switch`, `RadioGroup`, `Radio`, `FormField`, `Input`, `Textarea`, `Grid`, `Inline`, `Stack`, `Surface`, `Card`, `Text`, and their types |
-| `@opennihongo/ui/icons`      | `src/icons/index.ts` | `Icon`, the first-party functional icons, and their types                                                                                                                    |
-| `@opennihongo/ui/styles.css` | `src/styles.css`     | Shared design tokens and base styles                                                                                                                                         |
+| Import path                  | Public entry         | Contents                                                                                                                                                                              |
+| ---------------------------- | -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `@opennihongo/ui`            | `src/index.ts`       | `Button`, `Badge`, `IconButton`, `Checkbox`, `Switch`, `RadioGroup`, `Radio`, `FormField`, `Input`, `Textarea`, `Grid`, `Inline`, `Stack`, `Surface`, `Card`, `Text`, and their types |
+| `@opennihongo/ui/icons`      | `src/icons/index.ts` | `Icon`, the first-party functional icons, and their types                                                                                                                             |
+| `@opennihongo/ui/styles.css` | `src/styles.css`     | Shared design tokens and base styles                                                                                                                                                  |
 
 Consumers must import through these package paths. Imports into `src/` or other
 package internals are unsupported; TypeScript's `Bundler` module resolution

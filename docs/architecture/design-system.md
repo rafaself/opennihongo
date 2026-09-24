@@ -49,6 +49,12 @@ the Card for actions. The Card root does not behave as a link or button, and
 interactive styling or behavior belongs to the actual interactive elements.
 Do not add those content or action conventions to `Surface`.
 
+`Badge` presents a concise, non-interactive status or category label. Use it to
+communicate information such as availability or a content category; do not use
+it for an action, navigation, or a selectable filter. Use a link for navigation,
+a `Button` for an action, and an appropriate selection control when the user
+needs to change a choice.
+
 ## Promote recurring UI
 
 Start new UI in the narrowest area that owns its behavior. Promote an existing

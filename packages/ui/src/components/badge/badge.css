@@ -1,0 +1,41 @@
+.ns-badge {
+  align-items: center;
+  background-color: var(--ns-color-surface-subtle);
+  border: var(--ns-border-width-subtle) var(--ns-border-style-solid)
+    var(--ns-color-border-subtle);
+  border-radius: var(--ns-radius-pill);
+  color: var(--ns-color-text-secondary);
+  display: inline-flex;
+  font-size: var(--ns-text-caption-size);
+  font-weight: var(--ns-text-label-weight);
+  letter-spacing: var(--ns-text-label-letter-spacing);
+  line-height: var(--ns-text-label-line-height);
+  padding-block: var(--ns-space-1);
+  padding-inline: var(--ns-space-2);
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+.ns-badge[data-variant="success"] {
+  background-color: var(--ns-color-feedback-success-surface);
+  border-color: transparent;
+  color: var(--ns-color-feedback-success);
+}
+
+.ns-badge[data-variant="warning"] {
+  background-color: var(--ns-color-feedback-warning-surface);
+  border-color: transparent;
+  color: var(--ns-color-feedback-warning);
+}
+
+.ns-badge[data-variant="info"] {
+  background-color: var(--ns-color-feedback-info-surface);
+  border-color: transparent;
+  color: var(--ns-color-feedback-info);
+}
+
+.ns-badge[data-variant="danger"] {
+  background-color: var(--ns-color-feedback-danger-surface);
+  border-color: transparent;
+  color: var(--ns-color-feedback-danger);
+}

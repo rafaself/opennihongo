@@ -1,5 +1,5 @@
-import type { ButtonProps, ButtonSize } from "../Button";
-import { Button } from "../Button";
+import type { ButtonProps, ButtonSize } from "../button/Button";
+import { Button } from "../button/Button";
 import { Icon, type IconName } from "../../icons/Icon";
 import type { IconSize } from "../../icons/IconBase";
 

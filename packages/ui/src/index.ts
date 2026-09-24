@@ -1,9 +1,11 @@
-export { Button } from "./components/Button";
+export { Button } from "./components/button/Button";
 export type {
   ButtonProps,
   ButtonSize,
   ButtonVariant,
-} from "./components/Button";
+} from "./components/button/Button";
+export { Badge } from "./components/badge/Badge";
+export type { BadgeProps, BadgeVariant } from "./components/badge/Badge";
 export { IconButton } from "./components/icon-button/IconButton";
 export type { IconButtonProps } from "./components/icon-button/IconButton";
 export { FormField } from "./components/form-field/FormField";

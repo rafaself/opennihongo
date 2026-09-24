@@ -1,0 +1,24 @@
+.ns-badge-story-list {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ns-space-2);
+}
+
+.ns-badge-story-themes {
+  display: grid;
+  gap: var(--ns-space-4);
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+}
+
+.ns-badge-story-theme {
+  background-color: var(--ns-color-canvas);
+  border-radius: var(--ns-radius-card);
+  color: var(--ns-color-text-primary);
+  padding: var(--ns-space-4);
+}
+
+.ns-badge-story-theme > p {
+  font-weight: var(--ns-text-label-weight);
+  margin: 0 0 var(--ns-space-3);
+}
