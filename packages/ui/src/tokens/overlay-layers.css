@@ -1,0 +1,10 @@
+/* Shared stacking levels keep portals ordered without component-local numbers. */
+:root {
+  --ns-layer-content: 0;
+  --ns-layer-sticky: 10;
+  --ns-layer-dialog-backdrop: 20;
+  --ns-layer-dialog: 30;
+  --ns-layer-popover: 40;
+  --ns-layer-tooltip: 50;
+  --ns-layer-toast: 60;
+}

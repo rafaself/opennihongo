@@ -54,6 +54,59 @@ the Card for actions. The Card root does not behave as a link or button, and
 interactive styling or behavior belongs to the actual interactive elements.
 Do not add those content or action conventions to `Surface`.
 
+## Overlay contract
+
+Portaled UI uses the shared layer tokens from the [Design Tokens
+guide](design-tokens.md#overlay-layers). The order is content, sticky app
+chrome, dialog backdrop, dialog surface, popover content (including Select),
+tooltip, then toast. Overlay styles set `z-index` only from their assigned
+`--ns-layer-*` token. Do not use literal z-index values or expose a `zIndex`,
+layer-selection, or portal-style escape hatch on an overlay API. The portal
+container can be selected by a consumer; its layer cannot.
+
+An overlay's portal defaults to `document.body` in the document that owns the
+component. This is also the default for the web app, Storybook stories, and UI
+Gallery examples; a Storybook preview in an iframe therefore uses that preview
+document's body. Overlay implementations must not read `document` or
+`document.body` during server rendering. They should defer portal mounting
+until the client has mounted, unless the host has supplied an available mount.
+When the host needs a different root for SSR hydration, a test, or integration
+inside an isolated host, expose the same optional prop,
+`portalContainer?: HTMLElement`, and pass it to the underlying portal
+primitive. Omit it for the normal body destination. Do not add alternate
+container names or silently infer a mount from a trigger. A supplied mount
+should be a stable host-owned element whose stacking context is not clipped or
+isolated from the host content.
+
+Modal backdrops use `--ns-color-overlay-backdrop`; their dialog content uses
+`--ns-color-surface-raised`, `--ns-color-border`, and
+`--ns-elevation-dialog`. Non-modal floating content such as Select and Popover
+uses the raised surface and `--ns-elevation-overlay`, without a backdrop.
+Tooltips and toasts use those same semantic surface roles as needed. The
+surface is owned by the overlay content, and only a modal dialog owns a
+backdrop. Do not create component-specific overlay colors when these roles
+suffice.
+
+Only an open modal dialog locks document scrolling. The dialog's accessible
+primitive owns that lock, including nested-modal counting and restoring the
+previous body state when the last modal closes. Popovers, Select, tooltips, and
+toasts never lock scrolling or compete to restore global styles.
+
+Modal dialogs have an accessible name, move focus into the dialog on open, keep
+Tab navigation within it, and return focus to the trigger (or a logical fallback
+if the trigger no longer exists) on close. Escape and outside interaction
+dismiss by default; a flow that must prevent dismissal must keep the dialog
+controlled and provide a visible close or recovery action. Opening a modal
+closes unrelated transient overlays. Popover and Select interactions follow
+their underlying primitive's keyboard model, dismiss on Escape and appropriate
+outside interaction, and return focus to the trigger when they close. Tooltips
+do not take focus or contain interactive controls; they appear for pointer
+hover and keyboard focus and hide on blur, pointer exit, or Escape. Toasts
+announce updates without taking focus or trapping it and provide an explicit
+dismiss action when users need to control their lifetime. Use the chosen
+accessible primitive for focus and dismissal mechanics rather than
+reimplementing them in each component.
+
 `Badge` presents a concise, non-interactive status or category label. Use it to
 communicate information such as availability or a content category; do not use
 it for an action, navigation, or a selectable filter. Use a link for navigation,

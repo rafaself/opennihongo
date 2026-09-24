@@ -6,16 +6,17 @@ the selected theme supplies their values.
 
 ## Source and public import
 
-Keep primitive values and semantic aliases in `packages/ui/src/tokens.css`.
-That file is included by `packages/ui/src/styles.css`, exported as
+Keep primitive values and semantic aliases in `packages/ui/src/tokens.css` or
+in a focused token partial imported by that file. `tokens.css` is included by
+`packages/ui/src/styles.css`, exported as
 `@opennihongo/ui/styles.css`. The [motion token guide](motion-tokens.md)
 describes its initial timing roles. Consumers import the package stylesheet,
 not token internals or a token-specific export. CSS is processed by existing
 toolchains without a separate token build pipeline.
 
 `packages/ui/src/styles.css` owns shared resets and base element styles.
-`packages/ui/src/tokens.css` owns primitive values, spacing, sizing, radius, and
-border aliases, semantic aliases, and theme scoping. Components in
+`packages/ui/src/tokens.css` and its focused partials under `src/tokens/` own
+primitive values, semantic aliases, and theme scoping. Components in
 `packages/ui/src` consume semantic aliases or the shared role-neutral spacing,
 sizing, radius, and border aliases. Application CSS may also consume those
 aliases for app-level composition, but no consumer should depend on other
@@ -216,6 +217,31 @@ role, `--ns-text-body-size` for a text role, and `--ns-motion-control` for an
 interaction role. A semantic alias may refer to one primitive or derive from
 several primitives when a theme needs a role-specific value.
 
+## Overlay layers
+
+Overlay stacking uses one theme-independent ordered scale. Consume these
+semantic tokens for `z-index`; do not introduce component-local numbers,
+component-specific layer aliases, or public layer overrides. The values are
+kept in the shared stylesheet so the web app, Storybook, gallery, and shared
+components use the same order.
+
+| Order | Semantic token               | Intended use                             |
+| ----- | ---------------------------- | ---------------------------------------- |
+| 0     | `--ns-layer-content`         | Ordinary page content                    |
+| 10    | `--ns-layer-sticky`          | Sticky application chrome and navigation |
+| 20    | `--ns-layer-dialog-backdrop` | Modal dialog backdrop                    |
+| 30    | `--ns-layer-dialog`          | Modal dialog content                     |
+| 40    | `--ns-layer-popover`         | Popovers and Select option content       |
+| 50    | `--ns-layer-tooltip`         | Tooltips                                 |
+| 60    | `--ns-layer-toast`           | Toast notifications                      |
+
+The numbers are centralized implementation values, not an invitation to add
+intermediate component levels. Popovers and Select content sit above dialogs
+so a focused overlay control remains usable in a dialog; opening a modal
+dismisses unrelated transient overlays. Toasts are the topmost notification
+layer. See the [overlay contract](design-system.md#overlay-contract) for
+portal mounts, focus, dismissal, backdrop, and scroll-lock ownership.
+
 ## Surface roles
 
 Surface roles describe the background plane for content. Their names stay the
@@ -238,8 +264,18 @@ used only when the composition also communicates elevation. The token name
 redundant. Do not add sunken, interactive, or overlay surface aliases until a
 shared use requires a distinct background meaning. Interactive states use
 their action, focus, and selection roles, while an overlay effect belongs to
-the composition that needs it. Surface role values are documented only in the
-light and dark theme maps below.
+the composition that needs it. A modal backdrop is a scrim rather than a
+content surface and uses the separate `--ns-color-overlay-backdrop` role.
+Raised overlay content uses `--ns-color-surface-raised`. Surface role values
+are documented only in the light and dark theme maps below.
+
+## Overlay backdrop
+
+`--ns-color-overlay-backdrop` is the semantic scrim for a modal dialog's
+backdrop. It dims the content behind a blocking dialog; it is not applied to
+the dialog surface or to non-modal floating content. The light theme uses
+Sumi ink at 56% opacity, and the dark theme uses black at 64% opacity. This
+role changes with the theme while the layer order does not.
 
 ## Elevation
 
@@ -261,8 +297,9 @@ components keep using the same token in either theme.
 Keep ordinary surfaces flat unless their position in the composition needs to
 read as raised. Use card elevation for bounded content, and reserve dialog and
 overlay levels for content that must visually sit above surrounding content.
-These tokens do not set stacking order or create a backdrop; the composition
-still owns `z-index` and overlay behavior.
+Elevation does not set stacking order or create a backdrop; overlay stacking
+uses the shared `--ns-layer-*` tokens, and modal backdrops use
+`--ns-color-overlay-backdrop`.
 
 Interactive controls move through the interactive, hover, and pressed levels.
 On press, reduce the shadow and use a small downward translation (typically
@@ -292,6 +329,7 @@ which primitive family supplies a value.
 | Brand and primary actions | `--ns-color-brand`, `--ns-color-action-primary`; their `-hover` and `-foreground` variants                                                            | Hinomaru 600 for the action, 700 on hover, and white foreground                              |
 | Text                      | `--ns-color-text-primary` (`--ns-color-ink`), `--ns-color-text-secondary` (`--ns-color-muted`), `--ns-color-text-tertiary`, `--ns-color-text-inverse` | Sumi 900, 700, and 600, with white inverse text                                              |
 | Surfaces                  | `--ns-color-canvas`, `--ns-color-surface`, `--ns-color-surface-subtle`, `--ns-color-surface-raised`                                                   | Sumi 50, white, Sumi 100, and white                                                          |
+| Overlay backdrop          | `--ns-color-overlay-backdrop`                                                                                                                         | Sumi 900 ink at 56% opacity                                                                  |
 | Borders                   | `--ns-color-border-subtle`, `--ns-color-border`, `--ns-color-border-strong`                                                                           | Sumi 100, 300, and 500                                                                       |
 | Focus and selection       | `--ns-color-focus`, `--ns-color-selection`, `--ns-color-selection-foreground`                                                                         | Amber 600 focus, Hinomaru 50 selection, and primary text                                     |
 | Feedback                  | `--ns-color-feedback-{success,warning,info,danger}` and matching `-surface` tokens                                                                    | Green, amber, blue, and Hinomaru foreground accents with their 50-step surfaces              |
@@ -317,6 +355,7 @@ steps over matching 900-step surfaces.
 | Brand and primary actions | Hinomaru 500, Hinomaru 600 on hover, and white foreground                                |
 | Text                      | Sumi 50 primary, 100 secondary, 300 tertiary, and Sumi 900 inverse                       |
 | Surfaces                  | Sumi 900 canvas, dark Sumi 900/700 mixes for surface layers, and Sumi 700 raised surface |
+| Overlay backdrop          | Black at 64% opacity                                                                     |
 | Borders                   | Sumi 700 subtle, 500 standard, and 300 strong                                            |
 | Focus and selection       | Amber 300 focus, Hinomaru 900 selection, and primary text                                |
 | Feedback                  | Green, amber, blue, and Hinomaru 300 foregrounds with matching 900-step surfaces         |

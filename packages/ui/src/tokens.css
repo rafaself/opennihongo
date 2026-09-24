@@ -1,4 +1,6 @@
 /* Primitive values have no interface meaning and are consumed by semantic aliases only. */
+@import "./tokens/overlay-layers.css";
+
 :root {
   /* Hinomaru-inspired brand primitives; not semantic aliases or canonical flag-color claims. */
   --ns-primitive-color-hinomaru-50: #fff1f3;
@@ -260,6 +262,7 @@
   --ns-color-surface: var(--ns-primitive-color-neutral-0);
   --ns-color-surface-subtle: var(--ns-primitive-color-sumi-100);
   --ns-color-surface-raised: var(--ns-primitive-color-neutral-0);
+  --ns-color-overlay-backdrop: rgb(24 24 23 / 56%);
 
   /* Text and borders use the Sumi scale to keep the light UI warm and legible. */
   --ns-color-text-primary: var(--ns-primitive-color-sumi-900);
@@ -333,6 +336,7 @@
     var(--ns-primitive-color-sumi-700)
   );
   --ns-color-surface-raised: var(--ns-primitive-color-sumi-700);
+  --ns-color-overlay-backdrop: rgb(0 0 0 / 64%);
 
   /* Light Sumi tones keep all text roles legible on dark neutral surfaces. */
   --ns-color-text-primary: var(--ns-primitive-color-sumi-50);
