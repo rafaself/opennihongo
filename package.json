@@ -8,12 +8,17 @@
   },
   "scripts": {
     "dev": "pnpm --filter @nihon-shiga/web dev",
-    "build": "pnpm --filter @nihon-shiga/web build && pnpm --filter @nihon-shiga/ui build-storybook",
-    "typecheck": "pnpm --filter @nihon-shiga/web typecheck && pnpm --filter @nihon-shiga/ui typecheck",
+    "lint": "nx run-many -t lint",
+    "build": "nx run-many -t build build-storybook",
+    "typecheck": "nx run-many -t typecheck",
     "storybook": "pnpm --filter @nihon-shiga/ui storybook"
   },
   "devDependencies": {
+    "@nx/eslint-plugin": "23.2.1",
     "@types/node": "^25.0.0",
-    "typescript": "^7.0.2"
+    "@typescript-eslint/parser": "8.70.1",
+    "eslint": "10.11.0",
+    "nx": "23.2.1",
+    "typescript": "~6.0.3"
   }
 }

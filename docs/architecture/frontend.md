@@ -1,6 +1,13 @@
 # Frontend architecture
 
-The frontend is a pnpm workspace with four explicit package boundaries:
+The frontend is a pnpm workspace with Nx providing project graph, task
+orchestration, local caching, affected execution, and module-boundary
+enforcement. pnpm remains responsible for package installation, dependency
+resolution, and workspace linking. Nx reads the package locations from
+`pnpm-workspace.yaml`; each package declares its architectural `type:*` tag in
+its `package.json`.
+
+The workspace has four explicit project boundaries:
 
 - `apps/web` owns the browser application and composes workspace packages.
 - `packages/core` owns framework-independent domain rules and types. It must
@@ -12,6 +19,19 @@ The frontend is a pnpm workspace with four explicit package boundaries:
 - `packages/ui` owns domain-agnostic design-system components and styles. It may
   depend on its UI framework, but it must not depend on product features,
   `core`, or `persistence`.
+
+Nx enforces the dependency direction in ESLint: domain projects may depend only
+on domain projects; data-access projects may depend on domain and data-access
+projects; UI projects may depend only on UI projects; and app projects may
+compose domain, data-access, and UI projects. For packages with an `exports`
+map, it and TypeScript module resolution enforce the supported public import
+paths. Do not add package entry points until a real public API has been
+established.
+
+The root TypeScript dependency stays on the 6.0 line (currently 6.0.3) because
+the Nx ESLint boundary plugin's TypeScript utilities do not yet support
+TypeScript 7's compiler API. Revisit this constraint when the lint toolchain
+supports TypeScript 7.
 
 The `core` and `persistence` packages currently contain only workspace metadata:
 there is no domain or persisted behavior to implement yet. Add code when a real
@@ -62,6 +82,23 @@ app/main.tsx -> app/router.tsx -> layouts/AppLayout.tsx
                                         -> @nihon-shiga/ui
 ```
 
-Run `pnpm dev` for the app, `pnpm typecheck` for TypeScript checks,
-`pnpm build` for the web and Storybook production builds, or `pnpm storybook`
-to work on UI components in isolation.
+Run `pnpm dev` for the app, `pnpm lint` for boundary validation,
+`pnpm typecheck` for TypeScript checks, and `pnpm build` for the web and
+Storybook production builds. These root commands delegate to Nx while each
+project target continues to call its package's existing tooling. Run an
+individual target with `pnpm nx <target> <project>` (for example,
+`pnpm nx typecheck @nihon-shiga/web`) or run validation only for changed
+projects and their dependents with `pnpm nx affected -t lint typecheck test
+build build-storybook --uncommitted`. Use `--base=origin/main --head=HEAD` to
+compare committed changes against the remote main branch. Targets such as
+`test` are picked up when a project adds the corresponding package script.
+
+Add future apps and packages under the existing `apps/*` or `packages/*`
+workspace globs, give each package a unique name, set `nx.projectType` to
+`application` or `library`, and add one responsibility tag. Declare workspace
+package dependencies with `workspace:*`, expose stable public imports through
+its `exports` map, and add package scripts for the targets it supports. Nx will
+discover the project and its package-script targets without a separate project
+file.
+
+Run `pnpm storybook` to work on UI components in isolation.

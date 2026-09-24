@@ -3,3 +3,4 @@ packages:
   - packages/*
 allowBuilds:
   esbuild: true # Required for Vite's platform-specific build tooling.
+  nx: true # Required for Nx's post-install script.
