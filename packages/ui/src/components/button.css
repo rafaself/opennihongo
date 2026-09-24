@@ -10,7 +10,7 @@
   line-height: var(--ns-text-label-line-height);
   letter-spacing: var(--ns-text-label-letter-spacing);
   justify-content: center;
-  min-height: 2.75rem;
+  min-height: var(--ns-size-control-height-standard);
   padding: var(--ns-space-2-5) var(--ns-space-4);
   transition:
     background-color 140ms ease,

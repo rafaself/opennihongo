@@ -35,6 +35,7 @@ scale step, using the `--ns-primitive-` prefix. Examples for future scales:
 | Font weight        | `--ns-primitive-font-weight-{role}`     | `--ns-primitive-font-weight-semibold`   |
 | Line height        | `--ns-primitive-line-height-{role}`     | `--ns-primitive-line-height-normal`     |
 | Letter spacing     | `--ns-primitive-letter-spacing-{role}`  | `--ns-primitive-letter-spacing-tight`   |
+| Size               | `--ns-primitive-size-{pixels}`          | `--ns-primitive-size-24`                |
 | Motion duration    | `--ns-primitive-motion-duration-{step}` | `--ns-primitive-motion-duration-2`      |
 | Motion easing      | `--ns-primitive-motion-easing-{name}`   | `--ns-primitive-motion-easing-standard` |
 
@@ -66,6 +67,53 @@ the package and product do not declare separate spacing bases. For example,
 shared component CSS can use `padding: var(--ns-space-2-5) var(--ns-space-4)`.
 These scale aliases do not assign a component role. Add role-specific spacing
 semantics only when a stable shared interface meaning emerges.
+
+## Sizing scale
+
+Sizing primitives describe intrinsic dimensions for icon boxes, common control
+heights, and pointer targets. Some values match the spacing progression, but
+their role is distinct: spacing controls the gap around content, while sizing
+sets a control's height, an icon's box, or an interactive target's dimensions.
+Use the semantic sizing aliases in components instead of consuming these
+primitive values directly.
+
+| Primitive token          | Value     |
+| ------------------------ | --------- |
+| `--ns-primitive-size-16` | `1rem`    |
+| `--ns-primitive-size-20` | `1.25rem` |
+| `--ns-primitive-size-24` | `1.5rem`  |
+| `--ns-primitive-size-40` | `2.5rem`  |
+| `--ns-primitive-size-44` | `2.75rem` |
+| `--ns-primitive-size-48` | `3rem`    |
+
+Semantic aliases provide reusable dimensions for the common cases below.
+Control tokens describe height; icon-box tokens describe both width and
+height. Pointer-target tokens describe a square dimension and should be
+applied to both minimum width and minimum height.
+
+| Purpose                 | Semantic token                         | Value  | Guidance                                 |
+| ----------------------- | -------------------------------------- | ------ | ---------------------------------------- |
+| Compact control height  | `--ns-size-control-height-compact`     | `40px` | Use for dense, secondary controls        |
+| Standard control height | `--ns-size-control-height-standard`    | `44px` | Default shared control height            |
+| Comfortable control     | `--ns-size-control-height-comfortable` | `48px` | Use when a larger control is appropriate |
+| Small icon box          | `--ns-size-icon-box-small`             | `16px` | Small supporting icon                    |
+| Medium icon box         | `--ns-size-icon-box-medium`            | `20px` | Default inline icon                      |
+| Large icon box          | `--ns-size-icon-box-large`             | `24px` | Prominent visual icon                    |
+| Pointer target minimum  | `--ns-size-pointer-target-minimum`     | `24px` | WCAG 2.2 SC 2.5.8 AA size baseline       |
+| Comfortable target      | `--ns-size-pointer-target-comfortable` | `44px` | Larger design preference                 |
+
+WCAG 2.2 SC 2.5.8 (Level AA) requires pointer targets to be at least 24 by 24
+CSS pixels unless an exception applies. For example, an undersized target may
+use the spacing exception when a 24 CSS pixel diameter circle centered on its
+bounding box does not intersect another target or the circle for another
+undersized target. The equivalent exception also applies when the same page
+provides another control that meets the criterion. Inline targets, unmodified
+user-agent controls, and essential presentations have separate exceptions;
+verify the criterion before relying on one. The 44 by 44 comfortable target is
+a design preference, not the AA minimum. A control-height token alone does not
+ensure conformance: its target width and any applicable spacing must also be
+considered. See the [WCAG 2.2 Target Size (Minimum) understanding
+document](https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html).
 
 The source includes the complete initial Hinomaru-inspired brand scale and
 Sumi-inspired neutral scale as primitive values. These palette steps are raw
