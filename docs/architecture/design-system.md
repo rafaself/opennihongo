@@ -28,6 +28,10 @@ Shared patterns follow the same rule. An accessible field composition used by
 independent features may become a common pattern; a multi-step lesson setup or
 exercise flow stays with the feature that defines its behavior.
 
+Use `Switch` for an on/off setting that takes effect immediately. Use
+`Checkbox` for selecting items and `Button` for actions that require explicit
+submission or confirmation.
+
 ## Structural surfaces and cards
 
 `Surface` is a low-level visual container. It applies a semantic surface
