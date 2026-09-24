@@ -1,4 +1,5 @@
 import type { HTMLAttributes } from "react";
+import { resolveProgressRange } from "./resolveProgressRange";
 import "./progress.css";
 
 type ProgressAccessibleName =
@@ -22,25 +23,17 @@ export type ProgressProps = Omit<
     value: number;
   };
 
-const DEFAULT_PROGRESS_MAX = 100;
-
 /**
  * Renders a static, determinate progress bar. `max` defaults to 100 and falls
  * back to 100 when it is non-finite or not positive. A non-finite `value` is
  * treated as 0; finite values are clamped between 0 and the resolved maximum.
  */
-export function Progress({
-  className,
-  max = DEFAULT_PROGRESS_MAX,
-  value,
-  ...props
-}: ProgressProps) {
-  const resolvedMax =
-    Number.isFinite(max) && max > 0 ? max : DEFAULT_PROGRESS_MAX;
-  const resolvedValue = Number.isFinite(value)
-    ? Math.min(Math.max(value, 0), resolvedMax)
-    : 0;
-  const percentage = (resolvedValue / resolvedMax) * 100;
+export function Progress({ className, max, value, ...props }: ProgressProps) {
+  const {
+    max: resolvedMax,
+    value: resolvedValue,
+    percentage,
+  } = resolveProgressRange(value, max);
   const classes = ["ns-progress", className].filter(Boolean).join(" ");
 
   return (

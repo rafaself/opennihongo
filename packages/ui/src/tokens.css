@@ -160,6 +160,9 @@
   --ns-size-control-height-standard: var(--ns-primitive-size-44);
   --ns-size-control-height-comfortable: var(--ns-primitive-size-48);
   --ns-size-progress-track: var(--ns-primitive-size-8);
+  --ns-size-progress-ring-small: var(--ns-primitive-size-24);
+  --ns-size-progress-ring-medium: var(--ns-primitive-size-40);
+  --ns-size-progress-ring-large: var(--ns-primitive-size-48);
 
   --ns-size-avatar-small: var(--ns-primitive-size-24);
   --ns-size-avatar-medium: var(--ns-primitive-size-40);

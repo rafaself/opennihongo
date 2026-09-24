@@ -98,6 +98,9 @@ applied to both minimum width and minimum height.
 | Purpose                 | Semantic token                         | Value  | Guidance                                 |
 | ----------------------- | -------------------------------------- | ------ | ---------------------------------------- |
 | Progress track          | `--ns-size-progress-track`             | `8px`  | Static linear progress indicator height  |
+| Small progress ring     | `--ns-size-progress-ring-small`        | `24px` | Compact circular progress diameter       |
+| Medium progress ring    | `--ns-size-progress-ring-medium`       | `40px` | Default circular progress diameter       |
+| Large progress ring     | `--ns-size-progress-ring-large`        | `48px` | Prominent circular progress diameter     |
 | Compact control height  | `--ns-size-control-height-compact`     | `40px` | Use for dense, secondary controls        |
 | Standard control height | `--ns-size-control-height-standard`    | `44px` | Default shared control height            |
 | Comfortable control     | `--ns-size-control-height-comfortable` | `48px` | Use when a larger control is appropriate |

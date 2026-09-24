@@ -11,6 +11,11 @@ export type {
 } from "./components/indicators/badge/Badge";
 export { Progress } from "./components/indicators/progress/Progress";
 export type { ProgressProps } from "./components/indicators/progress/Progress";
+export { ProgressRing } from "./components/indicators/progress/ProgressRing";
+export type {
+  ProgressRingProps,
+  ProgressRingSize,
+} from "./components/indicators/progress/ProgressRing";
 export { Avatar } from "./components/avatar/Avatar";
 export type { AvatarProps, AvatarSize } from "./components/avatar/Avatar";
 export { IconButton } from "./components/icon-button/IconButton";

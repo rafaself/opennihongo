@@ -19,6 +19,11 @@ form controls, and generic progress or status indicators. A generic progress
 indicator can be shared; the meaning of a learner's level, streak, or XP stays
 with the feature that defines it.
 
+`Progress` and `ProgressRing` require an accessible name and expose the same
+clamped `value`/`max` range. Ring center content remains separate from its
+progressbar semantics so assistive technology can still reach it; avoid using
+that slot to repeat the value already announced by the range.
+
 Feature code belongs under that feature's directory. Product-aware components
 used across features, such as a shared learning-session header, may live in the
 web app's `components/` area. They should not enter `packages/ui` just because

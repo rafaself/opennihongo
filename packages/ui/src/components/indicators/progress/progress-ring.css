@@ -1,0 +1,50 @@
+.ns-progress-ring {
+  aspect-ratio: 1;
+  display: inline-grid;
+  inline-size: var(--ns-size-progress-ring-medium);
+  place-items: center;
+  position: relative;
+  vertical-align: middle;
+}
+
+.ns-progress-ring--small {
+  inline-size: var(--ns-size-progress-ring-small);
+}
+
+.ns-progress-ring--large {
+  inline-size: var(--ns-size-progress-ring-large);
+}
+
+.ns-progress-ring__graphic {
+  display: block;
+  block-size: 100%;
+  inline-size: 100%;
+}
+
+.ns-progress-ring__track,
+.ns-progress-ring__indicator {
+  fill: none;
+  stroke-width: var(--ns-border-width-emphasis);
+}
+
+.ns-progress-ring__track {
+  stroke: var(--ns-color-surface-subtle);
+}
+
+.ns-progress-ring__indicator {
+  stroke: var(--ns-color-action-primary);
+  stroke-linecap: round;
+  transform: rotate(-90deg);
+  transform-origin: 50% 50%;
+}
+
+.ns-progress-ring__content {
+  align-items: center;
+  display: grid;
+  inset: 0;
+  justify-items: center;
+  max-inline-size: 80%;
+  overflow-wrap: anywhere;
+  position: absolute;
+  text-align: center;
+}
