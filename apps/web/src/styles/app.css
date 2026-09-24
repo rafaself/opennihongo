@@ -1,0 +1,12 @@
+@import 'tailwindcss';
+
+@theme inline {
+  --color-canvas: var(--ns-color-canvas);
+  --color-surface: var(--ns-color-surface);
+  --color-ink: var(--ns-color-ink);
+  --color-muted: var(--ns-color-muted);
+  --color-border: var(--ns-color-border);
+  --color-brand: var(--ns-color-brand);
+  --color-brand-foreground: var(--ns-color-brand-foreground);
+  --font-sans: var(--ns-font-sans);
+}

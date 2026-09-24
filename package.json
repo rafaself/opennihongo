@@ -1,0 +1,19 @@
+{
+  "name": "nihon-shiga",
+  "private": true,
+  "packageManager": "pnpm@11.8.0",
+  "engines": {
+    "node": ">=22.12.0",
+    "pnpm": ">=11.8.0"
+  },
+  "scripts": {
+    "dev": "pnpm --filter @nihon-shiga/web dev",
+    "build": "pnpm --filter @nihon-shiga/web build && pnpm --filter @nihon-shiga/ui build-storybook",
+    "typecheck": "pnpm --filter @nihon-shiga/web typecheck && pnpm --filter @nihon-shiga/ui typecheck",
+    "storybook": "pnpm --filter @nihon-shiga/ui storybook"
+  },
+  "devDependencies": {
+    "@types/node": "^25.0.0",
+    "typescript": "^7.0.2"
+  }
+}

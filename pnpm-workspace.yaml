@@ -1,0 +1,5 @@
+packages:
+  - apps/*
+  - packages/*
+allowBuilds:
+  esbuild: true # Required for Vite's platform-specific build tooling.
