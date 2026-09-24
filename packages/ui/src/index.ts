@@ -57,5 +57,11 @@ export type {
   SurfaceProps,
   SurfaceVariant,
 } from "./components/surface/Surface";
+export { Card } from "./components/surface/Card";
+export type {
+  CardElement,
+  CardProps,
+  CardVariant,
+} from "./components/surface/Card";
 export { Text } from "./typography/Text";
 export type { TextColor, TextProps, TextVariant } from "./typography/Text";

@@ -41,10 +41,13 @@ pressed, and focus-within shadow feedback for compositions that contain real
 interactive elements; `Surface` itself remains a structural `div` and does not
 provide click or keyboard behavior.
 
-A future `Card` may define a more opinionated content hierarchy, spacing, and
-action placement for bounded content. It should compose `Surface` for the
-visual foundation instead of duplicating its token mapping. Do not add those
-content or action conventions to `Surface`.
+`Card` is a static content container that composes `Surface` for its visual
+foundation and applies consistent content padding. Use its `article` element
+for self-contained content or a labelled `section` for a named region; its
+default `div` is for generic grouping. Compose explicit Buttons or links inside
+the Card for actions. The Card root does not behave as a link or button, and
+interactive styling or behavior belongs to the actual interactive elements.
+Do not add those content or action conventions to `Surface`.
 
 ## Promote recurring UI
 
