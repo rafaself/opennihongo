@@ -24,6 +24,13 @@ clamped `value`/`max` range. Ring center content remains separate from its
 progressbar semantics so assistive technology can still reach it; avoid using
 that slot to repeat the value already announced by the range.
 
+`Spinner` is an indeterminate status for short operations and requires an
+`aria-label` or `aria-labelledby`. Pair it with visible status text; color or
+animation must not be the only indication of ongoing work. It stops rotating
+when reduced motion is requested. Use `Progress` or `ProgressRing` when a
+determinate value is available, and `Skeleton` when preserving a known content
+layout is more useful.
+
 Feature code belongs under that feature's directory. Product-aware components
 used across features, such as a shared learning-session header, may live in the
 web app's `components/` area. They should not enter `packages/ui` just because

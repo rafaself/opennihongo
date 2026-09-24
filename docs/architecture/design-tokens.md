@@ -96,23 +96,26 @@ Control tokens describe height; icon-box tokens describe both width and
 height. Pointer-target tokens describe a square dimension and should be
 applied to both minimum width and minimum height.
 
-| Purpose                 | Semantic token                         | Value  | Guidance                                 |
-| ----------------------- | -------------------------------------- | ------ | ---------------------------------------- |
-| Progress track          | `--ns-size-progress-track`             | `8px`  | Static linear progress indicator height  |
-| Small progress ring     | `--ns-size-progress-ring-small`        | `24px` | Compact circular progress diameter       |
-| Medium progress ring    | `--ns-size-progress-ring-medium`       | `40px` | Default circular progress diameter       |
-| Large progress ring     | `--ns-size-progress-ring-large`        | `48px` | Prominent circular progress diameter     |
-| Compact control height  | `--ns-size-control-height-compact`     | `40px` | Use for dense, secondary controls        |
-| Standard control height | `--ns-size-control-height-standard`    | `44px` | Default shared control height            |
-| Comfortable control     | `--ns-size-control-height-comfortable` | `48px` | Use when a larger control is appropriate |
-| Small avatar            | `--ns-size-avatar-small`               | `24px` | Compact identity display                 |
-| Medium avatar           | `--ns-size-avatar-medium`              | `40px` | Default identity display                 |
-| Large avatar            | `--ns-size-avatar-large`               | `48px` | Prominent identity display               |
-| Small icon box          | `--ns-size-icon-box-small`             | `16px` | Small supporting icon                    |
-| Medium icon box         | `--ns-size-icon-box-medium`            | `20px` | Default inline icon                      |
-| Large icon box          | `--ns-size-icon-box-large`             | `24px` | Prominent visual icon                    |
-| Pointer target minimum  | `--ns-size-pointer-target-minimum`     | `24px` | WCAG 2.2 SC 2.5.8 AA size baseline       |
-| Comfortable target      | `--ns-size-pointer-target-comfortable` | `44px` | Larger design preference                 |
+| Purpose                 | Semantic token                         | Value  | Guidance                                  |
+| ----------------------- | -------------------------------------- | ------ | ----------------------------------------- |
+| Progress track          | `--ns-size-progress-track`             | `8px`  | Static linear progress indicator height   |
+| Small progress ring     | `--ns-size-progress-ring-small`        | `24px` | Compact circular progress diameter        |
+| Medium progress ring    | `--ns-size-progress-ring-medium`       | `40px` | Default circular progress diameter        |
+| Large progress ring     | `--ns-size-progress-ring-large`        | `48px` | Prominent circular progress diameter      |
+| Small spinner           | `--ns-size-spinner-small`              | `16px` | Compact indeterminate loading indicator   |
+| Medium spinner          | `--ns-size-spinner-medium`             | `20px` | Default indeterminate loading indicator   |
+| Large spinner           | `--ns-size-spinner-large`              | `24px` | Prominent indeterminate loading indicator |
+| Compact control height  | `--ns-size-control-height-compact`     | `40px` | Use for dense, secondary controls         |
+| Standard control height | `--ns-size-control-height-standard`    | `44px` | Default shared control height             |
+| Comfortable control     | `--ns-size-control-height-comfortable` | `48px` | Use when a larger control is appropriate  |
+| Small avatar            | `--ns-size-avatar-small`               | `24px` | Compact identity display                  |
+| Medium avatar           | `--ns-size-avatar-medium`              | `40px` | Default identity display                  |
+| Large avatar            | `--ns-size-avatar-large`               | `48px` | Prominent identity display                |
+| Small icon box          | `--ns-size-icon-box-small`             | `16px` | Small supporting icon                     |
+| Medium icon box         | `--ns-size-icon-box-medium`            | `20px` | Default inline icon                       |
+| Large icon box          | `--ns-size-icon-box-large`             | `24px` | Prominent visual icon                     |
+| Pointer target minimum  | `--ns-size-pointer-target-minimum`     | `24px` | WCAG 2.2 SC 2.5.8 AA size baseline        |
+| Comfortable target      | `--ns-size-pointer-target-comfortable` | `44px` | Larger design preference                  |
 
 WCAG 2.2 SC 2.5.8 (Level AA) requires pointer targets to be at least 24 by 24
 CSS pixels unless an exception applies. For example, an undersized target may

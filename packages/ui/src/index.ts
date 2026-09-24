@@ -22,6 +22,12 @@ export type {
   SkeletonShape,
   SkeletonSize,
 } from "./components/indicators/skeleton/Skeleton";
+export { Spinner } from "./components/indicators/spinner/Spinner";
+export type {
+  SpinnerColor,
+  SpinnerProps,
+  SpinnerSize,
+} from "./components/indicators/spinner/Spinner";
 export { Avatar } from "./components/avatar/Avatar";
 export type { AvatarProps, AvatarSize } from "./components/avatar/Avatar";
 export { IconButton } from "./components/icon-button/IconButton";

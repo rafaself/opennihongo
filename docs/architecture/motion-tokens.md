@@ -10,16 +10,19 @@ custom properties directly.
 Durations distinguish routine state changes from longer expressive feedback.
 Use semantic aliases in components instead of depending on primitive steps.
 
-| Semantic token                     | Primitive token                    | Value   | Intended use                              |
-| ---------------------------------- | ---------------------------------- | ------- | ----------------------------------------- |
-| `--ns-motion-duration-instant`     | `--ns-primitive-motion-duration-0` | `0ms`   | Immediate state updates or reduced motion |
-| `--ns-motion-duration-fast`        | `--ns-primitive-motion-duration-1` | `120ms` | Small, routine control feedback           |
-| `--ns-motion-duration-normal`      | `--ns-primitive-motion-duration-2` | `200ms` | Standard interface transitions            |
-| `--ns-motion-duration-slow`        | `--ns-primitive-motion-duration-3` | `320ms` | Larger, deliberate interface transitions  |
-| `--ns-motion-duration-celebration` | `--ns-primitive-motion-duration-4` | `600ms` | Optional celebratory feedback timing      |
+| Semantic token                       | Primitive token                    | Value    | Intended use                                      |
+| ------------------------------------ | ---------------------------------- | -------- | ------------------------------------------------- |
+| `--ns-motion-duration-instant`       | `--ns-primitive-motion-duration-0` | `0ms`    | Immediate state updates or reduced motion         |
+| `--ns-motion-duration-fast`          | `--ns-primitive-motion-duration-1` | `120ms`  | Small, routine control feedback                   |
+| `--ns-motion-duration-normal`        | `--ns-primitive-motion-duration-2` | `200ms`  | Standard interface transitions                    |
+| `--ns-motion-duration-slow`          | `--ns-primitive-motion-duration-3` | `320ms`  | Larger, deliberate interface transitions          |
+| `--ns-motion-duration-celebration`   | `--ns-primitive-motion-duration-4` | `600ms`  | Optional celebratory feedback timing              |
+| `--ns-motion-duration-indeterminate` | `--ns-primitive-motion-duration-5` | `1000ms` | Slow rotation for indeterminate status indicators |
 
 The celebration duration is intentionally distinct from routine timing. It
 provides a duration for future use; it does not define or implement an effect.
+Indeterminate status indicators use a slower rotation than routine control
+feedback; the effect stops when reduced motion is requested.
 `--ns-motion-press-offset` is `1px` during ordinary interaction and becomes
 `0px` when reduced motion is requested. Shared controls can use it for a small
 tactile press cue without moving under the reduced-motion preference.
@@ -60,12 +63,13 @@ easing. Components should use semantic aliases instead of hard-coded timings or
 primitive values so the preference is honored. Instant updates still expose
 the same state; the preference removes movement, not information.
 
-| Behavior       | Reduced-motion treatment                                                             | Preserve the state with                                    |
-| -------------- | ------------------------------------------------------------------------------------ | ---------------------------------------------------------- |
-| Press          | Remove translation and apply the pressed state immediately.                          | Pressed color, border, or shadow.                          |
-| Enter and exit | Show or remove content immediately; avoid sliding, zooming, or large transforms.     | Clear content order, headings, and focus placement.        |
-| Progress       | Update the progress value immediately; omit sweeping, pulsing, or moving indicators. | A progress bar value plus a label or numeric status.       |
-| Celebration    | Omit decorative particles, loops, shakes, and spring/bounce movement.                | A static reward mark with readable success or reward text. |
+| Behavior             | Reduced-motion treatment                                                             | Preserve the state with                                    |
+| -------------------- | ------------------------------------------------------------------------------------ | ---------------------------------------------------------- |
+| Press                | Remove translation and apply the pressed state immediately.                          | Pressed color, border, or shadow.                          |
+| Enter and exit       | Show or remove content immediately; avoid sliding, zooming, or large transforms.     | Clear content order, headings, and focus placement.        |
+| Progress             | Update the progress value immediately; omit sweeping, pulsing, or moving indicators. | A progress bar value plus a label or numeric status.       |
+| Indeterminate status | Stop spinner rotation while retaining its status semantics.                          | A visible loading message beside the static indicator.     |
+| Celebration          | Omit decorative particles, loops, shakes, and spring/bounce movement.                | A static reward mark with readable success or reward text. |
 
 Do not make completion, error, or reward meaning depend on motion, color alone,
 or a disappearing effect. Keep semantic status text and accessible progress

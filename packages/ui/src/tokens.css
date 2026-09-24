@@ -103,6 +103,7 @@
   --ns-primitive-motion-duration-2: 200ms;
   --ns-primitive-motion-duration-3: 320ms;
   --ns-primitive-motion-duration-4: 600ms;
+  --ns-primitive-motion-duration-5: 1000ms;
   --ns-primitive-motion-easing-standard: cubic-bezier(0.2, 0, 0, 1);
   --ns-primitive-motion-easing-enter: cubic-bezier(0, 0, 0.2, 1);
   --ns-primitive-motion-easing-exit: cubic-bezier(0.4, 0, 1, 1);
@@ -165,6 +166,9 @@
   --ns-size-progress-ring-small: var(--ns-primitive-size-24);
   --ns-size-progress-ring-medium: var(--ns-primitive-size-40);
   --ns-size-progress-ring-large: var(--ns-primitive-size-48);
+  --ns-size-spinner-small: var(--ns-size-icon-box-small);
+  --ns-size-spinner-medium: var(--ns-size-icon-box-medium);
+  --ns-size-spinner-large: var(--ns-size-icon-box-large);
 
   --ns-size-avatar-small: var(--ns-primitive-size-24);
   --ns-size-avatar-medium: var(--ns-primitive-size-40);
@@ -203,6 +207,7 @@
   --ns-motion-duration-normal: var(--ns-primitive-motion-duration-2);
   --ns-motion-duration-slow: var(--ns-primitive-motion-duration-3);
   --ns-motion-duration-celebration: var(--ns-primitive-motion-duration-4);
+  --ns-motion-duration-indeterminate: var(--ns-primitive-motion-duration-5);
   --ns-motion-press-offset: 1px;
 
   --ns-motion-easing-standard: var(--ns-primitive-motion-easing-standard);
@@ -218,6 +223,7 @@
     --ns-motion-duration-normal: var(--ns-motion-duration-instant);
     --ns-motion-duration-slow: var(--ns-motion-duration-instant);
     --ns-motion-duration-celebration: var(--ns-motion-duration-instant);
+    --ns-motion-duration-indeterminate: var(--ns-motion-duration-instant);
     --ns-motion-press-offset: 0px;
     --ns-motion-easing-spring: var(--ns-motion-easing-standard);
     --ns-motion-easing-bounce: var(--ns-motion-easing-standard);
