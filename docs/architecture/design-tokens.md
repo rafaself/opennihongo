@@ -31,6 +31,9 @@ scale step, using the `--ns-primitive-` prefix. Examples for future scales:
 | Spacing            | `--ns-primitive-space-{step}`           | `--ns-primitive-space-4`                |
 | Type size          | `--ns-primitive-font-size-{step}`       | `--ns-primitive-font-size-3`            |
 | Font family        | `--ns-primitive-font-family-{role}`     | `--ns-primitive-font-family-sans`       |
+| Font weight        | `--ns-primitive-font-weight-{role}`     | `--ns-primitive-font-weight-semibold`   |
+| Line height        | `--ns-primitive-line-height-{role}`     | `--ns-primitive-line-height-normal`     |
+| Letter spacing     | `--ns-primitive-letter-spacing-{role}`  | `--ns-primitive-letter-spacing-tight`   |
 | Motion duration    | `--ns-primitive-motion-duration-{step}` | `--ns-primitive-motion-duration-2`      |
 | Motion easing      | `--ns-primitive-motion-easing-{name}`   | `--ns-primitive-motion-easing-standard` |
 
@@ -79,7 +82,7 @@ role and theme without exposing raw palette names as component APIs.
 Semantic tokens name the interface role, use the `--ns-` prefix, and omit
 palette families and scale steps. For example, use `--ns-color-canvas` or
 `--ns-color-brand` for color roles, `--ns-space-control-gap` for a spacing
-role, `--ns-font-body` for a text role, and `--ns-motion-control` for an
+role, `--ns-text-body-size` for a text role, and `--ns-motion-control` for an
 interaction role. A semantic alias may refer to one primitive or derive from
 several primitives when a theme needs a role-specific value.
 
@@ -135,6 +138,41 @@ remains the source of verified conformance results.
 is a component and app consumption contract. Primitive scales can be extended
 by their implementation issues; they do not make component APIs or package
 exports.
+
+## Typography scale
+
+Typography uses the local/system sans stack already declared by the package;
+the initial scale does not fetch a font or add a dependency. Primitive values
+provide a compact size, weight, line-height, and letter-spacing scale. The
+semantic `--ns-text-{role}-*` tokens compose those values for shared display,
+heading, body, label, and caption roles. These roles do not vary by color theme.
+
+| Role    | Size | Weight | Line height | Letter spacing | Intended use                            |
+| ------- | ---- | ------ | ----------- | -------------- | --------------------------------------- |
+| Display | 40px | 400    | 1.1         | -0.025em       | Page titles and prominent introductions |
+| Heading | 24px | 600    | 1.25        | -0.0125em      | Section headings and card titles        |
+| Body    | 16px | 400    | 1.5         | 0              | Paragraphs and default interface copy   |
+| Label   | 14px | 600    | 1.25        | 0              | Controls and short interface labels     |
+| Caption | 12px | 400    | 1.5         | 0              | Supporting metadata and helper copy     |
+
+The package stylesheet exposes `.ns-text-display`, `.ns-text-heading`,
+`.ns-text-body`, `.ns-text-label`, and `.ns-text-caption` classes for applying
+each complete role. Component CSS can consume the same semantic tokens directly
+when it needs to compose styles, as the shared Button does for its label type:
+
+```css
+.ns-button {
+  font-size: var(--ns-text-label-size);
+  font-weight: var(--ns-text-label-weight);
+  line-height: var(--ns-text-label-line-height);
+  letter-spacing: var(--ns-text-label-letter-spacing);
+}
+```
+
+Use body for sustained reading, reserve display for the strongest page-level
+hierarchy, and use label or caption only for short UI text. Prefer these shared
+roles over new feature-local size and weight values. Extend the primitive scale
+only when a real hierarchy requires a value between its existing steps.
 
 ## Theme activation
 

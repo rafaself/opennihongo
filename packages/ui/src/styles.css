@@ -23,6 +23,45 @@ body {
   margin: 0;
   min-width: 20rem;
   min-height: 100vh;
+  font-size: var(--ns-text-body-size);
+  font-weight: var(--ns-text-body-weight);
+  line-height: var(--ns-text-body-line-height);
+  letter-spacing: var(--ns-text-body-letter-spacing);
+}
+
+.ns-text-display {
+  font-size: var(--ns-text-display-size);
+  font-weight: var(--ns-text-display-weight);
+  line-height: var(--ns-text-display-line-height);
+  letter-spacing: var(--ns-text-display-letter-spacing);
+}
+
+.ns-text-heading {
+  font-size: var(--ns-text-heading-size);
+  font-weight: var(--ns-text-heading-weight);
+  line-height: var(--ns-text-heading-line-height);
+  letter-spacing: var(--ns-text-heading-letter-spacing);
+}
+
+.ns-text-body {
+  font-size: var(--ns-text-body-size);
+  font-weight: var(--ns-text-body-weight);
+  line-height: var(--ns-text-body-line-height);
+  letter-spacing: var(--ns-text-body-letter-spacing);
+}
+
+.ns-text-label {
+  font-size: var(--ns-text-label-size);
+  font-weight: var(--ns-text-label-weight);
+  line-height: var(--ns-text-label-line-height);
+  letter-spacing: var(--ns-text-label-letter-spacing);
+}
+
+.ns-text-caption {
+  font-size: var(--ns-text-caption-size);
+  font-weight: var(--ns-text-caption-weight);
+  line-height: var(--ns-text-caption-line-height);
+  letter-spacing: var(--ns-text-caption-letter-spacing);
 }
 
 button,

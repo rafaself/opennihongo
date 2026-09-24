@@ -5,8 +5,10 @@
   cursor: pointer;
   display: inline-flex;
   font: inherit;
-  font-size: 0.9375rem;
-  font-weight: 600;
+  font-size: var(--ns-text-label-size);
+  font-weight: var(--ns-text-label-weight);
+  line-height: var(--ns-text-label-line-height);
+  letter-spacing: var(--ns-text-label-letter-spacing);
   justify-content: center;
   min-height: 2.75rem;
   padding: 0.625rem 1rem;
