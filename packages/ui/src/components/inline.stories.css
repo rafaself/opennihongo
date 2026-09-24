@@ -1,0 +1,9 @@
+.ns-inline-story-narrow {
+  width: 16rem;
+}
+
+.ns-inline-story-metadata {
+  color: var(--ns-color-text-secondary);
+  font-size: var(--ns-text-caption-size);
+  line-height: var(--ns-text-caption-line-height);
+}
