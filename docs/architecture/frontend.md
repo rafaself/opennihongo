@@ -33,6 +33,17 @@ the Nx ESLint boundary plugin's TypeScript utilities do not yet support
 TypeScript 7's compiler API. Revisit this constraint when the lint toolchain
 supports TypeScript 7.
 
+The shared TypeScript configuration enables `strict` mode, exact optional
+properties, checked indexed access, explicit returns and overrides, and
+unreachable-code and side-effect-import checks. It also rejects unused locals
+and parameters and switch fallthroughs. ESLint rejects explicit `any` types and
+TypeScript suppression comments in addition to enforcing package boundaries.
+These checks currently cover `web` and `ui`; `core` and `persistence` do not yet
+contain TypeScript code or have typecheck targets. Dependency declaration files
+are checked for `web`. `ui` skips dependency declaration checks because its
+current Storybook declarations fail when checked alongside exact optional
+property types.
+
 The `core` and `persistence` packages currently contain only workspace metadata:
 there is no domain or persisted behavior to implement yet. Add code when a real
 feature establishes a contract, rather than creating placeholder APIs.

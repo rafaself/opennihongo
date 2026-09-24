@@ -32,6 +32,20 @@ const boundaryConfig = {
   },
   rules: {
     '@nx/enforce-module-boundaries': boundaryRule,
+    'no-restricted-syntax': [
+      'error',
+      {
+        selector: 'TSAnyKeyword',
+        message: 'Avoid `any`; use `unknown` or a more specific type.',
+      },
+    ],
+    'no-warning-comments': [
+      'error',
+      {
+        terms: ['@ts-ignore', '@ts-nocheck', '@ts-expect-error'],
+        location: 'anywhere',
+      },
+    ],
   },
 }
 
