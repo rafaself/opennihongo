@@ -84,6 +84,19 @@ suppression comments.
 For ownership, contribution, and promotion rules for shared UI, see the
 [Design System contribution guide](docs/architecture/design-system.md).
 
+## Code organization
+
+These are blocking limits, not suggestions: source directories may have no more
+than 12 direct source files and subdirectories, and handwritten implementation
+and test files may have no more than 400 physical lines. Reorganize around real
+responsibilities before crossing either limit. If a touched area is already
+over a limit, bring it within the limit before adding implementation there.
+Reviewers should block a pull request that exceeds a limit unless a maintainer
+approved the exception before implementation; a rationale in the pull request
+is not approval. Avoid arbitrary splits and vague catch-all folders. See the
+[frontend architecture guide](docs/architecture/frontend.md#source-directory-and-file-size)
+for counting rules and exceptions.
+
 To validate a message locally without installing project dependencies:
 
 ```sh

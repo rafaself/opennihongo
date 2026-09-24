@@ -94,6 +94,33 @@ Only create a directory when it has real code to own. For example, `features/`,
 `hooks/`, and `lib/` do not exist in the starter because no current behavior
 needs them.
 
+## Source directory and file size
+
+Keep hand-written source under `apps/` and `packages/` organized by feature,
+component, or other clear responsibility instead of accumulating unrelated
+files in one flat folder. The limits below are blocking boundaries, not review
+suggestions.
+
+- A source folder may contain no more than 12 direct source files and
+  subdirectories. If a change would exceed 12, stop and reorganize related
+  modules under meaningful subdirectories before continuing. If a touched
+  folder is already over 12 entries, bring it within the limit before adding
+  implementation there.
+- A hand-written implementation or test file may contain no more than 400
+  physical lines. Before creating or extending a file past 400 lines, stop and
+  extract distinct responsibilities into cohesive modules. If a touched file
+  is already over 400 lines, bring it within the limit before adding
+  implementation there.
+- If a responsibility-based reorganization cannot meet either limit without
+  harming the design, pause and get explicit maintainer approval before
+  continuing. Crossing either limit requires explicit prior approval. A
+  rationale in a review or final report does not count as approval.
+- Split by responsibility, not by arbitrary line ranges. Each folder or module
+  should own meaningful code; do not add one-file wrappers or vague buckets
+  such as `misc`, `common`, or `utils` just to meet a count.
+- Do not count generated or vendored output, lockfiles, static data, fixtures,
+  snapshots, or prose documentation toward these limits.
+
 ## Dependency and state rules
 
 - `web` composes the public exports of `core`, `persistence`, and `ui`.
