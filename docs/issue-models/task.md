@@ -32,13 +32,23 @@ Describe the concrete outcome this task should produce.
 
 ## Implementation
 
-- [ ] ...
-- [ ] ...
+Describe the intended approach, relevant technical areas, and important
+implementation considerations.
+
+Use prose or regular bullet points when useful. Do not use checkboxes here.
+Implementation details are guidance for the work, not a second completion
+checklist.
 
 ## Acceptance criteria
 
+Use checkboxes only for objective, externally verifiable conditions that define
+when the task is complete.
+
 - [ ] ...
 - [ ] ...
+
+Keep the list focused. Avoid restating every implementation step as an
+acceptance criterion.
 
 ## Constraints
 
