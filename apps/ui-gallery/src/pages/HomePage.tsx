@@ -1,19 +1,19 @@
 import { Button } from "@opennihongo/ui";
 
 const colorTokens = [
-  { name: "Canvas", token: "--ns-color-canvas", value: "#f7f8f5" },
+  { name: "Canvas", token: "--ns-color-canvas", value: "#fafaf9" },
   { name: "Surface", token: "--ns-color-surface", value: "#ffffff" },
-  { name: "Ink", token: "--ns-color-ink", value: "#1f2c2c" },
-  { name: "Muted", token: "--ns-color-muted", value: "#596967" },
-  { name: "Border", token: "--ns-color-border", value: "#dce5e1" },
-  { name: "Brand", token: "--ns-color-brand", value: "#245c55" },
-  { name: "Brand hover", token: "--ns-color-brand-hover", value: "#194a44" },
+  { name: "Ink", token: "--ns-color-ink", value: "#181817" },
+  { name: "Muted", token: "--ns-color-muted", value: "#3c3c39" },
+  { name: "Border", token: "--ns-color-border", value: "#c9c9c5" },
+  { name: "Brand", token: "--ns-color-brand", value: "#bc002d" },
+  { name: "Brand hover", token: "--ns-color-brand-hover", value: "#990026" },
   {
     name: "Brand foreground",
     token: "--ns-color-brand-foreground",
     value: "#ffffff",
   },
-  { name: "Focus", token: "--ns-color-focus", value: "#d58e3f" },
+  { name: "Focus", token: "--ns-color-focus", value: "#bb702b" },
 ];
 
 export function HomePage() {

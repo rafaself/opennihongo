@@ -83,6 +83,28 @@ role, `--ns-font-body` for a text role, and `--ns-motion-control` for an
 interaction role. A semantic alias may refer to one primitive or derive from
 several primitives when a theme needs a role-specific value.
 
+## Light theme color map
+
+The default and explicit light themes map the shared color roles as follows.
+These names are the component and app contract; consumers do not need to know
+which primitive family supplies a value.
+
+| Role                      | Semantic tokens                                                                                                                                       | Light mapping                                                                                |
+| ------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
+| Brand and primary actions | `--ns-color-brand`, `--ns-color-action-primary`; their `-hover` and `-foreground` variants                                                            | Hinomaru 600 for the action, 700 on hover, and white foreground                              |
+| Text                      | `--ns-color-text-primary` (`--ns-color-ink`), `--ns-color-text-secondary` (`--ns-color-muted`), `--ns-color-text-tertiary`, `--ns-color-text-inverse` | Sumi 900, 700, and 600, with white inverse text                                              |
+| Surfaces                  | `--ns-color-canvas`, `--ns-color-surface`, `--ns-color-surface-subtle`, `--ns-color-surface-raised`                                                   | Sumi 50, white, Sumi 100, and white                                                          |
+| Borders                   | `--ns-color-border-subtle`, `--ns-color-border`, `--ns-color-border-strong`                                                                           | Sumi 100, 300, and 500                                                                       |
+| Focus and selection       | `--ns-color-focus`, `--ns-color-selection`, `--ns-color-selection-foreground`                                                                         | Amber 600 focus, Hinomaru 50 selection, and primary text                                     |
+| Feedback                  | `--ns-color-feedback-{success,warning,info,danger}` and matching `-surface` tokens                                                                    | Green, amber, blue, and Hinomaru foreground accents with their 50-step surfaces              |
+| Rewards                   | `--ns-color-reward-{xp,streak,achievement}` and matching `-surface` tokens                                                                            | Amber for XP, orange for streaks, and indigo for achievements, each with its 50-step surface |
+
+The primary action uses Hinomaru red. Feedback keeps distinct green, amber,
+and blue meanings; red is reserved for the brand action and danger feedback.
+Reward accents reuse the established amber, orange, and indigo families. The
+variables are included by `@opennihongo/ui/styles.css`, so hosts consume them
+through the supported stylesheet entry and can scope them with `data-theme`.
+
 `packages/ui` owns both layers and chooses their names. Only the semantic layer
 is a component and app consumption contract. Primitive scales can be extended
 by their implementation issues; they do not make component APIs or package

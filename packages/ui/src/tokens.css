@@ -77,17 +77,53 @@
 :root,
 [data-theme="light"] {
   color-scheme: light;
-  --ns-color-canvas: var(--ns-primitive-color-neutral-50);
+
+  /* Surfaces use warm Sumi neutrals with white reserved for raised content. */
+  --ns-color-canvas: var(--ns-primitive-color-sumi-50);
   --ns-color-surface: var(--ns-primitive-color-neutral-0);
-  --ns-color-ink: var(--ns-primitive-color-neutral-900);
-  --ns-color-muted: var(--ns-primitive-color-neutral-700);
-  --ns-color-border: var(--ns-primitive-color-neutral-200);
-  --ns-color-brand: var(--ns-primitive-color-teal-700);
-  --ns-color-brand-hover: var(--ns-primitive-color-teal-800);
-  --ns-color-brand-foreground: var(--ns-primitive-color-neutral-0);
-  --ns-color-focus: var(--ns-primitive-color-amber-500);
-  --ns-color-selection: var(--ns-primitive-color-teal-100);
-  --ns-color-selection-foreground: var(--ns-primitive-color-neutral-900);
+  --ns-color-surface-subtle: var(--ns-primitive-color-sumi-100);
+  --ns-color-surface-raised: var(--ns-primitive-color-neutral-0);
+
+  /* Text and borders use the Sumi scale to keep the light UI warm and legible. */
+  --ns-color-text-primary: var(--ns-primitive-color-sumi-900);
+  --ns-color-text-secondary: var(--ns-primitive-color-sumi-700);
+  --ns-color-text-tertiary: var(--ns-primitive-color-sumi-600);
+  --ns-color-text-inverse: var(--ns-primitive-color-neutral-0);
+  --ns-color-ink: var(--ns-color-text-primary);
+  --ns-color-muted: var(--ns-color-text-secondary);
+  --ns-color-border-subtle: var(--ns-primitive-color-sumi-100);
+  --ns-color-border: var(--ns-primitive-color-sumi-300);
+  --ns-color-border-strong: var(--ns-primitive-color-sumi-500);
+
+  /* Hinomaru red is the shared brand and primary-action color. */
+  --ns-color-action-primary: var(--ns-primitive-color-hinomaru-600);
+  --ns-color-action-primary-hover: var(--ns-primitive-color-hinomaru-700);
+  --ns-color-action-primary-foreground: var(--ns-primitive-color-neutral-0);
+  --ns-color-brand: var(--ns-color-action-primary);
+  --ns-color-brand-hover: var(--ns-color-action-primary-hover);
+  --ns-color-brand-foreground: var(--ns-color-action-primary-foreground);
+  --ns-color-focus: var(--ns-primitive-color-amber-600);
+  --ns-color-selection: var(--ns-primitive-color-hinomaru-50);
+  --ns-color-selection-foreground: var(--ns-color-text-primary);
+
+  /* Feedback communicates status without assigning every role to brand red. */
+  --ns-color-feedback-success: var(--ns-primitive-color-green-700);
+  --ns-color-feedback-success-surface: var(--ns-primitive-color-green-50);
+  --ns-color-feedback-warning: var(--ns-primitive-color-amber-700);
+  --ns-color-feedback-warning-surface: var(--ns-primitive-color-amber-50);
+  --ns-color-feedback-info: var(--ns-primitive-color-blue-700);
+  --ns-color-feedback-info-surface: var(--ns-primitive-color-blue-50);
+  --ns-color-feedback-danger: var(--ns-primitive-color-hinomaru-700);
+  --ns-color-feedback-danger-surface: var(--ns-primitive-color-hinomaru-50);
+
+  /* Reward roles reuse the restrained XP, streak, and achievement accents. */
+  --ns-color-reward-xp: var(--ns-primitive-color-amber-700);
+  --ns-color-reward-xp-surface: var(--ns-primitive-color-amber-50);
+  --ns-color-reward-streak: var(--ns-primitive-color-orange-700);
+  --ns-color-reward-streak-surface: var(--ns-primitive-color-orange-50);
+  --ns-color-reward-achievement: var(--ns-primitive-color-indigo-700);
+  --ns-color-reward-achievement-surface: var(--ns-primitive-color-indigo-50);
+
   --ns-font-sans: var(--ns-primitive-font-family-sans);
 }
 
