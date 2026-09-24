@@ -36,6 +36,19 @@
   padding: var(--ns-space-3) var(--ns-space-5);
 }
 
+.ns-button.ns-button--icon {
+  inline-size: var(--ns-size-control-height-standard);
+  padding: 0;
+}
+
+.ns-button.ns-button--icon[data-size="compact"] {
+  inline-size: var(--ns-size-control-height-compact);
+}
+
+.ns-button.ns-button--icon[data-size="comfortable"] {
+  inline-size: var(--ns-size-control-height-comfortable);
+}
+
 .ns-button:hover:not(:disabled) {
   box-shadow: var(--ns-elevation-hover);
 }

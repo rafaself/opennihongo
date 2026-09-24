@@ -4,6 +4,8 @@ export type {
   ButtonSize,
   ButtonVariant,
 } from "./components/Button";
+export { IconButton } from "./components/icon-button/IconButton";
+export type { IconButtonProps } from "./components/icon-button/IconButton";
 export { FormField } from "./components/form-field/FormField";
 export type {
   FormFieldControlProps,
