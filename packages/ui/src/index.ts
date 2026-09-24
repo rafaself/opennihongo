@@ -11,6 +11,8 @@ export type {
 } from "./components/indicators/badge/Badge";
 export { Progress } from "./components/indicators/progress/Progress";
 export type { ProgressProps } from "./components/indicators/progress/Progress";
+export { XPBar } from "./components/indicators/xp-bar/XPBar";
+export type { XPBarProps } from "./components/indicators/xp-bar/XPBar";
 export { ProgressRing } from "./components/indicators/progress/ProgressRing";
 export type {
   ProgressRingProps,
