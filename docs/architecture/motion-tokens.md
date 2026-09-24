@@ -20,6 +20,9 @@ Use semantic aliases in components instead of depending on primitive steps.
 
 The celebration duration is intentionally distinct from routine timing. It
 provides a duration for future use; it does not define or implement an effect.
+`--ns-motion-press-offset` is `1px` during ordinary interaction and becomes
+`0px` when reduced motion is requested. Shared controls can use it for a small
+tactile press cue without moving under the reduced-motion preference.
 
 ## Easing
 
@@ -48,8 +51,30 @@ physics simulations or repeated bounce keyframes.
 }
 ```
 
-The semantic duration aliases resolve to `--ns-motion-duration-instant` when
-the user requests reduced motion. Components should use these aliases instead
-of hard-coded timings so that preference is honored. Keep component-specific
-animations and effects with the feature that owns them; this guide defines only
-the shared timing language.
+## Reduced-motion contract
+
+The public stylesheet detects `prefers-reduced-motion: reduce` in one shared
+media query. When active, semantic transition durations resolve to instant, the
+press offset becomes zero, and spring/bounce aliases resolve to the standard
+easing. Components should use semantic aliases instead of hard-coded timings or
+primitive values so the preference is honored. Instant updates still expose
+the same state; the preference removes movement, not information.
+
+| Behavior       | Reduced-motion treatment                                                             | Preserve the state with                                    |
+| -------------- | ------------------------------------------------------------------------------------ | ---------------------------------------------------------- |
+| Press          | Remove translation and apply the pressed state immediately.                          | Pressed color, border, or shadow.                          |
+| Enter and exit | Show or remove content immediately; avoid sliding, zooming, or large transforms.     | Clear content order, headings, and focus placement.        |
+| Progress       | Update the progress value immediately; omit sweeping, pulsing, or moving indicators. | A progress bar value plus a label or numeric status.       |
+| Celebration    | Omit decorative particles, loops, shakes, and spring/bounce movement.                | A static reward mark with readable success or reward text. |
+
+Do not make completion, error, or reward meaning depend on motion, color alone,
+or a disappearing effect. Keep semantic status text and accessible progress
+values in the reduced path; announce important updates through the owning
+feature's existing accessibility mechanism.
+
+The shared Button is a representative press example: its normal 1px press
+translation is supplied by `--ns-motion-press-offset`; the same rule resolves
+to `translateY(0px)` when the system preference is set. Its pressed elevation
+still changes immediately, so the state remains visible without movement.
+Feature-owned transitions and decorative effects should follow the same
+contract using their own selectors and status semantics.

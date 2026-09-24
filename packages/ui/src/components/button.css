@@ -15,11 +15,12 @@
   padding: var(--ns-space-2-5) var(--ns-space-4);
   box-shadow: var(--ns-elevation-interactive);
   transition:
-    background-color 140ms ease,
-    border-color 140ms ease,
-    box-shadow 140ms ease,
-    color 140ms ease,
-    transform 140ms ease;
+    background-color var(--ns-motion-duration-fast)
+      var(--ns-motion-easing-standard),
+    border-color var(--ns-motion-duration-fast) var(--ns-motion-easing-standard),
+    box-shadow var(--ns-motion-duration-fast) var(--ns-motion-easing-standard),
+    color var(--ns-motion-duration-fast) var(--ns-motion-easing-standard),
+    transform var(--ns-motion-duration-fast) var(--ns-motion-easing-standard);
 }
 
 .ns-button:hover:not(:disabled) {
@@ -28,7 +29,7 @@
 
 .ns-button:active:not(:disabled) {
   box-shadow: var(--ns-elevation-pressed);
-  transform: translateY(1px);
+  transform: translateY(var(--ns-motion-press-offset));
 }
 
 .ns-button[data-variant="primary"] {
