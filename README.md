@@ -1,4 +1,4 @@
-# Nihon Shiga
+# OpenNihongo
 
 A local-first platform for learning the Japanese language.
 

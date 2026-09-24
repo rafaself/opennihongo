@@ -1,5 +1,5 @@
 {
-  "name": "@nihon-shiga/web",
+  "name": "@opennihongo/web",
   "private": true,
   "type": "module",
   "scripts": {
@@ -10,7 +10,7 @@
     "typecheck": "tsc -p tsconfig.json"
   },
   "dependencies": {
-    "@nihon-shiga/ui": "workspace:*",
+    "@opennihongo/ui": "workspace:*",
     "@tanstack/react-router": "1.170.38",
     "react": "^19.3.0",
     "react-dom": "^19.3.0"

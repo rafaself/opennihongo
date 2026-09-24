@@ -38,7 +38,7 @@ importers:
 
   apps/web:
     dependencies:
-      '@nihon-shiga/ui':
+      '@opennihongo/ui':
         specifier: workspace:*
         version: link:../../packages/ui
       '@tanstack/react-router':

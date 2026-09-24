@@ -1,4 +1,4 @@
-import { Button } from "@nihon-shiga/ui";
+import { Button } from "@opennihongo/ui";
 
 export function WelcomeView() {
   return (
@@ -17,7 +17,7 @@ export function WelcomeView() {
           Make steady progress, one step at a time.
         </h1>
         <p className="mt-5 max-w-xl text-lg leading-8 text-muted">
-          Nihon Shiga is being prepared as a calm, local-first place to learn
+          OpenNihongo is being prepared as a calm, local-first place to learn
           Japanese.
         </p>
       </div>

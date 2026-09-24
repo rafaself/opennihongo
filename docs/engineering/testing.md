@@ -1,6 +1,6 @@
 # Testing strategy
 
-This document defines the testing policy for the Nihon Shiga MVP.
+This document defines the testing policy for the OpenNihongo MVP.
 
 The goal is not merely to keep the test suite green. Tests must represent
 intended domain behavior, product requirements, contracts, and regressions.

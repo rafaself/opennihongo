@@ -1,8 +1,8 @@
-# Contributing to Nihon Shiga
+# Contributing to OpenNihongo
 
 ## Workflow
 
-Nihon Shiga uses a trunk-based workflow:
+OpenNihongo uses a trunk-based workflow:
 
 - `main` is the integration branch;
 - work happens in short-lived branches;

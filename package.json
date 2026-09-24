@@ -1,5 +1,5 @@
 {
-  "name": "nihon-shiga",
+  "name": "opennihongo",
   "private": true,
   "packageManager": "pnpm@11.8.0",
   "engines": {
@@ -7,13 +7,13 @@
     "pnpm": ">=11.8.0"
   },
   "scripts": {
-    "dev": "pnpm --filter @nihon-shiga/web dev",
+    "dev": "pnpm --filter @opennihongo/web dev",
     "lint": "nx run-many -t lint",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "build": "nx run-many -t build build-storybook",
     "typecheck": "nx run-many -t typecheck",
-    "storybook": "pnpm --filter @nihon-shiga/ui storybook"
+    "storybook": "pnpm --filter @opennihongo/ui storybook"
   },
   "devDependencies": {
     "@eslint/js": "10.0.1",

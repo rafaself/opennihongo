@@ -93,7 +93,7 @@ The starter route is intentionally small:
 app/main.tsx -> app/router.tsx -> layouts/AppLayout.tsx
                                   -> pages/HomePage.tsx
                                      -> views/home/WelcomeView.tsx
-                                        -> @nihon-shiga/ui
+                                        -> @opennihongo/ui
 ```
 
 Run `pnpm dev` for the app, `pnpm lint` for ESLint and dependency-boundary
@@ -102,7 +102,7 @@ TypeScript checks, and `pnpm build` for the web and Storybook production builds.
 Use `pnpm format` to apply formatting. These root commands delegate to Nx where
 applicable while each project target continues to call its package's existing
 tooling. Run an individual target with `pnpm nx <target> <project>` (for
-example, `pnpm nx typecheck @nihon-shiga/web`) or run validation only for
+example, `pnpm nx typecheck @opennihongo/web`) or run validation only for
 changed projects and their dependents with `pnpm nx affected -t lint typecheck
 test build build-storybook --uncommitted`. Use `--base=origin/main --head=HEAD`
 to compare committed changes against the remote main branch. Targets such as

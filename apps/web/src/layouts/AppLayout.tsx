@@ -12,7 +12,7 @@ export function AppLayout() {
             日
           </span>
           <span className="text-lg font-semibold tracking-tight">
-            Nihon Shiga
+            OpenNihongo
           </span>
         </div>
       </header>
