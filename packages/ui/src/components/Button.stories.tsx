@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { Button } from "./Button";
+// eslint-disable-next-line @nx/enforce-module-boundaries -- Storybook exercises the package API as a consumer.
+import { Button } from "@opennihongo/ui";
 
 const meta = {
   title: "Components/Button",

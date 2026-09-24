@@ -28,6 +28,23 @@ map, it and TypeScript module resolution enforce the supported public import
 paths. Do not add package entry points until a real public API has been
 established.
 
+## UI package public API
+
+`packages/ui/package.json` is the source of truth for the `@opennihongo/ui`
+package's public imports. Its `exports` map currently declares only:
+
+| Import path                  | Public entry     | Contents                                     |
+| ---------------------------- | ---------------- | -------------------------------------------- |
+| `@opennihongo/ui`            | `src/index.ts`   | `Button`, `ButtonProps`, and `ButtonVariant` |
+| `@opennihongo/ui/styles.css` | `src/styles.css` | Shared design tokens and base styles         |
+
+Consumers must import through these package paths. Imports into `src/` or other
+package internals are unsupported; TypeScript's `Bundler` module resolution
+honors the `exports` map and rejects undeclared package subpaths. The web app
+and the Storybook component gallery both use the declared component and
+stylesheet entries. Add another export only when a concrete API exists and a
+consumer needs it.
+
 The root TypeScript dependency stays on the 6.0 line (currently 6.0.3) because
 the Nx ESLint boundary plugin's TypeScript utilities do not yet support
 TypeScript 7's compiler API. Revisit this constraint when the lint toolchain
