@@ -38,7 +38,13 @@ export function GalleryLayout() {
                     <ul className="gallery-navigation-links">
                       {section.links.map((link) => (
                         <li key={link.id}>
-                          <a href={link.href}>{link.label}</a>
+                          {"hash" in link ? (
+                            <Link hash={link.hash} to={link.to}>
+                              {link.label}
+                            </Link>
+                          ) : (
+                            <Link to={link.to}>{link.label}</Link>
+                          )}
                         </li>
                       ))}
                     </ul>

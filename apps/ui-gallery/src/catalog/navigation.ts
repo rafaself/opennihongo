@@ -1,7 +1,8 @@
 export interface GalleryNavigationLink {
   readonly id: string;
   readonly label: string;
-  readonly href: string;
+  readonly to: string;
+  readonly hash?: string;
 }
 
 export interface GalleryNavigationSection {
@@ -20,7 +21,12 @@ export const galleryNavigation = {
       description:
         "Shared visual primitives and semantic design tokens for product interfaces.",
       links: [
-        { id: "color-tokens", label: "Color tokens", href: "/#foundations" },
+        {
+          id: "color-tokens",
+          label: "Color tokens",
+          to: "/",
+          hash: "foundations",
+        },
       ],
     },
     {
@@ -28,7 +34,7 @@ export const galleryNavigation = {
       label: "Components",
       description:
         "Domain-agnostic interface components from the public UI package.",
-      links: [{ id: "buttons", label: "Buttons", href: "/components/buttons" }],
+      links: [{ id: "buttons", label: "Buttons", to: "/components/buttons" }],
     },
     {
       id: "gamification",
@@ -56,7 +62,7 @@ export const galleryNavigation = {
       label: "Playground",
       description:
         "Isolated examples for exploring component variants and interaction states.",
-      links: [{ id: "playground", label: "Playground", href: "/playground" }],
+      links: [{ id: "playground", label: "Playground", to: "/playground" }],
     },
   ],
 } as const satisfies {
