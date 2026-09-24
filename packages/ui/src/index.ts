@@ -55,6 +55,8 @@ export type {
   StackJustify,
   StackProps,
 } from "./components/layout/Stack";
+export { Divider } from "./components/layout/divider/Divider";
+export type { DividerProps } from "./components/layout/divider/Divider";
 export { Surface } from "./components/surface/Surface";
 export type {
   SurfaceElevation,

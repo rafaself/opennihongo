@@ -1,0 +1,7 @@
+.ns-divider {
+  inline-size: 100%;
+  margin: 0;
+  border: 0;
+  border-block-start: var(--ns-border-width-subtle) var(--ns-border-style-solid)
+    var(--ns-color-border-subtle);
+}
