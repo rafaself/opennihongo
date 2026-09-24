@@ -34,10 +34,12 @@ scale step, using the `--ns-primitive-` prefix. Examples for future scales:
 | Motion duration    | `--ns-primitive-motion-duration-{step}` | `--ns-primitive-motion-duration-2`      |
 | Motion easing      | `--ns-primitive-motion-easing-{name}`   | `--ns-primitive-motion-easing-standard` |
 
-The primitive swatches currently in the source are the small set of values
-already used by the shared stylesheet; they are not complete color, spacing,
-type, or motion scales. Follow-on scale issues extend the relevant families in
-this source.
+The source includes the complete initial Hinomaru-inspired brand scale as
+primitive values. These palette steps are raw brand primitives for semantic
+theme mappings; components and application styles must consume semantic tokens
+instead. The palette does not claim that any value is the legally canonical
+Japanese flag color. Other color, spacing, type, and motion families remain
+small sets until their scale issues extend them in this source.
 
 Semantic tokens name the interface role, use the `--ns-` prefix, and omit
 palette families and scale steps. For example, use `--ns-color-canvas` or

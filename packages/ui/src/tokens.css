@@ -1,5 +1,14 @@
 /* Primitive values have no interface meaning and are consumed by semantic aliases only. */
 :root {
+  /* Hinomaru-inspired brand primitives; not semantic aliases or canonical flag-color claims. */
+  --ns-primitive-color-hinomaru-50: #fff1f3;
+  --ns-primitive-color-hinomaru-100: #ffe0e5;
+  --ns-primitive-color-hinomaru-300: #f58a9e;
+  --ns-primitive-color-hinomaru-500: #d92345;
+  --ns-primitive-color-hinomaru-600: #bc002d;
+  --ns-primitive-color-hinomaru-700: #990026;
+  --ns-primitive-color-hinomaru-900: #5f0018;
+
   --ns-primitive-color-neutral-0: #ffffff;
   --ns-primitive-color-neutral-50: #f7f8f5;
   --ns-primitive-color-neutral-200: #dce5e1;
