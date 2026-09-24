@@ -78,6 +78,18 @@ To validate a message locally without installing project dependencies:
 printf '%s\n' 'feat(kana): add hiragana table' | npx --yes @commitlint/cli@21.2.3
 ```
 
+## Testing
+
+The testing strategy is defined in
+[`docs/engineering/testing.md`](docs/engineering/testing.md).
+
+Tests must represent intended behavior, requirements, contracts, and
+regressions. They must not be weakened, skipped, deleted, or rewritten solely
+to make the suite pass.
+
+The MVP targets at least 95% coverage for statements, branches, functions, and
+lines, with critical domain code targeting 100% where practical.
+
 ## Issues
 
 Manual GitHub issues intentionally remain simple and unrestricted. Blank issues
