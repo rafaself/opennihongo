@@ -68,6 +68,11 @@ internals.
 
 ## Quality and documentation
 
+Follow the shared [interactive state contract](interactive-states.md) when
+defining focus, hover, press, disabled, or loading behavior for a component.
+Components should implement only states that apply to their semantics and must
+keep visual state aligned with actual interaction behavior.
+
 Use `Grid` for equal-width, responsive columns with shared spacing gaps. Use
 CSS Grid directly when a layout needs named areas, explicit item placement, or
 custom track sizing.
