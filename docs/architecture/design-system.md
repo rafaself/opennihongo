@@ -87,6 +87,10 @@ or alongside their definitions so contributors can find their intended use.
 The source, naming rules, semantic roles, and theme contract for shared tokens
 are defined in the [Design Tokens guide](design-tokens.md).
 
+The first-party functional icon source, naming rules, size and stroke
+conventions, and accessibility requirements are defined in the
+[Functional Icons guide](icons.md).
+
 Keep the public API small and typed. Treat imports and props as supported
 contracts: favor compatible additions and avoid changing existing behavior.
 Prefer composition and accessible defaults over many boolean switches. Add an
