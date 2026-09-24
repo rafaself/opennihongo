@@ -101,8 +101,18 @@ export type {
 } from "./components/surface/Card";
 export { Text } from "./typography/Text";
 export type { TextColor, TextProps, TextVariant } from "./typography/Text";
-export { Tooltip, TooltipProvider } from "./components/tooltip/Tooltip";
+export {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "./components/overlay/popover/Popover";
+export type {
+  PopoverContentProps,
+  PopoverProps,
+  PopoverTriggerProps,
+} from "./components/overlay/popover/Popover";
+export { Tooltip, TooltipProvider } from "./components/overlay/tooltip/Tooltip";
 export type {
   TooltipProps,
   TooltipProviderProps,
-} from "./components/tooltip/Tooltip";
+} from "./components/overlay/tooltip/Tooltip";
