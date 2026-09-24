@@ -36,13 +36,16 @@ supports TypeScript 7.
 The shared TypeScript configuration enables `strict` mode, exact optional
 properties, checked indexed access, explicit returns and overrides, and
 unreachable-code and side-effect-import checks. It also rejects unused locals
-and parameters and switch fallthroughs. ESLint rejects explicit `any` types and
-TypeScript suppression comments in addition to enforcing package boundaries.
-These checks currently cover `web` and `ui`; `core` and `persistence` do not yet
-contain TypeScript code or have typecheck targets. Dependency declaration files
-are checked for `web`. `ui` skips dependency declaration checks because its
-current Storybook declarations fail when checked alongside exact optional
-property types.
+and parameters and switch fallthroughs. ESLint applies strict type-aware
+TypeScript rules to `web` and `ui`, rejects explicit `any` and TypeScript
+suppression comments, and enforces package boundaries. `core` and `persistence`
+do not yet contain TypeScript code or have typecheck targets. Dependency
+declaration files are checked for `web`. `ui` skips dependency declaration
+checks because its current Storybook declarations fail when checked alongside
+exact optional property types.
+
+Prettier is the formatting authority for supported source, configuration, and
+Markdown files. Its options and ignore list are defined at the workspace root.
 
 The `core` and `persistence` packages currently contain only workspace metadata:
 there is no domain or persisted behavior to implement yet. Add code when a real
@@ -52,17 +55,17 @@ feature establishes a contract, rather than creating placeholder APIs.
 
 Place application code under `apps/web/src` according to its responsibility:
 
-| Area | Owns |
-| --- | --- |
-| `app/` | Browser entry point, providers, router, and application configuration. |
-| `layouts/` | Persistent page composition such as shared headers and navigation. |
-| `pages/` | Route-level components selected by the router. |
-| `views/` | Substantial composed interface regions used by pages. |
-| `features/` | Feature-owned UI and application behavior; keep internals local to the feature. |
-| `components/` | Reusable product-aware components that are not owned by one feature. |
-| `hooks/` | Hooks with a real cross-feature use case. Feature-specific hooks stay with their feature. |
-| `lib/` | Reusable technical helpers, not domain rules or generic buckets. |
-| `styles/` | Application-level Tailwind entry points and token mappings. |
+| Area          | Owns                                                                                      |
+| ------------- | ----------------------------------------------------------------------------------------- |
+| `app/`        | Browser entry point, providers, router, and application configuration.                    |
+| `layouts/`    | Persistent page composition such as shared headers and navigation.                        |
+| `pages/`      | Route-level components selected by the router.                                            |
+| `views/`      | Substantial composed interface regions used by pages.                                     |
+| `features/`   | Feature-owned UI and application behavior; keep internals local to the feature.           |
+| `components/` | Reusable product-aware components that are not owned by one feature.                      |
+| `hooks/`      | Hooks with a real cross-feature use case. Feature-specific hooks stay with their feature. |
+| `lib/`        | Reusable technical helpers, not domain rules or generic buckets.                          |
+| `styles/`     | Application-level Tailwind entry points and token mappings.                               |
 
 Only create a directory when it has real code to own. For example, `features/`,
 `hooks/`, and `lib/` do not exist in the starter because no current behavior
@@ -93,15 +96,16 @@ app/main.tsx -> app/router.tsx -> layouts/AppLayout.tsx
                                         -> @nihon-shiga/ui
 ```
 
-Run `pnpm dev` for the app, `pnpm lint` for boundary validation,
-`pnpm typecheck` for TypeScript checks, and `pnpm build` for the web and
-Storybook production builds. These root commands delegate to Nx while each
-project target continues to call its package's existing tooling. Run an
-individual target with `pnpm nx <target> <project>` (for example,
-`pnpm nx typecheck @nihon-shiga/web`) or run validation only for changed
-projects and their dependents with `pnpm nx affected -t lint typecheck test
-build build-storybook --uncommitted`. Use `--base=origin/main --head=HEAD` to
-compare committed changes against the remote main branch. Targets such as
+Run `pnpm dev` for the app, `pnpm lint` for ESLint and dependency-boundary
+checks, `pnpm format:check` to verify formatting, `pnpm typecheck` for
+TypeScript checks, and `pnpm build` for the web and Storybook production builds.
+Use `pnpm format` to apply formatting. These root commands delegate to Nx where
+applicable while each project target continues to call its package's existing
+tooling. Run an individual target with `pnpm nx <target> <project>` (for
+example, `pnpm nx typecheck @nihon-shiga/web`) or run validation only for
+changed projects and their dependents with `pnpm nx affected -t lint typecheck
+test build build-storybook --uncommitted`. Use `--base=origin/main --head=HEAD`
+to compare committed changes against the remote main branch. Targets such as
 `test` are picked up when a project adds the corresponding package script.
 
 Add future apps and packages under the existing `apps/*` or `packages/*`

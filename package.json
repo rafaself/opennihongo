@@ -9,16 +9,21 @@
   "scripts": {
     "dev": "pnpm --filter @nihon-shiga/web dev",
     "lint": "nx run-many -t lint",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
     "build": "nx run-many -t build build-storybook",
     "typecheck": "nx run-many -t typecheck",
     "storybook": "pnpm --filter @nihon-shiga/ui storybook"
   },
   "devDependencies": {
+    "@eslint/js": "10.0.1",
     "@nx/eslint-plugin": "23.2.1",
     "@types/node": "^25.0.0",
-    "@typescript-eslint/parser": "8.70.1",
     "eslint": "10.11.0",
+    "eslint-config-prettier": "10.1.8",
     "nx": "23.2.1",
-    "typescript": "~6.0.3"
+    "prettier": "3.9.8",
+    "typescript": "~6.0.3",
+    "typescript-eslint": "8.70.1"
   }
 }

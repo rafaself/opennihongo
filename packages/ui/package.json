@@ -8,7 +8,7 @@
     "./styles.css": "./src/styles.css"
   },
   "scripts": {
-    "lint": "eslint . --no-error-on-unmatched-pattern",
+    "lint": "eslint . --no-error-on-unmatched-pattern --max-warnings=0",
     "build-storybook": "storybook build",
     "storybook": "storybook dev --host 127.0.0.1 --port 6006",
     "typecheck": "tsc -p tsconfig.json"
@@ -28,6 +28,8 @@
   },
   "nx": {
     "projectType": "library",
-    "tags": ["type:ui"]
+    "tags": [
+      "type:ui"
+    ]
   }
 }

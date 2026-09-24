@@ -7,8 +7,8 @@ A local-first platform for learning the Japanese language.
 The frontend uses pnpm for workspace dependencies and Nx for project graph,
 task orchestration, caching, affected execution, and architecture enforcement.
 Install dependencies with `pnpm install`, start the web app with `pnpm dev`,
-and run lint, type checks, and production builds with `pnpm lint`,
-`pnpm typecheck`, and `pnpm build`. Use `pnpm nx affected -t lint typecheck
+and run `pnpm lint`, `pnpm format:check`, `pnpm typecheck`, and `pnpm build`.
+Use `pnpm format` to apply formatting. Use `pnpm nx affected -t lint typecheck
 test build build-storybook --base=origin/main --head=HEAD` to validate changed
 projects and their dependents.
 

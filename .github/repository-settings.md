@@ -18,10 +18,12 @@ Recommended settings:
 Recommended ruleset or branch protection settings:
 
 - require a pull request before merging;
-- require the `Conventional PR title` status check;
 - block force pushes;
 - block branch deletion;
 - require conversations to be resolved before merging.
+
+Do not require workflow status checks while GitHub Actions workflows are
+disabled.
 
 A mandatory approving review is intentionally not required while the project
 has a single primary maintainer. This can be enabled when the contributor model

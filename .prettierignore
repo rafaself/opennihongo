@@ -1,0 +1,6 @@
+node_modules/
+.nx/
+**/dist/
+**/coverage/
+**/storybook-static/
+pnpm-lock.yaml

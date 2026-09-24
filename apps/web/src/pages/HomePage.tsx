@@ -1,5 +1,5 @@
-import { WelcomeView } from '../views/home/WelcomeView'
+import { WelcomeView } from "../views/home/WelcomeView";
 
 export function HomePage() {
-  return <WelcomeView />
+  return <WelcomeView />;
 }

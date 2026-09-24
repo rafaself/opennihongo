@@ -63,14 +63,23 @@ primary commit message that enters `main`.
 ### Commitlint
 
 `commitlint.config.mjs` is the source of truth for the commit message format.
-
-The `Conventional PR title` GitHub check validates pull request titles with
-commitlint. Since pull requests are squash-merged, this validates the commit
-message that will enter `main`.
+Since pull requests are squash-merged, use the same format for pull request
+titles. GitHub Actions checks are currently disabled, so titles are not
+validated automatically.
 
 Intermediate branch commits are encouraged to follow the same convention but
 are not enforced. This keeps work-in-progress history flexible without
 weakening the permanent `main` history.
+
+## Code style
+
+Prettier formats supported source, configuration, and Markdown files. Run
+`pnpm format` to apply the project's formatting rules or `pnpm format:check` to
+check them without changing files. ESLint applies recommended JavaScript rules,
+strict type-aware TypeScript rules, and Nx module-boundary checks. Before a
+pull request, run `pnpm lint`, `pnpm format:check`, and `pnpm typecheck` locally.
+GitHub Actions is disabled to avoid CI costs. Avoid `any` and TypeScript
+suppression comments.
 
 To validate a message locally without installing project dependencies:
 

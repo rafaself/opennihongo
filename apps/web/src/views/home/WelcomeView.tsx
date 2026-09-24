@@ -1,4 +1,4 @@
-import { Button } from '@nihon-shiga/ui'
+import { Button } from "@nihon-shiga/ui";
 
 export function WelcomeView() {
   return (
@@ -35,5 +35,5 @@ export function WelcomeView() {
         </Button>
       </aside>
     </section>
-  )
+  );
 }

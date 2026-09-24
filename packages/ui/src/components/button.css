@@ -16,22 +16,22 @@
     color 140ms ease;
 }
 
-.ns-button[data-variant='primary'] {
+.ns-button[data-variant="primary"] {
   background: var(--ns-color-brand);
   color: var(--ns-color-brand-foreground);
 }
 
-.ns-button[data-variant='primary']:hover:not(:disabled) {
+.ns-button[data-variant="primary"]:hover:not(:disabled) {
   background: var(--ns-color-brand-hover);
 }
 
-.ns-button[data-variant='secondary'] {
+.ns-button[data-variant="secondary"] {
   background: var(--ns-color-surface);
   border-color: var(--ns-color-border);
   color: var(--ns-color-ink);
 }
 
-.ns-button[data-variant='secondary']:hover:not(:disabled) {
+.ns-button[data-variant="secondary"]:hover:not(:disabled) {
   background: var(--ns-color-canvas);
 }
 
