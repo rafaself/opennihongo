@@ -25,6 +25,18 @@ implementations. Register route components in the router and add them to the
 section metadata; the shell will render the new navigation entry without a
 shell change.
 
+Use <code>GalleryDocumentationPage</code> from
+[GalleryDocumentationPage.tsx](../../apps/ui-gallery/src/layouts/GalleryDocumentationPage.tsx)
+for component and pattern pages. It owns the shared heading, summary, and
+responsive section composition; pages provide their own live examples,
+guidance, reference notes, and optional do/don't lists as React content. This
+keeps the layout independent of any particular component. Give each page a
+unique id for its accessible heading references. Example content can use
+<code>gallery-doc-example-grid</code>, <code>gallery-doc-example-card</code>,
+and <code>gallery-doc-example-stage</code> for responsive demo styling. See
+[ButtonsPage.tsx](../../apps/ui-gallery/src/pages/ButtonsPage.tsx) for a
+complete example.
+
 Do not create empty pages for future components just to populate navigation.
 Empty sections remain visible as taxonomy and may include concise scope
 descriptions until they have real catalog pages.

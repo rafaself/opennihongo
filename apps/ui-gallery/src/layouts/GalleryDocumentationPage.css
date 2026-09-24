@@ -1,0 +1,164 @@
+.gallery-doc-page {
+  margin: 0 auto;
+  max-width: 64rem;
+  padding: clamp(3rem, 7vw, 5.5rem) 0 4.5rem;
+}
+
+.gallery-doc-heading {
+  max-width: 48rem;
+}
+
+.gallery-doc-heading h1 {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(2.5rem, 5.5vw, 4.5rem);
+  font-weight: 400;
+  letter-spacing: -0.055em;
+  line-height: 1.04;
+  margin: 0;
+}
+
+.gallery-doc-summary {
+  color: var(--ns-color-muted);
+  font-size: 1.0625rem;
+  line-height: 1.7;
+  margin: 1.25rem 0 0;
+  max-width: 42rem;
+}
+
+.gallery-doc-section {
+  border-top: 1px solid var(--ns-color-border);
+  margin-top: 3.5rem;
+  padding-top: 2.5rem;
+}
+
+.gallery-doc-section-heading {
+  margin-bottom: 1.5rem;
+}
+
+.gallery-doc-section-heading .gallery-eyebrow {
+  margin-bottom: 0.6rem;
+}
+
+.gallery-doc-section-heading h2 {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(1.75rem, 4vw, 2.25rem);
+  font-weight: 400;
+  letter-spacing: -0.04em;
+  margin: 0;
+}
+
+.gallery-doc-examples,
+.gallery-doc-guidance-card,
+.gallery-doc-note,
+.gallery-doc-practices-grid > section {
+  background: var(--ns-color-surface);
+  border: 1px solid var(--ns-color-border);
+  border-radius: 1rem;
+}
+
+.gallery-doc-examples {
+  padding: 1rem;
+}
+
+.gallery-doc-guidance-grid,
+.gallery-doc-notes-grid,
+.gallery-doc-practices-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.gallery-doc-example-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+}
+
+.gallery-doc-example-card {
+  min-width: 0;
+  padding: 0.5rem;
+}
+
+.gallery-doc-example-card h3,
+.gallery-doc-guidance-card h3,
+.gallery-doc-note h3,
+.gallery-doc-practices-grid h3 {
+  font-size: 0.9375rem;
+  margin: 0;
+}
+
+.gallery-doc-example-card > p,
+.gallery-doc-guidance-card > p,
+.gallery-doc-note > p,
+.gallery-doc-practices-grid li {
+  color: var(--ns-color-muted);
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+
+.gallery-doc-example-card > p {
+  margin: 0.4rem 0 0.85rem;
+}
+
+.gallery-doc-example-stage {
+  align-items: center;
+  background-image: radial-gradient(#dce5e1 0.65px, transparent 0.65px);
+  background-size: 12px 12px;
+  border-radius: 0.75rem;
+  display: flex;
+  justify-content: center;
+  min-height: 7rem;
+  padding: 1.25rem;
+}
+
+.gallery-doc-guidance-card,
+.gallery-doc-note,
+.gallery-doc-practices-grid > section {
+  min-width: 0;
+  padding: 1.25rem;
+}
+
+.gallery-doc-guidance-card > :last-child,
+.gallery-doc-note > :last-child {
+  margin-bottom: 0;
+}
+
+.gallery-doc-note code {
+  overflow-wrap: anywhere;
+}
+
+.gallery-doc-practices-grid > section:first-child {
+  border-top: 3px solid var(--ns-color-brand);
+}
+
+.gallery-doc-practices-grid > section:last-child {
+  border-top: 3px solid var(--ns-color-focus);
+}
+
+.gallery-doc-practices-grid ul {
+  margin: 0.75rem 0 0;
+  padding-left: 1.25rem;
+}
+
+.gallery-doc-practices-grid li + li {
+  margin-top: 0.5rem;
+}
+
+@media (max-width: 48rem) {
+  .gallery-doc-page {
+    padding-top: 3rem;
+  }
+}
+
+@media (max-width: 36rem) {
+  .gallery-doc-example-grid,
+  .gallery-doc-guidance-grid,
+  .gallery-doc-notes-grid,
+  .gallery-doc-practices-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .gallery-doc-examples {
+    padding: 0.75rem;
+  }
+}

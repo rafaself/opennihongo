@@ -4,6 +4,7 @@ import {
   createRouter,
 } from "@tanstack/react-router";
 import { GalleryLayout } from "../layouts/GalleryLayout";
+import { ButtonsPage } from "../pages/ButtonsPage";
 import { HomePage } from "../pages/HomePage";
 import { NotFoundPage } from "../pages/NotFoundPage";
 
@@ -18,7 +19,13 @@ const homeRoute = createRoute({
   component: HomePage,
 });
 
-const routeTree = rootRoute.addChildren([homeRoute]);
+const buttonsRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/components/buttons",
+  component: ButtonsPage,
+});
+
+const routeTree = rootRoute.addChildren([homeRoute, buttonsRoute]);
 
 export const router = createRouter({ routeTree });
 

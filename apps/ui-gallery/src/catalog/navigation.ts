@@ -28,7 +28,7 @@ export const galleryNavigation = {
       label: "Components",
       description:
         "Domain-agnostic interface components from the public UI package.",
-      links: [{ id: "buttons", label: "Buttons", href: "/#components" }],
+      links: [{ id: "buttons", label: "Buttons", href: "/components/buttons" }],
     },
     {
       id: "gamification",
