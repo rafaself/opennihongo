@@ -7,6 +7,7 @@ import { GalleryLayout } from "../layouts/GalleryLayout";
 import { ButtonsPage } from "../pages/ButtonsPage";
 import { HomePage } from "../pages/HomePage";
 import { NotFoundPage } from "../pages/NotFoundPage";
+import { PlaygroundPage } from "../pages/PlaygroundPage";
 
 const rootRoute = createRootRoute({
   component: GalleryLayout,
@@ -25,7 +26,17 @@ const buttonsRoute = createRoute({
   component: ButtonsPage,
 });
 
-const routeTree = rootRoute.addChildren([homeRoute, buttonsRoute]);
+const playgroundRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/playground",
+  component: PlaygroundPage,
+});
+
+const routeTree = rootRoute.addChildren([
+  homeRoute,
+  buttonsRoute,
+  playgroundRoute,
+]);
 
 export const router = createRouter({ routeTree });
 

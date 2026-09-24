@@ -56,7 +56,7 @@ export const galleryNavigation = {
       label: "Playground",
       description:
         "Isolated examples for exploring component variants and interaction states.",
-      links: [],
+      links: [{ id: "playground", label: "Playground", href: "/playground" }],
     },
   ],
 } as const satisfies {

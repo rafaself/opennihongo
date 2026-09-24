@@ -1,0 +1,122 @@
+.gallery-playground {
+  margin: 0 auto;
+  max-width: 64rem;
+  padding: clamp(3rem, 7vw, 5.5rem) 0 4.5rem;
+}
+
+.gallery-playground-heading {
+  max-width: 48rem;
+}
+
+.gallery-playground-heading h1 {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(2.5rem, 5.5vw, 4.5rem);
+  font-weight: 400;
+  letter-spacing: -0.055em;
+  line-height: 1.04;
+  margin: 0;
+}
+
+.gallery-playground-heading > p:last-child,
+.gallery-playground-controls > p {
+  color: var(--ns-color-muted);
+  line-height: 1.7;
+}
+
+.gallery-playground-heading > p:last-child {
+  font-size: 1.0625rem;
+  margin: 1.25rem 0 0;
+  max-width: 42rem;
+}
+
+.gallery-playground section {
+  border-top: 1px solid var(--ns-color-border);
+  margin-top: 3.5rem;
+  padding-top: 2.5rem;
+}
+
+.gallery-playground-section-heading {
+  margin-bottom: 1.5rem;
+}
+
+.gallery-playground-section-heading .gallery-eyebrow {
+  margin-bottom: 0.6rem;
+}
+
+.gallery-playground-section-heading h2 {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(1.75rem, 4vw, 2.25rem);
+  font-weight: 400;
+  letter-spacing: -0.04em;
+  margin: 0;
+}
+
+.gallery-playground-workbench {
+  background: var(--ns-color-surface);
+  border: 1px solid var(--ns-color-border);
+  border-radius: 1rem;
+  display: grid;
+  grid-template-columns: minmax(13rem, 0.8fr) minmax(0, 1.2fr);
+  overflow: hidden;
+}
+
+.gallery-playground-controls {
+  border: 0;
+  border-right: 1px solid var(--ns-color-border);
+  margin: 0;
+  padding: 1.5rem;
+}
+
+.gallery-playground-controls legend {
+  font-size: 0.9375rem;
+  font-weight: 700;
+  padding: 0;
+}
+
+.gallery-playground-controls > p {
+  font-size: 0.875rem;
+  margin: 0.4rem 0 1rem;
+}
+
+.gallery-playground-option {
+  align-items: center;
+  display: flex;
+  gap: 0.625rem;
+  padding: 0.5rem 0;
+  text-transform: capitalize;
+}
+
+.gallery-playground-option input {
+  accent-color: var(--ns-color-brand);
+  height: 1rem;
+  width: 1rem;
+}
+
+.gallery-playground-preview {
+  align-items: center;
+  background-image: radial-gradient(#dce5e1 0.65px, transparent 0.65px);
+  background-size: 12px 12px;
+  display: flex;
+  justify-content: center;
+  min-height: 14rem;
+  padding: 2rem;
+}
+
+@media (max-width: 48rem) {
+  .gallery-playground {
+    padding-top: 3rem;
+  }
+
+  .gallery-playground-workbench {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .gallery-playground-controls {
+    border-bottom: 1px solid var(--ns-color-border);
+    border-right: 0;
+  }
+
+  .gallery-playground-preview {
+    min-height: 11rem;
+  }
+}

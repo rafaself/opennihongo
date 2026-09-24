@@ -45,3 +45,18 @@ The gallery consumes `@opennihongo/ui` and stays independent of web-app runtime
 code. In particular, a Gamification entry may document feature-owned UI and
 its ownership boundaries, but the gallery must not import a web feature's
 implementation to display it.
+
+## Playground controls
+
+The Playground route owns temporary example state with React state in the
+route. A local control should pass that state through the public props of a
+component from `@opennihongo/ui`; the gallery demonstrates the API and must not
+copy its styling or behavior. Keep page-specific controls and state with their
+example rather than adding a shared state layer for a single use case.
+
+When a later control represents a gallery-wide presentation preference, move
+only that shared preference to the gallery shell and expose it to pages through
+a small gallery-owned provider or explicit props. Pages should still translate
+the preference into public Design System props or semantic tokens. The shell
+must not own component behavior, and global theme and reduced-motion controls
+belong to issue #91.
