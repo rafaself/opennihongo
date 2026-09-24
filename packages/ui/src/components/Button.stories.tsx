@@ -21,8 +21,26 @@ export const Secondary: Story = {
   },
 };
 
+export const Compact: Story = {
+  args: {
+    size: "compact",
+  },
+};
+
+export const Comfortable: Story = {
+  args: {
+    size: "comfortable",
+  },
+};
+
 export const Disabled: Story = {
   args: {
     disabled: true,
+  },
+};
+
+export const Loading: Story = {
+  args: {
+    loading: true,
   },
 };

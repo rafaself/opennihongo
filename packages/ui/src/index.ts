@@ -1,5 +1,9 @@
 export { Button } from "./components/Button";
-export type { ButtonProps, ButtonVariant } from "./components/Button";
+export type {
+  ButtonProps,
+  ButtonSize,
+  ButtonVariant,
+} from "./components/Button";
 export { FormField } from "./components/form-field/FormField";
 export type {
   FormFieldControlProps,
