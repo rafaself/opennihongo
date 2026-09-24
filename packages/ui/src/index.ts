@@ -11,6 +11,12 @@ export type {
   FormFieldControlProps,
   FormFieldProps,
 } from "./components/form-field/FormField";
+export { Input } from "./components/input/Input";
+export type {
+  InputProps,
+  InputSize,
+  InputType,
+} from "./components/input/Input";
 export { Grid } from "./components/layout/grid/Grid";
 export type {
   GridColumns,

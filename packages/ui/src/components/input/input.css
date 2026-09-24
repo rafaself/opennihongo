@@ -1,0 +1,53 @@
+.ns-input {
+  background-color: var(--ns-color-surface);
+  border: var(--ns-border-width-standard) var(--ns-border-style-solid)
+    var(--ns-color-border);
+  border-radius: var(--ns-radius-control);
+  color: var(--ns-color-text-primary);
+  display: block;
+  font-size: var(--ns-text-body-size);
+  line-height: var(--ns-text-body-line-height);
+  min-height: var(--ns-size-control-height-standard);
+  padding: var(--ns-space-2-5) var(--ns-space-3);
+  transition:
+    background-color var(--ns-motion-duration-fast)
+      var(--ns-motion-easing-standard),
+    border-color var(--ns-motion-duration-fast) var(--ns-motion-easing-standard),
+    box-shadow var(--ns-motion-duration-fast) var(--ns-motion-easing-standard);
+  width: 100%;
+}
+
+.ns-input::placeholder {
+  color: var(--ns-color-text-tertiary);
+  opacity: 1;
+}
+
+.ns-input[data-size="compact"] {
+  min-height: var(--ns-size-control-height-compact);
+  padding-block: var(--ns-space-2);
+  padding-inline: var(--ns-space-3);
+}
+
+.ns-input[data-size="comfortable"] {
+  min-height: var(--ns-size-control-height-comfortable);
+  padding-block: var(--ns-space-3);
+  padding-inline: var(--ns-space-4);
+}
+
+.ns-input:focus-visible {
+  outline: var(--ns-border-width-focus) var(--ns-border-style-solid)
+    var(--ns-color-focus);
+  outline-offset: 2px;
+}
+
+.ns-input[aria-invalid="true"] {
+  border-color: var(--ns-color-feedback-danger);
+}
+
+.ns-input:disabled {
+  background-color: var(--ns-color-surface-subtle);
+  border-color: var(--ns-color-border);
+  box-shadow: var(--ns-elevation-none);
+  color: var(--ns-color-text-secondary);
+  cursor: not-allowed;
+}
