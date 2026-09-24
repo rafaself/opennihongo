@@ -1,7 +1,8 @@
 .ns-button {
   align-items: center;
-  border: 1px solid transparent;
-  border-radius: 0.75rem;
+  border: var(--ns-border-width-standard) var(--ns-border-style-solid)
+    transparent;
+  border-radius: var(--ns-radius-control);
   cursor: pointer;
   display: inline-flex;
   font: inherit;
@@ -38,7 +39,8 @@
 }
 
 .ns-button:focus-visible {
-  outline: 3px solid var(--ns-color-focus);
+  outline: var(--ns-border-width-focus) var(--ns-border-style-solid)
+    var(--ns-color-focus);
   outline-offset: 2px;
 }
 

@@ -15,11 +15,12 @@ is the source; CSS is processed by the existing app toolchains without a
 separate token build pipeline.
 
 `packages/ui/src/styles.css` owns shared resets and base element styles.
-`packages/ui/src/tokens.css` owns primitive values, spacing scale aliases,
-semantic aliases, and theme scoping. Components in `packages/ui/src` consume
-semantic aliases or the shared role-neutral spacing aliases. Application CSS
-may also consume semantic aliases and the shared spacing aliases for app-level
-composition, but no consumer should depend on other primitive scales directly.
+`packages/ui/src/tokens.css` owns primitive values, spacing, sizing, radius, and
+border aliases, semantic aliases, and theme scoping. Components in
+`packages/ui/src` consume semantic aliases or the shared role-neutral spacing,
+sizing, radius, and border aliases. Application CSS may also consume those
+aliases for app-level composition, but no consumer should depend on other
+primitive scales directly.
 
 ## Layers and names
 
@@ -36,6 +37,9 @@ scale step, using the `--ns-primitive-` prefix. Examples for future scales:
 | Line height        | `--ns-primitive-line-height-{role}`     | `--ns-primitive-line-height-normal`     |
 | Letter spacing     | `--ns-primitive-letter-spacing-{role}`  | `--ns-primitive-letter-spacing-tight`   |
 | Size               | `--ns-primitive-size-{pixels}`          | `--ns-primitive-size-24`                |
+| Radius             | `--ns-primitive-radius-{step}`          | `--ns-primitive-radius-3`               |
+| Border width       | `--ns-primitive-border-width-{pixels}`  | `--ns-primitive-border-width-1`         |
+| Border style       | `--ns-primitive-border-style-{name}`    | `--ns-primitive-border-style-solid`     |
 | Motion duration    | `--ns-primitive-motion-duration-{step}` | `--ns-primitive-motion-duration-2`      |
 | Motion easing      | `--ns-primitive-motion-easing-{name}`   | `--ns-primitive-motion-easing-standard` |
 
@@ -114,6 +118,47 @@ a design preference, not the AA minimum. A control-height token alone does not
 ensure conformance: its target width and any applicable spacing must also be
 considered. See the [WCAG 2.2 Target Size (Minimum) understanding
 document](https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html).
+
+## Radius scale
+
+Rounded geometry uses a small scale from square corners through pill shapes.
+Primitive values describe geometry only. Shared aliases expose the scale, and
+the control and card aliases give common shared surfaces stable defaults. Use
+these aliases instead of introducing one-off corner radii in shared UI.
+
+| Primitive token              | Shared alias       | Value     | Guidance                        |
+| ---------------------------- | ------------------ | --------- | ------------------------------- |
+| `--ns-primitive-radius-0`    | `--ns-radius-none` | `0`       | Square corners                  |
+| `--ns-primitive-radius-1`    | `--ns-radius-sm`   | `0.25rem` | Small details                   |
+| `--ns-primitive-radius-2`    | `--ns-radius-md`   | `0.5rem`  | Compact surfaces                |
+| `--ns-primitive-radius-3`    | `--ns-radius-lg`   | `0.75rem` | `--ns-radius-control` default   |
+| `--ns-primitive-radius-4`    | `--ns-radius-xl`   | `1rem`    | `--ns-radius-card` default      |
+| `--ns-primitive-radius-full` | `--ns-radius-pill` | `9999px`  | Fully rounded pills and circles |
+
+The scale is intentionally compact: use the control alias for controls and the
+card alias for card-like surfaces, then use the shared scale aliases where a
+different shape is needed. The pill value is large enough to remain fully
+rounded for elements of different heights.
+
+## Border width and style
+
+Border width and style are role-neutral geometric tokens. Border colors remain
+semantic color tokens and are defined by the light and dark theme maps above;
+these tokens do not assign a component-specific color.
+
+| Primitive token                     | Shared alias                 | Value   | Guidance                                |
+| ----------------------------------- | ---------------------------- | ------- | --------------------------------------- |
+| `--ns-primitive-border-width-1`     | `--ns-border-width-subtle`   | `1px`   | Fine separators and subtle outlines     |
+| `--ns-primitive-border-width-1`     | `--ns-border-width-standard` | `1px`   | Control and card borders                |
+| `--ns-primitive-border-width-2`     | `--ns-border-width-emphasis` | `2px`   | Emphasized borders                      |
+| `--ns-primitive-border-width-3`     | `--ns-border-width-focus`    | `3px`   | Visible keyboard focus outlines         |
+| `--ns-primitive-border-style-solid` | `--ns-border-style-solid`    | `solid` | Shared solid borders and focus outlines |
+
+Use `border-style` or the shorthand with the shared style token. Shared
+components should use the semantic width and radius aliases; theme-specific
+border colors continue to use `--ns-color-border*` or another appropriate
+semantic color. The package stylesheet exposes the tokens through the same
+`@opennihongo/ui/styles.css` import as the rest of the design-system tokens.
 
 The source includes the complete initial Hinomaru-inspired brand scale and
 Sumi-inspired neutral scale as primitive values. These palette steps are raw

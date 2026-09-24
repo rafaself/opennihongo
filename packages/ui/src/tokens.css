@@ -115,6 +115,19 @@
   --ns-primitive-size-44: 2.75rem;
   --ns-primitive-size-48: 3rem;
 
+  /* Rounded geometry and border primitives stay independent from component roles. */
+  --ns-primitive-radius-0: 0;
+  --ns-primitive-radius-1: 0.25rem;
+  --ns-primitive-radius-2: 0.5rem;
+  --ns-primitive-radius-3: 0.75rem;
+  --ns-primitive-radius-4: 1rem;
+  --ns-primitive-radius-full: 9999px;
+
+  --ns-primitive-border-width-1: 1px;
+  --ns-primitive-border-width-2: 2px;
+  --ns-primitive-border-width-3: 3px;
+  --ns-primitive-border-style-solid: solid;
+
   /* Public role-neutral aliases; role-specific tokens can be added when needed. */
   --ns-space-1: var(--ns-primitive-space-1);
   --ns-space-2: var(--ns-primitive-space-2);
@@ -140,6 +153,24 @@
 
   --ns-size-pointer-target-minimum: var(--ns-primitive-size-24);
   --ns-size-pointer-target-comfortable: var(--ns-primitive-size-44);
+}
+
+/* Shared aliases define rounded shapes and border emphasis without colors. */
+:root {
+  --ns-radius-none: var(--ns-primitive-radius-0);
+  --ns-radius-sm: var(--ns-primitive-radius-1);
+  --ns-radius-md: var(--ns-primitive-radius-2);
+  --ns-radius-lg: var(--ns-primitive-radius-3);
+  --ns-radius-xl: var(--ns-primitive-radius-4);
+  --ns-radius-pill: var(--ns-primitive-radius-full);
+  --ns-radius-control: var(--ns-radius-lg);
+  --ns-radius-card: var(--ns-radius-xl);
+
+  --ns-border-width-subtle: var(--ns-primitive-border-width-1);
+  --ns-border-width-standard: var(--ns-primitive-border-width-1);
+  --ns-border-width-emphasis: var(--ns-primitive-border-width-2);
+  --ns-border-width-focus: var(--ns-primitive-border-width-3);
+  --ns-border-style-solid: var(--ns-primitive-border-style-solid);
 }
 
 /* Semantic text roles compose the primitives for common interface content. */
