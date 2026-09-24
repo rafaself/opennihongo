@@ -1,21 +1,25 @@
 export { Button } from "./components/Button";
 export type { ButtonProps, ButtonVariant } from "./components/Button";
-export { Grid } from "./components/grid/Grid";
-export type { GridColumns, GridGap, GridProps } from "./components/grid/Grid";
-export { Inline } from "./components/Inline";
+export { Grid } from "./components/layout/grid/Grid";
+export type {
+  GridColumns,
+  GridGap,
+  GridProps,
+} from "./components/layout/grid/Grid";
+export { Inline } from "./components/layout/Inline";
 export type {
   InlineAlign,
   InlineGap,
   InlineJustify,
   InlineProps,
-} from "./components/Inline";
-export { Stack } from "./components/Stack";
+} from "./components/layout/Inline";
+export { Stack } from "./components/layout/Stack";
 export type {
   StackAlign,
   StackGap,
   StackJustify,
   StackProps,
-} from "./components/Stack";
+} from "./components/layout/Stack";
 export { Surface } from "./components/surface/Surface";
 export type {
   SurfaceElevation,

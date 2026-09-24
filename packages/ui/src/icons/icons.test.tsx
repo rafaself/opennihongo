@@ -1,7 +1,19 @@
 import "@testing-library/jest-dom/vitest";
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
-import { CheckIcon, CloseIcon, Icon } from "@opennihongo/ui/icons";
+import {
+  CheckIcon,
+  CloseIcon,
+  Icon,
+  type IconComponentProps,
+} from "@opennihongo/ui/icons";
+
+type AssertFalse<T extends false> = T;
+type HasDangerouslySetInnerHTML =
+  "dangerouslySetInnerHTML" extends keyof IconComponentProps ? true : false;
+
+export type IconPropsRejectDangerouslySetInnerHTML =
+  AssertFalse<HasDangerouslySetInnerHTML>;
 
 describe("functional icon registry", () => {
   it("renders only the selected named icons", () => {

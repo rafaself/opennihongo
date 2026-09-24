@@ -10,6 +10,7 @@ export type IconComponentProps = Omit<
   SVGProps<SVGSVGElement>,
   | "children"
   | "color"
+  | "dangerouslySetInnerHTML"
   | "fill"
   | "height"
   | "aria-hidden"
