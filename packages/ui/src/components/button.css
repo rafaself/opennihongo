@@ -11,7 +11,7 @@
   letter-spacing: var(--ns-text-label-letter-spacing);
   justify-content: center;
   min-height: 2.75rem;
-  padding: 0.625rem 1rem;
+  padding: var(--ns-space-2-5) var(--ns-space-4);
   transition:
     background-color 140ms ease,
     border-color 140ms ease,

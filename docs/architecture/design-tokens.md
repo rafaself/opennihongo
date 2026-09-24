@@ -15,10 +15,11 @@ is the source; CSS is processed by the existing app toolchains without a
 separate token build pipeline.
 
 `packages/ui/src/styles.css` owns shared resets and base element styles.
-`packages/ui/src/tokens.css` owns primitive values, semantic aliases, and theme
-scoping. Components in `packages/ui/src` consume semantic aliases. Application
-CSS may also consume semantic aliases for app-level composition, but no
-consumer should depend on primitive scales directly.
+`packages/ui/src/tokens.css` owns primitive values, spacing scale aliases,
+semantic aliases, and theme scoping. Components in `packages/ui/src` consume
+semantic aliases or the shared role-neutral spacing aliases. Application CSS
+may also consume semantic aliases and the shared spacing aliases for app-level
+composition, but no consumer should depend on other primitive scales directly.
 
 ## Layers and names
 
@@ -36,6 +37,35 @@ scale step, using the `--ns-primitive-` prefix. Examples for future scales:
 | Letter spacing     | `--ns-primitive-letter-spacing-{role}`  | `--ns-primitive-letter-spacing-tight`   |
 | Motion duration    | `--ns-primitive-motion-duration-{step}` | `--ns-primitive-motion-duration-2`      |
 | Motion easing      | `--ns-primitive-motion-easing-{name}`   | `--ns-primitive-motion-easing-standard` |
+
+## Spacing scale
+
+Spacing primitives use the existing Tailwind spacing progression, where one
+step is `0.25rem`. The public role-neutral `--ns-space-*` aliases expose a
+compact subset for shared component CSS and direct layout composition. The
+`2.5` Tailwind step uses the CSS-safe suffix `2-5` in token names. Values stay
+on that progression; add a step only when shared styling needs it.
+
+| Tailwind step | Primitive token            | Shared alias     | Value      |
+| ------------- | -------------------------- | ---------------- | ---------- |
+| 1             | `--ns-primitive-space-1`   | `--ns-space-1`   | `0.25rem`  |
+| 2             | `--ns-primitive-space-2`   | `--ns-space-2`   | `0.5rem`   |
+| 2.5           | `--ns-primitive-space-2-5` | `--ns-space-2-5` | `0.625rem` |
+| 3             | `--ns-primitive-space-3`   | `--ns-space-3`   | `0.75rem`  |
+| 4             | `--ns-primitive-space-4`   | `--ns-space-4`   | `1rem`     |
+| 5             | `--ns-primitive-space-5`   | `--ns-space-5`   | `1.25rem`  |
+| 6             | `--ns-primitive-space-6`   | `--ns-space-6`   | `1.5rem`   |
+| 8             | `--ns-primitive-space-8`   | `--ns-space-8`   | `2rem`     |
+| 12            | `--ns-primitive-space-12`  | `--ns-space-12`  | `3rem`     |
+| 16            | `--ns-primitive-space-16`  | `--ns-space-16`  | `4rem`     |
+
+The web app maps Tailwind's `--spacing` base to `--ns-space-1` in its
+`@theme inline` block. Standard utilities such as `gap-3`, `p-4`, `px-6`, and
+`py-12` therefore use the same `0.25rem` progression as the shared aliases;
+the package and product do not declare separate spacing bases. For example,
+shared component CSS can use `padding: var(--ns-space-2-5) var(--ns-space-4)`.
+These scale aliases do not assign a component role. Add role-specific spacing
+semantics only when a stable shared interface meaning emerges.
 
 The source includes the complete initial Hinomaru-inspired brand scale and
 Sumi-inspired neutral scale as primitive values. These palette steps are raw

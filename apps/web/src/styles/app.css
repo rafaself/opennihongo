@@ -1,6 +1,7 @@
 @import "tailwindcss";
 
 @theme inline {
+  --spacing: var(--ns-space-1);
   --color-canvas: var(--ns-color-canvas);
   --color-surface: var(--ns-color-surface);
   --color-ink: var(--ns-color-ink);
