@@ -17,6 +17,12 @@ export type {
   InputSize,
   InputType,
 } from "./components/input/Input";
+export { Textarea } from "./components/textarea/Textarea";
+export type {
+  TextareaProps,
+  TextareaResize,
+  TextareaSize,
+} from "./components/textarea/Textarea";
 export { Grid } from "./components/layout/grid/Grid";
 export type {
   GridColumns,
