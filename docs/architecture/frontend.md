@@ -11,8 +11,9 @@ The workspace has five explicit project boundaries:
 
 - `apps/web` owns the browser application and composes workspace packages.
 - `apps/ui-gallery` owns the standalone visual catalog for public Design System
-  components and tokens. It consumes `packages/ui` directly and does not depend
-  on `apps/web` runtime code.
+  components and tokens. Its section taxonomy is documented in the [UI Gallery
+  catalog guide](ui-gallery.md). It consumes `packages/ui` directly and does not
+  depend on `apps/web` runtime code.
 - `packages/core` owns framework-independent domain rules and types. It must
   remain independent from React, browser APIs, routing, styling, and concrete
   persistence implementations.

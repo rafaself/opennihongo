@@ -1,4 +1,6 @@
 import { Link, Outlet } from "@tanstack/react-router";
+import { galleryNavigation } from "../catalog/navigation";
+import "./GalleryNavigation.css";
 
 export function GalleryLayout() {
   return (
@@ -19,9 +21,31 @@ export function GalleryLayout() {
             </span>
           </Link>
           <nav aria-label="Main navigation" className="gallery-navigation">
-            <Link activeProps={{ "aria-current": "page" }} to="/">
-              Overview
+            <Link
+              activeProps={{ "aria-current": "page" }}
+              to={galleryNavigation.overview.to}
+            >
+              {galleryNavigation.overview.label}
             </Link>
+            {galleryNavigation.sections.map((section) => (
+              <details className="gallery-navigation-section" key={section.id}>
+                <summary>{section.label}</summary>
+                <div className="gallery-navigation-panel">
+                  <p className="gallery-navigation-description">
+                    {section.description}
+                  </p>
+                  {section.links.length > 0 && (
+                    <ul className="gallery-navigation-links">
+                      {section.links.map((link) => (
+                        <li key={link.id}>
+                          <a href={link.href}>{link.label}</a>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
+              </details>
+            ))}
           </nav>
         </div>
       </header>
