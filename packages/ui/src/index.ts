@@ -15,6 +15,11 @@ export type {
   LevelBadgeSize,
   LevelBadgeTier,
 } from "./components/indicators/level-badge/LevelBadge";
+export { Streak } from "./components/indicators/streak/Streak";
+export type {
+  StreakProps,
+  StreakState,
+} from "./components/indicators/streak/Streak";
 export { Progress } from "./components/indicators/progress/Progress";
 export type { ProgressProps } from "./components/indicators/progress/Progress";
 export { XPBar } from "./components/indicators/xp-bar/XPBar";

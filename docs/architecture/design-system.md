@@ -29,6 +29,11 @@ supplies either a current/target range or a value/optional maximum, plus the
 accessible name and any supporting text. Keep XP award, threshold, and level
 rules in the feature that owns them; `XPBar` only presents the supplied range.
 
+`Streak` presents a caller-supplied count, unit, and state. Its state label is
+visible alongside the semantic color treatment, and its visible label names
+the status region. The caller determines the count and state; `Streak` does not
+decide whether a streak increments, expires, is protected, or can be recovered.
+
 `Spinner` is an indeterminate status for short operations and requires an
 `aria-label` or `aria-labelledby`. Pair it with visible status text; color or
 animation must not be the only indication of ongoing work. It stops rotating

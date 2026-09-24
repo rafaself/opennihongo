@@ -1,0 +1,95 @@
+.ns-streak {
+  align-items: center;
+  background-color: var(--ns-color-reward-streak-surface);
+  border: var(--ns-border-width-subtle) var(--ns-border-style-solid)
+    var(--ns-color-border-subtle);
+  border-radius: var(--ns-radius-lg);
+  display: inline-flex;
+  gap: var(--ns-space-3);
+  padding-block: var(--ns-space-2);
+  padding-inline: var(--ns-space-3);
+  transition:
+    background-color var(--ns-motion-duration-fast)
+      var(--ns-motion-easing-standard),
+    border-color var(--ns-motion-duration-fast) var(--ns-motion-easing-standard),
+    color var(--ns-motion-duration-fast) var(--ns-motion-easing-standard);
+}
+
+.ns-streak[data-state="at-risk"] {
+  background-color: var(--ns-color-feedback-warning-surface);
+}
+
+.ns-streak[data-state="protected"] {
+  background-color: var(--ns-color-feedback-info-surface);
+}
+
+.ns-streak[data-state="completed"] {
+  background-color: var(--ns-color-feedback-success-surface);
+}
+
+.ns-streak[data-state="inactive"] {
+  background-color: var(--ns-color-surface-subtle);
+}
+
+.ns-streak__icon {
+  color: var(--ns-color-reward-streak);
+  flex: none;
+  transition: color var(--ns-motion-duration-fast)
+    var(--ns-motion-easing-standard);
+}
+
+.ns-streak__icon[data-state="at-risk"] {
+  color: var(--ns-color-feedback-warning);
+}
+
+.ns-streak__icon[data-state="protected"] {
+  color: var(--ns-color-feedback-info);
+}
+
+.ns-streak__icon[data-state="completed"] {
+  color: var(--ns-color-feedback-success);
+}
+
+.ns-streak__icon[data-state="inactive"] {
+  color: var(--ns-color-text-tertiary);
+}
+
+.ns-streak__label {
+  white-space: nowrap;
+}
+
+.ns-streak__count {
+  align-items: baseline;
+  display: inline-flex;
+  gap: var(--ns-space-1);
+}
+
+.ns-streak__value {
+  font-variant-numeric: tabular-nums;
+}
+
+.ns-streak__unit {
+  white-space: nowrap;
+}
+
+.ns-streak__state {
+  transition:
+    background-color var(--ns-motion-duration-fast)
+      var(--ns-motion-easing-standard),
+    border-color var(--ns-motion-duration-fast) var(--ns-motion-easing-standard),
+    color var(--ns-motion-duration-fast) var(--ns-motion-easing-standard);
+}
+
+.ns-streak__state[data-state="active"] {
+  background-color: var(--ns-color-reward-streak-surface);
+  border-color: transparent;
+  color: var(--ns-color-reward-streak);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ns-streak,
+  .ns-streak__icon,
+  .ns-streak__state {
+    transition: none;
+  }
+}
