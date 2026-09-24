@@ -1,8 +1,11 @@
+import { useState } from "react";
 import { Link, Outlet } from "@tanstack/react-router";
 import { galleryNavigation } from "../catalog/navigation";
 import "./GalleryNavigation.css";
 
 export function GalleryLayout() {
+  const [openSectionId, setOpenSectionId] = useState<string | null>(null);
+
   return (
     <div className="gallery-shell">
       <header className="gallery-header">
@@ -10,6 +13,9 @@ export function GalleryLayout() {
           <Link
             aria-label="OpenNihongo Design System home"
             className="gallery-brand"
+            onClick={() => {
+              setOpenSectionId(null);
+            }}
             to="/"
           >
             <span aria-hidden="true" className="gallery-brand-mark">
@@ -23,12 +29,28 @@ export function GalleryLayout() {
           <nav aria-label="Main navigation" className="gallery-navigation">
             <Link
               activeProps={{ "aria-current": "page" }}
+              onClick={() => {
+                setOpenSectionId(null);
+              }}
               to={galleryNavigation.overview.to}
             >
               {galleryNavigation.overview.label}
             </Link>
             {galleryNavigation.sections.map((section) => (
-              <details className="gallery-navigation-section" key={section.id}>
+              <details
+                className="gallery-navigation-section"
+                key={section.id}
+                onToggle={(event) => {
+                  if (event.currentTarget.open) {
+                    setOpenSectionId(section.id);
+                  } else {
+                    setOpenSectionId((currentSectionId) =>
+                      currentSectionId === section.id ? null : currentSectionId,
+                    );
+                  }
+                }}
+                open={openSectionId === section.id}
+              >
                 <summary>{section.label}</summary>
                 <div className="gallery-navigation-panel">
                   <p className="gallery-navigation-description">
@@ -39,11 +61,24 @@ export function GalleryLayout() {
                       {section.links.map((link) => (
                         <li key={link.id}>
                           {"hash" in link ? (
-                            <Link hash={link.hash} to={link.to}>
+                            <Link
+                              hash={link.hash}
+                              onClick={() => {
+                                setOpenSectionId(null);
+                              }}
+                              to={link.to}
+                            >
                               {link.label}
                             </Link>
                           ) : (
-                            <Link to={link.to}>{link.label}</Link>
+                            <Link
+                              onClick={() => {
+                                setOpenSectionId(null);
+                              }}
+                              to={link.to}
+                            >
+                              {link.label}
+                            </Link>
                           )}
                         </li>
                       ))}
