@@ -1,0 +1,73 @@
+/* Primitive values have no interface meaning and are consumed by semantic aliases only. */
+:root {
+  --ns-primitive-color-neutral-0: #ffffff;
+  --ns-primitive-color-neutral-50: #f7f8f5;
+  --ns-primitive-color-neutral-200: #dce5e1;
+  --ns-primitive-color-neutral-700: #596967;
+  --ns-primitive-color-neutral-900: #1f2c2c;
+  --ns-primitive-color-teal-100: #cce4dd;
+  --ns-primitive-color-teal-700: #245c55;
+  --ns-primitive-color-teal-800: #194a44;
+  --ns-primitive-color-amber-500: #d58e3f;
+  --ns-primitive-font-family-sans:
+    Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", sans-serif;
+}
+
+/* An unmarked root is light. Theme attributes can also scope aliases to a subtree. */
+:root,
+[data-theme="light"] {
+  color-scheme: light;
+  --ns-color-canvas: var(--ns-primitive-color-neutral-50);
+  --ns-color-surface: var(--ns-primitive-color-neutral-0);
+  --ns-color-ink: var(--ns-primitive-color-neutral-900);
+  --ns-color-muted: var(--ns-primitive-color-neutral-700);
+  --ns-color-border: var(--ns-primitive-color-neutral-200);
+  --ns-color-brand: var(--ns-primitive-color-teal-700);
+  --ns-color-brand-hover: var(--ns-primitive-color-teal-800);
+  --ns-color-brand-foreground: var(--ns-primitive-color-neutral-0);
+  --ns-color-focus: var(--ns-primitive-color-amber-500);
+  --ns-color-selection: var(--ns-primitive-color-teal-100);
+  --ns-color-selection-foreground: var(--ns-primitive-color-neutral-900);
+  --ns-font-sans: var(--ns-primitive-font-family-sans);
+}
+
+[data-theme="dark"] {
+  color-scheme: dark;
+  --ns-color-canvas: var(--ns-primitive-color-neutral-900);
+  --ns-color-surface: color-mix(
+    in srgb,
+    var(--ns-primitive-color-neutral-900) 82%,
+    var(--ns-primitive-color-neutral-700)
+  );
+  --ns-color-ink: var(--ns-primitive-color-neutral-50);
+  --ns-color-muted: color-mix(
+    in srgb,
+    var(--ns-primitive-color-neutral-50) 72%,
+    var(--ns-primitive-color-neutral-700)
+  );
+  --ns-color-border: color-mix(
+    in srgb,
+    var(--ns-primitive-color-neutral-900) 45%,
+    var(--ns-primitive-color-neutral-700)
+  );
+  --ns-color-brand: color-mix(
+    in srgb,
+    var(--ns-primitive-color-teal-700) 45%,
+    var(--ns-primitive-color-neutral-0)
+  );
+  --ns-color-brand-hover: color-mix(
+    in srgb,
+    var(--ns-primitive-color-teal-700) 35%,
+    var(--ns-primitive-color-neutral-0)
+  );
+  --ns-color-brand-foreground: var(--ns-primitive-color-neutral-900);
+  --ns-color-focus: var(--ns-primitive-color-amber-500);
+  --ns-color-selection: color-mix(
+    in srgb,
+    var(--ns-primitive-color-teal-700) 65%,
+    var(--ns-primitive-color-neutral-900)
+  );
+  --ns-color-selection-foreground: var(--ns-primitive-color-neutral-50);
+  --ns-font-sans: var(--ns-primitive-font-family-sans);
+}

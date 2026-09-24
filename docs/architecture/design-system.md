@@ -66,6 +66,8 @@ empty states where applicable. Stories should demonstrate the public API and
 include interaction or accessibility checks when behavior warrants them.
 Tokens and other non-component foundations should be documented in the gallery
 or alongside their definitions so contributors can find their intended use.
+The source, naming rules, semantic roles, and theme contract for shared tokens
+are defined in the [Design Tokens guide](design-tokens.md).
 
 Keep the public API small and typed. Treat imports and props as supported
 contracts: favor compatible additions and avoid changing existing behavior.

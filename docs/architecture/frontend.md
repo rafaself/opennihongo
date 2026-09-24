@@ -52,6 +52,10 @@ and the Storybook component gallery both use the declared component and
 stylesheet entries. Add another export only when a concrete API exists and a
 consumer needs it.
 
+The shared primitive and semantic token layers, theme scoping contract, and
+Tailwind mapping path are documented in the [Design Tokens
+guide](design-tokens.md).
+
 The root TypeScript dependency stays on the 6.0 line (currently 6.0.3) because
 the Nx ESLint boundary plugin's TypeScript utilities do not yet support
 TypeScript 7's compiler API. Revisit this constraint when the lint toolchain
