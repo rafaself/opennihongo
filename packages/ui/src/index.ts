@@ -15,6 +15,12 @@ export type {
   AchievementProps,
   AchievementState,
 } from "./components/indicators/achievement/Achievement";
+export { RewardCard } from "./components/indicators/reward-card/RewardCard";
+export type {
+  RewardCardCategory,
+  RewardCardProps,
+  RewardCardState,
+} from "./components/indicators/reward-card/RewardCard";
 export { LevelBadge } from "./components/indicators/level-badge/LevelBadge";
 export type {
   LevelBadgeProps,

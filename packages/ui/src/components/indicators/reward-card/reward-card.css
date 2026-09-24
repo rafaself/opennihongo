@@ -1,0 +1,66 @@
+.ns-reward-card__layout {
+  align-items: center;
+  display: grid;
+  gap: var(--ns-space-4);
+  grid-template-columns: auto minmax(0, 1fr) auto;
+}
+
+.ns-reward-card__icon {
+  align-items: center;
+  background-color: var(--ns-color-reward-xp-surface);
+  border: var(--ns-border-width-standard) var(--ns-border-style-solid)
+    var(--ns-color-border-subtle);
+  border-radius: var(--ns-radius-lg);
+  color: var(--ns-color-reward-xp);
+  display: inline-flex;
+  flex: none;
+  height: var(--ns-size-avatar-large);
+  justify-content: center;
+  width: var(--ns-size-avatar-large);
+}
+
+.ns-reward-card[data-category="streak"] .ns-reward-card__icon {
+  background-color: var(--ns-color-reward-streak-surface);
+  color: var(--ns-color-reward-streak);
+}
+
+.ns-reward-card[data-category="achievement"] .ns-reward-card__icon {
+  background-color: var(--ns-color-reward-achievement-surface);
+  color: var(--ns-color-reward-achievement);
+}
+
+.ns-reward-card[data-state="locked"] .ns-reward-card__icon {
+  background-color: var(--ns-color-surface-subtle);
+  color: var(--ns-color-text-secondary);
+}
+
+.ns-reward-card__content {
+  display: grid;
+  gap: var(--ns-space-1);
+  min-width: 0;
+}
+
+.ns-reward-card__label,
+.ns-reward-card__value {
+  margin: 0;
+}
+
+.ns-reward-card__value {
+  font-variant-numeric: tabular-nums;
+  overflow-wrap: anywhere;
+}
+
+.ns-reward-card__state {
+  justify-self: end;
+}
+
+@media (max-width: 30rem) {
+  .ns-reward-card__layout {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+
+  .ns-reward-card__state {
+    grid-column: 2;
+    justify-self: start;
+  }
+}
