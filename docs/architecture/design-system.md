@@ -74,6 +74,24 @@ export when a real consumer needs it, and review changes against every current
 consumer and its Storybook examples. Use the deprecation path below when an
 incompatible change is necessary.
 
+## Review accessibility in Storybook
+
+Run `pnpm storybook`, open a component story, and review its **Accessibility**
+panel. The Storybook a11y addon runs axe checks for the rendered story and shows
+violations, passes, and checks that need manual review. Violations are errors in
+the configured Storybook accessibility test integration because
+`a11y.test` is set to `"error"`. In local review, fix the component or correct
+the story setup, then review the story again. Do not turn off checks or suppress
+a violation to make the panel pass. The Button `Primary` story is the current
+passing example.
+
+Automated checks cover only part of accessibility. Manually use the component
+with the keyboard, checking focus order and visibility and the relevant keys
+(such as Tab, Enter, Space, and Escape). Check semantics and announced state
+with assistive technology when the component's behavior calls for it. Treat
+axe's incomplete results as prompts for this review; a passing panel does not
+replace keyboard or screen-reader testing.
+
 ## Deprecation
 
 When a public component or prop needs replacement, mark the old API as
