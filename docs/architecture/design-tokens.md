@@ -234,6 +234,46 @@ their action, focus, and selection roles, while an overlay effect belongs to
 the composition that needs it. Surface role values are documented only in the
 light and dark theme maps below.
 
+## Elevation
+
+Elevation communicates structural depth, separately from surface color. Use the
+semantic tokens below instead of setting component-local `box-shadow` values.
+The light and dark themes tune the same hierarchy to their neutral surfaces;
+components keep using the same token in either theme.
+
+| Level       | Semantic token               | Intended use                                            |
+| ----------- | ---------------------------- | ------------------------------------------------------- |
+| None        | `--ns-elevation-none`        | Flat surfaces and disabled controls                     |
+| Card        | `--ns-elevation-card`        | Bounded content that needs a small lift from its parent |
+| Interactive | `--ns-elevation-interactive` | Resting buttons and other raised controls               |
+| Hover       | `--ns-elevation-hover`       | A hovered, enabled interactive control                  |
+| Pressed     | `--ns-elevation-pressed`     | A pressed, enabled interactive control                  |
+| Dialog      | `--ns-elevation-dialog`      | Dialogs and other focused blocking content              |
+| Overlay     | `--ns-elevation-overlay`     | Floating menus, popovers, and other transient content   |
+
+Keep ordinary surfaces flat unless their position in the composition needs to
+read as raised. Use card elevation for bounded content, and reserve dialog and
+overlay levels for content that must visually sit above surrounding content.
+These tokens do not set stacking order or create a backdrop; the composition
+still owns `z-index` and overlay behavior.
+
+Interactive controls move through the interactive, hover, and pressed levels.
+On press, reduce the shadow and use a small downward translation (typically
+`translateY(1px)`) so the control feels like it moves into the surface instead
+of rising. Transition the shadow and transform together, and keep disabled
+controls flat and stationary. Avoid making state meaning depend on shadow alone;
+retain visible color, border, focus, or disabled cues as appropriate.
+
+Structural elevation is separate from celebratory effects. Reward color tokens
+communicate XP, streak, and achievement meaning; a glow, sparkle, or other
+celebratory treatment is a decorative effect and must not be used to imply the
+structural depth of a card, control, dialog, or overlay. Do not add reward
+shadows to the structural elevation scale.
+
+The UI package defines the shared tokens in `tokens.css`. The web app maps the
+card token to Tailwind's `shadow-card` utility for composed application markup;
+shared UI styles and other consumers use the semantic token directly.
+
 ## Light theme color map
 
 The default and explicit light themes map the shared color roles as follows.

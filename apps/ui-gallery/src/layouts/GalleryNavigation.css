@@ -42,7 +42,7 @@
   background: var(--ns-color-surface);
   border: 1px solid var(--ns-color-border);
   border-radius: 0.875rem;
-  box-shadow: 0 0.75rem 2rem rgb(31 44 44 / 12%);
+  box-shadow: var(--ns-elevation-overlay);
   min-width: 17rem;
   padding: 1rem;
   position: absolute;

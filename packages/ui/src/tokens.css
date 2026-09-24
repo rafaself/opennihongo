@@ -252,6 +252,19 @@
   --ns-color-reward-achievement: var(--ns-primitive-color-indigo-700);
   --ns-color-reward-achievement-surface: var(--ns-primitive-color-indigo-50);
 
+  /* Structural elevation uses restrained warm-neutral shadows in light mode. */
+  --ns-elevation-none: none;
+  --ns-elevation-card: 0 1px 2px rgb(24 24 23 / 8%);
+  --ns-elevation-interactive: 0 1px 2px rgb(24 24 23 / 10%);
+  --ns-elevation-hover:
+    0 3px 8px rgb(24 24 23 / 14%), 0 1px 2px rgb(24 24 23 / 8%);
+  --ns-elevation-pressed:
+    inset 0 1px 2px rgb(24 24 23 / 12%), 0 0 1px rgb(24 24 23 / 8%);
+  --ns-elevation-dialog:
+    0 12px 24px rgb(24 24 23 / 16%), 0 4px 8px rgb(24 24 23 / 10%);
+  --ns-elevation-overlay:
+    0 24px 48px rgb(24 24 23 / 20%), 0 8px 16px rgb(24 24 23 / 12%);
+
   --ns-font-sans: var(--ns-primitive-font-family-sans);
 }
 
@@ -313,6 +326,18 @@
   --ns-color-reward-streak-surface: var(--ns-primitive-color-orange-900);
   --ns-color-reward-achievement: var(--ns-primitive-color-indigo-300);
   --ns-color-reward-achievement-surface: var(--ns-primitive-color-indigo-900);
+
+  /* Dark elevation stays visible without bright, theme-independent shadows. */
+  --ns-elevation-none: none;
+  --ns-elevation-card:
+    0 1px 2px rgb(0 0 0 / 24%), 0 0 0 1px rgb(250 250 249 / 4%);
+  --ns-elevation-interactive: 0 1px 2px rgb(0 0 0 / 28%);
+  --ns-elevation-hover: 0 3px 8px rgb(0 0 0 / 34%), 0 1px 2px rgb(0 0 0 / 22%);
+  --ns-elevation-pressed: inset 0 1px 2px rgb(0 0 0 / 28%);
+  --ns-elevation-dialog:
+    0 12px 24px rgb(0 0 0 / 42%), 0 4px 8px rgb(0 0 0 / 28%);
+  --ns-elevation-overlay:
+    0 24px 48px rgb(0 0 0 / 50%), 0 8px 16px rgb(0 0 0 / 32%);
 
   --ns-font-sans: var(--ns-primitive-font-family-sans);
 }

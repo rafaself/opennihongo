@@ -24,7 +24,7 @@ export function WelcomeView() {
 
       <aside
         aria-label="Getting started"
-        className="rounded-2xl border border-border bg-surface p-6 shadow-sm"
+        className="rounded-2xl border border-border bg-surface p-6 shadow-card"
       >
         <p className="text-sm font-medium text-muted">Getting started</p>
         <p className="mt-2 text-xl font-semibold tracking-tight">
