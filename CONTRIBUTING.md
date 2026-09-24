@@ -60,6 +60,24 @@ Breaking changes may use `!`, for example:
 Because pull requests are squash-merged, the pull request title becomes the
 primary commit message that enters `main`.
 
+### Commitlint
+
+`commitlint.config.mjs` is the source of truth for the commit message format.
+
+The `Conventional PR title` GitHub check validates pull request titles with
+commitlint. Since pull requests are squash-merged, this validates the commit
+message that will enter `main`.
+
+Intermediate branch commits are encouraged to follow the same convention but
+are not enforced. This keeps work-in-progress history flexible without
+weakening the permanent `main` history.
+
+To validate a message locally without installing project dependencies:
+
+```sh
+printf '%s\n' 'feat(kana): add hiragana table' | npx --yes @commitlint/cli@21.2.3
+```
+
 ## Issues
 
 Manual GitHub issues intentionally remain simple and unrestricted. Blank issues
