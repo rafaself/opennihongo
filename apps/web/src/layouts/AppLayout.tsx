@@ -1,4 +1,4 @@
-import { Outlet } from '@tanstack/react-router'
+import { Outlet } from "@tanstack/react-router";
 
 export function AppLayout() {
   return (
@@ -25,5 +25,5 @@ export function AppLayout() {
         A local-first Japanese learning space
       </footer>
     </div>
-  )
+  );
 }

@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite --host 127.0.0.1",
-    "lint": "eslint . --no-error-on-unmatched-pattern",
+    "lint": "eslint . --no-error-on-unmatched-pattern --max-warnings=0",
     "build": "pnpm typecheck && vite build",
     "preview": "vite preview --host 127.0.0.1",
     "typecheck": "tsc -p tsconfig.json"
@@ -17,7 +17,9 @@
   },
   "nx": {
     "projectType": "application",
-    "tags": ["type:app"]
+    "tags": [
+      "type:app"
+    ]
   },
   "devDependencies": {
     "@tailwindcss/vite": "^4.3.3",

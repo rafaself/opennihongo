@@ -1,27 +1,27 @@
-import type { Meta, StoryObj } from '@storybook/react-vite'
-import { Button } from './Button'
+import type { Meta, StoryObj } from "@storybook/react-vite";
+import { Button } from "./Button";
 
 const meta = {
-  title: 'Components/Button',
+  title: "Components/Button",
   component: Button,
   args: {
-    children: 'Continue',
+    children: "Continue",
   },
-} satisfies Meta<typeof Button>
+} satisfies Meta<typeof Button>;
 
-export default meta
-type Story = StoryObj<typeof meta>
+export default meta;
+type Story = StoryObj<typeof meta>;
 
-export const Primary: Story = {}
+export const Primary: Story = {};
 
 export const Secondary: Story = {
   args: {
-    variant: 'secondary',
+    variant: "secondary",
   },
-}
+};
 
 export const Disabled: Story = {
   args: {
     disabled: true,
   },
-}
+};

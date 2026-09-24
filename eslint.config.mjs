@@ -1,58 +1,79 @@
-import nx from '@nx/eslint-plugin'
-import tsParser from '@typescript-eslint/parser'
+import js from "@eslint/js";
+import nx from "@nx/eslint-plugin";
+import prettier from "eslint-config-prettier/flat";
+import tseslint from "typescript-eslint";
 
 const boundaryRule = [
-  'error',
+  "error",
   {
     allow: [],
     depConstraints: [
       {
-        sourceTag: 'type:domain',
-        onlyDependOnLibsWithTags: ['type:domain'],
+        sourceTag: "type:domain",
+        onlyDependOnLibsWithTags: ["type:domain"],
       },
       {
-        sourceTag: 'type:data-access',
-        onlyDependOnLibsWithTags: ['type:data-access', 'type:domain'],
+        sourceTag: "type:data-access",
+        onlyDependOnLibsWithTags: ["type:data-access", "type:domain"],
       },
       {
-        sourceTag: 'type:ui',
-        onlyDependOnLibsWithTags: ['type:ui'],
+        sourceTag: "type:ui",
+        onlyDependOnLibsWithTags: ["type:ui"],
       },
       {
-        sourceTag: 'type:app',
-        onlyDependOnLibsWithTags: ['type:domain', 'type:data-access', 'type:ui'],
+        sourceTag: "type:app",
+        onlyDependOnLibsWithTags: [
+          "type:domain",
+          "type:data-access",
+          "type:ui",
+        ],
       },
     ],
   },
-]
+];
 
-const boundaryConfig = {
+const sharedRules = {
   plugins: {
-    '@nx': nx,
+    "@nx": nx,
   },
   rules: {
-    '@nx/enforce-module-boundaries': boundaryRule,
+    "@nx/enforce-module-boundaries": boundaryRule,
   },
-}
+};
 
-export default [
+export default tseslint.config(
   {
-    ignores: ['**/dist/**', '**/storybook-static/**'],
+    ignores: ["**/dist/**", "**/storybook-static/**"],
   },
   {
-    ...boundaryConfig,
-    files: ['**/*.{js,jsx,mjs,cjs}'],
+    files: ["**/*.{js,jsx,mjs,cjs}"],
+    extends: [js.configs.recommended],
+    ...sharedRules,
   },
   {
-    ...boundaryConfig,
-    files: ['**/*.{ts,tsx}'],
+    files: ["**/*.{ts,tsx}"],
+    extends: [js.configs.recommended, tseslint.configs.strictTypeChecked],
+    ...sharedRules,
+    rules: {
+      ...sharedRules.rules,
+      "@typescript-eslint/no-explicit-any": "error",
+      "@typescript-eslint/ban-ts-comment": [
+        "error",
+        {
+          "ts-expect-error": true,
+          "ts-ignore": true,
+          "ts-nocheck": true,
+        },
+      ],
+    },
     languageOptions: {
-      parser: tsParser,
       parserOptions: {
+        projectService: true,
         ecmaFeatures: {
           jsx: true,
         },
       },
     },
   },
-]
+  prettier,
+);
