@@ -16,5 +16,11 @@ export type {
   StackJustify,
   StackProps,
 } from "./components/Stack";
+export { Surface } from "./components/surface/Surface";
+export type {
+  SurfaceElevation,
+  SurfaceProps,
+  SurfaceVariant,
+} from "./components/surface/Surface";
 export { Text } from "./typography/Text";
 export type { TextColor, TextProps, TextVariant } from "./typography/Text";

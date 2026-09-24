@@ -1,0 +1,38 @@
+.ns-surface {
+  background-color: var(--ns-color-surface);
+  border: var(--ns-border-width-standard) var(--ns-border-style-solid)
+    var(--ns-color-border-subtle);
+  border-radius: var(--ns-radius-card);
+  box-shadow: var(--ns-elevation-none);
+}
+
+.ns-surface[data-variant="subtle"] {
+  background-color: var(--ns-color-surface-subtle);
+}
+
+.ns-surface[data-variant="raised"] {
+  background-color: var(--ns-color-surface-raised);
+}
+
+.ns-surface[data-elevation="none"] {
+  box-shadow: var(--ns-elevation-none);
+}
+
+.ns-surface[data-elevation="card"] {
+  box-shadow: var(--ns-elevation-card);
+}
+
+.ns-surface[data-elevation="interactive"] {
+  box-shadow: var(--ns-elevation-interactive);
+  transition: box-shadow var(--ns-motion-duration-fast)
+    var(--ns-motion-easing-standard);
+}
+
+.ns-surface[data-elevation="interactive"]:hover,
+.ns-surface[data-elevation="interactive"]:focus-within {
+  box-shadow: var(--ns-elevation-hover);
+}
+
+.ns-surface[data-elevation="interactive"]:active {
+  box-shadow: var(--ns-elevation-pressed);
+}

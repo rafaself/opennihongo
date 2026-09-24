@@ -1,0 +1,23 @@
+.ns-surface-story-content {
+  display: grid;
+  gap: var(--ns-space-2);
+  padding: var(--ns-space-4);
+}
+
+.ns-surface-story-content h2,
+.ns-surface-story-content p {
+  margin: 0;
+}
+
+.ns-surface-story-themes {
+  display: grid;
+  gap: var(--ns-space-4);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.ns-surface-story-theme {
+  background-color: var(--ns-color-canvas);
+  border-radius: var(--ns-radius-md);
+  color: var(--ns-color-ink);
+  padding: var(--ns-space-4);
+}

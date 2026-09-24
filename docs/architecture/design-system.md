@@ -28,6 +28,20 @@ Shared patterns follow the same rule. An accessible field composition used by
 independent features may become a common pattern; a multi-step lesson setup or
 exercise flow stays with the feature that defines its behavior.
 
+## Structural surfaces and cards
+
+`Surface` is a low-level visual container. It applies a semantic surface
+background, border, radius, and elevation while leaving content, spacing,
+layout, and behavior to its caller. Its interactive elevation provides hover,
+pressed, and focus-within shadow feedback for compositions that contain real
+interactive elements; `Surface` itself remains a structural `div` and does not
+provide click or keyboard behavior.
+
+A future `Card` may define a more opinionated content hierarchy, spacing, and
+action placement for bounded content. It should compose `Surface` for the
+visual foundation instead of duplicating its token mapping. Do not add those
+content or action conventions to `Surface`.
+
 ## Promote recurring UI
 
 Start new UI in the narrowest area that owns its behavior. Promote an existing
