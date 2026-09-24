@@ -159,6 +159,10 @@
   --ns-size-control-height-standard: var(--ns-primitive-size-44);
   --ns-size-control-height-comfortable: var(--ns-primitive-size-48);
 
+  --ns-size-avatar-small: var(--ns-primitive-size-24);
+  --ns-size-avatar-medium: var(--ns-primitive-size-40);
+  --ns-size-avatar-large: var(--ns-primitive-size-48);
+
   --ns-size-icon-box-small: var(--ns-primitive-size-16);
   --ns-size-icon-box-medium: var(--ns-primitive-size-20);
   --ns-size-icon-box-large: var(--ns-primitive-size-24);

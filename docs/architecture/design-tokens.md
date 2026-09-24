@@ -99,6 +99,9 @@ applied to both minimum width and minimum height.
 | Compact control height  | `--ns-size-control-height-compact`     | `40px` | Use for dense, secondary controls        |
 | Standard control height | `--ns-size-control-height-standard`    | `44px` | Default shared control height            |
 | Comfortable control     | `--ns-size-control-height-comfortable` | `48px` | Use when a larger control is appropriate |
+| Small avatar            | `--ns-size-avatar-small`               | `24px` | Compact identity display                 |
+| Medium avatar           | `--ns-size-avatar-medium`              | `40px` | Default identity display                 |
+| Large avatar            | `--ns-size-avatar-large`               | `48px` | Prominent identity display               |
 | Small icon box          | `--ns-size-icon-box-small`             | `16px` | Small supporting icon                    |
 | Medium icon box         | `--ns-size-icon-box-medium`            | `20px` | Default inline icon                      |
 | Large icon box          | `--ns-size-icon-box-large`             | `24px` | Prominent visual icon                    |

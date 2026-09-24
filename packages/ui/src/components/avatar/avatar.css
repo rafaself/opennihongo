@@ -1,0 +1,61 @@
+.ns-avatar {
+  align-items: center;
+  background-color: var(--ns-color-surface-subtle);
+  border-radius: var(--ns-radius-pill);
+  color: var(--ns-color-text-secondary);
+  display: inline-flex;
+  flex: none;
+  height: var(--ns-size-avatar-medium);
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+  vertical-align: middle;
+  width: var(--ns-size-avatar-medium);
+}
+
+.ns-avatar[data-size="small"] {
+  height: var(--ns-size-avatar-small);
+  width: var(--ns-size-avatar-small);
+}
+
+.ns-avatar[data-size="small"] .ns-avatar__fallback {
+  font-size: var(--ns-text-caption-size);
+}
+
+.ns-avatar[data-size="large"] {
+  height: var(--ns-size-avatar-large);
+  width: var(--ns-size-avatar-large);
+}
+
+.ns-avatar[data-size="large"] .ns-avatar__fallback {
+  font-size: var(--ns-text-body-size);
+}
+
+.ns-avatar__fallback {
+  align-items: center;
+  display: inline-flex;
+  font-size: var(--ns-text-label-size);
+  font-weight: var(--ns-text-label-weight);
+  height: 100%;
+  justify-content: center;
+  line-height: 1;
+  width: 100%;
+}
+
+.ns-avatar__fallback svg {
+  height: 62%;
+  width: 62%;
+}
+
+.ns-avatar__image {
+  height: 100%;
+  inset: 0;
+  object-fit: cover;
+  opacity: 0;
+  position: absolute;
+  width: 100%;
+}
+
+.ns-avatar__image[data-loaded="true"] {
+  opacity: 1;
+}

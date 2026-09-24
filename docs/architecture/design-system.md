@@ -55,6 +55,13 @@ it for an action, navigation, or a selectable filter. Use a link for navigation,
 a `Button` for an action, and an appropriate selection control when the user
 needs to change a choice.
 
+`Avatar` displays a person image or a visual fallback at a shared semantic size.
+Set `alt` to a meaningful identity label when the avatar conveys who the person
+is; use `alt=""` when nearby text already identifies them. The fallback is
+decorative because the `alt` label remains the accessible name after an image
+fails to load. Supply initials or other non-interactive fallback content when
+the default silhouette is not appropriate.
+
 ## Promote recurring UI
 
 Start new UI in the narrowest area that owns its behavior. Promote an existing
