@@ -101,3 +101,8 @@ export type {
 } from "./components/surface/Card";
 export { Text } from "./typography/Text";
 export type { TextColor, TextProps, TextVariant } from "./typography/Text";
+export { Tooltip, TooltipProvider } from "./components/tooltip/Tooltip";
+export type {
+  TooltipProps,
+  TooltipProviderProps,
+} from "./components/tooltip/Tooltip";

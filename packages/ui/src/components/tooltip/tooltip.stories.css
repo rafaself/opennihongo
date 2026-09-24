@@ -1,0 +1,3 @@
+.ns-tooltip-story-reduced-motion {
+  --ns-motion-duration-fast: var(--ns-motion-duration-instant);
+}

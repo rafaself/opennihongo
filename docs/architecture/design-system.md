@@ -101,7 +101,12 @@ closes unrelated transient overlays. Popover and Select interactions follow
 their underlying primitive's keyboard model, dismiss on Escape and appropriate
 outside interaction, and return focus to the trigger when they close. Tooltips
 do not take focus or contain interactive controls; they appear for pointer
-hover and keyboard focus and hide on blur, pointer exit, or Escape. Toasts
+hover and keyboard focus and hide on blur, Escape, or when the pointer exits the
+hoverable trigger-and-content region. The primitive allows pointer travel from
+the trigger to the tooltip content. Tooltip text is supplemental and must not
+be required information; the trigger keeps its own accessible name. Wrap the
+application in `TooltipProvider` once to share the pointer delay between
+triggers. Toasts
 announce updates without taking focus or trapping it and provide an explicit
 dismiss action when users need to control their lifetime. Use the chosen
 accessible primitive for focus and dismissal mechanics rather than
