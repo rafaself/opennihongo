@@ -129,40 +129,62 @@
 
 [data-theme="dark"] {
   color-scheme: dark;
-  --ns-color-canvas: var(--ns-primitive-color-neutral-900);
+
+  /* Layer neutral surfaces while keeping the canvas distinctly darkest. */
+  --ns-color-canvas: var(--ns-primitive-color-sumi-900);
   --ns-color-surface: color-mix(
     in srgb,
-    var(--ns-primitive-color-neutral-900) 82%,
-    var(--ns-primitive-color-neutral-700)
+    var(--ns-primitive-color-sumi-900) 82%,
+    var(--ns-primitive-color-sumi-700)
   );
-  --ns-color-ink: var(--ns-primitive-color-neutral-50);
-  --ns-color-muted: color-mix(
+  --ns-color-surface-subtle: color-mix(
     in srgb,
-    var(--ns-primitive-color-neutral-50) 72%,
-    var(--ns-primitive-color-neutral-700)
+    var(--ns-primitive-color-sumi-900) 65%,
+    var(--ns-primitive-color-sumi-700)
   );
-  --ns-color-border: color-mix(
-    in srgb,
-    var(--ns-primitive-color-neutral-900) 45%,
-    var(--ns-primitive-color-neutral-700)
-  );
-  --ns-color-brand: color-mix(
-    in srgb,
-    var(--ns-primitive-color-teal-700) 45%,
-    var(--ns-primitive-color-neutral-0)
-  );
-  --ns-color-brand-hover: color-mix(
-    in srgb,
-    var(--ns-primitive-color-teal-700) 35%,
-    var(--ns-primitive-color-neutral-0)
-  );
-  --ns-color-brand-foreground: var(--ns-primitive-color-neutral-900);
-  --ns-color-focus: var(--ns-primitive-color-amber-500);
-  --ns-color-selection: color-mix(
-    in srgb,
-    var(--ns-primitive-color-teal-700) 65%,
-    var(--ns-primitive-color-neutral-900)
-  );
-  --ns-color-selection-foreground: var(--ns-primitive-color-neutral-50);
+  --ns-color-surface-raised: var(--ns-primitive-color-sumi-700);
+
+  /* Light Sumi tones keep all text roles legible on dark neutral surfaces. */
+  --ns-color-text-primary: var(--ns-primitive-color-sumi-50);
+  --ns-color-text-secondary: var(--ns-primitive-color-sumi-100);
+  --ns-color-text-tertiary: var(--ns-primitive-color-sumi-300);
+  --ns-color-text-inverse: var(--ns-primitive-color-sumi-900);
+  --ns-color-ink: var(--ns-color-text-primary);
+  --ns-color-muted: var(--ns-color-text-secondary);
+
+  /* Borders remain visible on layered surfaces without competing with text. */
+  --ns-color-border-subtle: var(--ns-primitive-color-sumi-700);
+  --ns-color-border: var(--ns-primitive-color-sumi-500);
+  --ns-color-border-strong: var(--ns-primitive-color-sumi-300);
+
+  /* Keep the Hinomaru brand and use lighter steps for dark-theme actions. */
+  --ns-color-action-primary: var(--ns-primitive-color-hinomaru-500);
+  --ns-color-action-primary-hover: var(--ns-primitive-color-hinomaru-600);
+  --ns-color-action-primary-foreground: var(--ns-primitive-color-neutral-0);
+  --ns-color-brand: var(--ns-color-action-primary);
+  --ns-color-brand-hover: var(--ns-color-action-primary-hover);
+  --ns-color-brand-foreground: var(--ns-color-action-primary-foreground);
+  --ns-color-focus: var(--ns-primitive-color-amber-300);
+  --ns-color-selection: var(--ns-primitive-color-hinomaru-900);
+  --ns-color-selection-foreground: var(--ns-color-text-primary);
+
+  /* Brighter accent steps over deep matching surfaces preserve feedback meaning. */
+  --ns-color-feedback-success: var(--ns-primitive-color-green-300);
+  --ns-color-feedback-success-surface: var(--ns-primitive-color-green-900);
+  --ns-color-feedback-warning: var(--ns-primitive-color-amber-300);
+  --ns-color-feedback-warning-surface: var(--ns-primitive-color-amber-900);
+  --ns-color-feedback-info: var(--ns-primitive-color-blue-300);
+  --ns-color-feedback-info-surface: var(--ns-primitive-color-blue-900);
+  --ns-color-feedback-danger: var(--ns-primitive-color-hinomaru-300);
+  --ns-color-feedback-danger-surface: var(--ns-primitive-color-hinomaru-900);
+
+  /* Reward accents retain their light-theme family on dark surfaces. */
+  --ns-color-reward-xp: var(--ns-primitive-color-amber-300);
+  --ns-color-reward-xp-surface: var(--ns-primitive-color-amber-900);
+  --ns-color-reward-streak: var(--ns-primitive-color-orange-300);
+  --ns-color-reward-streak-surface: var(--ns-primitive-color-orange-900);
+  --ns-color-reward-achievement: var(--ns-primitive-color-indigo-300);
+  --ns-color-reward-achievement-surface: var(--ns-primitive-color-indigo-900);
+
   --ns-font-sans: var(--ns-primitive-font-family-sans);
 }

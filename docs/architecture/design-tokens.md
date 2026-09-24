@@ -105,6 +105,32 @@ Reward accents reuse the established amber, orange, and indigo families. The
 variables are included by `@opennihongo/ui/styles.css`, so hosts consume them
 through the supported stylesheet entry and can scope them with `data-theme`.
 
+## Dark theme color map
+
+The dark theme maps the same semantic roles under `[data-theme="dark"]`. It
+uses the darkest Sumi value for the canvas, progressively lighter neutral
+surfaces, and light Sumi values for text and borders. Primary actions stay
+Hinomaru red, with the 500 and 600 steps providing white-foreground control
+states. Focus uses amber 300; feedback and reward foregrounds use their 300
+steps over matching 900-step surfaces.
+
+| Role                      | Dark mapping                                                                             |
+| ------------------------- | ---------------------------------------------------------------------------------------- |
+| Brand and primary actions | Hinomaru 500, Hinomaru 600 on hover, and white foreground                                |
+| Text                      | Sumi 50 primary, 100 secondary, 300 tertiary, and Sumi 900 inverse                       |
+| Surfaces                  | Sumi 900 canvas, dark Sumi 900/700 mixes for surface layers, and Sumi 700 raised surface |
+| Borders                   | Sumi 700 subtle, 500 standard, and 300 strong                                            |
+| Focus and selection       | Amber 300 focus, Hinomaru 900 selection, and primary text                                |
+| Feedback                  | Green, amber, blue, and Hinomaru 300 foregrounds with matching 900-step surfaces         |
+| Rewards                   | Amber, orange, and indigo 300 foregrounds with matching 900-step surfaces                |
+
+Representative dark text/surface pairs use light Sumi values against the
+darkest and raised surfaces, and the primary control keeps white text over
+Hinomaru 500 in its default state and Hinomaru 600 on hover. Feedback and
+reward accents use lighter foreground steps over their deep family surfaces.
+These pairings are ready for the formal contrast audit in issue #93; that audit
+remains the source of verified conformance results.
+
 `packages/ui` owns both layers and chooses their names. Only the semantic layer
 is a component and app consumption contract. Primitive scales can be extended
 by their implementation issues; they do not make component APIs or package
