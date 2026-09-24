@@ -349,8 +349,8 @@ a {
 
   .gallery-intro-stamp {
     height: 7rem;
-    right: 8%;
-    top: 2rem;
+    margin: 2rem 0 0 auto;
+    position: static;
     width: 7rem;
     font-size: 1rem;
   }
