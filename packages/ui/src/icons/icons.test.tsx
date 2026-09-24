@@ -1,7 +1,7 @@
 import "@testing-library/jest-dom/vitest";
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
-import { CheckIcon, CloseIcon } from "@opennihongo/ui/icons";
+import { CheckIcon, CloseIcon, Icon } from "@opennihongo/ui/icons";
 
 describe("functional icon registry", () => {
   it("renders only the selected named icons", () => {
@@ -22,6 +22,58 @@ describe("functional icon registry", () => {
       "d",
       "M6 6 18 18M18 6 6 18",
     );
+  });
+
+  it("renders names from the canonical icon registry", () => {
+    const { container } = render(
+      <>
+        <Icon name="check" />
+        <Icon name="close" />
+      </>,
+    );
+
+    const icons = container.querySelectorAll("svg");
+    expect(icons).toHaveLength(2);
+    expect(icons[0]?.querySelector("path")).toHaveAttribute(
+      "d",
+      "m5 12 4 4L19 6",
+    );
+    expect(icons[1]?.querySelector("path")).toHaveAttribute(
+      "d",
+      "M6 6 18 18M18 6 6 18",
+    );
+  });
+
+  it("supports semantic colors and accessible names on registered icons", () => {
+    render(
+      <>
+        <span id="dismiss-label">Dismiss</span>
+        <Icon
+          aria-labelledby="dismiss-label"
+          color="secondary"
+          name="close"
+          size="large"
+        />
+      </>,
+    );
+
+    const icon = screen.getByRole("img", { name: "Dismiss" });
+    expect(icon).not.toHaveAttribute("aria-hidden");
+    expect(icon).toHaveAttribute("data-color", "secondary");
+    expect(icon).toHaveStyle({
+      width: "var(--ns-size-icon-box-large, 24px)",
+      height: "var(--ns-size-icon-box-large, 24px)",
+    });
+  });
+
+  it("keeps name-selected icons decorative by default", () => {
+    const { container } = render(<Icon name="check" />);
+    const icon = container.querySelector("svg");
+
+    expect(icon).toHaveAttribute("aria-hidden", "true");
+    expect(icon).toHaveAttribute("focusable", "false");
+    expect(icon).toHaveAttribute("data-color", "inherit");
+    expect(icon).not.toHaveAttribute("role", "img");
   });
 
   it("hides decorative icons from assistive technology by default", () => {

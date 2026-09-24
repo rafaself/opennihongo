@@ -1,0 +1,15 @@
+.ns-icon[data-color="primary"] {
+  color: var(--ns-color-text-primary);
+}
+
+.ns-icon[data-color="secondary"] {
+  color: var(--ns-color-text-secondary);
+}
+
+.ns-icon[data-color="tertiary"] {
+  color: var(--ns-color-text-tertiary);
+}
+
+.ns-icon[data-color="inverse"] {
+  color: var(--ns-color-text-inverse);
+}

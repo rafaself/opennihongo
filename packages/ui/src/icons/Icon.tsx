@@ -1,74 +1,22 @@
-import type { ReactNode, SVGProps } from "react";
+import type { ComponentType } from "react";
+import { CheckIcon } from "./CheckIcon";
+import { CloseIcon } from "./CloseIcon";
+import type { IconComponentProps } from "./IconBase";
 
-export type IconSize = "small" | "medium" | "large";
+export type IconName = "check" | "close";
 
-export type IconProps = Omit<
-  SVGProps<SVGSVGElement>,
-  | "children"
-  | "fill"
-  | "height"
-  | "aria-hidden"
-  | "focusable"
-  | "role"
-  | "size"
-  | "stroke"
-  | "strokeLinecap"
-  | "strokeLinejoin"
-  | "strokeWidth"
-  | "tabIndex"
-  | "title"
-  | "viewBox"
-  | "width"
-> & {
-  size?: IconSize;
+export type IconProps = IconComponentProps & {
+  name: IconName;
 };
 
-const iconBoxSizes: Record<IconSize, string> = {
-  small: "var(--ns-size-icon-box-small, 16px)",
-  medium: "var(--ns-size-icon-box-medium, 20px)",
-  large: "var(--ns-size-icon-box-large, 24px)",
-};
+const iconRegistry = {
+  check: CheckIcon,
+  close: CloseIcon,
+} satisfies Record<IconName, ComponentType<IconComponentProps>>;
 
-type IconElementProps = IconProps & {
-  children: ReactNode;
-};
+/** Renders a stable name from the first-party functional icon registry. */
+export function Icon({ name, ...props }: IconProps) {
+  const RegisteredIcon = iconRegistry[name];
 
-export function Icon({
-  children,
-  className,
-  size = "medium",
-  style,
-  "aria-label": ariaLabel,
-  "aria-labelledby": ariaLabelledBy,
-  ...props
-}: IconElementProps) {
-  const hasAccessibleName = Boolean(ariaLabel || ariaLabelledBy);
-
-  return (
-    <svg
-      {...props}
-      aria-hidden={hasAccessibleName ? undefined : true}
-      aria-label={ariaLabel}
-      aria-labelledby={ariaLabelledBy}
-      className={className}
-      fill="none"
-      focusable={false}
-      role={hasAccessibleName ? "img" : undefined}
-      stroke="currentColor"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      strokeWidth={2}
-      style={{
-        display: "inline-block",
-        flexShrink: 0,
-        height: iconBoxSizes[size],
-        verticalAlign: "-0.125em",
-        width: iconBoxSizes[size],
-        ...style,
-      }}
-      viewBox="0 0 24 24"
-    >
-      {children}
-    </svg>
-  );
+  return <RegisteredIcon {...props} />;
 }

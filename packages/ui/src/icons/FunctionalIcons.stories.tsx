@@ -1,13 +1,19 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { CheckIcon, CloseIcon, type IconSize } from "@opennihongo/ui/icons";
+import { Icon, type IconName, type IconSize } from "@opennihongo/ui/icons";
 
 const sizes: IconSize[] = ["small", "medium", "large"];
+const names: IconName[] = ["check", "close"];
 
 const meta = {
   title: "Icons/Functional icons",
-  component: CheckIcon,
+  component: Icon,
+  args: { name: "check" },
+  argTypes: {
+    name: { control: "select", options: names },
+    size: { control: "select", options: sizes },
+  },
   parameters: { layout: "centered" },
-} satisfies Meta<typeof CheckIcon>;
+} satisfies Meta<typeof Icon>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
@@ -24,14 +30,24 @@ export const Registry: Story = {
       {sizes.map((size) => (
         <div key={size} style={{ display: "grid", gap: "0.5rem" }}>
           <strong>{size}</strong>
-          <span>
-            <CheckIcon size={size} /> Check
-          </span>
-          <span>
-            <CloseIcon size={size} /> Close
-          </span>
+          {names.map((name) => (
+            <span key={name}>
+              <Icon name={name} size={size} /> {name}
+            </span>
+          ))}
         </div>
       ))}
+    </div>
+  ),
+};
+
+export const DecorativeAndNamed: Story = {
+  render: () => (
+    <div style={{ display: "grid", gap: "1rem" }}>
+      <span>
+        <Icon name="check" /> Completed
+      </span>
+      <Icon aria-label="Dismiss" name="close" />
     </div>
   ),
 };

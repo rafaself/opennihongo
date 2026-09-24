@@ -1,9 +1,9 @@
-import { Icon, type IconProps } from "./Icon";
+import { IconBase, type IconComponentProps } from "./IconBase";
 
-export function CheckIcon(props: IconProps) {
+export function CheckIcon(props: IconComponentProps) {
   return (
-    <Icon {...props}>
+    <IconBase {...props}>
       <path d="m5 12 4 4L19 6" />
-    </Icon>
+    </IconBase>
   );
 }

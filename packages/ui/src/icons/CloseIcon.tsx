@@ -1,9 +1,9 @@
-import { Icon, type IconProps } from "./Icon";
+import { IconBase, type IconComponentProps } from "./IconBase";
 
-export function CloseIcon(props: IconProps) {
+export function CloseIcon(props: IconComponentProps) {
   return (
-    <Icon {...props}>
+    <IconBase {...props}>
       <path d="M6 6 18 18M18 6 6 18" />
-    </Icon>
+    </IconBase>
   );
 }
