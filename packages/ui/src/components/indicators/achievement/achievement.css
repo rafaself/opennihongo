@@ -1,0 +1,65 @@
+.ns-achievement {
+  align-items: start;
+  display: grid;
+  gap: var(--ns-space-4);
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  padding: var(--ns-space-4);
+}
+
+.ns-achievement__icon {
+  align-items: center;
+  background-color: var(--ns-color-reward-achievement-surface);
+  border: var(--ns-border-width-standard) var(--ns-border-style-solid)
+    var(--ns-color-border-subtle);
+  border-radius: var(--ns-radius-lg);
+  color: var(--ns-color-reward-achievement);
+  display: inline-flex;
+  height: var(--ns-size-avatar-large);
+  justify-content: center;
+  width: var(--ns-size-avatar-large);
+}
+
+.ns-achievement[data-state="locked"] .ns-achievement__icon {
+  background-color: var(--ns-color-surface-subtle);
+  color: var(--ns-color-text-secondary);
+}
+
+.ns-achievement[data-state="in-progress"] .ns-achievement__icon {
+  background-color: var(--ns-color-feedback-info-surface);
+  color: var(--ns-color-feedback-info);
+}
+
+.ns-achievement__content {
+  display: grid;
+  gap: var(--ns-space-2);
+  min-width: 0;
+}
+
+.ns-achievement__title,
+.ns-achievement__description {
+  margin: 0;
+}
+
+.ns-achievement__progress {
+  display: grid;
+  gap: var(--ns-space-1);
+}
+
+.ns-achievement__progress-bar .ns-progress__indicator {
+  background-color: var(--ns-color-reward-achievement);
+}
+
+.ns-achievement__state {
+  justify-self: end;
+}
+
+@media (max-width: 30rem) {
+  .ns-achievement {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+
+  .ns-achievement__state {
+    grid-column: 2;
+    justify-self: start;
+  }
+}

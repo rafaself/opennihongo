@@ -9,6 +9,12 @@ export type {
   BadgeProps,
   BadgeVariant,
 } from "./components/indicators/badge/Badge";
+export { Achievement } from "./components/indicators/achievement/Achievement";
+export type {
+  AchievementProgress,
+  AchievementProps,
+  AchievementState,
+} from "./components/indicators/achievement/Achievement";
 export { LevelBadge } from "./components/indicators/level-badge/LevelBadge";
 export type {
   LevelBadgeProps,
