@@ -209,6 +209,31 @@ role, `--ns-text-body-size` for a text role, and `--ns-motion-control` for an
 interaction role. A semantic alias may refer to one primitive or derive from
 several primitives when a theme needs a role-specific value.
 
+## Surface roles
+
+Surface roles describe the background plane for content. Their names stay the
+same in every theme; a theme supplies the values in its color map below. They
+name background intent only and do not set component type, stacking order, or
+elevation effects.
+
+| Role            | Semantic token              | Intended use                                                                                                                                                               |
+| --------------- | --------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Canvas          | `--ns-color-canvas`         | The page or application backdrop behind content. Use it for open areas that do not need a separate content surface.                                                        |
+| Default surface | `--ns-color-surface`        | The ordinary content plane when a bounded content group needs a background distinct from the canvas.                                                                       |
+| Subtle surface  | `--ns-color-surface-subtle` | A quieter supporting group within the ordinary content plane. Choose it to reduce emphasis, not to claim that content is physically recessed.                              |
+| Raised surface  | `--ns-color-surface-raised` | Content that must read above the ordinary plane, such as transient floating content. Pair it with an elevation cue; this background token alone does not create elevation. |
+
+The canvas sits behind content. Default and subtle surfaces are alternatives at
+the ordinary content layer, selected by emphasis rather than by a fixed
+lightness or depth order. Raised surfaces sit above that layer and should be
+used only when the composition also communicates elevation. The token name
+`surface` is the default role; a separate `surface-default` alias would be
+redundant. Do not add sunken, interactive, or overlay surface aliases until a
+shared use requires a distinct background meaning. Interactive states use
+their action, focus, and selection roles, while an overlay effect belongs to
+the composition that needs it. Surface role values are documented only in the
+light and dark theme maps below.
+
 ## Light theme color map
 
 The default and explicit light themes map the shared color roles as follows.
