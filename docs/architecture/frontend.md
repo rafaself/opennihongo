@@ -7,9 +7,12 @@ resolution, and workspace linking. Nx reads the package locations from
 `pnpm-workspace.yaml`; each package declares its architectural `type:*` tag in
 its `package.json`.
 
-The workspace has four explicit project boundaries:
+The workspace has five explicit project boundaries:
 
 - `apps/web` owns the browser application and composes workspace packages.
+- `apps/ui-gallery` owns the standalone visual catalog for public Design System
+  components and tokens. It consumes `packages/ui` directly and does not depend
+  on `apps/web` runtime code.
 - `packages/core` owns framework-independent domain rules and types. It must
   remain independent from React, browser APIs, routing, styling, and concrete
   persistence implementations.
@@ -136,4 +139,5 @@ its `exports` map, and add package scripts for the targets it supports. Nx will
 discover the project and its package-script targets without a separate project
 file.
 
-Run `pnpm storybook` to work on UI components in isolation.
+Run `pnpm storybook` to work on UI components in isolation, or `pnpm ui-gallery`
+to browse the standalone component and token catalog.

@@ -8,6 +8,7 @@
   },
   "scripts": {
     "dev": "pnpm --filter @opennihongo/web dev",
+    "ui-gallery": "pnpm --filter @opennihongo/ui-gallery dev",
     "lint": "nx run-many -t lint",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
