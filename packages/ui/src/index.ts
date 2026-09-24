@@ -85,6 +85,18 @@ export type {
   StackJustify,
   StackProps,
 } from "./components/layout/Stack";
+export {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "./components/layout/tabs/Tabs";
+export type {
+  TabsContentProps,
+  TabsListProps,
+  TabsProps,
+  TabsTriggerProps,
+} from "./components/layout/tabs/Tabs";
 export { Divider } from "./components/layout/divider/Divider";
 export type { DividerProps } from "./components/layout/divider/Divider";
 export { Surface } from "./components/surface/Surface";

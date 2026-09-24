@@ -37,6 +37,11 @@ Use `Switch` for an on/off setting that takes effect immediately. Use
 `Checkbox` for selecting items and `Button` for actions that require explicit
 submission or confirmation.
 
+Use `Tabs` to switch between related panels in the current view. Keep
+route-backed navigation in the router and use links for it. Give each tab list
+an accessible name; horizontal lists scroll inline on narrow containers so
+their triggers remain unwrapped and reachable.
+
 ## Structural surfaces and cards
 
 `Surface` is a low-level visual container. It applies a semantic surface
