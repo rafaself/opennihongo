@@ -16,6 +16,12 @@ export type {
   ProgressRingProps,
   ProgressRingSize,
 } from "./components/indicators/progress/ProgressRing";
+export { Skeleton } from "./components/indicators/skeleton/Skeleton";
+export type {
+  SkeletonProps,
+  SkeletonShape,
+  SkeletonSize,
+} from "./components/indicators/skeleton/Skeleton";
 export { Avatar } from "./components/avatar/Avatar";
 export type { AvatarProps, AvatarSize } from "./components/avatar/Avatar";
 export { IconButton } from "./components/icon-button/IconButton";
