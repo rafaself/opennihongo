@@ -1,0 +1,94 @@
+.ns-checkbox {
+  align-items: center;
+  block-size: var(--ns-size-pointer-target-minimum);
+  display: inline-flex;
+  inline-size: var(--ns-size-pointer-target-minimum);
+  justify-content: center;
+  position: relative;
+  vertical-align: middle;
+}
+
+.ns-checkbox__input {
+  appearance: none;
+  background-color: var(--ns-color-surface);
+  border: var(--ns-border-width-standard) var(--ns-border-style-solid)
+    var(--ns-color-border-strong);
+  border-radius: var(--ns-radius-sm);
+  block-size: var(--ns-size-pointer-target-minimum);
+  cursor: pointer;
+  inline-size: var(--ns-size-pointer-target-minimum);
+  margin: 0;
+  transition:
+    background-color var(--ns-motion-duration-fast)
+      var(--ns-motion-easing-standard),
+    border-color var(--ns-motion-duration-fast) var(--ns-motion-easing-standard);
+}
+
+.ns-checkbox__input:hover:not(:disabled) {
+  border-color: var(--ns-color-action-primary-hover);
+}
+
+.ns-checkbox__input:checked,
+.ns-checkbox__input:indeterminate {
+  background-color: var(--ns-color-action-primary);
+  border-color: var(--ns-color-action-primary);
+}
+
+.ns-checkbox__input:focus-visible {
+  outline: var(--ns-border-width-focus) var(--ns-border-style-solid)
+    var(--ns-color-focus);
+  outline-offset: 2px;
+}
+
+.ns-checkbox__input:disabled {
+  background-color: var(--ns-color-surface-subtle);
+  border-color: var(--ns-color-border);
+  cursor: not-allowed;
+}
+
+.ns-checkbox__input:checked:disabled,
+.ns-checkbox__input:indeterminate:disabled {
+  background-color: var(--ns-color-surface-subtle);
+  border-color: var(--ns-color-border);
+}
+
+.ns-checkbox__indicator {
+  align-items: center;
+  color: var(--ns-color-action-primary-foreground);
+  display: none;
+  inset: 0;
+  justify-content: center;
+  pointer-events: none;
+  position: absolute;
+}
+
+.ns-checkbox__input:checked:not(:indeterminate) + .ns-checkbox__indicator {
+  display: flex;
+}
+
+.ns-checkbox__input:indeterminate + .ns-checkbox__indicator {
+  display: flex;
+}
+
+.ns-checkbox__input:indeterminate + .ns-checkbox__indicator > .ns-icon {
+  visibility: hidden;
+}
+
+.ns-checkbox__input:indeterminate + .ns-checkbox__indicator::after {
+  background-color: currentColor;
+  block-size: var(--ns-border-width-emphasis);
+  border-radius: var(--ns-radius-pill);
+  content: "";
+  inline-size: var(--ns-size-icon-box-small);
+}
+
+.ns-checkbox__input:checked:disabled + .ns-checkbox__indicator,
+.ns-checkbox__input:indeterminate:disabled + .ns-checkbox__indicator {
+  color: var(--ns-color-text-secondary);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ns-checkbox__input {
+    transition: none;
+  }
+}

@@ -11,6 +11,8 @@ export type {
   FormFieldControlProps,
   FormFieldProps,
 } from "./components/form-field/FormField";
+export { Checkbox } from "./components/checkbox/Checkbox";
+export type { CheckboxProps } from "./components/checkbox/Checkbox";
 export { Input } from "./components/input/Input";
 export type {
   InputProps,
