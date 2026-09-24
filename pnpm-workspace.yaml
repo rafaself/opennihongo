@@ -4,3 +4,5 @@ packages:
 allowBuilds:
   esbuild: true # Required for Vite's platform-specific build tooling.
   nx: true # Required for Nx's post-install script.
+patchedDependencies:
+  "@radix-ui/react-select@2.3.7": patches/@radix-ui__react-select@2.3.7.patch

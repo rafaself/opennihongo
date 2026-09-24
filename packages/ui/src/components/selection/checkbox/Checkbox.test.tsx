@@ -2,7 +2,7 @@ import "@testing-library/jest-dom/vitest";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it } from "vitest";
-import { FormField } from "../form-field/FormField";
+import { FormField } from "../../form-field/FormField";
 import { Checkbox } from "./Checkbox";
 
 describe("Checkbox", () => {

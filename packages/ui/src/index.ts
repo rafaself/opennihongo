@@ -25,14 +25,34 @@ export type {
   FormFieldControlProps,
   FormFieldProps,
 } from "./components/form-field/FormField";
-export { Checkbox } from "./components/checkbox/Checkbox";
-export type { CheckboxProps } from "./components/checkbox/Checkbox";
+export { Checkbox } from "./components/selection/checkbox/Checkbox";
+export type { CheckboxProps } from "./components/selection/checkbox/Checkbox";
 export { Switch } from "./components/switch/Switch";
 export type { SwitchProps } from "./components/switch/Switch";
-export { Radio } from "./components/radio-group/Radio";
-export type { RadioProps } from "./components/radio-group/Radio";
-export { RadioGroup } from "./components/radio-group/RadioGroup";
-export type { RadioGroupProps } from "./components/radio-group/RadioGroup";
+export { Radio } from "./components/selection/radio-group/Radio";
+export type { RadioProps } from "./components/selection/radio-group/Radio";
+export { RadioGroup } from "./components/selection/radio-group/RadioGroup";
+export type { RadioGroupProps } from "./components/selection/radio-group/RadioGroup";
+export {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectSeparator,
+  SelectTrigger,
+  SelectValue,
+} from "./components/selection/select/Select";
+export type {
+  SelectContentProps,
+  SelectGroupProps,
+  SelectItemProps,
+  SelectLabelProps,
+  SelectProps,
+  SelectSeparatorProps,
+  SelectTriggerProps,
+  SelectValueProps,
+} from "./components/selection/select/Select";
 export { Input } from "./components/input/Input";
 export type {
   InputProps,

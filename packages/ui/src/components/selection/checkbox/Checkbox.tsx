@@ -1,5 +1,5 @@
 import { useLayoutEffect, useRef, type InputHTMLAttributes } from "react";
-import { Icon } from "../../icons/Icon";
+import { Icon } from "../../../icons/Icon";
 import "./checkbox.css";
 
 export type CheckboxProps = Omit<

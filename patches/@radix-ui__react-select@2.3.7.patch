@@ -1,0 +1,28 @@
+diff --git a/dist/index.d.mts b/dist/index.d.mts
+index 151e643780e28dfc9f9948be46f2dc34d34f7f09..1799ec3f4d5970c3904801c6c1d5b084f95f778b 100644
+--- a/dist/index.d.mts
++++ b/dist/index.d.mts
+@@ -97,8 +97,7 @@ interface SelectContentImplProps extends Omit<SelectPopperPositionProps, keyof S
+ interface SelectItemAlignedPositionProps extends PrimitiveDivProps, SelectPopperPrivateProps {
+ }
+ type PopperContentProps = React.ComponentPropsWithoutRef<typeof PopperPrimitive.Content>;
+-interface SelectPopperPositionProps extends PopperContentProps, SelectPopperPrivateProps {
+-}
++type SelectPopperPositionProps = Omit<PopperContentProps, keyof SelectPopperPrivateProps> & SelectPopperPrivateProps;
+ type PrimitiveDivProps = React.ComponentPropsWithoutRef<typeof Primitive.div>;
+ interface SelectViewportProps extends PrimitiveDivProps {
+     nonce?: string;
+diff --git a/dist/index.d.ts b/dist/index.d.ts
+index 151e643780e28dfc9f9948be46f2dc34d34f7f09..1799ec3f4d5970c3904801c6c1d5b084f95f778b 100644
+--- a/dist/index.d.ts
++++ b/dist/index.d.ts
+@@ -97,8 +97,7 @@ interface SelectContentImplProps extends Omit<SelectPopperPositionProps, keyof S
+ interface SelectItemAlignedPositionProps extends PrimitiveDivProps, SelectPopperPrivateProps {
+ }
+ type PopperContentProps = React.ComponentPropsWithoutRef<typeof PopperPrimitive.Content>;
+-interface SelectPopperPositionProps extends PopperContentProps, SelectPopperPrivateProps {
+-}
++type SelectPopperPositionProps = Omit<PopperContentProps, keyof SelectPopperPrivateProps> & SelectPopperPrivateProps;
+ type PrimitiveDivProps = React.ComponentPropsWithoutRef<typeof Primitive.div>;
+ interface SelectViewportProps extends PrimitiveDivProps {
+     nonce?: string;
