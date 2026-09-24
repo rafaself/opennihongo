@@ -1,0 +1,11 @@
+.ns-dialog-story__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ns-space-3);
+  margin-block-start: var(--ns-space-6);
+}
+
+.ns-dialog__content.ns-dialog-story-reduced-motion,
+body:has(.ns-dialog-story-reduced-motion) .ns-dialog__overlay {
+  animation: none;
+}

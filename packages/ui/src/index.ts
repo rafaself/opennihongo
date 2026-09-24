@@ -111,6 +111,22 @@ export type {
   PopoverProps,
   PopoverTriggerProps,
 } from "./components/overlay/popover/Popover";
+export {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogTitle,
+  DialogTrigger,
+} from "./components/overlay/dialog/Dialog";
+export type {
+  DialogCloseProps,
+  DialogContentProps,
+  DialogDescriptionProps,
+  DialogProps,
+  DialogTitleProps,
+  DialogTriggerProps,
+} from "./components/overlay/dialog/Dialog";
 export { Tooltip, TooltipProvider } from "./components/overlay/tooltip/Tooltip";
 export type {
   TooltipProps,

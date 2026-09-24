@@ -1,0 +1,114 @@
+.ns-dialog__overlay {
+  background-color: var(--ns-color-overlay-backdrop);
+  inset: 0;
+  position: fixed;
+  z-index: var(--ns-layer-dialog-backdrop);
+}
+
+.ns-dialog__overlay[data-state="open"] {
+  animation: ns-dialog-backdrop-enter var(--ns-motion-duration-fast)
+    var(--ns-motion-easing-enter) both;
+}
+
+.ns-dialog__overlay[data-state="closed"] {
+  animation: ns-dialog-backdrop-exit var(--ns-motion-duration-fast)
+    var(--ns-motion-easing-exit) both;
+}
+
+.ns-dialog__content {
+  background-color: var(--ns-color-surface-raised);
+  border: var(--ns-border-width-standard) var(--ns-border-style-solid)
+    var(--ns-color-border);
+  border-radius: var(--ns-radius-lg);
+  box-shadow: var(--ns-elevation-dialog);
+  box-sizing: border-box;
+  color: var(--ns-color-text-primary);
+  inset-block-start: 50%;
+  inset-inline-start: 50%;
+  max-block-size: calc(100dvh - var(--ns-space-8));
+  max-inline-size: calc(100vw - var(--ns-space-8));
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: var(--ns-space-6);
+  position: fixed;
+  transform: translate(-50%, -50%);
+  width: min(32rem, calc(100vw - var(--ns-space-8)));
+  z-index: var(--ns-layer-dialog);
+}
+
+.ns-dialog__content[data-state="open"] {
+  animation: ns-dialog-enter var(--ns-motion-duration-fast)
+    var(--ns-motion-easing-enter) both;
+}
+
+.ns-dialog__content[data-state="closed"] {
+  animation: ns-dialog-exit var(--ns-motion-duration-fast)
+    var(--ns-motion-easing-exit) both;
+}
+
+.ns-dialog__title {
+  color: var(--ns-color-text-primary);
+  font: inherit;
+  font-size: var(--ns-text-heading-size);
+  font-weight: var(--ns-text-heading-weight);
+  letter-spacing: var(--ns-text-heading-letter-spacing);
+  line-height: var(--ns-text-heading-line-height);
+  margin: 0;
+}
+
+.ns-dialog__description {
+  color: var(--ns-color-text-secondary);
+  font: inherit;
+  margin-block: var(--ns-space-2) 0;
+}
+
+@keyframes ns-dialog-backdrop-enter {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes ns-dialog-backdrop-exit {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes ns-dialog-enter {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -48%) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+@keyframes ns-dialog-exit {
+  from {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+  to {
+    opacity: 0;
+    transform: translate(-50%, -48%) scale(0.98);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ns-dialog__overlay,
+  .ns-dialog__content {
+    animation: none;
+  }
+}
