@@ -34,12 +34,27 @@ scale step, using the `--ns-primitive-` prefix. Examples for future scales:
 | Motion duration    | `--ns-primitive-motion-duration-{step}` | `--ns-primitive-motion-duration-2`      |
 | Motion easing      | `--ns-primitive-motion-easing-{name}`   | `--ns-primitive-motion-easing-standard` |
 
-The source includes the complete initial Hinomaru-inspired brand scale as
-primitive values. These palette steps are raw brand primitives for semantic
-theme mappings; components and application styles must consume semantic tokens
-instead. The palette does not claim that any value is the legally canonical
-Japanese flag color. Other color, spacing, type, and motion families remain
-small sets until their scale issues extend them in this source.
+The source includes the complete initial Hinomaru-inspired brand scale and
+Sumi-inspired neutral scale as primitive values. These palette steps are raw
+primitives for later semantic theme mappings; components and application
+styles must consume semantic tokens instead. The Hinomaru palette does not
+claim that any value is the legally canonical Japanese flag color. Sumi uses
+slightly warm, ink-like neutrals rather than pure black throughout the
+interface:
+
+| Primitive token                 | Value     |
+| ------------------------------- | --------- |
+| `--ns-primitive-color-sumi-50`  | `#FAFAF9` |
+| `--ns-primitive-color-sumi-100` | `#F2F2F0` |
+| `--ns-primitive-color-sumi-300` | `#C9C9C5` |
+| `--ns-primitive-color-sumi-500` | `#777772` |
+| `--ns-primitive-color-sumi-600` | `#595956` |
+| `--ns-primitive-color-sumi-700` | `#3C3C39` |
+| `--ns-primitive-color-sumi-900` | `#181817` |
+
+The Sumi values do not assign text, border, or surface roles. Other color,
+spacing, type, and motion families remain small sets until their scale issues
+extend them in this source.
 
 Semantic tokens name the interface role, use the `--ns-` prefix, and omit
 palette families and scale steps. For example, use `--ns-color-canvas` or

@@ -9,6 +9,15 @@
   --ns-primitive-color-hinomaru-700: #990026;
   --ns-primitive-color-hinomaru-900: #5f0018;
 
+  /* Sumi-inspired ink neutral primitives; these values have no semantic roles. */
+  --ns-primitive-color-sumi-50: #fafaf9;
+  --ns-primitive-color-sumi-100: #f2f2f0;
+  --ns-primitive-color-sumi-300: #c9c9c5;
+  --ns-primitive-color-sumi-500: #777772;
+  --ns-primitive-color-sumi-600: #595956;
+  --ns-primitive-color-sumi-700: #3c3c39;
+  --ns-primitive-color-sumi-900: #181817;
+
   --ns-primitive-color-neutral-0: #ffffff;
   --ns-primitive-color-neutral-50: #f7f8f5;
   --ns-primitive-color-neutral-200: #dce5e1;
