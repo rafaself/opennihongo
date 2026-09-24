@@ -6,13 +6,12 @@ the selected theme supplies their values.
 
 ## Source and public import
 
-Keep primitive values and semantic aliases together in
-`packages/ui/src/tokens.css`. That file is package-internal and is included by
-`packages/ui/src/styles.css`, the public stylesheet exported as
-`@opennihongo/ui/styles.css`. Consumers import that package path; they do not
-import token source files or add a token-specific package export. The stylesheet
-is the source; CSS is processed by the existing app toolchains without a
-separate token build pipeline.
+Keep primitive values and semantic aliases in `packages/ui/src/tokens.css`.
+That file is included by `packages/ui/src/styles.css`, exported as
+`@opennihongo/ui/styles.css`. The [motion token guide](motion-tokens.md)
+describes its initial timing roles. Consumers import the package stylesheet,
+not token internals or a token-specific export. CSS is processed by existing
+toolchains without a separate token build pipeline.
 
 `packages/ui/src/styles.css` owns shared resets and base element styles.
 `packages/ui/src/tokens.css` owns primitive values, spacing, sizing, radius, and
