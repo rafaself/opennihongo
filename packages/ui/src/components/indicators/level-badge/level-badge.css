@@ -1,0 +1,31 @@
+.ns-level-badge {
+  gap: var(--ns-space-2);
+  padding-block: var(--ns-space-2);
+  padding-inline: var(--ns-space-3);
+}
+
+.ns-level-badge[data-size="compact"] {
+  gap: var(--ns-space-1);
+  padding-block: var(--ns-space-1);
+  padding-inline: var(--ns-space-2);
+}
+
+.ns-level-badge__icon {
+  color: var(--ns-color-reward-achievement);
+}
+
+.ns-level-badge__value {
+  font-variant-numeric: tabular-nums;
+}
+
+.ns-level-badge__tier {
+  font-size: var(--ns-text-caption-size);
+  line-height: var(--ns-text-caption-line-height);
+  padding-block: var(--ns-space-1);
+  padding-inline: var(--ns-space-2);
+}
+
+.ns-level-badge[data-size="compact"] .ns-level-badge__tier {
+  padding-block: 0;
+  padding-inline: var(--ns-space-1);
+}

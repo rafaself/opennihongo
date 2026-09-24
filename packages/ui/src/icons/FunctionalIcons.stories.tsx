@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Icon, type IconName, type IconSize } from "@opennihongo/ui/icons";
 
 const sizes: IconSize[] = ["small", "medium", "large"];
-const names: IconName[] = ["check", "close"];
+const names: IconName[] = ["check", "close", "star"];
 
 const meta = {
   title: "Icons/Functional icons",

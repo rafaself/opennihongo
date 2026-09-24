@@ -5,6 +5,7 @@ import {
   CheckIcon,
   CloseIcon,
   Icon,
+  StarIcon,
   type IconComponentProps,
 } from "@opennihongo/ui/icons";
 
@@ -21,11 +22,12 @@ describe("functional icon registry", () => {
       <>
         <CheckIcon />
         <CloseIcon />
+        <StarIcon />
       </>,
     );
 
     const icons = container.querySelectorAll("svg");
-    expect(icons).toHaveLength(2);
+    expect(icons).toHaveLength(3);
     expect(icons[0]?.querySelector("path")).toHaveAttribute(
       "d",
       "m5 12 4 4L19 6",
@@ -33,6 +35,10 @@ describe("functional icon registry", () => {
     expect(icons[1]?.querySelector("path")).toHaveAttribute(
       "d",
       "M6 6 18 18M18 6 6 18",
+    );
+    expect(icons[2]?.querySelector("path")).toHaveAttribute(
+      "d",
+      "m12 3 2.7 5.5 6.1.9-4.4 4.3 1 6.1-5.4-2.9-5.4 2.9 1-6.1-4.4-4.3 6.1-.9L12 3Z",
     );
   });
 
@@ -41,11 +47,12 @@ describe("functional icon registry", () => {
       <>
         <Icon name="check" />
         <Icon name="close" />
+        <Icon name="star" />
       </>,
     );
 
     const icons = container.querySelectorAll("svg");
-    expect(icons).toHaveLength(2);
+    expect(icons).toHaveLength(3);
     expect(icons[0]?.querySelector("path")).toHaveAttribute(
       "d",
       "m5 12 4 4L19 6",
@@ -53,6 +60,10 @@ describe("functional icon registry", () => {
     expect(icons[1]?.querySelector("path")).toHaveAttribute(
       "d",
       "M6 6 18 18M18 6 6 18",
+    );
+    expect(icons[2]?.querySelector("path")).toHaveAttribute(
+      "d",
+      "m12 3 2.7 5.5 6.1.9-4.4 4.3 1 6.1-5.4-2.9-5.4 2.9 1-6.1-4.4-4.3 6.1-.9L12 3Z",
     );
   });
 

@@ -9,6 +9,12 @@ export type {
   BadgeProps,
   BadgeVariant,
 } from "./components/indicators/badge/Badge";
+export { LevelBadge } from "./components/indicators/level-badge/LevelBadge";
+export type {
+  LevelBadgeProps,
+  LevelBadgeSize,
+  LevelBadgeTier,
+} from "./components/indicators/level-badge/LevelBadge";
 export { Progress } from "./components/indicators/progress/Progress";
 export type { ProgressProps } from "./components/indicators/progress/Progress";
 export { XPBar } from "./components/indicators/xp-bar/XPBar";
