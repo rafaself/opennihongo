@@ -1,0 +1,70 @@
+.ns-grid {
+  display: grid;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  gap: var(--ns-space-4);
+}
+
+.ns-grid[data-gap="none"] {
+  gap: 0;
+}
+
+.ns-grid[data-gap="1"] {
+  gap: var(--ns-space-1);
+}
+
+.ns-grid[data-gap="2"] {
+  gap: var(--ns-space-2);
+}
+
+.ns-grid[data-gap="2-5"] {
+  gap: var(--ns-space-2-5);
+}
+
+.ns-grid[data-gap="3"] {
+  gap: var(--ns-space-3);
+}
+
+.ns-grid[data-gap="4"] {
+  gap: var(--ns-space-4);
+}
+
+.ns-grid[data-gap="5"] {
+  gap: var(--ns-space-5);
+}
+
+.ns-grid[data-gap="6"] {
+  gap: var(--ns-space-6);
+}
+
+.ns-grid[data-gap="8"] {
+  gap: var(--ns-space-8);
+}
+
+.ns-grid[data-gap="12"] {
+  gap: var(--ns-space-12);
+}
+
+.ns-grid[data-gap="16"] {
+  gap: var(--ns-space-16);
+}
+
+@media (min-width: 40rem) {
+  .ns-grid[data-columns="2"],
+  .ns-grid[data-columns="3"],
+  .ns-grid[data-columns="4"] {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 60rem) {
+  .ns-grid[data-columns="3"],
+  .ns-grid[data-columns="4"] {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 80rem) {
+  .ns-grid[data-columns="4"] {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}

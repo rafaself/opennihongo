@@ -1,0 +1,21 @@
+.ns-grid-story-card {
+  min-height: 8rem;
+  padding: var(--ns-space-4);
+  border: var(--ns-border-width-subtle) var(--ns-border-style-solid)
+    var(--ns-color-border);
+  border-radius: var(--ns-radius-card);
+  background: var(--ns-color-surface);
+}
+
+.ns-grid-story-card h2 {
+  margin: 0;
+  color: var(--ns-color-text-primary);
+  font-size: var(--ns-text-heading-size);
+  font-weight: var(--ns-text-heading-weight);
+  line-height: var(--ns-text-heading-line-height);
+}
+
+.ns-grid-story-card p {
+  margin: var(--ns-space-2) 0 0;
+  color: var(--ns-color-text-secondary);
+}

@@ -1,5 +1,7 @@
 export { Button } from "./components/Button";
 export type { ButtonProps, ButtonVariant } from "./components/Button";
+export { Grid } from "./components/grid/Grid";
+export type { GridColumns, GridGap, GridProps } from "./components/grid/Grid";
 export { Inline } from "./components/Inline";
 export type {
   InlineAlign,

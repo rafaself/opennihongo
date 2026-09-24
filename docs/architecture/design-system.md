@@ -54,6 +54,10 @@ internals.
 
 ## Quality and documentation
 
+Use `Grid` for equal-width, responsive columns with shared spacing gaps. Use
+CSS Grid directly when a layout needs named areas, explicit item placement, or
+custom track sizing.
+
 Shared components must support their intended keyboard and assistive
 technology interactions. Prefer native HTML semantics, label controls, expose
 state and errors accessibly, preserve visible focus, and verify color contrast
