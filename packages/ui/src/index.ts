@@ -16,3 +16,5 @@ export type {
   StackJustify,
   StackProps,
 } from "./components/Stack";
+export { Text } from "./typography/Text";
+export type { TextColor, TextProps, TextVariant } from "./typography/Text";

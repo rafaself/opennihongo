@@ -1,0 +1,16 @@
+.ns-text {
+  color: var(--ns-color-text-primary);
+  margin: 0;
+}
+
+.ns-text[data-color="secondary"] {
+  color: var(--ns-color-text-secondary);
+}
+
+.ns-text[data-color="tertiary"] {
+  color: var(--ns-color-text-tertiary);
+}
+
+.ns-text[data-color="inverse"] {
+  color: var(--ns-color-text-inverse);
+}
