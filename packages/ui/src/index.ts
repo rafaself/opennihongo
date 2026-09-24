@@ -4,8 +4,13 @@ export type {
   ButtonSize,
   ButtonVariant,
 } from "./components/button/Button";
-export { Badge } from "./components/badge/Badge";
-export type { BadgeProps, BadgeVariant } from "./components/badge/Badge";
+export { Badge } from "./components/indicators/badge/Badge";
+export type {
+  BadgeProps,
+  BadgeVariant,
+} from "./components/indicators/badge/Badge";
+export { Progress } from "./components/indicators/progress/Progress";
+export type { ProgressProps } from "./components/indicators/progress/Progress";
 export { Avatar } from "./components/avatar/Avatar";
 export type { AvatarProps, AvatarSize } from "./components/avatar/Avatar";
 export { IconButton } from "./components/icon-button/IconButton";

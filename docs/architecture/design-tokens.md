@@ -82,6 +82,7 @@ primitive values directly.
 
 | Primitive token          | Value     |
 | ------------------------ | --------- |
+| `--ns-primitive-size-8`  | `0.5rem`  |
 | `--ns-primitive-size-16` | `1rem`    |
 | `--ns-primitive-size-20` | `1.25rem` |
 | `--ns-primitive-size-24` | `1.5rem`  |
@@ -96,6 +97,7 @@ applied to both minimum width and minimum height.
 
 | Purpose                 | Semantic token                         | Value  | Guidance                                 |
 | ----------------------- | -------------------------------------- | ------ | ---------------------------------------- |
+| Progress track          | `--ns-size-progress-track`             | `8px`  | Static linear progress indicator height  |
 | Compact control height  | `--ns-size-control-height-compact`     | `40px` | Use for dense, secondary controls        |
 | Standard control height | `--ns-size-control-height-standard`    | `44px` | Default shared control height            |
 | Comfortable control     | `--ns-size-control-height-comfortable` | `48px` | Use when a larger control is appropriate |

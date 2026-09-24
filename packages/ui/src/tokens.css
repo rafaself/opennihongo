@@ -119,7 +119,8 @@
   --ns-primitive-space-12: 3rem;
   --ns-primitive-space-16: 4rem;
 
-  /* Intrinsic sizing values serve icon boxes, control heights, and targets. */
+  /* Intrinsic sizing values serve controls, targets, icons, and indicators. */
+  --ns-primitive-size-8: 0.5rem;
   --ns-primitive-size-16: 1rem;
   --ns-primitive-size-20: 1.25rem;
   --ns-primitive-size-24: 1.5rem;
@@ -158,6 +159,7 @@
   --ns-size-control-height-compact: var(--ns-primitive-size-40);
   --ns-size-control-height-standard: var(--ns-primitive-size-44);
   --ns-size-control-height-comfortable: var(--ns-primitive-size-48);
+  --ns-size-progress-track: var(--ns-primitive-size-8);
 
   --ns-size-avatar-small: var(--ns-primitive-size-24);
   --ns-size-avatar-medium: var(--ns-primitive-size-40);

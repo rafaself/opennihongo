@@ -1,0 +1,15 @@
+.ns-progress {
+  background-color: var(--ns-color-surface-subtle);
+  border-radius: var(--ns-radius-pill);
+  display: block;
+  height: var(--ns-size-progress-track);
+  overflow: hidden;
+  width: 100%;
+}
+
+.ns-progress__indicator {
+  background-color: var(--ns-color-action-primary);
+  border-radius: inherit;
+  display: block;
+  height: 100%;
+}
