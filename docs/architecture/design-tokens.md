@@ -52,9 +52,29 @@ interface:
 | `--ns-primitive-color-sumi-700` | `#3C3C39` |
 | `--ns-primitive-color-sumi-900` | `#181817` |
 
-The Sumi values do not assign text, border, or surface roles. Other color,
-spacing, type, and motion families remain small sets until their scale issues
-extend them in this source.
+The Sumi values do not assign text, border, or surface roles. The supporting
+color scales below are raw accent values, not additional brand colors or
+semantic aliases. Semantic themes map interface meanings to these palettes;
+components and application styles must continue to consume those semantic
+tokens instead of selecting a palette directly.
+
+Green supplies success accents, amber is shared by warning and XP/reward
+accents, blue supplies information accents, orange supplies streak accents,
+and indigo supplies achievement accents. Sharing amber avoids introducing a
+second gold-like family. These are restrained feedback and gamification
+accents, not decorative rainbow colors.
+
+| Primitive family | 50        | 100       | 300       | 500       | 600       | 700       | 900       |
+| ---------------- | --------- | --------- | --------- | --------- | --------- | --------- | --------- |
+| green            | `#EDF9F1` | `#D7F1DF` | `#7BCF96` | `#32965A` | `#277A49` | `#1D6039` | `#123C26` |
+| amber            | `#FFF8E9` | `#FFEDC7` | `#F2C46F` | `#D58E3F` | `#BB702B` | `#925522` | `#57330F` |
+| blue             | `#EFF7FF` | `#D8EBFF` | `#8CBEF2` | `#478AD4` | `#3472B7` | `#2B5B93` | `#1C365E` |
+| orange           | `#FFF3EB` | `#FFE3D1` | `#F5AA78` | `#E4753E` | `#C85A2C` | `#9F4425` | `#5D2719` |
+| indigo           | `#F3F1FF` | `#E5E0FF` | `#B2A7F5` | `#7766D4` | `#6251B5` | `#4D4091` | `#30285D` |
+
+All values remain available only through the public stylesheet's shared token
+path. Later semantic theme mappings may select the steps appropriate to each
+role and theme without exposing raw palette names as component APIs.
 
 Semantic tokens name the interface role, use the `--ns-` prefix, and omit
 palette families and scale steps. For example, use `--ns-color-canvas` or
