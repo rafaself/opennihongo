@@ -1,0 +1,87 @@
+.ns-radio-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ns-space-2);
+}
+
+.ns-radio-group[data-orientation="horizontal"] {
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.ns-radio {
+  align-items: center;
+  background: transparent;
+  border: 0;
+  border-radius: var(--ns-radius-md);
+  color: var(--ns-color-text-primary);
+  cursor: pointer;
+  display: inline-flex;
+  font: inherit;
+  gap: var(--ns-space-2);
+  line-height: inherit;
+  min-block-size: var(--ns-size-pointer-target-minimum);
+  padding: var(--ns-space-1);
+  text-align: start;
+  transition: color var(--ns-motion-duration-fast)
+    var(--ns-motion-easing-standard);
+}
+
+.ns-radio__control {
+  align-items: center;
+  background-color: var(--ns-color-surface);
+  border: var(--ns-border-width-standard) var(--ns-border-style-solid)
+    var(--ns-color-border-strong);
+  block-size: var(--ns-size-pointer-target-minimum);
+  border-radius: var(--ns-radius-pill);
+  display: inline-flex;
+  flex: 0 0 var(--ns-size-pointer-target-minimum);
+  inline-size: var(--ns-size-pointer-target-minimum);
+  justify-content: center;
+  transition:
+    background-color var(--ns-motion-duration-fast)
+      var(--ns-motion-easing-standard),
+    border-color var(--ns-motion-duration-fast) var(--ns-motion-easing-standard);
+}
+
+.ns-radio__indicator {
+  background-color: var(--ns-color-action-primary);
+  block-size: var(--ns-primitive-size-8);
+  border-radius: var(--ns-radius-pill);
+  inline-size: var(--ns-primitive-size-8);
+}
+
+.ns-radio[data-state="checked"] .ns-radio__control {
+  border-color: var(--ns-color-action-primary);
+}
+
+.ns-radio:hover:not([data-disabled]) .ns-radio__control {
+  border-color: var(--ns-color-action-primary-hover);
+}
+
+.ns-radio:focus-visible {
+  outline: var(--ns-border-width-focus) var(--ns-border-style-solid)
+    var(--ns-color-focus);
+  outline-offset: 2px;
+}
+
+.ns-radio[data-disabled] {
+  color: var(--ns-color-text-secondary);
+  cursor: not-allowed;
+}
+
+.ns-radio[data-disabled] .ns-radio__control {
+  background-color: var(--ns-color-surface-subtle);
+  border-color: var(--ns-color-border);
+}
+
+.ns-radio[data-disabled][data-state="checked"] .ns-radio__indicator {
+  background-color: var(--ns-color-text-secondary);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ns-radio,
+  .ns-radio__control {
+    transition: none;
+  }
+}

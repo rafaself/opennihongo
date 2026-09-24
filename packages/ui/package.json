@@ -39,5 +39,8 @@
     "tags": [
       "type:ui"
     ]
+  },
+  "dependencies": {
+    "@radix-ui/react-radio-group": "1.4.7"
   }
 }

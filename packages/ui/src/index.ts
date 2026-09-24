@@ -13,6 +13,10 @@ export type {
 } from "./components/form-field/FormField";
 export { Checkbox } from "./components/checkbox/Checkbox";
 export type { CheckboxProps } from "./components/checkbox/Checkbox";
+export { Radio } from "./components/radio-group/Radio";
+export type { RadioProps } from "./components/radio-group/Radio";
+export { RadioGroup } from "./components/radio-group/RadioGroup";
+export type { RadioGroupProps } from "./components/radio-group/RadioGroup";
 export { Input } from "./components/input/Input";
 export type {
   InputProps,
