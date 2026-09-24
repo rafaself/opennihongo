@@ -30,6 +30,9 @@ established.
 
 ## UI package public API
 
+Ownership and promotion rules for shared and feature-local UI are documented in
+the [Design System contribution guide](design-system.md).
+
 `packages/ui/package.json` is the source of truth for the `@opennihongo/ui`
 package's public imports. Its `exports` map currently declares only:
 

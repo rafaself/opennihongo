@@ -81,6 +81,9 @@ pull request, run `pnpm lint`, `pnpm format:check`, and `pnpm typecheck` locally
 GitHub Actions is disabled to avoid CI costs. Avoid `any` and TypeScript
 suppression comments.
 
+For ownership, contribution, and promotion rules for shared UI, see the
+[Design System contribution guide](docs/architecture/design-system.md).
+
 To validate a message locally without installing project dependencies:
 
 ```sh
