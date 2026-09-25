@@ -230,6 +230,17 @@
   }
 }
 
+:root[data-motion="reduced"] {
+  --ns-motion-duration-fast: var(--ns-motion-duration-instant);
+  --ns-motion-duration-normal: var(--ns-motion-duration-instant);
+  --ns-motion-duration-slow: var(--ns-motion-duration-instant);
+  --ns-motion-duration-celebration: var(--ns-motion-duration-instant);
+  --ns-motion-duration-indeterminate: var(--ns-motion-duration-instant);
+  --ns-motion-press-offset: 0px;
+  --ns-motion-easing-spring: var(--ns-motion-easing-standard);
+  --ns-motion-easing-bounce: var(--ns-motion-easing-standard);
+}
+
 /* Semantic text roles compose the primitives for common interface content. */
 :root {
   --ns-text-display-size: var(--ns-primitive-font-size-8);

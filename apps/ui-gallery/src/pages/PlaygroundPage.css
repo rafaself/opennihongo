@@ -78,18 +78,90 @@
   margin: 0.4rem 0 1rem;
 }
 
-.gallery-playground-option {
-  align-items: center;
-  display: flex;
-  gap: 0.625rem;
-  padding: 0.5rem 0;
-  text-transform: capitalize;
+.gallery-playground-global-workbench {
+  background: var(--ns-color-surface);
+  border: 1px solid var(--ns-color-border);
+  border-radius: 1rem;
+  display: grid;
+  grid-template-columns: minmax(13rem, 0.8fr) minmax(0, 1.2fr);
+  overflow: hidden;
+}
+
+.gallery-playground-global-controls {
+  align-content: start;
+  border-right: 1px solid var(--ns-color-border);
+  display: grid;
+  gap: 1.5rem;
+  padding: 1.5rem;
+}
+
+.gallery-playground-global-fieldset {
+  border: 0;
+  margin: 0;
+  min-width: 0;
+  padding: 0;
+}
+
+.gallery-playground-global-fieldset legend {
+  font-size: 0.9375rem;
+  font-weight: 700;
+  padding: 0;
+}
+
+.gallery-playground-global-fieldset > p {
+  color: var(--ns-color-muted);
+  font-size: 0.875rem;
+  line-height: 1.6;
+  margin: 0.4rem 0 0.5rem;
 }
 
 .gallery-playground-option input {
   accent-color: var(--ns-color-brand);
   height: 1rem;
   width: 1rem;
+}
+
+.gallery-playground-status {
+  color: var(--ns-color-muted);
+  font-size: 0.875rem;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.gallery-playground-global-preview {
+  align-items: flex-start;
+  background-image: radial-gradient(#dce5e1 0.65px, transparent 0.65px);
+  background-size: 12px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  justify-content: center;
+  min-height: 20rem;
+  padding: 2rem;
+}
+
+.gallery-playground-preview-label {
+  color: var(--ns-color-muted);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.gallery-playground-motion-example,
+.gallery-playground-celebration-example {
+  align-items: center;
+  display: flex;
+  gap: 1rem;
+}
+
+.gallery-playground-option {
+  align-items: center;
+  display: flex;
+  gap: 0.625rem;
+  padding: 0.5rem 0;
+  text-transform: capitalize;
 }
 
 .gallery-playground-preview {
@@ -111,12 +183,22 @@
     grid-template-columns: minmax(0, 1fr);
   }
 
+  .gallery-playground-global-workbench {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
   .gallery-playground-controls {
     border-bottom: 1px solid var(--ns-color-border);
     border-right: 0;
   }
 
-  .gallery-playground-preview {
+  .gallery-playground-global-controls {
+    border-bottom: 1px solid var(--ns-color-border);
+    border-right: 0;
+  }
+
+  .gallery-playground-preview,
+  .gallery-playground-global-preview {
     min-height: 11rem;
   }
 }

@@ -59,9 +59,15 @@ physics simulations or repeated bounce keyframes.
 The public stylesheet detects `prefers-reduced-motion: reduce` in one shared
 media query. When active, semantic transition durations resolve to instant, the
 press offset becomes zero, and spring/bounce aliases resolve to the standard
-easing. Components should use semantic aliases instead of hard-coded timings or
-primitive values so the preference is honored. Instant updates still expose
-the same state; the preference removes movement, not information.
+easing. Applications and the UI Gallery can also set `data-motion="reduced"`
+on the document root to explicitly simulate reduced motion without changing
+the operating-system setting. The shared stylesheet then disables animations,
+transitions, and smooth scrolling throughout the document, and motion-aware
+components such as `Celebration` observe the same attribute. Removing the
+attribute returns CSS motion tokens and JavaScript effects to the system
+preference. Components should use semantic aliases instead of hard-coded
+timings or primitive values so the preference is honored. Instant updates still
+expose the same state; the preference removes movement, not information.
 
 | Behavior             | Reduced-motion treatment                                                             | Preserve the state with                                    |
 | -------------------- | ------------------------------------------------------------------------------------ | ---------------------------------------------------------- |

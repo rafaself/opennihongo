@@ -5,21 +5,34 @@ import "./celebration.css";
 const REDUCED_MOTION_QUERY = "(prefers-reduced-motion: reduce)";
 
 function subscribeToReducedMotion(onChange: () => void): () => void {
-  if (
-    typeof window === "undefined" ||
-    typeof window.matchMedia !== "function"
-  ) {
-    return () => {};
-  }
+  if (typeof window === "undefined") return () => {};
 
-  const mediaQuery = window.matchMedia(REDUCED_MOTION_QUERY);
-  mediaQuery.addEventListener("change", onChange);
+  const mediaQuery =
+    typeof window.matchMedia === "function"
+      ? window.matchMedia(REDUCED_MOTION_QUERY)
+      : undefined;
+  mediaQuery?.addEventListener("change", onChange);
+
+  const observer = new MutationObserver(onChange);
+  observer.observe(document.documentElement, {
+    attributeFilter: ["data-motion"],
+    attributes: true,
+  });
+
   return () => {
-    mediaQuery.removeEventListener("change", onChange);
+    mediaQuery?.removeEventListener("change", onChange);
+    observer.disconnect();
   };
 }
 
 function getReducedMotionSnapshot(): boolean {
+  if (
+    typeof document !== "undefined" &&
+    document.documentElement.getAttribute("data-motion") === "reduced"
+  ) {
+    return true;
+  }
+
   return (
     typeof window !== "undefined" &&
     typeof window.matchMedia === "function" &&

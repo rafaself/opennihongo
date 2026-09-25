@@ -75,3 +75,12 @@ select {
   background: var(--ns-color-selection);
   color: var(--ns-color-selection-foreground);
 }
+
+:root[data-motion="reduced"],
+:root[data-motion="reduced"] *,
+:root[data-motion="reduced"] *::before,
+:root[data-motion="reduced"] *::after {
+  animation: none !important;
+  scroll-behavior: auto !important;
+  transition: none !important;
+}
