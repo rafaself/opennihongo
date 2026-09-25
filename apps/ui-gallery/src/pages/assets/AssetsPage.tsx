@@ -232,16 +232,31 @@ export function AssetsPage() {
       id="assets-catalog"
       notes={[
         {
-          title: "Public icon API and sizing",
+          title: "Public icon APIs and sizing",
           content: (
-            <p>
-              Import the name-based <code>Icon</code> and
-              <code>IconName</code> from <code>@opennihongo/ui/icons</code>. The{" "}
-              <code>small</code>, <code>medium</code>, and <code>large</code>
-              sizes use 16px, 20px, and 24px semantic icon-box tokens. Icons use
-              a 24 × 24 viewBox, inherit <code>currentColor</code>, and do not
-              shrink inline.
-            </p>
+            <>
+              <p>
+                Import the name-based <code>Icon</code> and
+                <code>IconName</code> from <code>@opennihongo/ui/icons</code>.
+                The same entry exports the fixed-purpose
+                <code>CheckIcon</code>, <code>CloseIcon</code>, and
+                <code>StarIcon</code> components. Use a named component when the
+                icon is fixed in the composition:
+              </p>
+              <pre className="gallery-code-example">
+                <code>{`import { CheckIcon, CloseIcon, StarIcon } from "@opennihongo/ui/icons";
+
+<CheckIcon aria-label="Completed" size="small" />
+<CloseIcon aria-label="Dismiss" />
+<StarIcon aria-label="Progression" size="large" />`}</code>
+              </pre>
+              <p>
+                The <code>small</code>, <code>medium</code>, and
+                <code>large</code> sizes use 16px, 20px, and 24px semantic
+                icon-box tokens. Icons use a 24 × 24 viewBox, inherit
+                <code>currentColor</code>, and do not shrink inline.
+              </p>
+            </>
           ),
         },
         {
