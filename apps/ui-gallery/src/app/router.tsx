@@ -16,6 +16,7 @@ import { SizingPage } from "../pages/foundations/SizingPage";
 import { SpacingPage } from "../pages/foundations/SpacingPage";
 import { TypographyPage } from "../pages/foundations/TypographyPage";
 import { GamificationPage } from "../pages/gamification/GamificationPage";
+import { PatternsPage } from "../pages/patterns/PatternsPage";
 
 const rootRoute = createRootRoute({
   component: GalleryLayout,
@@ -82,6 +83,12 @@ const dailyGoalCompletedRoute = createRoute({
   component: DailyGoalCompletedPage,
 });
 
+const patternsRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/patterns",
+  component: PatternsPage,
+});
+
 const playgroundRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/playground",
@@ -98,6 +105,7 @@ const routeTree = rootRoute.addChildren([
   typographyRoute,
   buttonsRoute,
   gamificationRoute,
+  patternsRoute,
   dailyGoalCompletedRoute,
   playgroundRoute,
 ]);

@@ -79,8 +79,13 @@ export const galleryNavigation = {
         "Reusable compositions that combine shared components without owning feature rules.",
       links: [
         {
+          id: "patterns-catalog",
+          label: "Pattern catalog",
+          to: "/patterns",
+        },
+        {
           id: "daily-goal-completed",
-          label: "Daily goal completed",
+          label: "Daily goal completed details",
           to: "/patterns/daily-goal-completed",
         },
       ],
