@@ -1,4 +1,12 @@
 .ns-switch {
+  --ns-switch-thumb-size: calc(
+    var(--ns-size-icon-box-large) + var(--ns-space-1)
+  );
+  --ns-switch-thumb-travel: calc(
+    var(--ns-size-button-height-comfortable) - var(--ns-switch-thumb-size) -
+      var(--ns-space-1)
+  );
+
   align-items: center;
   background: transparent;
   border: 0;
@@ -18,9 +26,9 @@
   border: var(--ns-border-width-standard) var(--ns-border-style-solid)
     var(--ns-color-border-strong);
   border-radius: var(--ns-radius-pill);
-  block-size: var(--ns-size-pointer-target-minimum);
+  block-size: calc(var(--ns-size-icon-box-large) + var(--ns-space-2));
   display: flex;
-  inline-size: var(--ns-size-pointer-target-comfortable);
+  inline-size: var(--ns-size-button-height-comfortable);
   padding: var(--ns-border-width-standard);
   transition:
     background-color var(--ns-motion-duration-fast)
@@ -32,13 +40,13 @@
 .ns-switch__thumb {
   align-items: center;
   background-color: var(--ns-color-surface);
-  border: var(--ns-border-width-standard) var(--ns-border-style-solid)
+  border: var(--ns-border-width-emphasis) var(--ns-border-style-solid)
     var(--ns-color-border);
-  border-radius: var(--ns-radius-pill);
+  border-radius: var(--ns-radius-sm);
   box-shadow: var(--ns-elevation-card);
-  block-size: var(--ns-size-icon-box-medium);
+  block-size: var(--ns-switch-thumb-size);
   display: flex;
-  inline-size: var(--ns-size-icon-box-medium);
+  inline-size: var(--ns-switch-thumb-size);
   justify-content: center;
   transform: translateX(0);
   transition:
@@ -58,7 +66,15 @@
 
 .ns-switch[data-state="checked"] .ns-switch__thumb {
   border-color: var(--ns-color-action-primary);
-  transform: translateX(var(--ns-size-icon-box-medium));
+  transform: translateX(var(--ns-switch-thumb-travel));
+}
+
+.ns-switch:active:not(:disabled) .ns-switch__thumb {
+  transform: scale(0.92);
+}
+
+.ns-switch[data-state="checked"]:active:not(:disabled) .ns-switch__thumb {
+  transform: translateX(var(--ns-switch-thumb-travel)) scale(0.92);
 }
 
 .ns-switch:hover:not(:disabled) .ns-switch__track {
