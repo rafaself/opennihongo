@@ -48,7 +48,6 @@ a {
   border-radius: 0.75rem;
   color: var(--ns-color-brand-foreground);
   display: inline-flex;
-  font-family: serif;
   font-size: 1.125rem;
   height: 2.5rem;
   justify-content: center;
@@ -108,11 +107,10 @@ a {
 }
 
 .gallery-intro h1 {
-  font-family: Georgia, "Times New Roman", serif;
   font-size: clamp(2.5rem, 5.5vw, 4.5rem);
-  font-weight: 400;
-  letter-spacing: -0.055em;
-  line-height: 1.04;
+  font-weight: var(--ns-text-display-weight);
+  letter-spacing: var(--ns-text-display-letter-spacing);
+  line-height: var(--ns-text-display-line-height);
   margin: 0;
   max-width: 41rem;
 }
@@ -139,7 +137,6 @@ a {
   color: rgb(36 92 85 / 25%);
   display: flex;
   flex-direction: column;
-  font-family: serif;
   font-size: 1.5rem;
   height: 11rem;
   justify-content: center;
@@ -169,10 +166,10 @@ a {
 }
 
 .gallery-section-heading h2 {
-  font-family: Georgia, "Times New Roman", serif;
   font-size: 2.25rem;
-  font-weight: 400;
-  letter-spacing: -0.04em;
+  font-weight: var(--ns-text-heading-weight);
+  letter-spacing: var(--ns-text-heading-letter-spacing);
+  line-height: var(--ns-text-heading-line-height);
   margin: 0;
 }
 
@@ -259,11 +256,10 @@ a {
 }
 
 .gallery-not-found h1 {
-  font-family: Georgia, "Times New Roman", serif;
   font-size: clamp(2.25rem, 5vw, 3.5rem);
-  font-weight: 400;
-  letter-spacing: -0.05em;
-  line-height: 1.08;
+  font-weight: var(--ns-text-display-weight);
+  letter-spacing: var(--ns-text-display-letter-spacing);
+  line-height: var(--ns-text-display-line-height);
   margin: 0;
 }
 

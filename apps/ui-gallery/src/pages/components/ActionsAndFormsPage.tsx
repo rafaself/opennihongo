@@ -38,6 +38,16 @@ export function ActionsAndFormsPage() {
             </p>
           ),
         },
+        {
+          title: "Style persistent choices as cards",
+          content: (
+            <p>
+              Card-styled <code>Radio</code> options retain single-choice
+              semantics inside a named <code>RadioGroup</code>. Use
+              <code> ActionCard</code> for a choice that performs an action.
+            </p>
+          ),
+        },
       ]}
       id="actions-and-forms"
       notes={[
@@ -66,13 +76,15 @@ export function ActionsAndFormsPage() {
         doItems: [
           "Describe the action or setting in its accessible label.",
           "Keep errors and helper text associated with their control.",
+          "Use a card-styled Radio for content-rich preferences.",
         ],
         dontItems: [
           "Rely on placeholder text as the only label.",
           "Add application validation or business rules to shared controls.",
+          "Represent a persistent preference with an action button.",
         ],
       }}
-      summary="Live examples of shared action and form controls, using the public UI package and caller-provided labels, state, and behavior."
+      summary="Live examples of shared actions, form controls, and grouped preferences, using the public UI package and caller-provided labels, state, and behavior."
       title="Actions & Forms"
     />
   );

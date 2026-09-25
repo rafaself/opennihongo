@@ -4,19 +4,20 @@
   border: var(--ns-border-width-standard) var(--ns-border-style-solid)
     transparent;
   border-radius: var(--ns-radius-control);
-  box-shadow: var(--ns-elevation-interactive);
+  box-shadow: var(--ns-elevation-button-primary);
   color: var(--ns-color-action-primary-foreground);
   cursor: pointer;
   display: inline-flex;
   font: inherit;
-  font-size: var(--ns-text-label-size);
-  font-weight: var(--ns-text-label-weight);
+  font-size: var(--ns-text-button-size);
+  font-weight: var(--ns-text-button-weight);
   gap: var(--ns-space-2);
   justify-content: center;
-  letter-spacing: var(--ns-text-label-letter-spacing);
-  line-height: var(--ns-text-label-line-height);
-  min-height: var(--ns-size-control-height-standard);
+  letter-spacing: var(--ns-text-button-letter-spacing);
+  line-height: var(--ns-text-button-line-height);
+  min-height: var(--ns-size-button-height-standard);
   padding: var(--ns-space-2-5) var(--ns-space-4);
+  text-transform: uppercase;
   transition:
     background-color var(--ns-motion-duration-fast)
       var(--ns-motion-easing-standard),
@@ -32,12 +33,12 @@
 }
 
 .ns-button[data-size="comfortable"] {
-  min-height: var(--ns-size-control-height-comfortable);
+  min-height: var(--ns-size-button-height-comfortable);
   padding: var(--ns-space-3) var(--ns-space-5);
 }
 
 .ns-button.ns-button--icon {
-  inline-size: var(--ns-size-control-height-standard);
+  inline-size: var(--ns-size-button-height-standard);
   padding: 0;
 }
 
@@ -46,30 +47,33 @@
 }
 
 .ns-button.ns-button--icon[data-size="comfortable"] {
-  inline-size: var(--ns-size-control-height-comfortable);
-}
-
-.ns-button:hover:not(:disabled) {
-  box-shadow: var(--ns-elevation-hover);
-}
-
-.ns-button:active:not(:disabled) {
-  box-shadow: var(--ns-elevation-pressed);
-  transform: translateY(var(--ns-motion-press-offset));
+  inline-size: var(--ns-size-button-height-comfortable);
 }
 
 .ns-button[data-variant="primary"]:hover:not(:disabled) {
   background-color: var(--ns-color-action-primary-hover);
+  box-shadow: var(--ns-elevation-button-primary-hover);
 }
 
 .ns-button[data-variant="secondary"] {
   background-color: var(--ns-color-surface);
-  border-color: var(--ns-color-border);
-  color: var(--ns-color-text-primary);
+  border-width: var(--ns-border-width-emphasis);
+  border-color: var(--ns-color-action-secondary-edge);
+  box-shadow: var(--ns-elevation-button-secondary);
+  color: var(--ns-color-action-secondary-foreground);
 }
 
 .ns-button[data-variant="secondary"]:hover:not(:disabled) {
   background-color: var(--ns-color-canvas);
+}
+
+.ns-button[data-variant]:active:not(:disabled) {
+  box-shadow: var(--ns-elevation-none);
+  transform: translateY(var(--ns-motion-button-press-offset));
+}
+
+.ns-button[data-variant="secondary"]:active:not(:disabled) {
+  transform: translateY(var(--ns-motion-button-secondary-press-offset));
 }
 
 .ns-button:focus-visible {

@@ -81,41 +81,49 @@ sets a control's height, an icon's box, or an interactive target's dimensions.
 Use the semantic sizing aliases in components instead of consuming these
 primitive values directly.
 
-| Primitive token          | Value     |
-| ------------------------ | --------- |
-| `--ns-primitive-size-8`  | `0.5rem`  |
-| `--ns-primitive-size-16` | `1rem`    |
-| `--ns-primitive-size-20` | `1.25rem` |
-| `--ns-primitive-size-24` | `1.5rem`  |
-| `--ns-primitive-size-40` | `2.5rem`  |
-| `--ns-primitive-size-44` | `2.75rem` |
-| `--ns-primitive-size-48` | `3rem`    |
+| Primitive token           | Value      |
+| ------------------------- | ---------- |
+| `--ns-primitive-size-8`   | `0.5rem`   |
+| `--ns-primitive-size-16`  | `1rem`     |
+| `--ns-primitive-size-20`  | `1.25rem`  |
+| `--ns-primitive-size-24`  | `1.5rem`   |
+| `--ns-primitive-size-40`  | `2.5rem`   |
+| `--ns-primitive-size-44`  | `2.75rem`  |
+| `--ns-primitive-size-48`  | `3rem`     |
+| `--ns-primitive-size-50`  | `3.125rem` |
+| `--ns-primitive-size-56`  | `3.5rem`   |
+| `--ns-primitive-size-216` | `13.5rem`  |
 
 Semantic aliases provide reusable dimensions for the common cases below.
 Control tokens describe height; icon-box tokens describe both width and
 height. Pointer-target tokens describe a square dimension and should be
 applied to both minimum width and minimum height.
 
-| Purpose                 | Semantic token                         | Value  | Guidance                                  |
-| ----------------------- | -------------------------------------- | ------ | ----------------------------------------- |
-| Progress track          | `--ns-size-progress-track`             | `8px`  | Static linear progress indicator height   |
-| Small progress ring     | `--ns-size-progress-ring-small`        | `24px` | Compact circular progress diameter        |
-| Medium progress ring    | `--ns-size-progress-ring-medium`       | `40px` | Default circular progress diameter        |
-| Large progress ring     | `--ns-size-progress-ring-large`        | `48px` | Prominent circular progress diameter      |
-| Small spinner           | `--ns-size-spinner-small`              | `16px` | Compact indeterminate loading indicator   |
-| Medium spinner          | `--ns-size-spinner-medium`             | `20px` | Default indeterminate loading indicator   |
-| Large spinner           | `--ns-size-spinner-large`              | `24px` | Prominent indeterminate loading indicator |
-| Compact control height  | `--ns-size-control-height-compact`     | `40px` | Use for dense, secondary controls         |
-| Standard control height | `--ns-size-control-height-standard`    | `44px` | Default shared control height             |
-| Comfortable control     | `--ns-size-control-height-comfortable` | `48px` | Use when a larger control is appropriate  |
-| Small avatar            | `--ns-size-avatar-small`               | `24px` | Compact identity display                  |
-| Medium avatar           | `--ns-size-avatar-medium`              | `40px` | Default identity display                  |
-| Large avatar            | `--ns-size-avatar-large`               | `48px` | Prominent identity display                |
-| Small icon box          | `--ns-size-icon-box-small`             | `16px` | Small supporting icon                     |
-| Medium icon box         | `--ns-size-icon-box-medium`            | `20px` | Default inline icon                       |
-| Large icon box          | `--ns-size-icon-box-large`             | `24px` | Prominent visual icon                     |
-| Pointer target minimum  | `--ns-size-pointer-target-minimum`     | `24px` | WCAG 2.2 SC 2.5.8 AA size baseline        |
-| Comfortable target      | `--ns-size-pointer-target-comfortable` | `44px` | Larger design preference                  |
+| Purpose                 | Semantic token                         | Value   | Guidance                                   |
+| ----------------------- | -------------------------------------- | ------- | ------------------------------------------ |
+| Progress track          | `--ns-size-progress-track`             | `8px`   | Static linear progress indicator height    |
+| Small progress ring     | `--ns-size-progress-ring-small`        | `24px`  | Compact circular progress diameter         |
+| Medium progress ring    | `--ns-size-progress-ring-medium`       | `40px`  | Default circular progress diameter         |
+| Large progress ring     | `--ns-size-progress-ring-large`        | `48px`  | Prominent circular progress diameter       |
+| Small spinner           | `--ns-size-spinner-small`              | `16px`  | Compact indeterminate loading indicator    |
+| Medium spinner          | `--ns-size-spinner-medium`             | `20px`  | Default indeterminate loading indicator    |
+| Large spinner           | `--ns-size-spinner-large`              | `24px`  | Prominent indeterminate loading indicator  |
+| Compact control height  | `--ns-size-control-height-compact`     | `40px`  | Use for dense, secondary controls          |
+| Standard control height | `--ns-size-control-height-standard`    | `44px`  | Default shared control height              |
+| Comfortable control     | `--ns-size-control-height-comfortable` | `48px`  | Use when a larger control is appropriate   |
+| Standard Button height  | `--ns-size-button-height-standard`     | `50px`  | Default Button face height before its edge |
+| Comfortable Button      | `--ns-size-button-height-comfortable`  | `56px`  | Larger Button face height                  |
+| Action card minimum     | `--ns-size-action-card-minimum-height` | `216px` | Minimum height for media-led action cards  |
+| Primary Button edge     | `--ns-size-button-edge-primary`        | `4px`   | Hard lower edge and press travel           |
+| Secondary Button edge   | `--ns-size-button-edge-secondary`      | `2px`   | Outlined lower edge and press travel       |
+| Small avatar            | `--ns-size-avatar-small`               | `24px`  | Compact identity display                   |
+| Medium avatar           | `--ns-size-avatar-medium`              | `40px`  | Default identity display                   |
+| Large avatar            | `--ns-size-avatar-large`               | `48px`  | Prominent identity display                 |
+| Small icon box          | `--ns-size-icon-box-small`             | `16px`  | Small supporting icon                      |
+| Medium icon box         | `--ns-size-icon-box-medium`            | `20px`  | Default inline icon                        |
+| Large icon box          | `--ns-size-icon-box-large`             | `24px`  | Prominent visual icon                      |
+| Pointer target minimum  | `--ns-size-pointer-target-minimum`     | `24px`  | WCAG 2.2 SC 2.5.8 AA size baseline         |
+| Comfortable target      | `--ns-size-pointer-target-comfortable` | `44px`  | Larger design preference                   |
 
 WCAG 2.2 SC 2.5.8 (Level AA) requires pointer targets to be at least 24 by 24
 CSS pixels unless an exception applies. For example, an undersized target may
@@ -157,13 +165,14 @@ Border width and style are role-neutral geometric tokens. Border colors remain
 semantic color tokens and are defined by the light and dark theme maps above;
 these tokens do not assign a component-specific color.
 
-| Primitive token                     | Shared alias                 | Value   | Guidance                                |
-| ----------------------------------- | ---------------------------- | ------- | --------------------------------------- |
-| `--ns-primitive-border-width-1`     | `--ns-border-width-subtle`   | `1px`   | Fine separators and subtle outlines     |
-| `--ns-primitive-border-width-1`     | `--ns-border-width-standard` | `1px`   | Control and card borders                |
-| `--ns-primitive-border-width-2`     | `--ns-border-width-emphasis` | `2px`   | Emphasized borders                      |
-| `--ns-primitive-border-width-3`     | `--ns-border-width-focus`    | `3px`   | Visible keyboard focus outlines         |
-| `--ns-primitive-border-style-solid` | `--ns-border-style-solid`    | `solid` | Shared solid borders and focus outlines |
+| Primitive token                     | Shared alias                    | Value   | Guidance                                |
+| ----------------------------------- | ------------------------------- | ------- | --------------------------------------- |
+| `--ns-primitive-border-width-1`     | `--ns-border-width-subtle`      | `1px`   | Fine separators and subtle outlines     |
+| `--ns-primitive-border-width-1`     | `--ns-border-width-standard`    | `1px`   | Control and card borders                |
+| `--ns-primitive-border-width-2`     | `--ns-border-width-emphasis`    | `2px`   | Emphasized borders                      |
+| `--ns-primitive-border-width-3`     | `--ns-border-width-focus`       | `3px`   | Visible keyboard focus outlines         |
+| `--ns-primitive-border-width-4`     | `--ns-border-width-raised-edge` | `4px`   | Raised lower edges on interactive cards |
+| `--ns-primitive-border-style-solid` | `--ns-border-style-solid`       | `solid` | Shared solid borders and focus outlines |
 
 Use `border-style` or the shorthand with the shared style token. Shared
 components should use the semantic width and radius aliases; theme-specific
@@ -291,25 +300,27 @@ components keep using the same token in either theme.
 | ----------- | ---------------------------- | ------------------------------------------------------- |
 | None        | `--ns-elevation-none`        | Flat surfaces and disabled controls                     |
 | Card        | `--ns-elevation-card`        | Bounded content that needs a small lift from its parent |
-| Interactive | `--ns-elevation-interactive` | Resting buttons and other raised controls               |
+| Interactive | `--ns-elevation-interactive` | Generic interactive surfaces that use neutral elevation |
 | Hover       | `--ns-elevation-hover`       | A hovered, enabled interactive control                  |
 | Pressed     | `--ns-elevation-pressed`     | A pressed, enabled interactive control                  |
 | Dialog      | `--ns-elevation-dialog`      | Dialogs and other focused blocking content              |
 | Overlay     | `--ns-elevation-overlay`     | Floating menus, popovers, and other transient content   |
 
 Keep ordinary surfaces flat unless their position in the composition needs to
-read as raised. Use card elevation for bounded content, and reserve dialog and
-overlay levels for content that must visually sit above surrounding content.
-Elevation does not set stacking order or create a backdrop; overlay stacking
-uses the shared `--ns-layer-*` tokens, and modal backdrops use
+read as raised. Use card elevation for bounded content, and reserve dialog
+and overlay levels for content that must visually sit above surrounding
+content. Elevation does not set stacking order or create a backdrop; overlay
+stacking uses the shared `--ns-layer-*` tokens, and modal backdrops use
 `--ns-color-overlay-backdrop`.
 
-Interactive controls move through the interactive, hover, and pressed levels.
-On press, reduce the shadow and use a small downward translation (typically
-`translateY(1px)`) so the control feels like it moves into the surface instead
-of rising. Transition the shadow and transform together, and keep disabled
-controls flat and stationary. Avoid making state meaning depend on shadow alone;
-retain visible color, border, focus, or disabled cues as appropriate.
+The Button has variant-specific, theme-aware hard lower edges through
+`--ns-elevation-button-primary`, `--ns-elevation-button-primary-hover`, and
+`--ns-elevation-button-secondary`. These action-colored edges are separate
+from the neutral structural elevation scale. On press, the edge collapses and
+the Button moves down by the same amount; reduced motion removes the movement.
+Keep disabled controls flat and stationary. Avoid making state meaning depend
+on shadow alone; retain visible color, border, focus, or disabled cues as
+appropriate.
 
 Structural elevation is separate from celebratory effects. Reward color tokens
 communicate XP, streak, and achievement meaning; a glow, sparkle, or other
@@ -327,16 +338,16 @@ The default and explicit light themes map the shared color roles as follows.
 These names are the component and app contract; consumers do not need to know
 which primitive family supplies a value.
 
-| Role                      | Semantic tokens                                                                                                                                       | Light mapping                                                                                |
-| ------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
-| Brand and primary actions | `--ns-color-brand`, `--ns-color-action-primary`; their `-hover` and `-foreground` variants; `--ns-color-brand-text` and its hover variant             | Hinomaru 600 for the action and brand text, 700 on hover, and white action foreground        |
-| Text                      | `--ns-color-text-primary` (`--ns-color-ink`), `--ns-color-text-secondary` (`--ns-color-muted`), `--ns-color-text-tertiary`, `--ns-color-text-inverse` | Sumi 900, 700, and 600, with white inverse text                                              |
-| Surfaces                  | `--ns-color-canvas`, `--ns-color-surface`, `--ns-color-surface-subtle`, `--ns-color-surface-raised`                                                   | Sumi 50, white, Sumi 100, and white                                                          |
-| Overlay backdrop          | `--ns-color-overlay-backdrop`                                                                                                                         | Sumi 900 ink at 56% opacity                                                                  |
-| Borders                   | `--ns-color-border-subtle`, `--ns-color-border`, `--ns-color-border-strong`                                                                           | Sumi 100, 500, and 700                                                                       |
-| Focus and selection       | `--ns-color-focus`, `--ns-color-selection`, `--ns-color-selection-foreground`                                                                         | Amber 600 focus, Hinomaru 50 selection, and primary text                                     |
-| Feedback                  | `--ns-color-feedback-{success,warning,info,danger}` and matching `-surface` tokens                                                                    | Green, amber, blue, and Hinomaru foreground accents with their 50-step surfaces              |
-| Rewards                   | `--ns-color-reward-{xp,streak,achievement}` and matching `-surface` tokens                                                                            | Amber for XP, orange for streaks, and indigo for achievements, each with its 50-step surface |
+| Role                      | Semantic tokens                                                                                                                                       | Light mapping                                                                                                                                       |
+| ------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Brand and primary actions | Brand/action fill, foreground, and edge tokens; brand text and its hover token; secondary action foreground and edge                                  | Hinomaru 600 fill and brand text, 700 hover fill and primary edge, Hinomaru 900 hover edge, white primary foreground, and Sumi-toned secondary edge |
+| Text                      | `--ns-color-text-primary` (`--ns-color-ink`), `--ns-color-text-secondary` (`--ns-color-muted`), `--ns-color-text-tertiary`, `--ns-color-text-inverse` | Sumi 900, 700, and 600, with white inverse text                                                                                                     |
+| Surfaces                  | `--ns-color-canvas`, `--ns-color-surface`, `--ns-color-surface-subtle`, `--ns-color-surface-raised`                                                   | Sumi 50, white, Sumi 100, and white                                                                                                                 |
+| Overlay backdrop          | `--ns-color-overlay-backdrop`                                                                                                                         | Sumi 900 ink at 56% opacity                                                                                                                         |
+| Borders                   | `--ns-color-border-subtle`, `--ns-color-border`, `--ns-color-border-strong`                                                                           | Sumi 100, 500, and 700                                                                                                                              |
+| Focus and selection       | `--ns-color-focus`, `--ns-color-selection`, `--ns-color-selection-foreground`                                                                         | Amber 600 focus, Hinomaru 50 selection, and primary text                                                                                            |
+| Feedback                  | `--ns-color-feedback-{success,warning,info,danger}` and matching `-surface` tokens                                                                    | Green, amber, blue, and Hinomaru foreground accents with their 50-step surfaces                                                                     |
+| Rewards                   | `--ns-color-reward-{xp,streak,achievement}` and matching `-surface` tokens                                                                            | Amber for XP, orange for streaks, and indigo for achievements, each with its 50-step surface                                                        |
 
 The primary action uses Hinomaru red. Feedback keeps distinct green, amber,
 and blue meanings; red is reserved for the brand action and danger feedback.
@@ -356,16 +367,16 @@ Hinomaru red, with the 500 and 600 steps providing white-foreground control
 states. Focus uses amber 300; feedback and reward foregrounds use their 300
 steps over matching 900-step surfaces.
 
-| Role                      | Dark mapping                                                                                             |
-| ------------------------- | -------------------------------------------------------------------------------------------------------- |
-| Brand and primary actions | Hinomaru 500/600 action fills with white foreground; Hinomaru 300/100 for brand text and its hover state |
-| Text                      | Sumi 50 primary, 100 secondary, 300 tertiary, and Sumi 900 inverse                                       |
-| Surfaces                  | Sumi 900 canvas, dark Sumi 900/700 mixes for surface layers, and Sumi 700 raised surface                 |
-| Overlay backdrop          | Black at 64% opacity                                                                                     |
-| Borders                   | Sumi 700 subtle, 300 standard, and 100 strong                                                            |
-| Focus and selection       | Amber 300 focus, Hinomaru 900 selection, and primary text                                                |
-| Feedback                  | Green, amber, blue, and Hinomaru 300 foregrounds with matching 900-step surfaces                         |
-| Rewards                   | Amber, orange, and indigo 300 foregrounds with matching 900-step surfaces                                |
+| Role                      | Dark mapping                                                                                                                                                                                             |
+| ------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Brand and primary actions | Hinomaru 500/600 action fills with white foreground and matching 600/700 lower edges; Hinomaru 700 primary hover edge; Hinomaru 300/100 for brand and secondary text, with a Sumi-derived secondary edge |
+| Text                      | Sumi 50 primary, 100 secondary, 300 tertiary, and Sumi 900 inverse                                                                                                                                       |
+| Surfaces                  | Sumi 900 canvas, dark Sumi 900/700 mixes for surface layers, and Sumi 700 raised surface                                                                                                                 |
+| Overlay backdrop          | Black at 64% opacity                                                                                                                                                                                     |
+| Borders                   | Sumi 700 subtle, 300 standard, and 100 strong                                                                                                                                                            |
+| Focus and selection       | Amber 300 focus, Hinomaru 900 selection, and primary text                                                                                                                                                |
+| Feedback                  | Green, amber, blue, and Hinomaru 300 foregrounds with matching 900-step surfaces                                                                                                                         |
+| Rewards                   | Amber, orange, and indigo 300 foregrounds with matching 900-step surfaces                                                                                                                                |
 
 Representative dark text/surface pairs use light Sumi values against the
 darkest and raised surfaces, and the primary control keeps white text over
@@ -381,31 +392,37 @@ exports.
 
 ## Typography scale
 
-Typography uses the local/system sans stack already declared by the package;
-the initial scale does not fetch a font or add a dependency. Primitive values
-provide a compact size, weight, line-height, and letter-spacing scale. The
+Typography uses the locally bundled Nunito variable font, the substitute
+recommended by [Duolingo's typography guidance](https://design.duolingo.com/identity/typography),
+with rounded system sans fallbacks for scripts that the Latin font files do not
+cover. Its SIL Open Font License is included beside the font assets. Primitive
+values provide a compact size, weight, line-height, and letter-spacing scale. The
 semantic `--ns-text-{role}-*` tokens compose those values for shared display,
-heading, body, label, and caption roles. These roles do not vary by color theme.
+heading, body, label, button, and caption roles. These roles do not vary by
+color theme.
 
 | Role    | Size | Weight | Line height | Letter spacing | Intended use                            |
 | ------- | ---- | ------ | ----------- | -------------- | --------------------------------------- |
-| Display | 40px | 400    | 1.1         | -0.025em       | Page titles and prominent introductions |
-| Heading | 24px | 600    | 1.25        | -0.0125em      | Section headings and card titles        |
-| Body    | 16px | 400    | 1.5         | 0              | Paragraphs and default interface copy   |
-| Label   | 14px | 600    | 1.25        | 0              | Controls and short interface labels     |
+| Display | 40px | 700    | 1.1         | -0.025em       | Page titles and prominent introductions |
+| Heading | 24px | 700    | 1.25        | -0.0125em      | Section headings and card titles        |
+| Body    | 17px | 500    | 1.5         | 0              | Paragraphs and default interface copy   |
+| Label   | 14px | 600    | 1.25        | 0              | Short interface labels                  |
+| Button  | 15px | 700    | 1.25        | 0.8px          | Action labels, displayed uppercase      |
 | Caption | 12px | 400    | 1.5         | 0              | Supporting metadata and helper copy     |
 
 The package stylesheet exposes `.ns-text-display`, `.ns-text-heading`,
 `.ns-text-body`, `.ns-text-label`, and `.ns-text-caption` classes for applying
 each complete role. Component CSS can consume the same semantic tokens directly
-when it needs to compose styles, as the shared Button does for its label type:
+when it needs to compose styles. The shared Button uses its dedicated label
+role and transforms its visible label to uppercase:
 
 ```css
 .ns-button {
-  font-size: var(--ns-text-label-size);
-  font-weight: var(--ns-text-label-weight);
-  line-height: var(--ns-text-label-line-height);
-  letter-spacing: var(--ns-text-label-letter-spacing);
+  font-size: var(--ns-text-button-size);
+  font-weight: var(--ns-text-button-weight);
+  line-height: var(--ns-text-button-line-height);
+  letter-spacing: var(--ns-text-button-letter-spacing);
+  text-transform: uppercase;
 }
 ```
 

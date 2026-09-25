@@ -9,11 +9,10 @@
 }
 
 .gallery-playground-heading h1 {
-  font-family: Georgia, "Times New Roman", serif;
   font-size: clamp(2.5rem, 5.5vw, 4.5rem);
-  font-weight: 400;
-  letter-spacing: -0.055em;
-  line-height: 1.04;
+  font-weight: var(--ns-text-display-weight);
+  letter-spacing: var(--ns-text-display-letter-spacing);
+  line-height: var(--ns-text-display-line-height);
   margin: 0;
 }
 
@@ -44,10 +43,10 @@
 }
 
 .gallery-playground-section-heading h2 {
-  font-family: Georgia, "Times New Roman", serif;
   font-size: clamp(1.75rem, 4vw, 2.25rem);
-  font-weight: 400;
-  letter-spacing: -0.04em;
+  font-weight: var(--ns-text-heading-weight);
+  letter-spacing: var(--ns-text-heading-letter-spacing);
+  line-height: var(--ns-text-heading-line-height);
   margin: 0;
 }
 

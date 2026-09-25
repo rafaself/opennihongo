@@ -192,6 +192,8 @@ export type {
   CardProps,
   CardVariant,
 } from "./components/surface/Card";
+export { ActionCard } from "./components/surface/action-card/ActionCard";
+export type { ActionCardProps } from "./components/surface/action-card/ActionCard";
 export { Text } from "./typography/Text";
 export type { TextColor, TextProps, TextVariant } from "./typography/Text";
 export {

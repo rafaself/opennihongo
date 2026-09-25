@@ -17,9 +17,10 @@
 }
 
 .gallery-gamification-examples > section > h3 {
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: 1.5rem;
-  font-weight: 400;
+  font-size: var(--ns-text-heading-size);
+  font-weight: var(--ns-text-heading-weight);
+  letter-spacing: var(--ns-text-heading-letter-spacing);
+  line-height: var(--ns-text-heading-line-height);
   margin: 0;
 }
 

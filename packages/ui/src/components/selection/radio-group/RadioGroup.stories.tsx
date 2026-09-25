@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 // eslint-disable-next-line @nx/enforce-module-boundaries -- Storybook exercises the package API as a consumer.
-import { Radio, RadioGroup } from "@opennihongo/ui";
+import { Radio, RadioGroup, Text } from "@opennihongo/ui";
 
 const meta = {
   title: "Components/RadioGroup",
@@ -9,7 +9,7 @@ const meta = {
     docs: {
       description: {
         component:
-          "Compose a named RadioGroup with Radio options. Use Tab to enter the group and arrow keys to move and select options; the visible option text supplies each radio's accessible name.",
+          "Compose a named RadioGroup with Radio options. Use the card variant for content-rich choices while preserving radio semantics. Use Tab to enter the group and arrow keys to move and select options.",
       },
     },
   },
@@ -66,6 +66,51 @@ export const Horizontal: Story = {
       >
         <Radio value="hiragana">Hiragana</Radio>
         <Radio value="katakana">Katakana</Radio>
+      </RadioGroup>
+    </div>
+  ),
+};
+
+export const SelectableCards: Story = {
+  render: () => (
+    <div>
+      <h2 id="pronunciation-format-label">Pronunciation format</h2>
+      <RadioGroup
+        aria-labelledby="pronunciation-format-label"
+        defaultValue="romanized"
+        name="pronunciation-format"
+        orientation="horizontal"
+      >
+        <Radio
+          aria-label="Romanized Japanese pronunciation"
+          value="romanized"
+          variant="card"
+        >
+          <Text as="span" color="secondary" variant="caption">
+            ni hon go
+          </Text>
+          <Text as="span" lang="ja" variant="display">
+            日本語
+          </Text>
+          <Text as="span" variant="label">
+            Romanized
+          </Text>
+        </Radio>
+        <Radio
+          aria-label="Japanese pronunciation"
+          value="japanese"
+          variant="card"
+        >
+          <Text as="span" color="secondary" variant="caption">
+            に ほん ご
+          </Text>
+          <Text as="span" lang="ja" variant="display">
+            日本語
+          </Text>
+          <Text as="span" variant="label">
+            Japanese
+          </Text>
+        </Radio>
       </RadioGroup>
     </div>
   ),

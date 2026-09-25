@@ -56,6 +56,11 @@ Use `Switch` for an on/off setting that takes effect immediately. Use
 `Checkbox` for selecting items and `Button` for actions that require explicit
 submission or confirmation.
 
+Use `RadioGroup` for one persistent choice. `Radio` provides a `card` variant
+for content-rich options such as language or display preferences; its visual
+selection treatment supplements the radio's checked semantics. Use `ActionCard`
+when the full tile performs an action.
+
 Use `Tabs` to switch between related panels in the current view. Keep
 route-backed navigation in the router and use links for it. Give each tab list
 an accessible name; horizontal lists scroll inline on narrow containers so
@@ -77,6 +82,11 @@ default `div` is for generic grouping. Compose explicit Buttons or links inside
 the Card for actions. The Card root does not behave as a link or button, and
 interactive styling or behavior belongs to the actual interactive elements.
 Do not add those content or action conventions to `Surface`.
+
+`ActionCard` is a full-card native button for an action with an optional
+illustration, title, and supporting detail. Use it when the entire tile is the
+action; use a link when it navigates, and keep the action's behavior with its
+caller.
 
 ## Overlay contract
 

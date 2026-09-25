@@ -7,6 +7,7 @@ export const componentCatalogCategories = [
     to: "/components/actions-and-forms",
     items: [
       "Button",
+      "ActionCard",
       "IconButton",
       "FormField",
       "Checkbox",

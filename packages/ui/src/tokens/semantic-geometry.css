@@ -3,6 +3,9 @@
   --ns-size-control-height-compact: var(--ns-primitive-size-40);
   --ns-size-control-height-standard: var(--ns-primitive-size-44);
   --ns-size-control-height-comfortable: var(--ns-primitive-size-48);
+  --ns-size-button-height-standard: var(--ns-primitive-size-50);
+  --ns-size-button-height-comfortable: var(--ns-primitive-size-56);
+  --ns-size-action-card-minimum-height: var(--ns-primitive-size-216);
   --ns-size-progress-track: var(--ns-primitive-size-8);
   --ns-size-progress-ring-small: var(--ns-primitive-size-24);
   --ns-size-progress-ring-medium: var(--ns-primitive-size-40);
@@ -38,5 +41,8 @@
   --ns-border-width-standard: var(--ns-primitive-border-width-1);
   --ns-border-width-emphasis: var(--ns-primitive-border-width-2);
   --ns-border-width-focus: var(--ns-primitive-border-width-3);
+  --ns-border-width-raised-edge: var(--ns-primitive-border-width-4);
   --ns-border-style-solid: var(--ns-primitive-border-style-solid);
+  --ns-size-button-edge-primary: var(--ns-space-1);
+  --ns-size-button-edge-secondary: var(--ns-border-width-emphasis);
 }

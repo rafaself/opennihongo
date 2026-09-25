@@ -27,6 +27,59 @@
     var(--ns-motion-easing-standard);
 }
 
+.ns-radio[data-variant="card"] {
+  align-items: center;
+  background-color: var(--ns-color-surface);
+  border: var(--ns-border-width-emphasis) var(--ns-border-style-solid)
+    var(--ns-color-border);
+  border-block-end-width: var(--ns-border-width-raised-edge);
+  border-radius: var(--ns-radius-card);
+  display: flex;
+  flex-direction: column;
+  gap: var(--ns-space-2);
+  justify-content: center;
+  padding: var(--ns-space-4);
+  text-align: center;
+  transition:
+    background-color var(--ns-motion-duration-fast)
+      var(--ns-motion-easing-standard),
+    border-color var(--ns-motion-duration-fast) var(--ns-motion-easing-standard),
+    border-width var(--ns-motion-duration-fast) var(--ns-motion-easing-standard),
+    transform var(--ns-motion-duration-fast) var(--ns-motion-easing-standard);
+}
+
+.ns-radio-group[data-orientation="horizontal"] .ns-radio[data-variant="card"] {
+  flex: 1 1 12rem;
+  min-inline-size: 0;
+}
+
+.ns-radio[data-variant="card"] .ns-radio__control {
+  display: none;
+}
+
+.ns-radio[data-variant="card"] .ns-radio__label {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: var(--ns-space-2);
+}
+
+.ns-radio[data-variant="card"][data-state="checked"] {
+  background-color: var(--ns-color-selection);
+  border-color: var(--ns-color-action-primary);
+  border-width: var(--ns-border-width-raised-edge);
+  color: var(--ns-color-selection-foreground);
+}
+
+.ns-radio[data-variant="card"]:hover:not([data-disabled]) {
+  border-color: var(--ns-color-action-primary-hover);
+}
+
+.ns-radio[data-variant="card"]:active:not([data-disabled]) {
+  border-block-end-width: var(--ns-border-width-emphasis);
+  transform: translateY(var(--ns-border-width-emphasis));
+}
+
 .ns-radio__control {
   align-items: center;
   background-color: var(--ns-color-surface);
@@ -70,6 +123,11 @@
   cursor: not-allowed;
 }
 
+.ns-radio[data-variant="card"][data-disabled] {
+  background-color: var(--ns-color-surface-subtle);
+  border-color: var(--ns-color-border-subtle);
+}
+
 .ns-radio[data-disabled] .ns-radio__control {
   background-color: var(--ns-color-surface-subtle);
   border-color: var(--ns-color-border);
@@ -84,4 +142,15 @@
   .ns-radio__control {
     transition: none;
   }
+
+  .ns-radio[data-variant="card"]:active:not([data-disabled]) {
+    border-block-end-width: var(--ns-border-width-raised-edge);
+    transform: none;
+  }
+}
+
+:root[data-motion="reduced"]
+  .ns-radio[data-variant="card"]:active:not([data-disabled]) {
+  border-block-end-width: var(--ns-border-width-raised-edge);
+  transform: none;
 }

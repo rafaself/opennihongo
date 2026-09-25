@@ -9,11 +9,10 @@
 }
 
 .gallery-doc-heading h1 {
-  font-family: Georgia, "Times New Roman", serif;
   font-size: clamp(2.5rem, 5.5vw, 4.5rem);
-  font-weight: 400;
-  letter-spacing: -0.055em;
-  line-height: 1.04;
+  font-weight: var(--ns-text-display-weight);
+  letter-spacing: var(--ns-text-display-letter-spacing);
+  line-height: var(--ns-text-display-line-height);
   margin: 0;
 }
 
@@ -40,10 +39,10 @@
 }
 
 .gallery-doc-section-heading h2 {
-  font-family: Georgia, "Times New Roman", serif;
   font-size: clamp(1.75rem, 4vw, 2.25rem);
-  font-weight: 400;
-  letter-spacing: -0.04em;
+  font-weight: var(--ns-text-heading-weight);
+  letter-spacing: var(--ns-text-heading-letter-spacing);
+  line-height: var(--ns-text-heading-line-height);
   margin: 0;
 }
 
@@ -79,6 +78,10 @@
   padding: 0.5rem;
 }
 
+.gallery-doc-example-card--wide {
+  grid-column: 1 / -1;
+}
+
 .gallery-doc-example-card h3,
 .gallery-doc-guidance-card h3,
 .gallery-doc-note h3,
@@ -109,6 +112,65 @@
   justify-content: center;
   min-height: 7rem;
   padding: 1.25rem;
+}
+
+.gallery-action-card-grid {
+  inline-size: 100%;
+}
+
+.gallery-preferences-panel {
+  inline-size: 100%;
+  max-inline-size: 48rem;
+  text-align: start;
+}
+
+.gallery-preferences-panel h4 {
+  font-size: var(--ns-text-heading-size);
+  font-weight: var(--ns-text-heading-weight);
+  line-height: var(--ns-text-heading-line-height);
+  margin: 0 0 var(--ns-space-4);
+}
+
+.gallery-preference-section {
+  display: grid;
+  gap: var(--ns-space-3);
+}
+
+.gallery-preference-section h5 {
+  font-size: var(--ns-text-body-size);
+  font-weight: var(--ns-text-heading-weight);
+  line-height: var(--ns-text-heading-line-height);
+  margin: 0;
+}
+
+.gallery-preference-row {
+  align-items: center;
+  display: grid;
+  gap: var(--ns-space-4);
+  grid-template-columns: minmax(0, 1fr) auto;
+  padding-block: var(--ns-space-3);
+}
+
+.gallery-preference-row--stacked {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.gallery-preference-copy {
+  display: grid;
+  gap: var(--ns-space-1);
+}
+
+.gallery-preference-select {
+  inline-size: 100%;
+}
+
+.gallery-preference-choice {
+  display: grid;
+  gap: var(--ns-space-3);
+}
+
+.gallery-preference-radio-group {
+  inline-size: 100%;
 }
 
 .gallery-doc-guidance-card,

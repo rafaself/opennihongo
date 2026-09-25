@@ -59,9 +59,11 @@ overlay obscures it.
 When elevation suits the component, use the shared interactive, hover, and
 pressed elevation roles in that order. A press should feel like the control
 moves into its surface: reduce the shadow and use
-`--ns-motion-press-offset` where appropriate. Transition related color,
-elevation, and transform changes with the fast duration and standard easing.
-Do not rely on shadow or movement as the only pressed-state cue.
+`--ns-motion-press-offset` where appropriate. The Button uses its own
+variant-specific hard lower edge and press travel to match its primary or
+secondary action role. Transition related color, elevation, and transform
+changes with the fast duration and standard easing. Do not rely on shadow or
+movement as the only pressed-state cue.
 
 The shared motion tokens honor `prefers-reduced-motion`: the press offset
 resolves to zero and routine transition durations become instant. The pressed
