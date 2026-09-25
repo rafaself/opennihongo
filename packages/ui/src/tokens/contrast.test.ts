@@ -12,20 +12,24 @@ interface ContrastPair {
   readonly minimum: number;
 }
 
-const stylesheet = readFileSync(
-  resolve(process.cwd(), "src/tokens.css"),
+const primitiveStylesheet = readFileSync(
+  resolve(process.cwd(), "src/tokens/primitives.css"),
   "utf8",
 );
-const lightStart = stylesheet.indexOf(':root,\n[data-theme="light"] {');
-const darkStart = stylesheet.indexOf('[data-theme="dark"] {', lightStart);
+const themeStylesheet = readFileSync(
+  resolve(process.cwd(), "src/tokens/themes.css"),
+  "utf8",
+);
+const lightStart = themeStylesheet.indexOf(':root,\n[data-theme="light"] {');
+const darkStart = themeStylesheet.indexOf('[data-theme="dark"] {', lightStart);
 
 if (lightStart < 0 || darkStart < 0) {
   throw new Error("Could not find the light and dark color theme token maps.");
 }
 
 const themeStyles: Record<Theme, string> = {
-  light: stylesheet.slice(lightStart, darkStart),
-  dark: stylesheet.slice(darkStart),
+  light: themeStylesheet.slice(lightStart, darkStart),
+  dark: themeStylesheet.slice(darkStart),
 };
 const surfaceTokens = [
   "--ns-color-canvas",
@@ -72,7 +76,7 @@ function resolveColor(
   }
 
   const declarationSource = token.startsWith("--ns-primitive-color-")
-    ? stylesheet
+    ? primitiveStylesheet
     : themeStyles[theme];
   const value = declarationValue(declarationSource, token);
   const nextResolving = new Set(resolving).add(token);

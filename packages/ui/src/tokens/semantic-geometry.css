@@ -1,0 +1,42 @@
+/* Semantic dimensions make common control and target sizes easy to reuse. */
+:root {
+  --ns-size-control-height-compact: var(--ns-primitive-size-40);
+  --ns-size-control-height-standard: var(--ns-primitive-size-44);
+  --ns-size-control-height-comfortable: var(--ns-primitive-size-48);
+  --ns-size-progress-track: var(--ns-primitive-size-8);
+  --ns-size-progress-ring-small: var(--ns-primitive-size-24);
+  --ns-size-progress-ring-medium: var(--ns-primitive-size-40);
+  --ns-size-progress-ring-large: var(--ns-primitive-size-48);
+  --ns-size-spinner-small: var(--ns-size-icon-box-small);
+  --ns-size-spinner-medium: var(--ns-size-icon-box-medium);
+  --ns-size-spinner-large: var(--ns-size-icon-box-large);
+
+  --ns-size-avatar-small: var(--ns-primitive-size-24);
+  --ns-size-avatar-medium: var(--ns-primitive-size-40);
+  --ns-size-avatar-large: var(--ns-primitive-size-48);
+
+  --ns-size-icon-box-small: var(--ns-primitive-size-16);
+  --ns-size-icon-box-medium: var(--ns-primitive-size-20);
+  --ns-size-icon-box-large: var(--ns-primitive-size-24);
+
+  --ns-size-pointer-target-minimum: var(--ns-primitive-size-24);
+  --ns-size-pointer-target-comfortable: var(--ns-primitive-size-44);
+}
+
+/* Shared aliases define rounded shapes and border emphasis without colors. */
+:root {
+  --ns-radius-none: var(--ns-primitive-radius-0);
+  --ns-radius-sm: var(--ns-primitive-radius-1);
+  --ns-radius-md: var(--ns-primitive-radius-2);
+  --ns-radius-lg: var(--ns-primitive-radius-3);
+  --ns-radius-xl: var(--ns-primitive-radius-4);
+  --ns-radius-pill: var(--ns-primitive-radius-full);
+  --ns-radius-control: var(--ns-radius-lg);
+  --ns-radius-card: var(--ns-radius-xl);
+
+  --ns-border-width-subtle: var(--ns-primitive-border-width-1);
+  --ns-border-width-standard: var(--ns-primitive-border-width-1);
+  --ns-border-width-emphasis: var(--ns-primitive-border-width-2);
+  --ns-border-width-focus: var(--ns-primitive-border-width-3);
+  --ns-border-style-solid: var(--ns-primitive-border-style-solid);
+}

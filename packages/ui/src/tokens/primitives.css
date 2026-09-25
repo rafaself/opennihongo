@@ -1,0 +1,156 @@
+/* Primitive values have no interface meaning and feed the semantic aliases. */
+:root {
+  /* Hinomaru-inspired brand primitives; not semantic aliases or canonical flag-color claims. */
+  --ns-primitive-color-hinomaru-50: #fff1f3;
+  --ns-primitive-color-hinomaru-100: #ffe0e5;
+  --ns-primitive-color-hinomaru-300: #f58a9e;
+  --ns-primitive-color-hinomaru-500: #d92345;
+  --ns-primitive-color-hinomaru-600: #bc002d;
+  --ns-primitive-color-hinomaru-700: #990026;
+  --ns-primitive-color-hinomaru-900: #5f0018;
+
+  /* Sumi-inspired ink neutral primitives; these values have no semantic roles. */
+  --ns-primitive-color-sumi-50: #fafaf9;
+  --ns-primitive-color-sumi-100: #f2f2f0;
+  --ns-primitive-color-sumi-300: #c9c9c5;
+  --ns-primitive-color-sumi-500: #777772;
+  --ns-primitive-color-sumi-600: #595956;
+  --ns-primitive-color-sumi-700: #3c3c39;
+  --ns-primitive-color-sumi-900: #181817;
+
+  /* Restrained functional and reward accents; semantic aliases choose their roles. */
+  --ns-primitive-color-green-50: #edf9f1;
+  --ns-primitive-color-green-100: #d7f1df;
+  --ns-primitive-color-green-300: #7bcf96;
+  --ns-primitive-color-green-500: #32965a;
+  --ns-primitive-color-green-600: #277a49;
+  --ns-primitive-color-green-700: #1d6039;
+  --ns-primitive-color-green-900: #123c26;
+
+  /* Amber is intentionally shared by warning and XP/gold roles. */
+  --ns-primitive-color-amber-50: #fff8e9;
+  --ns-primitive-color-amber-100: #ffedc7;
+  --ns-primitive-color-amber-300: #f2c46f;
+  --ns-primitive-color-amber-500: #d58e3f;
+  --ns-primitive-color-amber-600: #bb702b;
+  --ns-primitive-color-amber-700: #925522;
+  --ns-primitive-color-amber-900: #57330f;
+
+  --ns-primitive-color-blue-50: #eff7ff;
+  --ns-primitive-color-blue-100: #d8ebff;
+  --ns-primitive-color-blue-300: #8cbef2;
+  --ns-primitive-color-blue-500: #478ad4;
+  --ns-primitive-color-blue-600: #3472b7;
+  --ns-primitive-color-blue-700: #2b5b93;
+  --ns-primitive-color-blue-900: #1c365e;
+
+  --ns-primitive-color-orange-50: #fff3eb;
+  --ns-primitive-color-orange-100: #ffe3d1;
+  --ns-primitive-color-orange-300: #f5aa78;
+  --ns-primitive-color-orange-500: #e4753e;
+  --ns-primitive-color-orange-600: #c85a2c;
+  --ns-primitive-color-orange-700: #9f4425;
+  --ns-primitive-color-orange-900: #5d2719;
+
+  --ns-primitive-color-indigo-50: #f3f1ff;
+  --ns-primitive-color-indigo-100: #e5e0ff;
+  --ns-primitive-color-indigo-300: #b2a7f5;
+  --ns-primitive-color-indigo-500: #7766d4;
+  --ns-primitive-color-indigo-600: #6251b5;
+  --ns-primitive-color-indigo-700: #4d4091;
+  --ns-primitive-color-indigo-900: #30285d;
+
+  --ns-primitive-color-neutral-0: #ffffff;
+  --ns-primitive-color-neutral-50: #f7f8f5;
+  --ns-primitive-color-neutral-200: #dce5e1;
+  --ns-primitive-color-neutral-700: #596967;
+  --ns-primitive-color-neutral-900: #1f2c2c;
+  --ns-primitive-color-teal-100: #cce4dd;
+  --ns-primitive-color-teal-700: #245c55;
+  --ns-primitive-color-teal-800: #194a44;
+
+  /* Compact font sizes cover supporting copy through display headings. */
+  --ns-primitive-font-size-1: 0.75rem;
+  --ns-primitive-font-size-2: 0.875rem;
+  --ns-primitive-font-size-3: 1rem;
+  --ns-primitive-font-size-4: 1.125rem;
+  --ns-primitive-font-size-5: 1.25rem;
+  --ns-primitive-font-size-6: 1.5rem;
+  --ns-primitive-font-size-7: 2rem;
+  --ns-primitive-font-size-8: 2.5rem;
+
+  --ns-primitive-font-weight-regular: 400;
+  --ns-primitive-font-weight-semibold: 600;
+
+  --ns-primitive-line-height-tight: 1.1;
+  --ns-primitive-line-height-snug: 1.25;
+  --ns-primitive-line-height-normal: 1.5;
+
+  --ns-primitive-letter-spacing-tight: -0.025em;
+  --ns-primitive-letter-spacing-snug: -0.0125em;
+  --ns-primitive-letter-spacing-normal: 0;
+  --ns-primitive-letter-spacing-wide: 0.04em;
+
+  --ns-primitive-font-family-sans:
+    Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", sans-serif;
+
+  /* Shared interaction timing primitives use broadly supported CSS values. */
+  --ns-primitive-motion-duration-0: 0ms;
+  --ns-primitive-motion-duration-1: 120ms;
+  --ns-primitive-motion-duration-2: 200ms;
+  --ns-primitive-motion-duration-3: 320ms;
+  --ns-primitive-motion-duration-4: 600ms;
+  --ns-primitive-motion-duration-5: 1000ms;
+  --ns-primitive-motion-easing-standard: cubic-bezier(0.2, 0, 0, 1);
+  --ns-primitive-motion-easing-enter: cubic-bezier(0, 0, 0.2, 1);
+  --ns-primitive-motion-easing-exit: cubic-bezier(0.4, 0, 1, 1);
+  --ns-primitive-motion-easing-spring: cubic-bezier(0.2, 1.45, 0.4, 1);
+  --ns-primitive-motion-easing-bounce: cubic-bezier(0.34, 1.7, 0.64, 1);
+
+  /* Compact subset of the Tailwind spacing scale used by shared UI and layout. */
+  --ns-primitive-space-1: 0.25rem;
+  --ns-primitive-space-2: 0.5rem;
+  --ns-primitive-space-2-5: 0.625rem;
+  --ns-primitive-space-3: 0.75rem;
+  --ns-primitive-space-4: 1rem;
+  --ns-primitive-space-5: 1.25rem;
+  --ns-primitive-space-6: 1.5rem;
+  --ns-primitive-space-8: 2rem;
+  --ns-primitive-space-12: 3rem;
+  --ns-primitive-space-16: 4rem;
+
+  /* Intrinsic sizing values serve controls, targets, icons, and indicators. */
+  --ns-primitive-size-8: 0.5rem;
+  --ns-primitive-size-16: 1rem;
+  --ns-primitive-size-20: 1.25rem;
+  --ns-primitive-size-24: 1.5rem;
+  --ns-primitive-size-40: 2.5rem;
+  --ns-primitive-size-44: 2.75rem;
+  --ns-primitive-size-48: 3rem;
+
+  /* Rounded geometry and border primitives stay independent from component roles. */
+  --ns-primitive-radius-0: 0;
+  --ns-primitive-radius-1: 0.25rem;
+  --ns-primitive-radius-2: 0.5rem;
+  --ns-primitive-radius-3: 0.75rem;
+  --ns-primitive-radius-4: 1rem;
+  --ns-primitive-radius-full: 9999px;
+
+  --ns-primitive-border-width-1: 1px;
+  --ns-primitive-border-width-2: 2px;
+  --ns-primitive-border-width-3: 3px;
+  --ns-primitive-border-style-solid: solid;
+
+  /* Public role-neutral aliases; role-specific tokens can be added when needed. */
+  --ns-space-1: var(--ns-primitive-space-1);
+  --ns-space-2: var(--ns-primitive-space-2);
+  --ns-space-2-5: var(--ns-primitive-space-2-5);
+  --ns-space-3: var(--ns-primitive-space-3);
+  --ns-space-4: var(--ns-primitive-space-4);
+  --ns-space-5: var(--ns-primitive-space-5);
+  --ns-space-6: var(--ns-primitive-space-6);
+  --ns-space-8: var(--ns-primitive-space-8);
+  --ns-space-12: var(--ns-primitive-space-12);
+  --ns-space-16: var(--ns-primitive-space-16);
+}
