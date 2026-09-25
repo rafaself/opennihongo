@@ -45,6 +45,11 @@ export const galleryNavigation = {
           label: "Typography",
           to: "/foundations/typography",
         },
+        {
+          id: "motion",
+          label: "Motion",
+          to: "/foundations/motion",
+        },
       ],
     },
     {
