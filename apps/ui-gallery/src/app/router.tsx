@@ -10,6 +10,7 @@ import { DailyGoalCompletedPage } from "../pages/DailyGoalCompletedPage";
 import { HomePage } from "../pages/HomePage";
 import { NotFoundPage } from "../pages/NotFoundPage";
 import { PlaygroundPage } from "../pages/PlaygroundPage";
+import { SpacingPage } from "../pages/foundations/SpacingPage";
 import { TypographyPage } from "../pages/TypographyPage";
 
 const rootRoute = createRootRoute({
@@ -35,6 +36,12 @@ const colorTokensRoute = createRoute({
   component: ColorTokensPage,
 });
 
+const spacingRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/foundations/spacing",
+  component: SpacingPage,
+});
+
 const typographyRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/foundations/typography",
@@ -56,6 +63,7 @@ const playgroundRoute = createRoute({
 const routeTree = rootRoute.addChildren([
   homeRoute,
   colorTokensRoute,
+  spacingRoute,
   typographyRoute,
   buttonsRoute,
   dailyGoalCompletedRoute,

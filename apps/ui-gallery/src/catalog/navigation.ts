@@ -21,6 +21,11 @@ export const galleryNavigation = {
         "Shared visual primitives and semantic design tokens for product interfaces.",
       links: [
         {
+          id: "spacing",
+          label: "Spacing",
+          to: "/foundations/spacing",
+        },
+        {
           id: "color-tokens",
           label: "Color tokens",
           to: "/foundations/colors",
