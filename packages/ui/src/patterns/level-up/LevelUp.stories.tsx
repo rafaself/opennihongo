@@ -33,7 +33,7 @@ const meta = {
     docs: {
       description: {
         component:
-          "A caller-driven level transition presentation. The caller supplies both levels, optional reward content, and actions. The pattern does not calculate progression or unlocks, and its optional Celebration honors reduced-motion preferences.",
+          "A caller-driven level transition presentation. The caller supplies both levels, optional reward content, labels, and actions. Level and reward headings accept localized overrides. The pattern does not calculate progression or unlocks, and its optional Celebration honors reduced-motion preferences.",
       },
     },
   },
@@ -56,6 +56,15 @@ export const CompactComposition: Story = {
       size="compact"
     />
   ),
+};
+
+export const LocalizedLabels: Story = {
+  args: {
+    heading: "レベルアップ！",
+    newLevelLabel: "新しいレベル",
+    previousLevelLabel: "前のレベル",
+    rewardsHeading: "報酬",
+  },
 };
 
 export const ReducedMotion: Story = {

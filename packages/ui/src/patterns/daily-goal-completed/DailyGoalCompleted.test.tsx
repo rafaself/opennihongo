@@ -105,4 +105,27 @@ describe("DailyGoalCompleted", () => {
         .querySelector(".ns-celebration"),
     ).toHaveAttribute("data-active", "false");
   });
+
+  it("supports a localized rewards heading", () => {
+    render(
+      <DailyGoalCompleted
+        celebration={false}
+        completionLabel="完了"
+        goal={{ label: "単語を練習する", max: 20, value: 20 }}
+        heading="今日の目標達成"
+        primaryAction={<Button>続ける</Button>}
+        rewardsHeading="報酬"
+        rewards={[
+          {
+            category: "xp",
+            label: "経験値",
+            state: "earned",
+            value: "+50 XP",
+          },
+        ]}
+      />,
+    );
+
+    expect(screen.getByRole("heading", { name: "報酬" })).toBeVisible();
+  });
 });

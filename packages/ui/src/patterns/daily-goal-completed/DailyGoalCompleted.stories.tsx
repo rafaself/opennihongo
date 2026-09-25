@@ -38,7 +38,7 @@ const meta = {
     docs: {
       description: {
         component:
-          "Presents a daily goal the caller has confirmed complete, its supplied progress values and rewards, and caller-provided actions. Completion and rewards are never calculated. The optional Celebration respects reduced-motion preferences.",
+          "Presents a daily goal the caller has confirmed complete, its supplied progress values and rewards, and caller-provided actions. The rewards heading accepts a localized override. Completion and rewards are never calculated. The optional Celebration respects reduced-motion preferences.",
       },
     },
   },
@@ -60,6 +60,10 @@ export const SingleReward: Story = {
       },
     ],
   },
+};
+
+export const LocalizedRewardsHeading: Story = {
+  args: { rewardsHeading: "報酬" },
 };
 
 export const CelebrationDisabled: Story = {

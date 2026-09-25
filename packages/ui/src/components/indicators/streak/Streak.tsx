@@ -36,6 +36,8 @@ export type StreakProps = Omit<
   count: number;
   /** Visible name for the status region. Defaults to "Streak". */
   label?: string;
+  /** Visible and announced label for the current state; defaults to English. */
+  stateLabel?: string;
   /** Caller-supplied presentation state; no streak rules are applied. */
   state: StreakState;
   /** Caller-supplied count unit. Defaults to "days". */
@@ -47,6 +49,7 @@ export function Streak({
   className,
   count,
   label = "Streak",
+  stateLabel,
   state,
   unit = "days",
   ...props
@@ -55,6 +58,10 @@ export function Streak({
 
   if (!label.trim()) {
     throw new Error("Streak requires a non-empty accessible label.");
+  }
+
+  if (stateLabel !== undefined && !stateLabel.trim()) {
+    throw new Error("Streak requires a non-empty state label when supplied.");
   }
 
   const classes = ["ns-streak", className].filter(Boolean).join(" ");
@@ -102,7 +109,7 @@ export function Streak({
         data-state={state}
         variant={stateVariants[state]}
       >
-        {stateLabels[state]}
+        {stateLabel ?? stateLabels[state]}
       </Badge>
     </div>
   );

@@ -26,7 +26,7 @@ const meta = {
     docs: {
       description: {
         component:
-          "Streak presents a caller-supplied count and state. It does not calculate, protect, expire, or recover streaks. State labels remain visible so color is never the only state cue. Its state transitions use shared motion tokens and stop when reduced motion is requested.",
+          "Streak presents a caller-supplied count and state. It does not calculate, protect, expire, or recover streaks. State labels remain visible so color is never the only state cue; callers can localize the state label. Its state transitions use shared motion tokens and stop when reduced motion is requested.",
       },
     },
   },
@@ -51,6 +51,15 @@ export const Completed: Story = {
 
 export const Inactive: Story = {
   args: { state: "inactive" },
+};
+
+export const Localized: Story = {
+  args: {
+    label: "連続学習日数",
+    state: "at-risk",
+    stateLabel: "要注意",
+    unit: "日",
+  },
 };
 
 export const AllStates: Story = {

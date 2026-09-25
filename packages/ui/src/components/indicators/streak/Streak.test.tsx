@@ -35,4 +35,22 @@ describe("Streak", () => {
     expect(within(status).getByText("lessons")).toBeVisible();
     expect(within(status).getByText("Active")).toBeVisible();
   });
+
+  it("supports a localized visible and announced state label", () => {
+    render(
+      <Streak
+        count={4}
+        label="連続学習日数"
+        state="at-risk"
+        stateLabel="要注意"
+        unit="日"
+      />,
+    );
+
+    expect(
+      within(screen.getByRole("status", { name: "連続学習日数" })).getByText(
+        "要注意",
+      ),
+    ).toBeVisible();
+  });
 });

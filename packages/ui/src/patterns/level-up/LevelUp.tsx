@@ -28,12 +28,18 @@ export type LevelUpProps = Omit<
   description?: string;
   /** Visible heading that names the presentation region. */
   heading: string;
+  /** Heading for optional rewards. Defaults to "Rewards". */
+  rewardsHeading?: string;
   /** Caller-supplied destination level; no progression is calculated. */
   newLevel: LevelUpLevel;
+  /** Caption and accessible name for the destination level. */
+  newLevelLabel?: string;
   /** Required caller-supplied primary action, such as a Button or link. */
   primaryAction: ReactElement;
   /** Caller-supplied source level; no progression is calculated. */
   previousLevel: LevelUpLevel;
+  /** Caption and accessible name for the source level. */
+  previousLevelLabel?: string;
   /** Optional caller-composed reward content with appropriate semantics. */
   rewards?: ReactNode;
   /** Optional caller-supplied secondary action. */
@@ -49,9 +55,12 @@ export function LevelUp({
   description,
   heading,
   newLevel,
+  newLevelLabel = "New level",
   previousLevel,
+  previousLevelLabel = "Previous level",
   primaryAction,
   rewards,
+  rewardsHeading = "Rewards",
   secondaryAction,
   size = "full",
   ...props
@@ -62,6 +71,14 @@ export function LevelUp({
 
   if (!heading.trim()) {
     throw new Error("LevelUp requires a non-empty heading.");
+  }
+
+  if (!previousLevelLabel.trim() || !newLevelLabel.trim()) {
+    throw new Error("LevelUp level labels must be non-empty.");
+  }
+
+  if (hasRewards && !rewardsHeading.trim()) {
+    throw new Error("LevelUp requires a non-empty rewards heading.");
   }
 
   return (
@@ -97,12 +114,12 @@ export function LevelUp({
 
           <div className="ns-level-up__levels">
             <div
-              aria-label="Previous level"
+              aria-label={previousLevelLabel}
               className="ns-level-up__level ns-level-up__level--previous"
               role="group"
             >
               <Text as="span" color="secondary" variant="caption">
-                Previous level
+                {previousLevelLabel}
               </Text>
               <LevelBadge
                 {...previousLevel}
@@ -118,12 +135,12 @@ export function LevelUp({
               →
             </Text>
             <div
-              aria-label="New level"
+              aria-label={newLevelLabel}
               className="ns-level-up__level ns-level-up__level--new"
               role="group"
             >
               <Text as="span" color="secondary" variant="caption">
-                New level
+                {newLevelLabel}
               </Text>
               <LevelBadge
                 {...newLevel}
@@ -139,7 +156,7 @@ export function LevelUp({
                 className="ns-level-up__rewards-heading"
                 variant="label"
               >
-                Rewards
+                {rewardsHeading}
               </Text>
               {rewards}
             </div>

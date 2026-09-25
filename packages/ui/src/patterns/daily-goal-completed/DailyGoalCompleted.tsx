@@ -43,6 +43,8 @@ export type DailyGoalCompletedProps = Omit<
   goal: DailyGoalCompletedGoal;
   /** Visible heading that names the presentation region. */
   heading: string;
+  /** Heading for the rewards section. Defaults to "Rewards". */
+  rewardsHeading?: string;
   /** Caller-provided primary action, such as a Button or link. */
   primaryAction: ReactElement;
   /** Caller-provided rewards and their display states. */
@@ -61,6 +63,7 @@ export function DailyGoalCompleted({
   heading,
   primaryAction,
   rewards,
+  rewardsHeading = "Rewards",
   secondaryAction,
   ...props
 }: DailyGoalCompletedProps) {
@@ -98,6 +101,10 @@ export function DailyGoalCompleted({
     throw new Error(
       "DailyGoalCompleted requires at least one supplied reward.",
     );
+  }
+
+  if (!rewardsHeading.trim()) {
+    throw new Error("DailyGoalCompleted requires a non-empty rewards heading.");
   }
 
   return (
@@ -192,7 +199,7 @@ export function DailyGoalCompleted({
               id={rewardHeadingId}
               variant="label"
             >
-              Rewards
+              {rewardsHeading}
             </Text>
             <div className="ns-daily-goal-completed__reward-grid">
               {rewards.map((reward, index) => (

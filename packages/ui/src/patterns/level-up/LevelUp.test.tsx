@@ -37,4 +37,31 @@ describe("LevelUp", () => {
 
     expect(onContinue).toHaveBeenCalledOnce();
   });
+
+  it("supports localized captions and accessible names", () => {
+    render(
+      <LevelUp
+        heading="レベルアップ"
+        newLevel={{ label: "レベル", value: 6 }}
+        newLevelLabel="新しいレベル"
+        previousLevel={{ label: "レベル", value: 5 }}
+        previousLevelLabel="前のレベル"
+        primaryAction={<Button>続ける</Button>}
+        rewards={<span>報酬</span>}
+        rewardsHeading="獲得報酬"
+      />,
+    );
+
+    expect(
+      within(screen.getByRole("group", { name: "前のレベル" })).getByText(
+        "前のレベル",
+      ),
+    ).toBeVisible();
+    expect(
+      within(screen.getByRole("group", { name: "新しいレベル" })).getByText(
+        "新しいレベル",
+      ),
+    ).toBeVisible();
+    expect(screen.getByRole("heading", { name: "獲得報酬" })).toBeVisible();
+  });
 });
