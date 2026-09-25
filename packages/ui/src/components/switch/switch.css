@@ -1,9 +1,12 @@
 .ns-switch {
+  --ns-switch-track-inline-size: calc(
+    var(--ns-size-button-height-comfortable) + var(--ns-space-2)
+  );
   --ns-switch-thumb-size: calc(
     var(--ns-size-icon-box-large) + var(--ns-space-1)
   );
   --ns-switch-thumb-travel: calc(
-    var(--ns-size-button-height-comfortable) - var(--ns-switch-thumb-size) -
+    var(--ns-switch-track-inline-size) - var(--ns-switch-thumb-size) -
       var(--ns-space-1)
   );
 
@@ -26,9 +29,9 @@
   border: var(--ns-border-width-standard) var(--ns-border-style-solid)
     var(--ns-color-border-strong);
   border-radius: var(--ns-radius-pill);
-  block-size: calc(var(--ns-size-icon-box-large) + var(--ns-space-2));
+  block-size: var(--ns-size-pointer-target-minimum);
   display: flex;
-  inline-size: var(--ns-size-button-height-comfortable);
+  inline-size: var(--ns-switch-track-inline-size);
   padding: var(--ns-border-width-standard);
   transition:
     background-color var(--ns-motion-duration-fast)
@@ -38,16 +41,15 @@
 }
 
 .ns-switch__thumb {
-  align-items: center;
   background-color: var(--ns-color-surface);
   border: var(--ns-border-width-emphasis) var(--ns-border-style-solid)
     var(--ns-color-border);
-  border-radius: var(--ns-radius-sm);
+  border-radius: var(--ns-radius-pill);
   box-shadow: var(--ns-elevation-card);
   block-size: var(--ns-switch-thumb-size);
-  display: flex;
+  display: block;
+  flex: 0 0 var(--ns-switch-thumb-size);
   inline-size: var(--ns-switch-thumb-size);
-  justify-content: center;
   transform: translateX(0);
   transition:
     background-color var(--ns-motion-duration-fast)
