@@ -42,4 +42,22 @@ describe("Achievement", () => {
     ).toBeInTheDocument();
     expect(screen.getByText("Locked")).toBeVisible();
   });
+
+  it.each([
+    [<Achievement state="locked" title=" " />, "non-empty title"],
+    [
+      <Achievement state="locked" stateLabel=" " title="First steps" />,
+      "non-empty state label",
+    ],
+    [
+      <Achievement
+        progress={{ current: 1, label: " ", target: 2 }}
+        state="in-progress"
+        title="First steps"
+      />,
+      "progress requires a non-empty label",
+    ],
+  ] as const)("rejects invalid visible content (%s)", (element, message) => {
+    expect(() => render(element)).toThrow(message);
+  });
 });

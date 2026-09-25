@@ -78,4 +78,57 @@ describe("ProgressSummary", () => {
       screen.getByText("Sections finished in this course."),
     ).toBeInTheDocument();
   });
+
+  it("supports optional metric labels and badges with their default presentation", () => {
+    render(
+      <ProgressSummary
+        metrics={[
+          {
+            badge: { label: "On track" },
+            id: "words",
+            label: "Words reviewed",
+            value: 24,
+          },
+        ]}
+        title="Study progress"
+      />,
+    );
+
+    expect(
+      screen.getByRole("progressbar", { name: "Words reviewed" }),
+    ).toHaveAttribute("aria-valuemax", "100");
+    expect(screen.getByText("On track")).toHaveAttribute(
+      "data-variant",
+      "neutral",
+    );
+  });
+
+  it.each([
+    [<ProgressSummary title=" " metrics={[]} />, "title"],
+    [
+      <ProgressSummary
+        title="Study progress"
+        metrics={[{ id: "", label: "Words", value: 1 }]}
+      />,
+      "unique",
+    ],
+    [
+      <ProgressSummary
+        title="Study progress"
+        metrics={[{ id: "words", label: " ", value: 1 }]}
+      />,
+      "metric labels",
+    ],
+    [
+      <ProgressSummary
+        title="Study progress"
+        metrics={[
+          { badge: { label: " " }, id: "words", label: "Words", value: 1 },
+        ]}
+      />,
+      "badge labels",
+    ],
+  ] as const)("requires a valid %s", (element, message) => {
+    expect(() => render(element)).toThrow(message);
+  });
 });

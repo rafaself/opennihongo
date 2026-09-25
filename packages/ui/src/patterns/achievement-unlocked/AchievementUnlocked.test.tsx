@@ -29,4 +29,16 @@ describe("AchievementUnlocked", () => {
 
     expect(onContinue).toHaveBeenCalledOnce();
   });
+
+  it("requires a visible region heading", () => {
+    expect(() =>
+      render(
+        <AchievementUnlocked
+          achievement={{ state: "unlocked", title: "Kana explorer" }}
+          heading=" "
+          primaryAction={<Button>Continue</Button>}
+        />,
+      ),
+    ).toThrow("AchievementUnlocked requires a non-empty heading.");
+  });
 });

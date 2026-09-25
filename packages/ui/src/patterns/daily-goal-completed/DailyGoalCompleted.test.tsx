@@ -128,4 +128,91 @@ describe("DailyGoalCompleted", () => {
 
     expect(screen.getByRole("heading", { name: "報酬" })).toBeVisible();
   });
+
+  it("uses the determinate progress default when no maximum is supplied", () => {
+    render(
+      <DailyGoalCompleted
+        completionLabel="Completed"
+        goal={{ label: "Practice words", value: 8 }}
+        heading="Daily goal complete"
+        primaryAction={<Button>Continue</Button>}
+        rewards={[
+          {
+            category: "xp",
+            label: "Experience points",
+            state: "earned",
+            value: "+50 XP",
+          },
+        ]}
+      />,
+    );
+
+    expect(
+      screen.getByRole("progressbar", { name: "Practice words" }),
+    ).toHaveAttribute("aria-valuemax", "100");
+  });
+
+  it.each([
+    [
+      <DailyGoalCompleted
+        completionLabel="Done"
+        goal={{ label: "Words", value: 1 }}
+        heading=" "
+        primaryAction={<Button>Continue</Button>}
+        rewards={[
+          { category: "xp", label: "XP", state: "earned", value: "+1" },
+        ]}
+      />,
+      "heading",
+    ],
+    [
+      <DailyGoalCompleted
+        completionLabel=" "
+        goal={{ label: "Words", value: 1 }}
+        heading="Complete"
+        primaryAction={<Button>Continue</Button>}
+        rewards={[
+          { category: "xp", label: "XP", state: "earned", value: "+1" },
+        ]}
+      />,
+      "completion label",
+    ],
+    [
+      <DailyGoalCompleted
+        completionLabel="Done"
+        goal={{ label: " ", value: 1 }}
+        heading="Complete"
+        primaryAction={<Button>Continue</Button>}
+        rewards={[
+          { category: "xp", label: "XP", state: "earned", value: "+1" },
+        ]}
+      />,
+      "goal label",
+    ],
+    [
+      <DailyGoalCompleted
+        completionLabel="Done"
+        goal={{ label: "Words", value: 1 }}
+        heading="Complete"
+        primaryAction={<Button>Continue</Button>}
+        rewards={[]}
+      />,
+      "at least one supplied reward",
+    ],
+    [
+      <DailyGoalCompleted
+        completionLabel="Done"
+        goal={{ label: "Words", value: 1 }}
+        heading="Complete"
+        primaryAction={<Button>Continue</Button>}
+        rewards={[
+          { category: "xp", label: "XP", state: "earned", value: "+1" },
+        ]}
+        rewardsHeading=" "
+      />,
+      "rewards heading",
+    ],
+  ] as const)("requires a non-empty %s", (element, message) => {
+    expect(() => render(element)).toThrow(message);
+  });
 });

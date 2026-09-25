@@ -1,7 +1,9 @@
 import "@testing-library/jest-dom/vitest";
-import { render, screen } from "@testing-library/react";
-import { describe, expect, it } from "vitest";
+import { cleanup, render, screen } from "@testing-library/react";
+import { afterEach, describe, expect, it } from "vitest";
 import { LeaderboardItem } from "./LeaderboardItem";
+
+afterEach(cleanup);
 
 describe("LeaderboardItem", () => {
   it("exposes rank and participant text and marks the current user accessibly", () => {
@@ -40,5 +42,50 @@ describe("LeaderboardItem", () => {
     });
 
     expect(item).not.toHaveAttribute("aria-current");
+  });
+
+  it.each([
+    ["participant name", { participantName: " " }, "participant name"],
+    ["rank", { rank: " " }, "finite rank"],
+    ["score", { score: Number.POSITIVE_INFINITY }, "finite score"],
+    ["visible labels", { rankLabel: " " }, "rank and score labels"],
+    [
+      "current-user label",
+      { isCurrentUser: true, currentUserLabel: " " },
+      "current-user label",
+    ],
+    [
+      "change label",
+      { change: { direction: "up", label: " " } },
+      "change label",
+    ],
+  ] as const)("requires a valid %s", (_field, props, message) => {
+    expect(() =>
+      render(
+        <ol>
+          <LeaderboardItem
+            participantName="Emi"
+            rank={1}
+            score={10}
+            {...props}
+          />
+        </ol>,
+      ),
+    ).toThrow(message);
+  });
+
+  it("uses the supplied avatar image when an image URL is provided", () => {
+    const { container } = render(
+      <ol>
+        <LeaderboardItem
+          avatarSrc="/emi.png"
+          participantName="Emi Tanaka"
+          rank={1}
+          score={980}
+        />
+      </ol>,
+    );
+
+    expect(container.querySelector("img")).toHaveAttribute("src", "/emi.png");
   });
 });

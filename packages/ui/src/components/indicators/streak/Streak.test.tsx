@@ -53,4 +53,14 @@ describe("Streak", () => {
       ),
     ).toBeVisible();
   });
+
+  it.each([
+    [<Streak count={1} label=" " state="active" />, "accessible label"],
+    [
+      <Streak count={1} state="active" stateLabel=" " />,
+      "state label when supplied",
+    ],
+  ] as const)("requires a non-empty %s", (element, message) => {
+    expect(() => render(element)).toThrow(message);
+  });
 });

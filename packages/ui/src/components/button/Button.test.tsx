@@ -12,6 +12,7 @@ describe("Button", () => {
     render(<Button onClick={onClick}>Continue</Button>);
 
     const button = screen.getByRole("button", { name: "Continue" });
+    expect(button).toBeEnabled();
     await user.tab();
     expect(button).toHaveFocus();
 

@@ -66,4 +66,42 @@ describe("QuestCard", () => {
     ).toBeVisible();
     expect(screen.getByText("+30 XP")).toBeVisible();
   });
+
+  it.each([
+    [
+      <QuestCard goal={1} progress={0} status="incomplete" title=" " />,
+      "title",
+    ],
+    [
+      <QuestCard
+        goal={1}
+        progress={0}
+        status="incomplete"
+        statusLabel=" "
+        title="Daily practice"
+      />,
+      "status label",
+    ],
+    [
+      <QuestCard
+        goal={1}
+        progress={0}
+        progressLabel=" "
+        status="incomplete"
+        title="Daily practice"
+      />,
+      "progress label",
+    ],
+    [
+      <QuestCard
+        goal={0}
+        progress={0}
+        status="incomplete"
+        title="Daily practice"
+      />,
+      "finite progress and a positive goal",
+    ],
+  ] as const)("rejects invalid %s", (element, message) => {
+    expect(() => render(element)).toThrow(message);
+  });
 });

@@ -6,7 +6,10 @@ import { FormField } from "../../form-field/FormField";
 import {
   Select,
   SelectContent,
+  SelectGroup,
   SelectItem,
+  SelectLabel,
+  SelectSeparator,
   SelectTrigger,
   SelectValue,
 } from "./Select";
@@ -32,8 +35,12 @@ describe("Select", () => {
           </SelectTrigger>
         </FormField>
         <SelectContent>
-          <SelectItem value="hiragana">Hiragana</SelectItem>
-          <SelectItem value="katakana">Katakana</SelectItem>
+          <SelectGroup>
+            <SelectLabel>Japanese scripts</SelectLabel>
+            <SelectItem value="hiragana">Hiragana</SelectItem>
+            <SelectItem value="katakana">Katakana</SelectItem>
+          </SelectGroup>
+          <SelectSeparator />
           <SelectItem value="kanji">Kanji</SelectItem>
         </SelectContent>
       </Select>,
@@ -47,6 +54,8 @@ describe("Select", () => {
     expect(trigger).toHaveFocus();
     await user.keyboard("{ArrowDown}");
     expect(screen.getByRole("listbox")).toBeInTheDocument();
+    expect(screen.getByText("Japanese scripts")).toBeVisible();
+    expect(document.querySelector(".ns-select__separator")).toBeInTheDocument();
     await user.keyboard("{ArrowDown}{Enter}");
 
     expect(trigger).toHaveTextContent("Katakana");

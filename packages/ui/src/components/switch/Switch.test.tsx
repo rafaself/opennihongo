@@ -75,4 +75,27 @@ describe("Switch", () => {
     expect(control).toHaveAttribute("aria-checked", "false");
     expect(onCheckedChange).not.toHaveBeenCalled();
   });
+
+  it("does not toggle when a caller click handler prevents activation", async () => {
+    const user = userEvent.setup();
+    const onCheckedChange = vi.fn();
+
+    render(
+      <label>
+        Confirm setting
+        <Switch
+          onCheckedChange={onCheckedChange}
+          onClick={(event) => {
+            event.preventDefault();
+          }}
+        />
+      </label>,
+    );
+
+    const control = screen.getByRole("switch", { name: "Confirm setting" });
+    await user.click(control);
+
+    expect(control).toHaveAttribute("aria-checked", "false");
+    expect(onCheckedChange).not.toHaveBeenCalled();
+  });
 });

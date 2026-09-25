@@ -4,6 +4,7 @@ import userEvent from "@testing-library/user-event";
 import { afterEach, describe, expect, it } from "vitest";
 import {
   Toast,
+  ToastAction,
   ToastClose,
   ToastDescription,
   ToastProvider,
@@ -51,5 +52,30 @@ describe("Toast", () => {
     await waitFor(() => {
       expect(screen.queryByRole("listitem")).not.toBeInTheDocument();
     });
+  });
+
+  it("supports a custom portal host and assertive notification actions", async () => {
+    const user = userEvent.setup();
+    const portalContainer = document.createElement("div");
+    document.body.append(portalContainer);
+
+    render(
+      <ToastProvider duration={Infinity}>
+        <Toast announcement="assertive" defaultOpen>
+          <ToastTitle>Sync failed</ToastTitle>
+          <ToastAction altText="Retry synchronization">Retry</ToastAction>
+        </Toast>
+        <ToastViewport portalContainer={portalContainer} />
+      </ToastProvider>,
+    );
+
+    const announcement = await screen.findByText("Sync failed");
+    expect(announcement).toHaveTextContent("Sync failed");
+    expect(portalContainer).toContainElement(announcement);
+
+    const retryButton = screen.getByRole("button", { name: "Retry" });
+    retryButton.focus();
+    await user.keyboard("{Enter}");
+    portalContainer.remove();
   });
 });

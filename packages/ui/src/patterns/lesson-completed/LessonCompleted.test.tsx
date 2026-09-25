@@ -1,12 +1,14 @@
 import "@testing-library/jest-dom/vitest";
-import { render, screen } from "@testing-library/react";
+import { cleanup, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { describe, expect, it, vi } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import { Button } from "../../components/button/Button";
 import { Progress } from "../../components/indicators/progress/Progress";
 import { LessonCompleted } from "./LessonCompleted";
 
 describe("LessonCompleted", () => {
+  afterEach(cleanup);
+
   it("renders caller data accessibly and keeps supplied actions operable", async () => {
     const onContinue = vi.fn();
     const onReview = vi.fn();
@@ -40,5 +42,27 @@ describe("LessonCompleted", () => {
 
     expect(onContinue).toHaveBeenCalledOnce();
     expect(onReview).toHaveBeenCalledOnce();
+  });
+
+  it("renders a rewards summary when no progress content is supplied", () => {
+    render(
+      <LessonCompleted
+        primaryAction={<Button>Continue</Button>}
+        rewards={<span>25 XP earned</span>}
+        title="Lesson complete"
+      />,
+    );
+
+    expect(
+      screen.getByRole("region", { name: "Lesson complete" }),
+    ).toHaveTextContent("25 XP earned");
+  });
+
+  it("requires a non-empty accessible heading", () => {
+    expect(() =>
+      render(
+        <LessonCompleted primaryAction={<Button>Continue</Button>} title=" " />,
+      ),
+    ).toThrow("LessonCompleted requires a non-empty title.");
   });
 });

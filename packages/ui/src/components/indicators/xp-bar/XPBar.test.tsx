@@ -37,4 +37,12 @@ describe("XPBar", () => {
       screen.getByRole("progressbar", { name: "Current XP progress" }),
     ).toHaveAttribute("aria-valuenow", "60");
   });
+
+  it("uses the default range when a normalized value has no maximum", () => {
+    render(<XPBar aria-label="Current XP" value={12} />);
+
+    expect(
+      screen.getByRole("progressbar", { name: "Current XP" }),
+    ).toHaveAttribute("aria-valuemax", "100");
+  });
 });

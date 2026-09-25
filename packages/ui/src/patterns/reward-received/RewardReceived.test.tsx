@@ -46,4 +46,21 @@ describe("RewardReceived", () => {
 
     expect(onContinue).toHaveBeenCalledOnce();
   });
+
+  it("requires a non-empty accessible heading", () => {
+    expect(() =>
+      render(
+        <RewardReceived
+          heading=" "
+          primaryAction={<Button>Continue</Button>}
+          reward={{
+            category: "xp",
+            label: "Experience points",
+            state: "earned",
+            value: "+10",
+          }}
+        />,
+      ),
+    ).toThrow("RewardReceived requires a non-empty heading.");
+  });
 });

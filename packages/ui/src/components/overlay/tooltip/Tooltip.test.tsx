@@ -23,7 +23,7 @@ describe("Tooltip", () => {
     const user = userEvent.setup();
 
     render(
-      <TooltipProvider>
+      <TooltipProvider delayDuration={0} skipDelayDuration={0}>
         <Tooltip content="Saves this lesson for later">
           <Button>Save lesson</Button>
         </Tooltip>
