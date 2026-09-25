@@ -329,20 +329,23 @@ which primitive family supplies a value.
 
 | Role                      | Semantic tokens                                                                                                                                       | Light mapping                                                                                |
 | ------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
-| Brand and primary actions | `--ns-color-brand`, `--ns-color-action-primary`; their `-hover` and `-foreground` variants                                                            | Hinomaru 600 for the action, 700 on hover, and white foreground                              |
+| Brand and primary actions | `--ns-color-brand`, `--ns-color-action-primary`; their `-hover` and `-foreground` variants; `--ns-color-brand-text` and its hover variant             | Hinomaru 600 for the action and brand text, 700 on hover, and white action foreground        |
 | Text                      | `--ns-color-text-primary` (`--ns-color-ink`), `--ns-color-text-secondary` (`--ns-color-muted`), `--ns-color-text-tertiary`, `--ns-color-text-inverse` | Sumi 900, 700, and 600, with white inverse text                                              |
 | Surfaces                  | `--ns-color-canvas`, `--ns-color-surface`, `--ns-color-surface-subtle`, `--ns-color-surface-raised`                                                   | Sumi 50, white, Sumi 100, and white                                                          |
 | Overlay backdrop          | `--ns-color-overlay-backdrop`                                                                                                                         | Sumi 900 ink at 56% opacity                                                                  |
-| Borders                   | `--ns-color-border-subtle`, `--ns-color-border`, `--ns-color-border-strong`                                                                           | Sumi 100, 300, and 500                                                                       |
+| Borders                   | `--ns-color-border-subtle`, `--ns-color-border`, `--ns-color-border-strong`                                                                           | Sumi 100, 500, and 700                                                                       |
 | Focus and selection       | `--ns-color-focus`, `--ns-color-selection`, `--ns-color-selection-foreground`                                                                         | Amber 600 focus, Hinomaru 50 selection, and primary text                                     |
 | Feedback                  | `--ns-color-feedback-{success,warning,info,danger}` and matching `-surface` tokens                                                                    | Green, amber, blue, and Hinomaru foreground accents with their 50-step surfaces              |
 | Rewards                   | `--ns-color-reward-{xp,streak,achievement}` and matching `-surface` tokens                                                                            | Amber for XP, orange for streaks, and indigo for achievements, each with its 50-step surface |
 
 The primary action uses Hinomaru red. Feedback keeps distinct green, amber,
 and blue meanings; red is reserved for the brand action and danger feedback.
-Reward accents reuse the established amber, orange, and indigo families. The
-variables are included by `@opennihongo/ui/styles.css`, so hosts consume them
-through the supported stylesheet entry and can scope them with `data-theme`.
+Reward accents reuse the established amber, orange, and indigo families.
+`--ns-color-brand-text` is the legible red text role for inline brand links;
+the dark theme uses lighter red steps while primary action fills retain their
+red backgrounds and white foreground. The variables are included by
+`@opennihongo/ui/styles.css`, so hosts consume them through the supported
+stylesheet entry and can scope them with `data-theme`.
 
 ## Dark theme color map
 
@@ -353,23 +356,23 @@ Hinomaru red, with the 500 and 600 steps providing white-foreground control
 states. Focus uses amber 300; feedback and reward foregrounds use their 300
 steps over matching 900-step surfaces.
 
-| Role                      | Dark mapping                                                                             |
-| ------------------------- | ---------------------------------------------------------------------------------------- |
-| Brand and primary actions | Hinomaru 500, Hinomaru 600 on hover, and white foreground                                |
-| Text                      | Sumi 50 primary, 100 secondary, 300 tertiary, and Sumi 900 inverse                       |
-| Surfaces                  | Sumi 900 canvas, dark Sumi 900/700 mixes for surface layers, and Sumi 700 raised surface |
-| Overlay backdrop          | Black at 64% opacity                                                                     |
-| Borders                   | Sumi 700 subtle, 500 standard, and 300 strong                                            |
-| Focus and selection       | Amber 300 focus, Hinomaru 900 selection, and primary text                                |
-| Feedback                  | Green, amber, blue, and Hinomaru 300 foregrounds with matching 900-step surfaces         |
-| Rewards                   | Amber, orange, and indigo 300 foregrounds with matching 900-step surfaces                |
+| Role                      | Dark mapping                                                                                             |
+| ------------------------- | -------------------------------------------------------------------------------------------------------- |
+| Brand and primary actions | Hinomaru 500/600 action fills with white foreground; Hinomaru 300/100 for brand text and its hover state |
+| Text                      | Sumi 50 primary, 100 secondary, 300 tertiary, and Sumi 900 inverse                                       |
+| Surfaces                  | Sumi 900 canvas, dark Sumi 900/700 mixes for surface layers, and Sumi 700 raised surface                 |
+| Overlay backdrop          | Black at 64% opacity                                                                                     |
+| Borders                   | Sumi 700 subtle, 300 standard, and 100 strong                                                            |
+| Focus and selection       | Amber 300 focus, Hinomaru 900 selection, and primary text                                                |
+| Feedback                  | Green, amber, blue, and Hinomaru 300 foregrounds with matching 900-step surfaces                         |
+| Rewards                   | Amber, orange, and indigo 300 foregrounds with matching 900-step surfaces                                |
 
 Representative dark text/surface pairs use light Sumi values against the
 darkest and raised surfaces, and the primary control keeps white text over
 Hinomaru 500 in its default state and Hinomaru 600 on hover. Feedback and
 reward accents use lighter foreground steps over their deep family surfaces.
-These pairings are ready for the formal contrast audit in issue #93; that audit
-remains the source of verified conformance results.
+The measured token-pair results and scope limits are recorded in the
+[semantic color contrast audit](color-contrast-audit.md).
 
 `packages/ui` owns both layers and chooses their names. Only the semantic layer
 is a component and app consumption contract. Primitive scales can be extended

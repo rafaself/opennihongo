@@ -75,7 +75,7 @@ a {
 
 .gallery-navigation a:hover,
 .gallery-text-link:hover {
-  color: var(--ns-color-brand);
+  color: var(--ns-color-brand-text-hover);
 }
 
 .gallery-main {
@@ -99,7 +99,7 @@ a {
 }
 
 .gallery-eyebrow {
-  color: var(--ns-color-brand);
+  color: var(--ns-color-brand-text);
   font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 0.12em;
@@ -127,7 +127,7 @@ a {
 
 .gallery-text-link {
   align-items: center;
-  color: var(--ns-color-brand);
+  color: var(--ns-color-brand-text);
   display: inline-flex;
   gap: 0.5rem;
 }
@@ -274,7 +274,7 @@ a {
 }
 
 .gallery-not-found-link {
-  color: var(--ns-color-brand);
+  color: var(--ns-color-brand-text);
   font-weight: 700;
   text-underline-offset: 0.2em;
 }

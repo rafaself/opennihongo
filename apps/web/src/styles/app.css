@@ -10,5 +10,7 @@
   --shadow-card: var(--ns-elevation-card);
   --color-brand: var(--ns-color-brand);
   --color-brand-foreground: var(--ns-color-brand-foreground);
+  --color-brand-text: var(--ns-color-brand-text);
+  --color-brand-text-hover: var(--ns-color-brand-text-hover);
   --font-sans: var(--ns-font-sans);
 }

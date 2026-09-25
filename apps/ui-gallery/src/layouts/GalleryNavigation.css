@@ -31,7 +31,7 @@
 }
 
 .gallery-navigation-section[open] > summary {
-  color: var(--ns-color-brand);
+  color: var(--ns-color-brand-text);
 }
 
 .gallery-navigation-section[open] > summary::after {
@@ -67,7 +67,7 @@
 }
 
 .gallery-navigation-links a {
-  color: var(--ns-color-brand);
+  color: var(--ns-color-brand-text);
   font-size: 0.875rem;
   font-weight: 600;
   text-decoration: none;

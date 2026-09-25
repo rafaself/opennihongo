@@ -7,7 +7,7 @@ export function WelcomeView() {
       className="my-auto grid gap-8 py-12 md:grid-cols-[minmax(0,1fr)_18rem] md:items-center"
     >
       <div className="max-w-2xl">
-        <p className="mb-4 text-sm font-semibold uppercase tracking-[0.16em] text-brand">
+        <p className="mb-4 text-sm font-semibold uppercase tracking-[0.16em] text-brand-text">
           Your Japanese learning space
         </p>
         <h1

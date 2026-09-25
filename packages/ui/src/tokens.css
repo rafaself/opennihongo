@@ -289,8 +289,8 @@
   --ns-color-ink: var(--ns-color-text-primary);
   --ns-color-muted: var(--ns-color-text-secondary);
   --ns-color-border-subtle: var(--ns-primitive-color-sumi-100);
-  --ns-color-border: var(--ns-primitive-color-sumi-300);
-  --ns-color-border-strong: var(--ns-primitive-color-sumi-500);
+  --ns-color-border: var(--ns-primitive-color-sumi-500);
+  --ns-color-border-strong: var(--ns-primitive-color-sumi-700);
 
   /* Hinomaru red is the shared brand and primary-action color. */
   --ns-color-action-primary: var(--ns-primitive-color-hinomaru-600);
@@ -299,6 +299,8 @@
   --ns-color-brand: var(--ns-color-action-primary);
   --ns-color-brand-hover: var(--ns-color-action-primary-hover);
   --ns-color-brand-foreground: var(--ns-color-action-primary-foreground);
+  --ns-color-brand-text: var(--ns-primitive-color-hinomaru-600);
+  --ns-color-brand-text-hover: var(--ns-primitive-color-hinomaru-700);
   --ns-color-focus: var(--ns-primitive-color-amber-600);
   --ns-color-selection: var(--ns-primitive-color-hinomaru-50);
   --ns-color-selection-foreground: var(--ns-color-text-primary);
@@ -365,8 +367,8 @@
 
   /* Borders remain visible on layered surfaces without competing with text. */
   --ns-color-border-subtle: var(--ns-primitive-color-sumi-700);
-  --ns-color-border: var(--ns-primitive-color-sumi-500);
-  --ns-color-border-strong: var(--ns-primitive-color-sumi-300);
+  --ns-color-border: var(--ns-primitive-color-sumi-300);
+  --ns-color-border-strong: var(--ns-primitive-color-sumi-100);
 
   /* Keep the Hinomaru brand and use lighter steps for dark-theme actions. */
   --ns-color-action-primary: var(--ns-primitive-color-hinomaru-500);
@@ -375,6 +377,8 @@
   --ns-color-brand: var(--ns-color-action-primary);
   --ns-color-brand-hover: var(--ns-color-action-primary-hover);
   --ns-color-brand-foreground: var(--ns-color-action-primary-foreground);
+  --ns-color-brand-text: var(--ns-primitive-color-hinomaru-300);
+  --ns-color-brand-text-hover: var(--ns-primitive-color-hinomaru-100);
   --ns-color-focus: var(--ns-primitive-color-amber-300);
   --ns-color-selection: var(--ns-primitive-color-hinomaru-900);
   --ns-color-selection-foreground: var(--ns-color-text-primary);

@@ -128,7 +128,7 @@
 }
 
 .gallery-doc-practices-grid > section:first-child {
-  border-top: 3px solid var(--ns-color-brand);
+  border-top: 3px solid var(--ns-color-brand-text);
 }
 
 .gallery-doc-practices-grid > section:last-child {

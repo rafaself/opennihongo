@@ -100,6 +100,18 @@ export const semanticGroups: readonly ColorRoleGroup[] = [
     title: "Brand and primary action",
     samples: [
       {
+        label: "Brand text",
+        background: "--ns-color-canvas",
+        foreground: "--ns-color-brand-text",
+        tokens: ["--ns-color-brand-text", "--ns-color-canvas"],
+      },
+      {
+        label: "Brand text hover",
+        background: "--ns-color-canvas",
+        foreground: "--ns-color-brand-text-hover",
+        tokens: ["--ns-color-brand-text-hover", "--ns-color-canvas"],
+      },
+      {
         label: "Primary action",
         background: "--ns-color-action-primary",
         foreground: "--ns-color-action-primary-foreground",
