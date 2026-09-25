@@ -53,6 +53,8 @@ export type {
   ProgressRingProps,
   ProgressRingSize,
 } from "./components/indicators/progress/ProgressRing";
+export { Celebration } from "./components/indicators/celebration/Celebration";
+export type { CelebrationProps } from "./components/indicators/celebration/Celebration";
 export { Skeleton } from "./components/indicators/skeleton/Skeleton";
 export type {
   SkeletonProps,

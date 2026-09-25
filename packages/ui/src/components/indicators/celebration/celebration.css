@@ -1,0 +1,30 @@
+.ns-celebration {
+  border-radius: inherit;
+  display: inline-flex;
+  vertical-align: middle;
+}
+
+.ns-celebration[data-active="true"] {
+  animation: ns-celebration-pulse var(--ns-motion-duration-celebration)
+    var(--ns-motion-easing-bounce) both;
+}
+
+@keyframes ns-celebration-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 transparent;
+    transform: scale(1);
+  }
+
+  35% {
+    box-shadow: 0 0 0 var(--ns-space-2)
+      var(--ns-color-reward-achievement-surface);
+    transform: scale(1.04);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ns-celebration[data-active="true"] {
+    animation: none;
+  }
+}
