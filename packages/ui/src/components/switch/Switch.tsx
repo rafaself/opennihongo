@@ -1,5 +1,4 @@
 import { useState, type ButtonHTMLAttributes } from "react";
-import { Icon } from "../../icons/Icon";
 import "./switch.css";
 
 export type SwitchProps = Omit<
@@ -55,9 +54,7 @@ export function Switch({
       type="button"
     >
       <span aria-hidden="true" className="ns-switch__track">
-        <span className="ns-switch__thumb">
-          <Icon name="check" size="small" />
-        </span>
+        <span className="ns-switch__thumb" />
       </span>
     </button>
   );

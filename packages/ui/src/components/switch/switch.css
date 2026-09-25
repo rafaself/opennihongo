@@ -25,7 +25,8 @@
   transition:
     background-color var(--ns-motion-duration-fast)
       var(--ns-motion-easing-standard),
-    border-color var(--ns-motion-duration-fast) var(--ns-motion-easing-standard);
+    border-color var(--ns-motion-duration-fast) var(--ns-motion-easing-standard),
+    box-shadow var(--ns-motion-duration-fast) var(--ns-motion-easing-standard);
 }
 
 .ns-switch__thumb {
@@ -34,8 +35,8 @@
   border: var(--ns-border-width-standard) var(--ns-border-style-solid)
     var(--ns-color-border);
   border-radius: var(--ns-radius-pill);
+  box-shadow: var(--ns-elevation-card);
   block-size: var(--ns-size-icon-box-medium);
-  color: var(--ns-color-action-primary);
   display: flex;
   inline-size: var(--ns-size-icon-box-medium);
   justify-content: center;
@@ -44,24 +45,20 @@
     background-color var(--ns-motion-duration-fast)
       var(--ns-motion-easing-standard),
     border-color var(--ns-motion-duration-fast) var(--ns-motion-easing-standard),
+    box-shadow var(--ns-motion-duration-fast) var(--ns-motion-easing-standard),
     transform var(--ns-motion-duration-fast) var(--ns-motion-easing-standard);
-}
-
-.ns-switch__thumb > .ns-icon {
-  visibility: hidden;
 }
 
 .ns-switch[data-state="checked"] .ns-switch__track {
   background-color: var(--ns-color-action-primary);
   border-color: var(--ns-color-action-primary);
+  box-shadow: 0 2px 8px
+    color-mix(in srgb, var(--ns-color-action-primary) 28%, transparent);
 }
 
 .ns-switch[data-state="checked"] .ns-switch__thumb {
+  border-color: var(--ns-color-action-primary);
   transform: translateX(var(--ns-size-icon-box-medium));
-}
-
-.ns-switch[data-state="checked"] .ns-switch__thumb > .ns-icon {
-  visibility: visible;
 }
 
 .ns-switch:hover:not(:disabled) .ns-switch__track {
@@ -81,10 +78,13 @@
 .ns-switch:disabled .ns-switch__track {
   background-color: var(--ns-color-surface-subtle);
   border-color: var(--ns-color-border);
+  box-shadow: none;
 }
 
 .ns-switch:disabled .ns-switch__thumb {
-  color: var(--ns-color-text-secondary);
+  background-color: var(--ns-color-surface-subtle);
+  border-color: var(--ns-color-border);
+  box-shadow: none;
 }
 
 @media (prefers-reduced-motion: reduce) {
