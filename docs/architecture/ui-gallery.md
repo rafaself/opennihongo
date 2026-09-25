@@ -13,13 +13,15 @@ metadata instead of maintaining its own list of sections or destinations.
 | Components   | Domain-agnostic interface components exposed by `@opennihongo/ui`.                               |
 | Gamification | Reward and progression visuals. Product behavior and feature-owned UI remain with their feature. |
 | Patterns     | Reusable interface compositions that do not encode one feature's rules.                          |
-| Assets       | Illustrations, iconography, and other visual resources with usage guidance.                      |
+| Assets       | Mascots, illustrations, iconography, and other visual resources with usage guidance.             |
 | Playground   | Isolated, interactive exploration of public component variants and states.                       |
 
 Keep functional icon conventions in the [Functional Icons guide](icons.md) and
 illustration ownership and usage in the [Illustration Assets
 guide](illustrations.md). The Gallery documents approved public assets; it does
 not define a second asset source or import application-feature code.
+The [Mascot State and Asset Contract](mascots.md) defines the vocabulary and
+consumer API expected if approved mascot artwork is added.
 
 ## Adding catalog pages
 

@@ -251,6 +251,10 @@ The separate artwork ownership, naming, responsive usage, theme, and
 accessibility conventions are defined in the
 [Illustration Assets guide](illustrations.md).
 
+The optional mascot-state vocabulary and state-to-asset contract are defined in
+the [Mascot State and Asset Contract](mascots.md). Mascot cues do not own
+product state or replace visible status text.
+
 Keep the public API small and typed. Treat imports and props as supported
 contracts: favor compatible additions and avoid changing existing behavior.
 Prefer composition and accessible defaults over many boolean switches. Add an

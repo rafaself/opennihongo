@@ -13,6 +13,8 @@ action, status, or control affordance. An illustration must not replace a
 functional icon, a control's accessible name, or text that explains a state.
 Follow the [Functional Icons guide](icons.md) for the icon registry and its
 visual and accessibility rules.
+Mascot artwork follows the semantic state and asset contract in the
+[Mascot guide](mascots.md).
 
 ## Ownership and source files
 
