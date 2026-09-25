@@ -1,0 +1,4 @@
+.ns-daily-goal-completed-story-reduced-motion
+  .ns-celebration[data-active="true"] {
+  animation: none;
+}

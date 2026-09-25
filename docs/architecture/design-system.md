@@ -180,6 +180,12 @@ labels, optional badges, and actions using progress bars or rings. It does not
 calculate learning progress or historical analytics; the owning feature supplies
 the values and their meaning.
 
+`DailyGoalCompleted` presents a daily goal that the caller has confirmed is
+complete, including supplied progress values, a completion label, rewards, and
+actions. Completion is never inferred from the progress range, and the pattern
+does not calculate or grant rewards. Its optional restrained celebration honors
+reduced-motion preferences.
+
 `Avatar` displays a person image or a visual fallback at a shared semantic size.
 Set `alt` to a meaningful identity label when the avatar conveys who the person
 is; use `alt=""` when nearby text already identifies them. The fallback is

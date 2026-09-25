@@ -57,6 +57,12 @@ export type {
   ProgressSummaryMetric,
   ProgressSummaryProps,
 } from "./patterns/progress-summary/ProgressSummary";
+export { DailyGoalCompleted } from "./patterns/daily-goal-completed/DailyGoalCompleted";
+export type {
+  DailyGoalCompletedGoal,
+  DailyGoalCompletedProps,
+  DailyGoalCompletedReward,
+} from "./patterns/daily-goal-completed/DailyGoalCompleted";
 export { LevelBadge } from "./components/indicators/level-badge/LevelBadge";
 export type {
   LevelBadgeProps,

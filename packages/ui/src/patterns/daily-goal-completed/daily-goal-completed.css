@@ -1,0 +1,63 @@
+.ns-daily-goal-completed {
+  inline-size: 100%;
+}
+
+.ns-daily-goal-completed__celebration {
+  display: block;
+}
+
+.ns-daily-goal-completed__layout {
+  display: grid;
+  gap: var(--ns-space-5);
+  min-inline-size: 0;
+}
+
+.ns-daily-goal-completed__header,
+.ns-daily-goal-completed__goal,
+.ns-daily-goal-completed__rewards {
+  display: grid;
+  gap: var(--ns-space-3);
+  min-inline-size: 0;
+}
+
+.ns-daily-goal-completed__header {
+  gap: var(--ns-space-2);
+}
+
+.ns-daily-goal-completed__heading,
+.ns-daily-goal-completed__description,
+.ns-daily-goal-completed__goal-label,
+.ns-daily-goal-completed__goal-description,
+.ns-daily-goal-completed__reward-heading {
+  margin: 0;
+}
+
+.ns-daily-goal-completed__goal-header {
+  min-inline-size: 0;
+}
+
+.ns-daily-goal-completed__goal-label {
+  min-inline-size: 0;
+  overflow-wrap: anywhere;
+}
+
+.ns-daily-goal-completed__progress {
+  inline-size: 100%;
+}
+
+.ns-daily-goal-completed__reward-grid {
+  display: grid;
+  gap: var(--ns-space-4);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+  min-inline-size: 0;
+}
+
+.ns-daily-goal-completed__actions > * {
+  flex: 1 1 12rem;
+}
+
+@media (min-width: 42rem) {
+  .ns-daily-goal-completed__actions > * {
+    flex: 0 1 auto;
+  }
+}

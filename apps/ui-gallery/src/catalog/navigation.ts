@@ -48,7 +48,13 @@ export const galleryNavigation = {
       label: "Patterns",
       description:
         "Reusable compositions that combine shared components without owning feature rules.",
-      links: [],
+      links: [
+        {
+          id: "daily-goal-completed",
+          label: "Daily goal completed",
+          to: "/patterns/daily-goal-completed",
+        },
+      ],
     },
     {
       id: "assets",
