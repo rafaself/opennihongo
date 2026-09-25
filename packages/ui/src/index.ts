@@ -27,6 +27,12 @@ export type {
   QuestCardReward,
   QuestCardStatus,
 } from "./components/indicators/quest-card/QuestCard";
+export { LeaderboardItem } from "./components/indicators/leaderboard-item/LeaderboardItem";
+export type {
+  LeaderboardItemChange,
+  LeaderboardItemChangeDirection,
+  LeaderboardItemProps,
+} from "./components/indicators/leaderboard-item/LeaderboardItem";
 export { LevelBadge } from "./components/indicators/level-badge/LevelBadge";
 export type {
   LevelBadgeProps,

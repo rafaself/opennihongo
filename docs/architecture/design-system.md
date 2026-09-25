@@ -157,6 +157,12 @@ Status is not derived from progress. It does not generate quests, determine
 completion, or award rewards; the owning feature supplies those decisions and
 values.
 
+`LeaderboardItem` presents a caller-supplied rank, participant identity, and
+score, with an optional rank-change indicator and current-user marker. Its
+current-user state has a visible label and `aria-current` semantics. It does
+not sort participants, calculate ranks, fetch users, or implement leaderboard
+rules; the owning feature supplies those decisions and values.
+
 `Avatar` displays a person image or a visual fallback at a shared semantic size.
 Set `alt` to a meaningful identity label when the avatar conveys who the person
 is; use `alt=""` when nearby text already identifies them. The fallback is

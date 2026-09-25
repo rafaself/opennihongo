@@ -1,0 +1,52 @@
+.ns-leaderboard-item {
+  list-style: none;
+}
+
+.ns-leaderboard-item__surface {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ns-space-3);
+  padding: var(--ns-space-3) var(--ns-space-4);
+}
+
+.ns-leaderboard-item__rank {
+  flex: none;
+  font-variant-numeric: tabular-nums;
+  min-width: 3.5rem;
+}
+
+.ns-leaderboard-item__avatar {
+  flex: none;
+}
+
+.ns-leaderboard-item__participant {
+  flex: 1 1 8rem;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.ns-leaderboard-item__current-user,
+.ns-leaderboard-item__change {
+  flex: none;
+  gap: var(--ns-space-1);
+}
+
+.ns-leaderboard-item__score {
+  display: grid;
+  gap: var(--ns-space-1);
+  justify-items: end;
+  margin-inline-start: auto;
+  min-width: 5rem;
+}
+
+.ns-leaderboard-item__score-label,
+.ns-leaderboard-item__score-value {
+  display: block;
+  text-align: end;
+}
+
+.ns-leaderboard-item__score-value {
+  font-variant-numeric: tabular-nums;
+  overflow-wrap: anywhere;
+}
