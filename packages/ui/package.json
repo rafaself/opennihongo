@@ -13,6 +13,8 @@
     "build-storybook": "storybook build",
     "storybook": "storybook dev --host 127.0.0.1 --port 6006",
     "test": "vitest run",
+    "test:visual": "playwright test --config=playwright.config.ts",
+    "test:visual:update": "playwright test --config=playwright.config.ts --update-snapshots",
     "typecheck": "tsc -p tsconfig.json"
   },
   "peerDependencies": {
@@ -20,6 +22,7 @@
     "react-dom": "^19.0.0"
   },
   "devDependencies": {
+    "@playwright/test": "1.63.0",
     "@storybook/addon-a11y": "10.6.0",
     "@storybook/react-vite": "^10.6.0",
     "@testing-library/jest-dom": "^7.0.1",

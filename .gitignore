@@ -3,6 +3,7 @@ node_modules/
 dist/
 coverage/
 storybook-static/
+/packages/ui/test-results/
 *.tsbuildinfo
 
 .env

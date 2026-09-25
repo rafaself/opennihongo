@@ -9,6 +9,8 @@
     "src",
     ".storybook/main.ts",
     ".storybook/preview.ts",
+    "playwright.config.ts",
+    "tests/visual",
     "vitest.config.ts"
   ]
 }

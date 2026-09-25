@@ -84,6 +84,9 @@ Initial high-value flows include:
 E2E tests complement unit and integration tests. They are not the primary
 mechanism for achieving code coverage.
 
+The focused Storybook screenshot baseline and its review/update procedure are
+documented in the [visual regression guide](visual-regression.md).
+
 ## Tooling
 
 The planned MVP testing stack is:
