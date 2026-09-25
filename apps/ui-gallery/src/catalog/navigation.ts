@@ -95,7 +95,13 @@ export const galleryNavigation = {
       label: "Assets",
       description:
         "Illustrations, iconography, and other visual resources with documented usage.",
-      links: [],
+      links: [
+        {
+          id: "assets-catalog",
+          label: "Icons and illustrations",
+          to: "/assets",
+        },
+      ],
     },
     {
       id: "playground",

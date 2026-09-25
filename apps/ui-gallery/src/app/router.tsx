@@ -5,6 +5,7 @@ import {
 } from "@tanstack/react-router";
 import { GalleryLayout } from "../layouts/GalleryLayout";
 import { ButtonsPage } from "../pages/ButtonsPage";
+import { AssetsPage } from "../pages/assets/AssetsPage";
 import { ColorTokensPage } from "../pages/foundations/colors/ColorTokensPage";
 import { DailyGoalCompletedPage } from "../pages/DailyGoalCompletedPage";
 import { HomePage } from "../pages/HomePage";
@@ -33,6 +34,12 @@ const buttonsRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/components/buttons",
   component: ButtonsPage,
+});
+
+const assetsRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/assets",
+  component: AssetsPage,
 });
 
 const gamificationRoute = createRoute({
@@ -97,6 +104,7 @@ const playgroundRoute = createRoute({
 
 const routeTree = rootRoute.addChildren([
   homeRoute,
+  assetsRoute,
   colorTokensRoute,
   spacingRoute,
   sizingRoute,
