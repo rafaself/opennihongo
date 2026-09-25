@@ -5,6 +5,7 @@ import {
 } from "@tanstack/react-router";
 import { GalleryLayout } from "../layouts/GalleryLayout";
 import { ActionsAndFormsPage } from "../pages/components/ActionsAndFormsPage";
+import { ContentAndProgressPage } from "../pages/components/ContentAndProgressPage";
 import { AssetsPage } from "../pages/assets/AssetsPage";
 import { ColorTokensPage } from "../pages/foundations/colors/ColorTokensPage";
 import { DailyGoalCompletedPage } from "../pages/DailyGoalCompletedPage";
@@ -34,6 +35,12 @@ const actionsAndFormsRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/components/actions-and-forms",
   component: ActionsAndFormsPage,
+});
+
+const contentAndProgressRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/components/content-and-progress",
+  component: ContentAndProgressPage,
 });
 
 const legacyButtonsRoute = createRoute({
@@ -118,6 +125,7 @@ const routeTree = rootRoute.addChildren([
   motionRoute,
   typographyRoute,
   actionsAndFormsRoute,
+  contentAndProgressRoute,
   legacyButtonsRoute,
   gamificationRoute,
   patternsRoute,

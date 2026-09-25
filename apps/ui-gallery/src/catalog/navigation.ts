@@ -63,6 +63,11 @@ export const galleryNavigation = {
           label: "Actions & forms",
           to: "/components/actions-and-forms",
         },
+        {
+          id: "content-and-progress",
+          label: "Content & progress",
+          to: "/components/content-and-progress",
+        },
       ],
     },
     {

@@ -32,8 +32,8 @@ export function HomePage() {
             <p className="gallery-eyebrow">01 / Interface</p>
             <h2 id="components-title">Components</h2>
             <p>
-              Shared actions and accessible form controls from the public UI
-              package.
+              Shared actions, content, status, and progress components from the
+              public UI package.
             </p>
           </div>
           <code className="gallery-package-path">@opennihongo/ui</code>
@@ -77,6 +77,13 @@ export function HomePage() {
         </pre>
         <Link className="gallery-text-link" to="/components/actions-and-forms">
           Explore actions and form controls
+        </Link>
+        <br />
+        <Link
+          className="gallery-text-link"
+          to="/components/content-and-progress"
+        >
+          Explore content and progress components
         </Link>
       </section>
     </>
