@@ -64,7 +64,13 @@ export const galleryNavigation = {
       label: "Gamification",
       description:
         "Feature-owned reward and progression UI, documented without moving product behavior into shared UI.",
-      links: [],
+      links: [
+        {
+          id: "gamification-catalog",
+          label: "Progress and rewards",
+          to: "/gamification",
+        },
+      ],
     },
     {
       id: "patterns",

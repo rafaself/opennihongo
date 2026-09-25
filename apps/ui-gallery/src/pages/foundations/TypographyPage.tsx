@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Text, type TextVariant } from "@opennihongo/ui";
-import { GalleryDocumentationPage } from "../layouts/GalleryDocumentationPage";
+import { GalleryDocumentationPage } from "../../layouts/GalleryDocumentationPage";
 import "./TypographyPage.css";
 
 const typographyStyles: readonly {

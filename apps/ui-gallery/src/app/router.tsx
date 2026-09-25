@@ -5,7 +5,7 @@ import {
 } from "@tanstack/react-router";
 import { GalleryLayout } from "../layouts/GalleryLayout";
 import { ButtonsPage } from "../pages/ButtonsPage";
-import { ColorTokensPage } from "../pages/ColorTokensPage";
+import { ColorTokensPage } from "../pages/foundations/colors/ColorTokensPage";
 import { DailyGoalCompletedPage } from "../pages/DailyGoalCompletedPage";
 import { HomePage } from "../pages/HomePage";
 import { NotFoundPage } from "../pages/NotFoundPage";
@@ -14,7 +14,8 @@ import { ElevationPage } from "../pages/foundations/ElevationPage";
 import { MotionPage } from "../pages/foundations/MotionPage";
 import { SizingPage } from "../pages/foundations/SizingPage";
 import { SpacingPage } from "../pages/foundations/SpacingPage";
-import { TypographyPage } from "../pages/TypographyPage";
+import { TypographyPage } from "../pages/foundations/TypographyPage";
+import { GamificationPage } from "../pages/gamification/GamificationPage";
 
 const rootRoute = createRootRoute({
   component: GalleryLayout,
@@ -31,6 +32,12 @@ const buttonsRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/components/buttons",
   component: ButtonsPage,
+});
+
+const gamificationRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/gamification",
+  component: GamificationPage,
 });
 
 const colorTokensRoute = createRoute({
@@ -90,6 +97,7 @@ const routeTree = rootRoute.addChildren([
   motionRoute,
   typographyRoute,
   buttonsRoute,
+  gamificationRoute,
   dailyGoalCompletedRoute,
   playgroundRoute,
 ]);

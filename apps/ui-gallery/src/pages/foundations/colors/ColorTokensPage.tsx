@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { GalleryDocumentationPage } from "../layouts/GalleryDocumentationPage";
+import { GalleryDocumentationPage } from "../../../layouts/GalleryDocumentationPage";
 import {
   accentPalettes,
   brandAndNeutralPalettes,
