@@ -8,20 +8,17 @@ const durations = [
   {
     label: "Instant",
     token: "--ns-motion-duration-instant",
-    value: "0 ms",
   },
-  { label: "Fast", token: "--ns-motion-duration-fast", value: "120 ms" },
-  { label: "Normal", token: "--ns-motion-duration-normal", value: "200 ms" },
-  { label: "Slow", token: "--ns-motion-duration-slow", value: "320 ms" },
+  { label: "Fast", token: "--ns-motion-duration-fast" },
+  { label: "Normal", token: "--ns-motion-duration-normal" },
+  { label: "Slow", token: "--ns-motion-duration-slow" },
   {
     label: "Celebration",
     token: "--ns-motion-duration-celebration",
-    value: "600 ms",
   },
   {
     label: "Indeterminate",
     token: "--ns-motion-duration-indeterminate",
-    value: "1000 ms",
   },
 ] as const;
 
@@ -54,32 +51,40 @@ const easings = [
 ] as const;
 
 function MotionDurationScale({ showEnd }: { readonly showEnd: boolean }) {
+  const rootStyles = getComputedStyle(document.documentElement);
+
   return (
     <ol
       aria-label="Shared motion durations"
       className="gallery-motion-duration-list"
       data-active={showEnd}
     >
-      {durations.map(({ label, token, value }) => (
-        <li className="gallery-motion-duration-row" key={token}>
-          <div className="gallery-motion-token-label">
-            <strong>{label}</strong>
-            <code>{token}</code>
-          </div>
-          <span
-            aria-hidden="true"
-            className="gallery-motion-track"
-            style={
-              {
-                "--gallery-motion-duration": `var(${token})`,
-              } as CSSProperties
-            }
-          >
-            <span className="gallery-motion-marker" />
-          </span>
-          <span className="gallery-motion-value">{value} base</span>
-        </li>
-      ))}
+      {durations.map(({ label, token }) => {
+        const resolvedValue = rootStyles.getPropertyValue(token).trim();
+
+        return (
+          <li className="gallery-motion-duration-row" key={token}>
+            <div className="gallery-motion-token-label">
+              <strong>{label}</strong>
+              <code>{token}</code>
+            </div>
+            <span
+              aria-hidden="true"
+              className="gallery-motion-track"
+              style={
+                {
+                  "--gallery-motion-duration": `var(${token})`,
+                } as CSSProperties
+              }
+            >
+              <span className="gallery-motion-marker" />
+            </span>
+            <span className="gallery-motion-value">
+              {resolvedValue ? `${resolvedValue} resolved` : "Unavailable"}
+            </span>
+          </li>
+        );
+      })}
     </ol>
   );
 }

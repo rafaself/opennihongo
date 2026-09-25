@@ -1,3 +1,4 @@
+import { Link } from "@tanstack/react-router";
 import { GamificationExamples } from "./GamificationExamples";
 import { GalleryDocumentationPage } from "../../layouts/GalleryDocumentationPage";
 import "./GamificationPage.css";
@@ -35,8 +36,8 @@ export function GamificationPage() {
             <p>
               Celebration effects are optional and respect the viewer's system
               preference. Their headings, values, rewards, and actions remain
-              visible without motion; compare the reduced-motion preview on the
-              <a href="/foundations/motion"> Motion page</a>.
+              visible without motion; compare the reduced-motion preview on the{" "}
+              <Link to="/foundations/motion">Motion page</Link>.
             </p>
           ),
         },

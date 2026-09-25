@@ -42,7 +42,7 @@ export function PatternsExamples() {
           <p>Supply the finished lesson summary, rewards, and next action.</p>
           <div className="gallery-doc-example-stage">
             <LessonCompleted
-              celebration
+              celebration={false}
               description="You finished this course. Keep your momentum going."
               primaryAction={<Button>Continue learning</Button>}
               progress={<span>12 of 12 sections completed</span>}
@@ -65,7 +65,7 @@ export function PatternsExamples() {
                 state: "new",
                 title: "Kana explorer",
               }}
-              celebration
+              celebration={false}
               heading="Achievement unlocked"
               primaryAction={<Button>Continue learning</Button>}
               secondaryAction={
@@ -85,7 +85,7 @@ export function PatternsExamples() {
           </p>
           <div className="gallery-doc-example-stage">
             <LevelUp
-              celebration
+              celebration={false}
               description="Your dedication is paying off."
               heading="Level up!"
               newLevel={{ label: "Level", value: 6 }}
@@ -107,7 +107,7 @@ export function PatternsExamples() {
           </p>
           <div className="gallery-doc-example-stage">
             <RewardReceived
-              celebration
+              celebration={false}
               description="Your effort is adding up."
               heading="Reward received"
               primaryAction={<Button>Continue learning</Button>}
