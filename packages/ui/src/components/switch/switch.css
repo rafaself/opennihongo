@@ -1,9 +1,9 @@
 .ns-switch {
   --ns-switch-track-inline-size: calc(
-    var(--ns-size-button-height-comfortable) + var(--ns-space-2)
+    var(--ns-size-button-height-comfortable) + var(--ns-space-4)
   );
   --ns-switch-thumb-size: calc(
-    var(--ns-size-icon-box-large) + var(--ns-space-1)
+    var(--ns-size-icon-box-large) + var(--ns-space-2)
   );
   --ns-switch-thumb-travel: calc(
     var(--ns-switch-track-inline-size) - var(--ns-switch-thumb-size) -
@@ -29,7 +29,7 @@
   border: var(--ns-border-width-standard) var(--ns-border-style-solid)
     var(--ns-color-border-strong);
   border-radius: var(--ns-radius-pill);
-  block-size: var(--ns-size-pointer-target-minimum);
+  block-size: calc(var(--ns-size-icon-box-large) + var(--ns-space-1));
   display: flex;
   inline-size: var(--ns-switch-track-inline-size);
   padding: var(--ns-border-width-standard);
