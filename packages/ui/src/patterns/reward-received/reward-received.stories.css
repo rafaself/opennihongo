@@ -1,0 +1,24 @@
+.ns-reward-received-story-responsive {
+  align-items: start;
+  display: grid;
+  gap: var(--ns-space-6);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+}
+
+.ns-reward-received-story-responsive__narrow {
+  inline-size: min(100%, 21rem);
+}
+
+.ns-reward-received-story-responsive__wide {
+  inline-size: min(100%, 48rem);
+}
+
+.ns-reward-received-story-responsive__narrow,
+.ns-reward-received-story-responsive__wide {
+  display: grid;
+  gap: var(--ns-space-3);
+}
+
+.ns-reward-received-story-reduced-motion .ns-celebration[data-active="true"] {
+  animation: none;
+}

@@ -35,6 +35,11 @@ export type {
 } from "./components/indicators/leaderboard-item/LeaderboardItem";
 export { LessonCompleted } from "./patterns/lesson-completed/LessonCompleted";
 export type { LessonCompletedProps } from "./patterns/lesson-completed/LessonCompleted";
+export { RewardReceived } from "./patterns/reward-received/RewardReceived";
+export type {
+  RewardReceivedData,
+  RewardReceivedProps,
+} from "./patterns/reward-received/RewardReceived";
 export { AchievementUnlocked } from "./patterns/achievement-unlocked/AchievementUnlocked";
 export type {
   AchievementUnlockedData,

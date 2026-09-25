@@ -1,0 +1,29 @@
+.ns-reward-received {
+  inline-size: 100%;
+}
+
+.ns-reward-received__celebration {
+  display: block;
+}
+
+.ns-reward-received__layout {
+  display: grid;
+  gap: var(--ns-space-5);
+  min-inline-size: 0;
+}
+
+.ns-reward-received__header {
+  display: grid;
+  gap: var(--ns-space-2);
+  min-inline-size: 0;
+}
+
+.ns-reward-received__actions > * {
+  flex: 1 1 12rem;
+}
+
+@media (min-width: 42rem) {
+  .ns-reward-received__actions > * {
+    flex: 0 1 auto;
+  }
+}

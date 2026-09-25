@@ -170,6 +170,11 @@ semantics. The optional celebration honors reduced-motion preferences. The
 pattern does not decide whether a lesson is complete, calculate rewards, or
 perform navigation.
 
+`RewardReceived` presents caller-supplied reward metadata and state, optional
+explanatory content, and caller-provided actions. Its optional celebration
+honors reduced-motion preferences. The pattern does not calculate, claim, grant,
+or persist rewards.
+
 `Avatar` displays a person image or a visual fallback at a shared semantic size.
 Set `alt` to a meaningful identity label when the avatar conveys who the person
 is; use `alt=""` when nearby text already identifies them. The fallback is
