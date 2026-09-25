@@ -1,0 +1,25 @@
+.ns-achievement-unlocked-story-responsive {
+  align-items: start;
+  display: grid;
+  gap: var(--ns-space-6);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+}
+
+.ns-achievement-unlocked-story-responsive__narrow {
+  inline-size: min(100%, 21rem);
+}
+
+.ns-achievement-unlocked-story-responsive__wide {
+  inline-size: min(100%, 48rem);
+}
+
+.ns-achievement-unlocked-story-responsive__narrow,
+.ns-achievement-unlocked-story-responsive__wide {
+  display: grid;
+  gap: var(--ns-space-3);
+}
+
+.ns-achievement-unlocked-story-reduced-motion
+  .ns-celebration[data-active="true"] {
+  animation: none;
+}

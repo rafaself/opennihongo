@@ -1,0 +1,28 @@
+.ns-achievement-unlocked {
+  inline-size: 100%;
+}
+
+.ns-achievement-unlocked__celebration {
+  display: block;
+}
+
+.ns-achievement-unlocked__layout {
+  display: grid;
+  gap: var(--ns-space-5);
+  min-inline-size: 0;
+}
+
+.ns-achievement-unlocked__header {
+  display: grid;
+  gap: var(--ns-space-2);
+}
+
+.ns-achievement-unlocked__actions > * {
+  flex: 1 1 12rem;
+}
+
+@media (min-width: 42rem) {
+  .ns-achievement-unlocked__actions > * {
+    flex: 0 1 auto;
+  }
+}
