@@ -1,5 +1,7 @@
 # UI Gallery catalog taxonomy
 
+For the Gallery's role alongside Storybook and the web consumer, and for local run and validation commands, see the [Design System developer workflow](design-system-workflow.md).
+
 The standalone UI Gallery groups design-system documentation under six
 top-level sections. Their navigation metadata lives in
 `apps/ui-gallery/src/catalog/navigation.ts`; the gallery shell renders that

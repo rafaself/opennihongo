@@ -34,6 +34,8 @@ established.
 
 ## UI package public API
 
+For a focused guide to consuming the package and validating its Storybook, Gallery, and web app integrations, see the [Design System developer workflow](design-system-workflow.md).
+
 Ownership and promotion rules for shared and feature-local UI are documented in
 the [Design System contribution guide](design-system.md).
 

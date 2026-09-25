@@ -5,6 +5,8 @@ visual foundations and interface components; product features own UI that
 explains or carries out a learning task. A component that looks reusable is not
 automatically a Design System component.
 
+For public imports and the local validation workflow across Storybook, the UI Gallery, and the web app, see the [Design System developer workflow](design-system-workflow.md).
+
 ## Choose an owner
 
 Keep UI beside its feature when its content, behavior, or API depends on that
