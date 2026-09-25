@@ -31,6 +31,11 @@ export const galleryNavigation = {
           to: "/foundations/sizing",
         },
         {
+          id: "elevation",
+          label: "Surfaces and elevation",
+          to: "/foundations/elevation",
+        },
+        {
           id: "color-tokens",
           label: "Color tokens",
           to: "/foundations/colors",

@@ -10,6 +10,7 @@ import { DailyGoalCompletedPage } from "../pages/DailyGoalCompletedPage";
 import { HomePage } from "../pages/HomePage";
 import { NotFoundPage } from "../pages/NotFoundPage";
 import { PlaygroundPage } from "../pages/PlaygroundPage";
+import { ElevationPage } from "../pages/foundations/ElevationPage";
 import { SizingPage } from "../pages/foundations/SizingPage";
 import { SpacingPage } from "../pages/foundations/SpacingPage";
 import { TypographyPage } from "../pages/TypographyPage";
@@ -49,6 +50,12 @@ const sizingRoute = createRoute({
   component: SizingPage,
 });
 
+const elevationRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/foundations/elevation",
+  component: ElevationPage,
+});
+
 const typographyRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/foundations/typography",
@@ -72,6 +79,7 @@ const routeTree = rootRoute.addChildren([
   colorTokensRoute,
   spacingRoute,
   sizingRoute,
+  elevationRoute,
   typographyRoute,
   buttonsRoute,
   dailyGoalCompletedRoute,
