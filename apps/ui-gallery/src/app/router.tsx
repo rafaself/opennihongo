@@ -2,6 +2,7 @@ import {
   createRootRoute,
   createRoute,
   createRouter,
+  lazyRouteComponent,
 } from "@tanstack/react-router";
 import { GalleryLayout } from "../layouts/GalleryLayout";
 import { ActionsAndFormsPage } from "../pages/components/ActionsAndFormsPage";
@@ -41,6 +42,16 @@ const contentAndProgressRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/components/content-and-progress",
   component: ContentAndProgressPage,
+});
+
+const overlaysAndNavigationRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/components/overlays-and-navigation",
+  component: lazyRouteComponent(
+    () =>
+      import("../pages/components/overlays-navigation/OverlaysAndNavigationPage"),
+    "OverlaysAndNavigationPage",
+  ),
 });
 
 const legacyButtonsRoute = createRoute({
@@ -126,6 +137,7 @@ const routeTree = rootRoute.addChildren([
   typographyRoute,
   actionsAndFormsRoute,
   contentAndProgressRoute,
+  overlaysAndNavigationRoute,
   legacyButtonsRoute,
   gamificationRoute,
   patternsRoute,

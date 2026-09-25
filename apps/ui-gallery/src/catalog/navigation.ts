@@ -68,6 +68,11 @@ export const galleryNavigation = {
           label: "Content & progress",
           to: "/components/content-and-progress",
         },
+        {
+          id: "overlays-and-navigation",
+          label: "Overlays & navigation",
+          to: "/components/overlays-and-navigation",
+        },
       ],
     },
     {
