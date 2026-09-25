@@ -1,0 +1,91 @@
+.ns-quest-card {
+  display: grid;
+  gap: var(--ns-space-4);
+}
+
+.ns-quest-card__header {
+  align-items: start;
+  display: grid;
+  gap: var(--ns-space-4);
+  grid-template-columns: auto minmax(0, 1fr) auto;
+}
+
+.ns-quest-card__icon {
+  align-items: center;
+  background-color: var(--ns-color-feedback-info-surface);
+  border: var(--ns-border-width-standard) var(--ns-border-style-solid)
+    var(--ns-color-border-subtle);
+  border-radius: var(--ns-radius-lg);
+  color: var(--ns-color-feedback-info);
+  display: inline-flex;
+  height: var(--ns-size-avatar-large);
+  justify-content: center;
+  width: var(--ns-size-avatar-large);
+}
+
+.ns-quest-card[data-status="completed"] .ns-quest-card__icon {
+  background-color: var(--ns-color-feedback-success-surface);
+  color: var(--ns-color-feedback-success);
+}
+
+.ns-quest-card__heading {
+  display: grid;
+  gap: var(--ns-space-2);
+  min-width: 0;
+}
+
+.ns-quest-card__title,
+.ns-quest-card__description {
+  margin: 0;
+}
+
+.ns-quest-card__status {
+  justify-self: end;
+}
+
+.ns-quest-card__progress {
+  display: grid;
+  gap: var(--ns-space-2);
+}
+
+.ns-quest-card__progress-summary {
+  align-items: baseline;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ns-space-2);
+  justify-content: space-between;
+}
+
+.ns-quest-card__progress-value {
+  font-variant-numeric: tabular-nums;
+}
+
+.ns-quest-card__progress-bar .ns-progress__indicator {
+  background-color: var(--ns-color-reward-xp);
+}
+
+.ns-quest-card__reward,
+.ns-quest-card__action {
+  border-top: var(--ns-border-width-subtle) var(--ns-border-style-solid)
+    var(--ns-color-border-subtle);
+  padding-top: var(--ns-space-4);
+}
+
+.ns-quest-card__action {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ns-space-2);
+  justify-content: end;
+}
+
+@media (max-width: 30rem) {
+  .ns-quest-card__header {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+
+  .ns-quest-card__status {
+    grid-column: 2;
+    justify-self: start;
+  }
+}

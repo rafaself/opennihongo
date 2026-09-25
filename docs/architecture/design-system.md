@@ -151,6 +151,12 @@ visible category and state labels can be localized by the caller. It does not
 award, calculate, claim, or persist rewards; those rules remain with the
 feature that supplies the data.
 
+`QuestCard` presents caller-supplied title, description, progress, goal, and
+incomplete or completed status, with an optional `RewardCard` and action.
+Status is not derived from progress. It does not generate quests, determine
+completion, or award rewards; the owning feature supplies those decisions and
+values.
+
 `Avatar` displays a person image or a visual fallback at a shared semantic size.
 Set `alt` to a meaningful identity label when the avatar conveys who the person
 is; use `alt=""` when nearby text already identifies them. The fallback is

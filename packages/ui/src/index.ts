@@ -21,6 +21,12 @@ export type {
   RewardCardProps,
   RewardCardState,
 } from "./components/indicators/reward-card/RewardCard";
+export { QuestCard } from "./components/indicators/quest-card/QuestCard";
+export type {
+  QuestCardProps,
+  QuestCardReward,
+  QuestCardStatus,
+} from "./components/indicators/quest-card/QuestCard";
 export { LevelBadge } from "./components/indicators/level-badge/LevelBadge";
 export type {
   LevelBadgeProps,
