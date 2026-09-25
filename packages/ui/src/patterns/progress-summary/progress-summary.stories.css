@@ -1,0 +1,21 @@
+.ns-progress-summary-story-responsive {
+  align-items: start;
+  display: grid;
+  gap: var(--ns-space-6);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
+}
+
+.ns-progress-summary-story-responsive__narrow {
+  max-inline-size: 22rem;
+}
+
+.ns-progress-summary-story-responsive__wide {
+  max-inline-size: 56rem;
+  min-inline-size: 0;
+  inline-size: 100%;
+}
+
+.ns-progress-summary-story-responsive__narrow > h3,
+.ns-progress-summary-story-responsive__wide > h3 {
+  margin-block: 0 var(--ns-space-2);
+}

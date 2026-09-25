@@ -51,6 +51,12 @@ export type {
   LevelUpProps,
   LevelUpSize,
 } from "./patterns/level-up/LevelUp";
+export { ProgressSummary } from "./patterns/progress-summary/ProgressSummary";
+export type {
+  ProgressSummaryDisplay,
+  ProgressSummaryMetric,
+  ProgressSummaryProps,
+} from "./patterns/progress-summary/ProgressSummary";
 export { LevelBadge } from "./components/indicators/level-badge/LevelBadge";
 export type {
   LevelBadgeProps,

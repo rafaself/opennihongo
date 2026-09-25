@@ -1,0 +1,63 @@
+.ns-progress-summary {
+  inline-size: 100%;
+}
+
+.ns-progress-summary__content {
+  min-inline-size: 0;
+}
+
+.ns-progress-summary__header {
+  display: grid;
+  gap: var(--ns-space-2);
+}
+
+.ns-progress-summary__title,
+.ns-progress-summary__metric-label,
+.ns-progress-summary__description,
+.ns-progress-summary__metric-description {
+  margin: 0;
+}
+
+.ns-progress-summary__metrics {
+  min-inline-size: 0;
+}
+
+.ns-progress-summary__metric {
+  align-content: start;
+  display: grid;
+  gap: var(--ns-space-3);
+  min-inline-size: 0;
+}
+
+.ns-progress-summary__metric-header,
+.ns-progress-summary__metric-badges {
+  min-inline-size: 0;
+}
+
+.ns-progress-summary__metric-label {
+  min-inline-size: 0;
+  overflow-wrap: anywhere;
+}
+
+.ns-progress-summary__metric-description {
+  overflow-wrap: anywhere;
+}
+
+.ns-progress-summary__bar {
+  inline-size: 100%;
+}
+
+.ns-progress-summary__ring {
+  display: grid;
+  justify-items: center;
+}
+
+.ns-progress-summary__actions > * {
+  flex: 1 1 12rem;
+}
+
+@media (min-width: 42rem) {
+  .ns-progress-summary__actions > * {
+    flex: 0 1 auto;
+  }
+}
