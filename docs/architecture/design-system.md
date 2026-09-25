@@ -247,6 +247,10 @@ The first-party functional icon source, naming rules, size and stroke
 conventions, and accessibility requirements are defined in the
 [Functional Icons guide](icons.md).
 
+The separate artwork ownership, naming, responsive usage, theme, and
+accessibility conventions are defined in the
+[Illustration Assets guide](illustrations.md).
+
 Keep the public API small and typed. Treat imports and props as supported
 contracts: favor compatible additions and avoid changing existing behavior.
 Prefer composition and accessible defaults over many boolean switches. Add an

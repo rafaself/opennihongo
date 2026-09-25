@@ -16,6 +16,11 @@ metadata instead of maintaining its own list of sections or destinations.
 | Assets       | Illustrations, iconography, and other visual resources with usage guidance.                      |
 | Playground   | Isolated, interactive exploration of public component variants and states.                       |
 
+Keep functional icon conventions in the [Functional Icons guide](icons.md) and
+illustration ownership and usage in the [Illustration Assets
+guide](illustrations.md). The Gallery documents approved public assets; it does
+not define a second asset source or import application-feature code.
+
 ## Adding catalog pages
 
 Add a navigation link to the owning section's `links` array when a real page

@@ -3,7 +3,8 @@
 `packages/ui` owns first-party SVG React components for domain-agnostic
 functional icons. Keep functional icons separate from illustrations and other
 visual assets; those belong in the UI Gallery's Assets catalog and should not
-be added to the functional icon registry.
+be added to the functional icon registry. See the
+[Illustration Assets guide](illustrations.md) for artwork ownership and usage.
 
 ## Source and names
 
