@@ -68,27 +68,32 @@
 }
 
 .ns-radio[data-variant="card"][data-state="checked"] {
+  --ns-radio-card-accent-edge: 0 0 0 var(--ns-border-width-standard)
+    color-mix(in srgb, var(--ns-color-action-primary) 28%, transparent);
+
   background-color: var(--ns-color-selection);
   border-color: var(--ns-color-border-subtle);
-  box-shadow: var(--ns-elevation-hover);
+  box-shadow: var(--ns-radio-card-accent-edge), var(--ns-elevation-hover);
   color: var(--ns-color-selection-foreground);
 }
 
-.ns-radio[data-variant="card"]:hover:not([data-disabled]) {
+.ns-radio[data-variant="card"]:hover:not([data-disabled]):not(
+    [data-state="checked"]
+  ) {
   border-color: var(--ns-color-border-strong);
   box-shadow: var(--ns-elevation-hover);
-}
-
-.ns-radio[data-variant="card"][data-state="checked"]:hover:not(
-    [data-disabled]
-  ) {
-  border-color: var(--ns-color-border-subtle);
 }
 
 .ns-radio[data-variant="card"]:active:not([data-disabled]) {
   border-block-end-width: var(--ns-border-width-emphasis);
   box-shadow: var(--ns-elevation-pressed);
   transform: translateY(var(--ns-border-width-emphasis));
+}
+
+.ns-radio[data-variant="card"][data-state="checked"]:active:not(
+    [data-disabled]
+  ) {
+  box-shadow: var(--ns-radio-card-accent-edge), var(--ns-elevation-pressed);
 }
 
 .ns-radio__control {
