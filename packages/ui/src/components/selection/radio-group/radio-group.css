@@ -34,6 +34,7 @@
     var(--ns-color-border);
   border-block-end-width: var(--ns-border-width-raised-edge);
   border-radius: var(--ns-radius-card);
+  box-shadow: var(--ns-elevation-card);
   display: flex;
   flex-direction: column;
   gap: var(--ns-space-2);
@@ -44,7 +45,9 @@
     background-color var(--ns-motion-duration-fast)
       var(--ns-motion-easing-standard),
     border-color var(--ns-motion-duration-fast) var(--ns-motion-easing-standard),
-    border-width var(--ns-motion-duration-fast) var(--ns-motion-easing-standard),
+    border-block-end-width var(--ns-motion-duration-fast)
+      var(--ns-motion-easing-standard),
+    box-shadow var(--ns-motion-duration-fast) var(--ns-motion-easing-standard),
     transform var(--ns-motion-duration-fast) var(--ns-motion-easing-standard);
 }
 
@@ -66,17 +69,25 @@
 
 .ns-radio[data-variant="card"][data-state="checked"] {
   background-color: var(--ns-color-selection);
-  border-color: var(--ns-color-action-primary);
-  border-width: var(--ns-border-width-raised-edge);
+  border-color: var(--ns-color-border-subtle);
+  box-shadow: var(--ns-elevation-hover);
   color: var(--ns-color-selection-foreground);
 }
 
 .ns-radio[data-variant="card"]:hover:not([data-disabled]) {
-  border-color: var(--ns-color-action-primary-hover);
+  border-color: var(--ns-color-border-strong);
+  box-shadow: var(--ns-elevation-hover);
+}
+
+.ns-radio[data-variant="card"][data-state="checked"]:hover:not(
+    [data-disabled]
+  ) {
+  border-color: var(--ns-color-border-subtle);
 }
 
 .ns-radio[data-variant="card"]:active:not([data-disabled]) {
   border-block-end-width: var(--ns-border-width-emphasis);
+  box-shadow: var(--ns-elevation-pressed);
   transform: translateY(var(--ns-border-width-emphasis));
 }
 
