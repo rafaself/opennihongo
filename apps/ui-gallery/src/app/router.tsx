@@ -4,7 +4,7 @@ import {
   createRouter,
 } from "@tanstack/react-router";
 import { GalleryLayout } from "../layouts/GalleryLayout";
-import { ButtonsPage } from "../pages/ButtonsPage";
+import { ActionsAndFormsPage } from "../pages/components/ActionsAndFormsPage";
 import { AssetsPage } from "../pages/assets/AssetsPage";
 import { ColorTokensPage } from "../pages/foundations/colors/ColorTokensPage";
 import { DailyGoalCompletedPage } from "../pages/DailyGoalCompletedPage";
@@ -30,10 +30,16 @@ const homeRoute = createRoute({
   component: HomePage,
 });
 
-const buttonsRoute = createRoute({
+const actionsAndFormsRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/components/actions-and-forms",
+  component: ActionsAndFormsPage,
+});
+
+const legacyButtonsRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/components/buttons",
-  component: ButtonsPage,
+  component: ActionsAndFormsPage,
 });
 
 const assetsRoute = createRoute({
@@ -111,7 +117,8 @@ const routeTree = rootRoute.addChildren([
   elevationRoute,
   motionRoute,
   typographyRoute,
-  buttonsRoute,
+  actionsAndFormsRoute,
+  legacyButtonsRoute,
   gamificationRoute,
   patternsRoute,
   dailyGoalCompletedRoute,

@@ -43,8 +43,8 @@ keeps the layout independent of any particular component. Give each page a
 unique id for its accessible heading references. Example content can use
 <code>gallery-doc-example-grid</code>, <code>gallery-doc-example-card</code>,
 and <code>gallery-doc-example-stage</code> for responsive demo styling. See
-[ButtonsPage.tsx](../../apps/ui-gallery/src/pages/ButtonsPage.tsx) for a
-complete example.
+[ActionsAndFormsPage.tsx](../../apps/ui-gallery/src/pages/components/ActionsAndFormsPage.tsx)
+for a complete example.
 
 Do not create empty pages for future components just to populate navigation.
 Empty sections remain visible as taxonomy and may include concise scope

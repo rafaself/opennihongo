@@ -1,4 +1,5 @@
 import { Button } from "@opennihongo/ui";
+import { Link } from "@tanstack/react-router";
 
 export function HomePage() {
   return (
@@ -29,10 +30,10 @@ export function HomePage() {
         <div className="gallery-section-heading">
           <div>
             <p className="gallery-eyebrow">01 / Interface</p>
-            <h2 id="components-title">Buttons</h2>
+            <h2 id="components-title">Components</h2>
             <p>
-              Clear actions with comfortable targets and a visible keyboard
-              focus state.
+              Shared actions and accessible form controls from the public UI
+              package.
             </p>
           </div>
           <code className="gallery-package-path">@opennihongo/ui</code>
@@ -74,6 +75,9 @@ export function HomePage() {
 <Button>Continue lesson</Button>
 <Button variant="secondary">View details</Button>`}</code>
         </pre>
+        <Link className="gallery-text-link" to="/components/actions-and-forms">
+          Explore actions and form controls
+        </Link>
       </section>
     </>
   );
