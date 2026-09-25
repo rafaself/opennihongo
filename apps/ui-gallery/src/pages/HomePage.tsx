@@ -1,21 +1,5 @@
 import { Button } from "@opennihongo/ui";
 
-const colorTokens = [
-  { name: "Canvas", token: "--ns-color-canvas", value: "#fafaf9" },
-  { name: "Surface", token: "--ns-color-surface", value: "#ffffff" },
-  { name: "Ink", token: "--ns-color-ink", value: "#181817" },
-  { name: "Muted", token: "--ns-color-muted", value: "#3c3c39" },
-  { name: "Border", token: "--ns-color-border", value: "#c9c9c5" },
-  { name: "Brand", token: "--ns-color-brand", value: "#bc002d" },
-  { name: "Brand hover", token: "--ns-color-brand-hover", value: "#990026" },
-  {
-    name: "Brand foreground",
-    token: "--ns-color-brand-foreground",
-    value: "#ffffff",
-  },
-  { name: "Focus", token: "--ns-color-focus", value: "#bb702b" },
-];
-
 export function HomePage() {
   return (
     <>
@@ -90,42 +74,6 @@ export function HomePage() {
 <Button>Continue lesson</Button>
 <Button variant="secondary">View details</Button>`}</code>
         </pre>
-      </section>
-
-      <section
-        aria-labelledby="foundations-title"
-        className="gallery-section gallery-foundations"
-        id="foundations"
-      >
-        <div className="gallery-section-heading">
-          <div>
-            <p className="gallery-eyebrow">02 / Foundations</p>
-            <h2 id="foundations-title">Color tokens</h2>
-            <p>
-              Semantic colors keep the interface calm, readable, and consistent.
-            </p>
-          </div>
-          <code className="gallery-package-path">
-            @opennihongo/ui/styles.css
-          </code>
-        </div>
-
-        <ul className="gallery-token-grid" aria-label="Design system colors">
-          {colorTokens.map(({ name, token, value }) => (
-            <li className="gallery-token" key={token}>
-              <span
-                aria-hidden="true"
-                className="gallery-token-swatch"
-                style={{ backgroundColor: `var(${token})` }}
-              />
-              <span className="gallery-token-details">
-                <strong>{name}</strong>
-                <code>{token}</code>
-                <code>{value}</code>
-              </span>
-            </li>
-          ))}
-        </ul>
       </section>
     </>
   );

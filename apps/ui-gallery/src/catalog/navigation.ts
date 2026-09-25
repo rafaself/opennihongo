@@ -2,7 +2,6 @@ export interface GalleryNavigationLink {
   readonly id: string;
   readonly label: string;
   readonly to: string;
-  readonly hash?: string;
 }
 
 export interface GalleryNavigationSection {
@@ -24,8 +23,7 @@ export const galleryNavigation = {
         {
           id: "color-tokens",
           label: "Color tokens",
-          to: "/",
-          hash: "foundations",
+          to: "/foundations/colors",
         },
       ],
     },

@@ -60,26 +60,14 @@ export function GalleryLayout() {
                     <ul className="gallery-navigation-links">
                       {section.links.map((link) => (
                         <li key={link.id}>
-                          {"hash" in link ? (
-                            <Link
-                              hash={link.hash}
-                              onClick={() => {
-                                setOpenSectionId(null);
-                              }}
-                              to={link.to}
-                            >
-                              {link.label}
-                            </Link>
-                          ) : (
-                            <Link
-                              onClick={() => {
-                                setOpenSectionId(null);
-                              }}
-                              to={link.to}
-                            >
-                              {link.label}
-                            </Link>
-                          )}
+                          <Link
+                            onClick={() => {
+                              setOpenSectionId(null);
+                            }}
+                            to={link.to}
+                          >
+                            {link.label}
+                          </Link>
                         </li>
                       ))}
                     </ul>

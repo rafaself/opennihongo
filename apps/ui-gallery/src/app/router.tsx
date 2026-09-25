@@ -5,6 +5,7 @@ import {
 } from "@tanstack/react-router";
 import { GalleryLayout } from "../layouts/GalleryLayout";
 import { ButtonsPage } from "../pages/ButtonsPage";
+import { ColorTokensPage } from "../pages/ColorTokensPage";
 import { DailyGoalCompletedPage } from "../pages/DailyGoalCompletedPage";
 import { HomePage } from "../pages/HomePage";
 import { NotFoundPage } from "../pages/NotFoundPage";
@@ -27,6 +28,12 @@ const buttonsRoute = createRoute({
   component: ButtonsPage,
 });
 
+const colorTokensRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/foundations/colors",
+  component: ColorTokensPage,
+});
+
 const dailyGoalCompletedRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/patterns/daily-goal-completed",
@@ -41,6 +48,7 @@ const playgroundRoute = createRoute({
 
 const routeTree = rootRoute.addChildren([
   homeRoute,
+  colorTokensRoute,
   buttonsRoute,
   dailyGoalCompletedRoute,
   playgroundRoute,
