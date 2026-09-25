@@ -1,0 +1,184 @@
+.gallery-sizing-examples {
+  min-width: 0;
+}
+
+.gallery-geometry-section-heading,
+.gallery-geometry-group-heading {
+  display: grid;
+  gap: var(--ns-space-1);
+}
+
+.gallery-geometry-section-heading {
+  margin-bottom: var(--ns-space-3);
+}
+
+.gallery-geometry-section-heading h3,
+.gallery-geometry-section-heading p,
+.gallery-geometry-group-heading h4,
+.gallery-geometry-group-heading p {
+  margin: 0;
+}
+
+.gallery-geometry-section-heading h3 {
+  font-size: var(--ns-text-heading-size);
+}
+
+.gallery-geometry-section-heading p,
+.gallery-geometry-group-heading p,
+.gallery-touch-guidance,
+.gallery-border-style-note {
+  color: var(--ns-color-text-secondary);
+}
+
+.gallery-geometry-groups {
+  display: grid;
+  gap: var(--ns-space-4);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+}
+
+.gallery-geometry-group {
+  background: var(--ns-color-surface);
+  border: var(--ns-border-width-standard) var(--ns-border-style-solid)
+    var(--ns-color-border-subtle);
+  border-radius: var(--ns-radius-card);
+  min-width: 0;
+  padding: var(--ns-space-3);
+}
+
+.gallery-geometry-group-heading {
+  margin-bottom: var(--ns-space-3);
+}
+
+.gallery-geometry-group-heading h4 {
+  font-size: var(--ns-text-label-size);
+}
+
+.gallery-geometry-group-heading p,
+.gallery-border-style-note,
+.gallery-touch-guidance {
+  font-size: var(--ns-text-caption-size);
+  line-height: var(--ns-text-body-line-height);
+}
+
+.gallery-geometry-token-list {
+  display: grid;
+  gap: var(--ns-space-2);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.gallery-sizing-token-row,
+.gallery-geometry-token-row {
+  align-items: center;
+  border-bottom: var(--ns-border-width-subtle) var(--ns-border-style-solid)
+    var(--ns-color-border-subtle);
+  display: grid;
+  gap: var(--ns-space-2);
+  grid-template-columns: minmax(0, 1fr) minmax(0, var(--ns-space-16)) auto;
+  min-height: var(--ns-size-pointer-target-minimum);
+  padding-bottom: var(--ns-space-1);
+}
+
+.gallery-sizing-token-row code,
+.gallery-geometry-token-row code {
+  overflow-wrap: anywhere;
+}
+
+.gallery-sizing-sample {
+  background: var(--ns-color-brand);
+  border-radius: var(--ns-radius-pill);
+  display: block;
+  max-inline-size: 100%;
+}
+
+.gallery-sizing-sample--control-height,
+.gallery-sizing-sample--track {
+  inline-size: min(100%, var(--ns-space-16));
+}
+
+.gallery-sizing-value {
+  color: var(--ns-color-text-secondary);
+  font-size: var(--ns-text-caption-size);
+  text-align: end;
+  white-space: nowrap;
+}
+
+.gallery-radius-sample {
+  background: var(--ns-color-surface-subtle);
+  border: var(--ns-border-width-standard) var(--ns-border-style-solid)
+    var(--ns-color-border);
+  block-size: var(--ns-size-control-height-comfortable);
+  display: block;
+  inline-size: var(--ns-space-16);
+}
+
+.gallery-border-sample {
+  background: var(--ns-color-surface);
+  border-color: var(--ns-color-border-strong);
+  block-size: var(--ns-size-control-height-comfortable);
+  display: block;
+  inline-size: var(--ns-space-16);
+}
+
+.gallery-shape-examples,
+.gallery-control-samples {
+  align-items: center;
+  background: var(--ns-color-canvas);
+  border: var(--ns-border-width-subtle) var(--ns-border-style-solid)
+    var(--ns-color-border-subtle);
+  border-radius: var(--ns-radius-md);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ns-space-3);
+  margin-top: var(--ns-space-3);
+  min-height: var(--ns-size-control-height-comfortable);
+  padding: var(--ns-space-3);
+}
+
+.gallery-pill-shape {
+  align-items: center;
+  background: var(--ns-color-surface-subtle);
+  border-radius: var(--ns-radius-pill);
+  display: inline-flex;
+  justify-content: center;
+  min-block-size: var(--ns-size-control-height-standard);
+  padding-inline: var(--ns-space-4);
+}
+
+.gallery-full-shape {
+  background: var(--ns-color-brand);
+  block-size: var(--ns-size-control-height-standard);
+  border-radius: var(--ns-radius-pill);
+  display: block;
+  inline-size: var(--ns-size-control-height-standard);
+}
+
+.gallery-border-style-note {
+  margin: var(--ns-space-2) 0 0;
+}
+
+.gallery-touch-guidance {
+  margin: var(--ns-space-3) 0 0;
+  max-width: 48rem;
+}
+
+@media (max-width: 36rem) {
+  .gallery-sizing-token-row,
+  .gallery-geometry-token-row {
+    gap: var(--ns-space-1);
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .gallery-sizing-sample,
+  .gallery-radius-sample,
+  .gallery-border-sample {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .gallery-sizing-value {
+    grid-column: 1 / -1;
+    text-align: start;
+  }
+}

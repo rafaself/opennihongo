@@ -26,6 +26,11 @@ export const galleryNavigation = {
           to: "/foundations/spacing",
         },
         {
+          id: "sizing",
+          label: "Sizing, radius, borders",
+          to: "/foundations/sizing",
+        },
+        {
           id: "color-tokens",
           label: "Color tokens",
           to: "/foundations/colors",
