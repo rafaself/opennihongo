@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 // eslint-disable-next-line @nx/enforce-module-boundaries -- Storybook exercises the package API as a consumer.
 import { Button, Tooltip } from "@opennihongo/ui";
-import "./tooltip.stories.css";
 
 const meta = {
   title: "Components/Tooltip",
@@ -40,15 +39,28 @@ export const KeyboardFocus: Story = {
 };
 
 export const ReducedMotion: Story = {
+  beforeEach: () => {
+    const root = document.documentElement;
+    const previousMotion = root.getAttribute("data-motion");
+    root.setAttribute("data-motion", "reduced");
+
+    return () => {
+      if (previousMotion === null) {
+        root.removeAttribute("data-motion");
+      } else {
+        root.setAttribute("data-motion", previousMotion);
+      }
+    };
+  },
   args: {
     children: <Button>Save lesson</Button>,
     content: "Saves this lesson for later",
     delayDuration: 0,
   },
   render: (args) => (
-    <div className="ns-tooltip-story-reduced-motion">
+    <>
       <p>Tooltip animation is disabled for reduced motion.</p>
       <Tooltip {...args} />
-    </div>
+    </>
   ),
 };

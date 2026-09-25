@@ -3,6 +3,9 @@ import { expect, test, type Page } from "@playwright/test";
 const storyIds = {
   primaryButton: "components-button--primary",
   openPopover: "components-popover--open",
+  reducedMotionPopover: "components-popover--reduced-motion",
+  reducedMotionTooltip: "components-tooltip--reduced-motion",
+  selectedSelect: "components-select--selected",
   achievementUnlocked: "patterns-achievement-unlocked--default",
 } as const;
 
@@ -47,6 +50,53 @@ test("captures an open Popover overlay", async ({ page }) => {
   ).toBeVisible();
 
   await expect(page).toHaveScreenshot("popover-open.png");
+});
+
+test("applies reduced motion to portaled Popover content", async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: "no-preference" });
+  await openStory(page, storyIds.reducedMotionPopover);
+  const content = page.locator(".ns-popover__content");
+
+  await expect(content).toBeVisible();
+  await expect(page.locator("html")).toHaveAttribute("data-motion", "reduced");
+  await expect
+    .poll(() => content.evaluate((element) => getComputedStyle(element).animationName))
+    .toBe("none");
+});
+
+test("applies reduced motion to portaled Tooltip content", async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: "no-preference" });
+  await openStory(page, storyIds.reducedMotionTooltip);
+  const trigger = page.getByRole("button", { name: "Save lesson" });
+  await trigger.focus();
+  const content = page.locator(".ns-tooltip__content");
+
+  await expect(content).toBeVisible();
+  await expect(page.locator("html")).toHaveAttribute("data-motion", "reduced");
+  await expect
+    .poll(() => content.evaluate((element) => getComputedStyle(element).animationName))
+    .toBe("none");
+});
+
+test("locks document scrolling while Select is open and restores it on close", async ({
+  page,
+}) => {
+  await openStory(page, storyIds.selectedSelect);
+  const body = page.locator("body");
+  const previousScrollLock = await body.getAttribute("data-scroll-locked");
+  const trigger = page.getByRole("combobox", { name: "Writing system" });
+
+  await trigger.click();
+  await expect(page.getByRole("listbox")).toBeVisible();
+  await expect
+    .poll(() => body.getAttribute("data-scroll-locked"))
+    .not.toBe(previousScrollLock);
+
+  await page.keyboard.press("Escape");
+  await expect(page.getByRole("listbox")).toBeHidden();
+  await expect
+    .poll(() => body.getAttribute("data-scroll-locked"))
+    .toBe(previousScrollLock);
 });
 
 test("captures the Achievement Unlocked gamification pattern", async ({

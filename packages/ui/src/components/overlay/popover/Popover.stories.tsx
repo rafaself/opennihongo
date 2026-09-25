@@ -6,7 +6,6 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@opennihongo/ui";
-import "./popover.stories.css";
 
 const meta = {
   title: "Components/Popover",
@@ -26,26 +25,18 @@ type Story = StoryObj<typeof meta>;
 
 type PopoverExampleProps = {
   defaultOpen?: boolean;
-  reducedMotion?: boolean;
 };
 
-function PopoverExample({
-  defaultOpen,
-  reducedMotion = false,
-}: PopoverExampleProps) {
+function PopoverExample({ defaultOpen }: PopoverExampleProps) {
   return (
-    <div
-      className={reducedMotion ? "ns-popover-story-reduced-motion" : undefined}
-    >
-      <Popover {...(defaultOpen !== undefined ? { defaultOpen } : {})}>
-        <PopoverTrigger asChild>
-          <Button variant="secondary">Reference details</Button>
-        </PopoverTrigger>
-        <PopoverContent aria-label="Reference details">
-          <p>Use this reference when reviewing the kana reading.</p>
-        </PopoverContent>
-      </Popover>
-    </div>
+    <Popover {...(defaultOpen !== undefined ? { defaultOpen } : {})}>
+      <PopoverTrigger asChild>
+        <Button variant="secondary">Reference details</Button>
+      </PopoverTrigger>
+      <PopoverContent aria-label="Reference details">
+        <p>Use this reference when reviewing the kana reading.</p>
+      </PopoverContent>
+    </Popover>
   );
 }
 
@@ -58,5 +49,18 @@ export const Open: Story = {
 };
 
 export const ReducedMotion: Story = {
-  render: () => <PopoverExample defaultOpen reducedMotion />,
+  beforeEach: () => {
+    const root = document.documentElement;
+    const previousMotion = root.getAttribute("data-motion");
+    root.setAttribute("data-motion", "reduced");
+
+    return () => {
+      if (previousMotion === null) {
+        root.removeAttribute("data-motion");
+      } else {
+        root.setAttribute("data-motion", previousMotion);
+      }
+    };
+  },
+  render: () => <PopoverExample defaultOpen />,
 };

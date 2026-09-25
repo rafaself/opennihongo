@@ -104,17 +104,21 @@ isolated from the host content.
 
 Modal backdrops use `--ns-color-overlay-backdrop`; their dialog content uses
 `--ns-color-surface-raised`, `--ns-color-border`, and
-`--ns-elevation-dialog`. Non-modal floating content such as Select and Popover
-uses the raised surface and `--ns-elevation-overlay`, without a backdrop.
-Tooltips and toasts use those same semantic surface roles as needed. The
-surface is owned by the overlay content, and only a modal dialog owns a
-backdrop. Do not create component-specific overlay colors when these roles
-suffice.
+`--ns-elevation-dialog`. Floating content such as Select and Popover uses the
+raised surface and `--ns-elevation-overlay`, without a backdrop. Tooltips and
+toasts use those same semantic surface roles as needed. The surface is owned by
+the overlay content, and only a modal dialog owns a backdrop. Do not create
+component-specific overlay colors when these roles suffice.
 
-Only an open modal dialog locks document scrolling. The dialog's accessible
-primitive owns that lock, including nested-modal counting and restoring the
-previous body state when the last modal closes. Popovers, Select, tooltips, and
-toasts never lock scrolling or compete to restore global styles.
+An open modal dialog and the current Radix Select primitive lock document
+scrolling. The dialog primitive owns nested-modal counting and restores the
+previous body state when the last modal closes. Radix Select also locks
+scrolling while its option list is open and disables outside pointer
+interaction; Select owns restoring the prior document state when it closes.
+This is Select's primitive behavior, not Dialog modality: Select has no
+backdrop or focus trap. Do not add a second global lock or manually restore
+body styles in either wrapper. Popovers, tooltips, and toasts never lock
+scrolling or compete to restore global styles.
 
 Modal dialogs have an accessible name, move focus into the dialog on open, keep
 Tab navigation within it, and return focus to the trigger (or a logical fallback
