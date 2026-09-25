@@ -33,6 +33,8 @@ export type {
   LeaderboardItemChangeDirection,
   LeaderboardItemProps,
 } from "./components/indicators/leaderboard-item/LeaderboardItem";
+export { LessonCompleted } from "./patterns/lesson-completed/LessonCompleted";
+export type { LessonCompletedProps } from "./patterns/lesson-completed/LessonCompleted";
 export { LevelBadge } from "./components/indicators/level-badge/LevelBadge";
 export type {
   LevelBadgeProps,

@@ -1,0 +1,44 @@
+.ns-lesson-completed {
+  inline-size: 100%;
+}
+
+.ns-lesson-completed__celebration {
+  display: block;
+}
+
+.ns-lesson-completed__layout {
+  display: grid;
+  gap: var(--ns-space-5);
+  min-inline-size: 0;
+}
+
+.ns-lesson-completed__header {
+  display: grid;
+  gap: var(--ns-space-2);
+}
+
+.ns-lesson-completed__summary {
+  display: grid;
+  gap: var(--ns-space-4);
+  min-inline-size: 0;
+}
+
+.ns-lesson-completed__progress,
+.ns-lesson-completed__rewards {
+  min-inline-size: 0;
+}
+
+.ns-lesson-completed__actions > * {
+  flex: 1 1 12rem;
+}
+
+@media (min-width: 42rem) {
+  .ns-lesson-completed__summary {
+    align-items: start;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+  }
+
+  .ns-lesson-completed__actions > * {
+    flex: 0 1 auto;
+  }
+}

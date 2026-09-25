@@ -163,6 +163,13 @@ current-user state has a visible label and `aria-current` semantics. It does
 not sort participants, calculate ranks, fetch users, or implement leaderboard
 rules; the owning feature supplies those decisions and values.
 
+`LessonCompleted` presents caller-supplied completion text, optional progress
+and reward content, and caller-supplied primary and secondary actions. Its
+progress and reward slots should contain content with appropriate accessible
+semantics. The optional celebration honors reduced-motion preferences. The
+pattern does not decide whether a lesson is complete, calculate rewards, or
+perform navigation.
+
 `Avatar` displays a person image or a visual fallback at a shared semantic size.
 Set `alt` to a meaningful identity label when the avatar conveys who the person
 is; use `alt=""` when nearby text already identifies them. The fallback is
