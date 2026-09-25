@@ -1,0 +1,113 @@
+.gallery-typography-examples {
+  display: grid;
+  gap: var(--ns-space-3);
+}
+
+.gallery-typography-theme-grid {
+  align-items: start;
+  display: grid;
+  gap: var(--ns-space-4);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.gallery-typography-theme {
+  background: var(--ns-color-canvas);
+  border: 1px solid var(--ns-color-border);
+  border-radius: var(--ns-radius-card);
+  color: var(--ns-color-text-primary);
+  display: grid;
+  gap: var(--ns-space-4);
+  min-width: 0;
+  padding: var(--ns-space-4);
+}
+
+.gallery-typography-theme-heading {
+  display: grid;
+  gap: var(--ns-space-2);
+}
+
+.gallery-typography-theme-heading h3,
+.gallery-typography-theme-heading p {
+  margin: 0;
+}
+
+.gallery-typography-family {
+  display: grid;
+  gap: var(--ns-space-1);
+  margin-top: var(--ns-space-2);
+  min-width: 0;
+}
+
+.gallery-typography-family code,
+.gallery-typography-metrics code {
+  overflow-wrap: anywhere;
+}
+
+.gallery-typography-styles {
+  display: grid;
+  gap: var(--ns-space-2);
+}
+
+.gallery-typography-style {
+  border-top: 1px solid var(--ns-color-border-subtle);
+  display: grid;
+  gap: var(--ns-space-2);
+  min-width: 0;
+  padding-top: var(--ns-space-3);
+}
+
+.gallery-typography-sample {
+  display: grid;
+  gap: var(--ns-space-1);
+  min-width: 0;
+}
+
+.gallery-typography-style-label {
+  color: var(--ns-color-text-secondary);
+  text-transform: uppercase;
+}
+
+.gallery-typography-sample > p {
+  overflow-wrap: anywhere;
+}
+
+.gallery-typography-metrics {
+  display: grid;
+  gap: var(--ns-space-1);
+  margin: 0;
+}
+
+.gallery-typography-metrics > div {
+  align-items: baseline;
+  display: grid;
+  gap: var(--ns-space-1) var(--ns-space-2);
+  grid-template-columns: 5.25rem minmax(0, 1fr);
+  min-width: 0;
+}
+
+.gallery-typography-metrics dt {
+  color: var(--ns-color-text-secondary);
+}
+
+.gallery-typography-metrics dd {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 var(--ns-space-2);
+  margin: 0;
+  min-width: 0;
+}
+
+.gallery-typography-metrics dd span {
+  color: var(--ns-color-text-secondary);
+}
+
+.gallery-typography-source {
+  color: var(--ns-color-text-secondary);
+  margin: 0;
+}
+
+@media (max-width: 56rem) {
+  .gallery-typography-theme-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

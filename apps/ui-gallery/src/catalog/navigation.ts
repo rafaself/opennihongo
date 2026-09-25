@@ -25,6 +25,11 @@ export const galleryNavigation = {
           label: "Color tokens",
           to: "/foundations/colors",
         },
+        {
+          id: "typography",
+          label: "Typography",
+          to: "/foundations/typography",
+        },
       ],
     },
     {
