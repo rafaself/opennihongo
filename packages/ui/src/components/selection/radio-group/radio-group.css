@@ -69,12 +69,20 @@
 
 .ns-radio[data-variant="card"][data-state="checked"] {
   --ns-radio-card-accent-edge: 0 0 0 var(--ns-border-width-standard)
-    color-mix(in srgb, var(--ns-color-action-primary) 28%, transparent);
+    color-mix(in srgb, var(--ns-color-brand-text) 48%, transparent);
+  --ns-radio-card-accent-glow: 0 3px 8px
+    color-mix(in srgb, var(--ns-color-brand-text) 24%, transparent);
 
   background-color: var(--ns-color-selection);
   border-color: var(--ns-color-border-subtle);
-  box-shadow: var(--ns-radio-card-accent-edge), var(--ns-elevation-hover);
-  color: var(--ns-color-selection-foreground);
+  box-shadow:
+    var(--ns-radio-card-accent-edge), var(--ns-radio-card-accent-glow),
+    var(--ns-elevation-hover);
+  color: var(--ns-color-brand-text);
+}
+
+.ns-radio[data-variant="card"][data-state="checked"] .ns-radio__label > * {
+  color: inherit;
 }
 
 .ns-radio[data-variant="card"]:hover:not([data-disabled]):not(
@@ -93,7 +101,9 @@
 .ns-radio[data-variant="card"][data-state="checked"]:active:not(
     [data-disabled]
   ) {
-  box-shadow: var(--ns-radio-card-accent-edge), var(--ns-elevation-pressed);
+  box-shadow:
+    var(--ns-radio-card-accent-edge), var(--ns-radio-card-accent-glow),
+    var(--ns-elevation-pressed);
 }
 
 .ns-radio__control {

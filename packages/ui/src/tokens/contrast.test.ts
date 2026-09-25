@@ -171,6 +171,12 @@ for (const theme of ["light", "dark"] as const) {
     },
     {
       theme,
+      foreground: "--ns-color-brand-text",
+      background: "--ns-color-selection",
+      minimum: 4.5,
+    },
+    {
+      theme,
       foreground: "--ns-color-selection-foreground",
       background: "--ns-color-selection",
       minimum: 4.5,
