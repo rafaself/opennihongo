@@ -75,6 +75,10 @@ export function HomePage() {
 <Button>Continue lesson</Button>
 <Button variant="secondary">View details</Button>`}</code>
         </pre>
+        <Link className="gallery-text-link" to="/components">
+          Browse the component catalog
+        </Link>
+        <br />
         <Link className="gallery-text-link" to="/components/actions-and-forms">
           Explore actions and form controls
         </Link>

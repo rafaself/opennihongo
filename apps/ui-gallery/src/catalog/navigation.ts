@@ -1,3 +1,5 @@
+import { componentCatalogCategories } from "./components";
+
 export interface GalleryNavigationLink {
   readonly id: string;
   readonly label: string;
@@ -59,20 +61,15 @@ export const galleryNavigation = {
         "Domain-agnostic interface components from the public UI package.",
       links: [
         {
-          id: "actions-and-forms",
-          label: "Actions & forms",
-          to: "/components/actions-and-forms",
+          id: "component-catalog",
+          label: "Catalog overview",
+          to: "/components",
         },
-        {
-          id: "content-and-progress",
-          label: "Content & progress",
-          to: "/components/content-and-progress",
-        },
-        {
-          id: "overlays-and-navigation",
-          label: "Overlays & navigation",
-          to: "/components/overlays-and-navigation",
-        },
+        ...componentCatalogCategories.map(({ id, label, to }) => ({
+          id,
+          label,
+          to,
+        })),
       ],
     },
     {

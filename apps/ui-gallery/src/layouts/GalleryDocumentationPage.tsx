@@ -18,6 +18,7 @@ export interface GalleryDocumentationPageProps {
   readonly title: string;
   readonly summary: string;
   readonly examples?: ReactNode;
+  readonly examplesTitle?: string;
   readonly guidance?: readonly GalleryDocumentationSection[];
   readonly notes?: readonly GalleryDocumentationSection[];
   readonly practices?: GalleryDocumentationPractices;
@@ -30,6 +31,7 @@ export function GalleryDocumentationPage({
   title,
   summary,
   examples,
+  examplesTitle = "Examples",
   guidance = [],
   notes = [],
   practices,
@@ -49,7 +51,7 @@ export function GalleryDocumentationPage({
         >
           <div className="gallery-doc-section-heading">
             <p className="gallery-eyebrow">In context</p>
-            <h2 id={id + "-examples-title"}>Examples</h2>
+            <h2 id={id + "-examples-title"}>{examplesTitle}</h2>
           </div>
           <div className="gallery-doc-examples">{examples}</div>
         </section>

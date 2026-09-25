@@ -7,6 +7,7 @@ import {
 import { GalleryLayout } from "../layouts/GalleryLayout";
 import { ActionsAndFormsPage } from "../pages/components/ActionsAndFormsPage";
 import { ContentAndProgressPage } from "../pages/components/ContentAndProgressPage";
+import { ComponentsIndexPage } from "../pages/components/ComponentsIndexPage";
 import { AssetsPage } from "../pages/assets/AssetsPage";
 import { ColorTokensPage } from "../pages/foundations/colors/ColorTokensPage";
 import { DailyGoalCompletedPage } from "../pages/DailyGoalCompletedPage";
@@ -36,6 +37,12 @@ const actionsAndFormsRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/components/actions-and-forms",
   component: ActionsAndFormsPage,
+});
+
+const componentsIndexRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/components",
+  component: ComponentsIndexPage,
 });
 
 const contentAndProgressRoute = createRoute({
@@ -135,6 +142,7 @@ const routeTree = rootRoute.addChildren([
   elevationRoute,
   motionRoute,
   typographyRoute,
+  componentsIndexRoute,
   actionsAndFormsRoute,
   contentAndProgressRoute,
   overlaysAndNavigationRoute,

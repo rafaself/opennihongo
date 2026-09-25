@@ -5,7 +5,11 @@ For the Gallery's role alongside Storybook and the web consumer, and for local r
 The standalone UI Gallery groups design-system documentation under six
 top-level sections. Their navigation metadata lives in
 `apps/ui-gallery/src/catalog/navigation.ts`; the gallery shell renders that
-metadata instead of maintaining its own list of sections or destinations.
+metadata instead of maintaining its own list of sections or destinations. The
+implemented component API index is maintained in
+`apps/ui-gallery/src/catalog/components.ts`; component navigation links derive
+from that category metadata, and its test checks the list against the runtime
+exports of `@opennihongo/ui` and `@opennihongo/ui/icons`.
 
 ## Sections
 
