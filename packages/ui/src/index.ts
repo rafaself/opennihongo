@@ -40,6 +40,12 @@ export type {
   AchievementUnlockedData,
   AchievementUnlockedProps,
 } from "./patterns/achievement-unlocked/AchievementUnlocked";
+export { LevelUp } from "./patterns/level-up/LevelUp";
+export type {
+  LevelUpLevel,
+  LevelUpProps,
+  LevelUpSize,
+} from "./patterns/level-up/LevelUp";
 export { LevelBadge } from "./components/indicators/level-badge/LevelBadge";
 export type {
   LevelBadgeProps,
