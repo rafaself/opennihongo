@@ -6,8 +6,8 @@
 .gallery-typography-theme-grid {
   align-items: start;
   display: grid;
-  gap: var(--ns-space-4);
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--ns-space-5);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 38rem), 1fr));
 }
 
 .gallery-typography-theme {
@@ -16,7 +16,7 @@
   border-radius: var(--ns-radius-card);
   color: var(--ns-color-text-primary);
   display: grid;
-  gap: var(--ns-space-4);
+  gap: var(--ns-space-5);
   min-width: 0;
   padding: var(--ns-space-4);
 }
@@ -24,6 +24,9 @@
 .gallery-typography-theme-heading {
   display: grid;
   gap: var(--ns-space-2);
+  min-width: 0;
+  padding-bottom: var(--ns-space-4);
+  border-bottom: 1px solid var(--ns-color-border-subtle);
 }
 
 .gallery-typography-theme-heading h3,
@@ -32,10 +35,20 @@
 }
 
 .gallery-typography-family {
+  background: var(--ns-color-surface);
+  border: 1px solid var(--ns-color-border-subtle);
+  border-radius: var(--ns-radius-md);
   display: grid;
   gap: var(--ns-space-1);
   margin-top: var(--ns-space-2);
   min-width: 0;
+  padding: var(--ns-space-3);
+}
+
+.gallery-typography-family code,
+.gallery-typography-metrics code {
+  font-size: var(--ns-text-caption-size);
+  line-height: var(--ns-text-body-line-height);
 }
 
 .gallery-typography-family code,
@@ -45,20 +58,30 @@
 
 .gallery-typography-styles {
   display: grid;
-  gap: var(--ns-space-2);
 }
 
 .gallery-typography-style {
   border-top: 1px solid var(--ns-color-border-subtle);
   display: grid;
-  gap: var(--ns-space-2);
+  gap: var(--ns-space-4);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
   min-width: 0;
-  padding-top: var(--ns-space-3);
+  padding: var(--ns-space-5) 0;
+}
+
+.gallery-typography-style:first-child {
+  border-top: 0;
+  padding-top: 0;
+}
+
+.gallery-typography-style:last-child {
+  padding-bottom: 0;
 }
 
 .gallery-typography-sample {
+  align-content: center;
   display: grid;
-  gap: var(--ns-space-1);
+  gap: var(--ns-space-2);
   min-width: 0;
 }
 
@@ -68,13 +91,19 @@
 }
 
 .gallery-typography-sample > p {
+  margin: 0;
   overflow-wrap: anywhere;
 }
 
 .gallery-typography-metrics {
+  background: var(--ns-color-surface);
+  border: 1px solid var(--ns-color-border-subtle);
+  border-radius: var(--ns-radius-md);
   display: grid;
-  gap: var(--ns-space-1);
+  gap: var(--ns-space-2);
   margin: 0;
+  min-width: 0;
+  padding: var(--ns-space-3);
 }
 
 .gallery-typography-metrics > div {
@@ -90,9 +119,8 @@
 }
 
 .gallery-typography-metrics dd {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0 var(--ns-space-2);
+  display: grid;
+  gap: var(--ns-space-1);
   margin: 0;
   min-width: 0;
 }
@@ -104,10 +132,4 @@
 .gallery-typography-source {
   color: var(--ns-color-text-secondary);
   margin: 0;
-}
-
-@media (max-width: 56rem) {
-  .gallery-typography-theme-grid {
-    grid-template-columns: minmax(0, 1fr);
-  }
 }

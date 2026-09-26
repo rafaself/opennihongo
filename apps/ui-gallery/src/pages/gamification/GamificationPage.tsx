@@ -59,8 +59,9 @@ export function GamificationPage() {
             <p>
               The examples include XPBar, Progress, ProgressRing, LevelBadge,
               LevelUp, Streak, Achievement, AchievementUnlocked, RewardCard,
-              RewardReceived, QuestCard, LeaderboardItem, ProgressSummary,
-              Celebration, LessonCompleted, and DailyGoalCompleted.
+              RewardReceived, QuestCard, QuestList, LeaderboardItem,
+              ProgressSummary, Celebration, LessonCompleted, and
+              DailyGoalCompleted.
             </p>
           ),
         },

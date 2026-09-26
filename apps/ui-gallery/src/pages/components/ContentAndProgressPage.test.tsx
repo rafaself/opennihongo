@@ -1,5 +1,5 @@
 // @vitest-environment jsdom
-import { cleanup, fireEvent, render, screen } from "@testing-library/react";
+import { cleanup, render, screen } from "@testing-library/react";
 import { afterEach, describe, expect, it } from "vitest";
 import { ContentAndProgressPage } from "./ContentAndProgressPage";
 
@@ -40,13 +40,10 @@ describe("ContentAndProgressPage", () => {
     expect(screen.getByText("Loading lesson preview")).toBeTruthy();
   });
 
-  it("scopes the live examples to the selected shared theme", () => {
+  it("inherits the gallery theme instead of rendering its own theme control", () => {
     const { container } = render(<ContentAndProgressPage />);
-    const preview = container.querySelector("[data-theme]");
 
-    expect(preview?.getAttribute("data-theme")).toBe("light");
-
-    fireEvent.click(screen.getByRole("radio", { name: "Dark theme" }));
-    expect(preview?.getAttribute("data-theme")).toBe("dark");
+    expect(screen.queryByRole("radio", { name: "Dark theme" })).toBeNull();
+    expect(container.querySelector("[data-theme]")).toBeNull();
   });
 });

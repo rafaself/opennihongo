@@ -26,6 +26,11 @@ feedback; the effect stops when reduced motion is requested.
 `--ns-motion-press-offset` is `1px` during ordinary interaction and becomes
 `0px` when reduced motion is requested. Shared controls can use it for a small
 tactile press cue without moving under the reduced-motion preference.
+The Button uses variant-specific offsets: `--ns-motion-button-press-offset`
+is `4px` for primary actions, and
+`--ns-motion-button-secondary-press-offset` is `2px` for secondary actions.
+Both resolve to `0px` when reduced motion is requested so their hard lower
+edges can collapse without moving the control.
 
 ## Easing
 
@@ -82,9 +87,9 @@ or a disappearing effect. Keep semantic status text and accessible progress
 values in the reduced path; announce important updates through the owning
 feature's existing accessibility mechanism.
 
-The shared Button is a representative press example: its normal 1px press
-translation is supplied by `--ns-motion-press-offset`; the same rule resolves
-to `translateY(0px)` when the system preference is set. Its pressed elevation
-still changes immediately, so the state remains visible without movement.
+The Button is a representative press example: its 4px primary and 2px
+secondary translations use variant-specific semantic tokens, and both resolve
+to `translateY(0px)` when the system preference is set. Its pressed lower edge
+still collapses immediately, so the state remains visible without movement.
 Feature-owned transitions and decorative effects should follow the same
 contract using their own selectors and status semantics.

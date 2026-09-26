@@ -17,9 +17,10 @@
 }
 
 .gallery-gamification-examples > section > h3 {
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: 1.5rem;
-  font-weight: 400;
+  font-size: var(--ns-text-heading-size);
+  font-weight: var(--ns-text-heading-weight);
+  letter-spacing: var(--ns-text-heading-letter-spacing);
+  line-height: var(--ns-text-heading-line-height);
   margin: 0;
 }
 
@@ -30,13 +31,12 @@
 }
 
 .gallery-gamification-card--wide {
-  grid-column: span 2;
+  grid-column: 1 / -1;
 }
 
 .gallery-gamification-stage {
   align-items: start;
-  background-image: radial-gradient(#dce5e1 0.65px, transparent 0.65px);
-  background-size: 12px 12px;
+  background: var(--ns-color-canvas);
   border-radius: 0.75rem;
   display: grid;
   justify-items: stretch;

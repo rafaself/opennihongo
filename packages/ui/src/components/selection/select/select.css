@@ -3,7 +3,9 @@
   background-color: var(--ns-color-surface);
   border: var(--ns-border-width-standard) var(--ns-border-style-solid)
     var(--ns-color-border);
+  border-block-end-width: var(--ns-border-width-raised-edge);
   border-radius: var(--ns-radius-control);
+  box-shadow: var(--ns-elevation-button-secondary);
   color: var(--ns-color-text-primary);
   cursor: pointer;
   display: flex;
@@ -17,12 +19,20 @@
   transition:
     background-color var(--ns-motion-duration-fast)
       var(--ns-motion-easing-standard),
-    border-color var(--ns-motion-duration-fast) var(--ns-motion-easing-standard);
+    border-color var(--ns-motion-duration-fast) var(--ns-motion-easing-standard),
+    box-shadow var(--ns-motion-duration-fast) var(--ns-motion-easing-standard),
+    transform var(--ns-motion-duration-fast) var(--ns-motion-easing-standard);
+  transform: translateY(0);
   inline-size: 100%;
 }
 
 .ns-select__trigger:hover:not(:disabled) {
   border-color: var(--ns-color-action-primary-hover);
+}
+
+.ns-select__trigger:active:not(:disabled) {
+  box-shadow: var(--ns-elevation-none);
+  transform: translateY(var(--ns-motion-button-secondary-press-offset));
 }
 
 .ns-select__trigger:focus-visible {
@@ -38,8 +48,10 @@
 .ns-select__trigger:disabled {
   background-color: var(--ns-color-surface-subtle);
   border-color: var(--ns-color-border);
+  box-shadow: var(--ns-elevation-none);
   color: var(--ns-color-text-secondary);
   cursor: not-allowed;
+  transform: none;
 }
 
 .ns-select__icon {
@@ -56,8 +68,8 @@
     currentColor;
   border-inline-end: var(--ns-border-width-standard)
     var(--ns-border-style-solid) currentColor;
-  block-size: var(--ns-primitive-size-2);
-  inline-size: var(--ns-primitive-size-2);
+  block-size: var(--ns-primitive-size-8);
+  inline-size: var(--ns-primitive-size-8);
   transform: translateY(-1px) rotate(45deg);
 }
 

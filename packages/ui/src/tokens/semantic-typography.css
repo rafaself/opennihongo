@@ -1,17 +1,17 @@
 /* Semantic text roles compose the primitives for common interface content. */
 :root {
   --ns-text-display-size: var(--ns-primitive-font-size-8);
-  --ns-text-display-weight: var(--ns-primitive-font-weight-regular);
+  --ns-text-display-weight: var(--ns-primitive-font-weight-bold);
   --ns-text-display-line-height: var(--ns-primitive-line-height-tight);
   --ns-text-display-letter-spacing: var(--ns-primitive-letter-spacing-tight);
 
   --ns-text-heading-size: var(--ns-primitive-font-size-6);
-  --ns-text-heading-weight: var(--ns-primitive-font-weight-semibold);
+  --ns-text-heading-weight: var(--ns-primitive-font-weight-bold);
   --ns-text-heading-line-height: var(--ns-primitive-line-height-snug);
   --ns-text-heading-letter-spacing: var(--ns-primitive-letter-spacing-snug);
 
-  --ns-text-body-size: var(--ns-primitive-font-size-3);
-  --ns-text-body-weight: var(--ns-primitive-font-weight-regular);
+  --ns-text-body-size: var(--ns-primitive-font-size-17);
+  --ns-text-body-weight: var(--ns-primitive-font-weight-medium);
   --ns-text-body-line-height: var(--ns-primitive-line-height-normal);
   --ns-text-body-letter-spacing: var(--ns-primitive-letter-spacing-normal);
 
@@ -19,6 +19,11 @@
   --ns-text-label-weight: var(--ns-primitive-font-weight-semibold);
   --ns-text-label-line-height: var(--ns-primitive-line-height-snug);
   --ns-text-label-letter-spacing: var(--ns-primitive-letter-spacing-normal);
+
+  --ns-text-button-size: var(--ns-primitive-font-size-15);
+  --ns-text-button-weight: var(--ns-primitive-font-weight-bold);
+  --ns-text-button-line-height: var(--ns-primitive-line-height-snug);
+  --ns-text-button-letter-spacing: 0.8px;
 
   --ns-text-caption-size: var(--ns-primitive-font-size-1);
   --ns-text-caption-weight: var(--ns-primitive-font-weight-regular);

@@ -60,8 +60,8 @@ export function ContentAndProgressPage() {
           title: "Theme behavior",
           content: (
             <p>
-              Switch the preview between light and dark to see the shared
-              <code> data-theme</code> contract in action. Components resolve
+              Use the theme control in the Gallery header to see the shared
+              <code> data-theme</code> contract in action. Components inherit
               the same semantic tokens used by application consumers.
             </p>
           ),

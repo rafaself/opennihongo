@@ -27,6 +27,11 @@ export type {
   QuestCardReward,
   QuestCardStatus,
 } from "./components/indicators/quest-card/QuestCard";
+export { QuestList } from "./patterns/quest-list/QuestList";
+export type {
+  QuestListItem,
+  QuestListProps,
+} from "./patterns/quest-list/QuestList";
 export { LeaderboardItem } from "./components/indicators/leaderboard-item/LeaderboardItem";
 export type {
   LeaderboardItemChange,
@@ -192,6 +197,8 @@ export type {
   CardProps,
   CardVariant,
 } from "./components/surface/Card";
+export { ActionCard } from "./components/surface/action-card/ActionCard";
+export type { ActionCardProps } from "./components/surface/action-card/ActionCard";
 export { Text } from "./typography/Text";
 export type { TextColor, TextProps, TextVariant } from "./typography/Text";
 export {

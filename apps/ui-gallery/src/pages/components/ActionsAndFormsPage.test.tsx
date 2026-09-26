@@ -14,7 +14,7 @@ describe("ActionsAndFormsPage", () => {
   afterEach(cleanup);
 
   it("documents accessible controls and caller-owned action behavior", () => {
-    const { container } = render(<ActionsAndFormsPage />);
+    render(<ActionsAndFormsPage />);
 
     expect(
       screen.getByRole("heading", { name: "Actions & Forms" }),
@@ -37,14 +37,7 @@ describe("ActionsAndFormsPage", () => {
         .getByRole("radio", { name: "Hiragana" })
         .getAttribute("aria-checked"),
     ).toBe("true");
-    expect(
-      container.querySelector("[data-theme]")?.getAttribute("data-theme"),
-    ).toBe("light");
-
-    fireEvent.click(screen.getByRole("radio", { name: "Dark theme" }));
-    expect(
-      container.querySelector("[data-theme]")?.getAttribute("data-theme"),
-    ).toBe("dark");
+    expect(screen.queryByRole("radio", { name: "Dark theme" })).toBeNull();
 
     fireEvent.click(screen.getByRole("button", { name: "Continue lesson" }));
     expect(

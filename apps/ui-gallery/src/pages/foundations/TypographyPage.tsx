@@ -202,11 +202,11 @@ export function TypographyPage() {
           ),
         },
         {
-          title: "Use the shared font stack",
+          title: "Use the shared type system",
           content: (
             <p>
-              The Design System uses <code>--ns-font-sans</code>, backed by its
-              primitive sans-serif stack. Let semantic styles set size, weight,
+              The Design System uses its bundled Nunito family through{" "}
+              <code>--ns-font-sans</code>. Let semantic styles set size, weight,
               and line height so examples and product UI stay consistent.
             </p>
           ),
@@ -248,7 +248,7 @@ export function TypographyPage() {
           "Use display or heading styling on every element just to make it prominent.",
         ],
       }}
-      summary="See the shared font family and five semantic text styles in representative interface content. Live token values and paired light and dark previews make the type hierarchy easy to inspect."
+      summary="See the shared font family, five semantic text styles, and Button label in representative interface content. Live token values and paired light and dark previews make the type hierarchy easy to inspect."
       title="Typography"
     />
   );

@@ -73,6 +73,8 @@
   --ns-primitive-font-size-1: 0.75rem;
   --ns-primitive-font-size-2: 0.875rem;
   --ns-primitive-font-size-3: 1rem;
+  --ns-primitive-font-size-15: 0.9375rem;
+  --ns-primitive-font-size-17: 1.0625rem;
   --ns-primitive-font-size-4: 1.125rem;
   --ns-primitive-font-size-5: 1.25rem;
   --ns-primitive-font-size-6: 1.5rem;
@@ -80,7 +82,9 @@
   --ns-primitive-font-size-8: 2.5rem;
 
   --ns-primitive-font-weight-regular: 400;
+  --ns-primitive-font-weight-medium: 500;
   --ns-primitive-font-weight-semibold: 600;
+  --ns-primitive-font-weight-bold: 700;
 
   --ns-primitive-line-height-tight: 1.1;
   --ns-primitive-line-height-snug: 1.25;
@@ -92,7 +96,7 @@
   --ns-primitive-letter-spacing-wide: 0.04em;
 
   --ns-primitive-font-family-sans:
-    Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+    Nunito, ui-rounded, system-ui, -apple-system, BlinkMacSystemFont,
     "Segoe UI", sans-serif;
 
   /* Shared interaction timing primitives use broadly supported CSS values. */
@@ -128,6 +132,9 @@
   --ns-primitive-size-40: 2.5rem;
   --ns-primitive-size-44: 2.75rem;
   --ns-primitive-size-48: 3rem;
+  --ns-primitive-size-50: 3.125rem;
+  --ns-primitive-size-56: 3.5rem;
+  --ns-primitive-size-216: 13.5rem;
 
   /* Rounded geometry and border primitives stay independent from component roles. */
   --ns-primitive-radius-0: 0;
@@ -140,6 +147,7 @@
   --ns-primitive-border-width-1: 1px;
   --ns-primitive-border-width-2: 2px;
   --ns-primitive-border-width-3: 3px;
+  --ns-primitive-border-width-4: 4px;
   --ns-primitive-border-style-solid: solid;
 
   /* Public role-neutral aliases; role-specific tokens can be added when needed. */

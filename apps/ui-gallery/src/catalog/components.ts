@@ -7,6 +7,7 @@ export const componentCatalogCategories = [
     to: "/components/actions-and-forms",
     items: [
       "Button",
+      "ActionCard",
       "IconButton",
       "FormField",
       "Checkbox",
@@ -98,6 +99,7 @@ export const componentCatalogResources = [
       { name: "Achievement", to: "/gamification" },
       { name: "RewardCard", to: "/gamification" },
       { name: "QuestCard", to: "/gamification" },
+      { name: "QuestList", to: "/gamification" },
       { name: "LeaderboardItem", to: "/gamification" },
       { name: "LevelBadge", to: "/gamification" },
       { name: "Streak", to: "/gamification" },
@@ -131,7 +133,9 @@ export const componentCatalogResources = [
       { name: "Icon", to: "/assets" },
       { name: "CheckIcon", to: "/assets" },
       { name: "CloseIcon", to: "/assets" },
+      { name: "MoonIcon", to: "/assets" },
       { name: "StarIcon", to: "/assets" },
+      { name: "SunIcon", to: "/assets" },
     ],
   },
 ] as const;

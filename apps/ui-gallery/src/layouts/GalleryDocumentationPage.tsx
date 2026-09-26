@@ -42,6 +42,20 @@ export function GalleryDocumentationPage({
         <p className="gallery-eyebrow">{eyebrow}</p>
         <h1 id={id + "-title"}>{title}</h1>
         <p className="gallery-doc-summary">{summary}</p>
+        <nav aria-label="Page sections" className="gallery-doc-contents">
+          {examples !== undefined && (
+            <a href={`#${id}-examples-title`}>{examplesTitle}</a>
+          )}
+          {guidance.length > 0 && (
+            <a href={`#${id}-guidance-title`}>Guidance</a>
+          )}
+          {notes.length > 0 && (
+            <a href={`#${id}-notes-title`}>Tokens and API</a>
+          )}
+          {practices !== undefined && (
+            <a href={`#${id}-practices-title`}>Do and don’t</a>
+          )}
+        </nav>
       </header>
 
       {examples !== undefined && (
@@ -50,7 +64,6 @@ export function GalleryDocumentationPage({
           className="gallery-doc-section"
         >
           <div className="gallery-doc-section-heading">
-            <p className="gallery-eyebrow">In context</p>
             <h2 id={id + "-examples-title"}>{examplesTitle}</h2>
           </div>
           <div className="gallery-doc-examples">{examples}</div>
@@ -63,7 +76,6 @@ export function GalleryDocumentationPage({
           className="gallery-doc-section"
         >
           <div className="gallery-doc-section-heading">
-            <p className="gallery-eyebrow">Usage</p>
             <h2 id={id + "-guidance-title"}>Guidance</h2>
           </div>
           <div className="gallery-doc-guidance-grid">
@@ -89,7 +101,6 @@ export function GalleryDocumentationPage({
           className="gallery-doc-section"
         >
           <div className="gallery-doc-section-heading">
-            <p className="gallery-eyebrow">Reference</p>
             <h2 id={id + "-notes-title"}>Tokens and API</h2>
           </div>
           <div className="gallery-doc-notes-grid">
@@ -113,7 +124,6 @@ export function GalleryDocumentationPage({
           className="gallery-doc-section"
         >
           <div className="gallery-doc-section-heading">
-            <p className="gallery-eyebrow">Checklist</p>
             <h2 id={id + "-practices-title"}>Do and don’t</h2>
           </div>
           <div className="gallery-doc-practices-grid">

@@ -5,12 +5,6 @@ import { TabsExample } from "./TabsExample";
 import { ToastExample } from "./ToastExample";
 import { TooltipExample } from "./TooltipExample";
 
-const themes = [
-  { value: "light", label: "Light theme" },
-  { value: "dark", label: "Dark theme" },
-] as const;
-
-type Theme = (typeof themes)[number]["value"];
 type MotionMode = "system" | "reduced";
 
 function setMotionMode(mode: MotionMode | null) {
@@ -22,7 +16,6 @@ function setMotionMode(mode: MotionMode | null) {
 }
 
 export function OverlaysAndNavigationExamples() {
-  const [theme, setTheme] = useState<Theme>("light");
   const [motionMode, setMotionModeState] = useState<MotionMode>("system");
   const [portalContainer, setPortalContainer] = useState<
     HTMLElement | undefined
@@ -53,24 +46,7 @@ export function OverlaysAndNavigationExamples() {
 
   return (
     <>
-      <fieldset>
-        <legend>Preview theme</legend>
-        {themes.map(({ value, label }) => (
-          <label key={value}>
-            <input
-              checked={theme === value}
-              name="overlays-navigation-theme"
-              onChange={() => {
-                setTheme(value);
-              }}
-              type="radio"
-              value={value}
-            />
-            {label}
-          </label>
-        ))}
-      </fieldset>
-      <fieldset>
+      <fieldset className="gallery-preview-controls">
         <legend>Preview motion</legend>
         {(
           [
@@ -92,7 +68,7 @@ export function OverlaysAndNavigationExamples() {
           </label>
         ))}
       </fieldset>
-      <div className="gallery-doc-example-grid" data-theme={theme}>
+      <div className="gallery-doc-example-grid">
         <TooltipExample portalContainer={portalContainer} />
         <PopoverExample portalContainer={portalContainer} />
         <DialogExample portalContainer={portalContainer} />
@@ -101,7 +77,6 @@ export function OverlaysAndNavigationExamples() {
       </div>
       <div
         className="gallery-overlay-portal-host"
-        data-theme={theme}
         ref={capturePortalContainer}
       />
     </>
