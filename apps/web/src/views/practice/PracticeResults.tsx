@@ -110,14 +110,16 @@ export function PracticeResults({
           </div>
         </div>
       </div>
-      <footer className="practice-results__actions">
-        <div>
-          <Link className="ns-button" data-variant="secondary" to="/kana">
-            Learn more kana
-          </Link>
-          <Button onClick={onRestart}>Practice again</Button>
-        </div>
-      </footer>
+      <div className="practice-session__action-slot">
+        <footer className="practice-results__actions">
+          <div>
+            <Link className="ns-button" data-variant="secondary" to="/kana">
+              Learn more kana
+            </Link>
+            <Button onClick={onRestart}>Practice again</Button>
+          </div>
+        </footer>
+      </div>
     </>
   );
 }

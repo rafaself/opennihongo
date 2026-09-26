@@ -1,13 +1,11 @@
 .practice-feedback {
   background: var(--ns-color-feedback-success-surface);
   border-top: 2px solid var(--ns-color-feedback-success);
-  bottom: 0;
   color: var(--ns-color-feedback-success);
-  left: 0;
-  position: fixed;
-  right: 0;
+  height: 100%;
+  inset: 0;
+  position: absolute;
   width: 100%;
-  z-index: var(--ns-layer-sticky);
 }
 
 .practice-feedback[data-correct="false"] {
@@ -21,9 +19,9 @@
   display: grid;
   gap: 1.25rem;
   grid-template-columns: 4.25rem minmax(0, 1fr) auto;
+  height: 100%;
   margin-inline: auto;
   max-width: 64rem;
-  min-height: 8rem;
   padding: 1rem 2rem;
 }
 

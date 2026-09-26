@@ -1,8 +1,11 @@
 .practice-session {
+  --practice-action-panel-height: 8.75rem;
+
   display: grid;
-  flex: 1;
+  flex: none;
   grid-template-rows: auto minmax(0, 1fr) auto;
-  min-height: 100dvh;
+  height: 100dvh;
+  overflow: hidden;
   width: 100%;
 }
 
@@ -63,9 +66,10 @@
 }
 
 .practice-session__body {
-  align-items: center;
+  align-items: safe center;
   display: grid;
   min-height: 0;
+  overflow-y: auto;
   padding: 2rem 1.25rem;
 }
 
@@ -208,7 +212,8 @@
 }
 
 .practice-session__action-slot {
-  height: 6.5rem;
+  height: var(--practice-action-panel-height);
+  position: relative;
 }
 
 .practice-session__actions {
@@ -231,7 +236,7 @@
 
 @media (max-width: 40rem) {
   .practice-session {
-    min-height: 100dvh;
+    --practice-action-panel-height: calc(9.5rem + env(safe-area-inset-bottom));
   }
 
   .practice-session__header {
@@ -247,11 +252,13 @@
   }
 
   .practice-session__exercise {
+    gap: 1rem;
     grid-template-columns: minmax(0, 1fr);
   }
 
   .practice-session__prompt {
     max-width: 14rem;
+    min-height: 10.75rem;
   }
 
   .practice-session__matching {
@@ -265,10 +272,6 @@
 
   .practice-session__actions-inner {
     padding: 1rem 1.25rem max(1rem, env(safe-area-inset-bottom));
-  }
-
-  .practice-session__action-slot {
-    height: 5.5rem;
   }
 }
 
