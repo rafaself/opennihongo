@@ -2,6 +2,7 @@ export {
   beginnerWordMatchingExercise,
   checkKanaAnswer,
   hiraganaToRomajiExercise,
+  hiraganaToRomajiTypedExercise,
   kanaBeginnerWords,
   kanaExercises,
   hiraganaVowels,
@@ -10,8 +11,10 @@ export {
   recordKanaAnswer,
   scoreKanaChoiceAnswer,
   scoreKanaMatchingAnswer,
+  scoreKanaTypedAnswer,
   validateKanaChoiceAnswer,
   validateKanaMatchingAnswer,
+  validateKanaTypedAnswer,
 } from "./kana/index";
 export type {
   KanaChoiceExercise,
@@ -21,6 +24,7 @@ export type {
   KanaMatchingExercise,
   KanaPairAnswer,
   KanaProgress,
+  KanaTypedAnswerExercise,
   KanaWord,
   KanaWordId,
 } from "./kana/index";

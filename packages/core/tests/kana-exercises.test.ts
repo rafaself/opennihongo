@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import {
   beginnerWordMatchingExercise,
   hiraganaToRomajiExercise,
+  hiraganaToRomajiTypedExercise,
   kanaBeginnerWords,
   kanaExercises,
   romajiToHiraganaExercise,
@@ -17,6 +18,8 @@ describe("curated beginner Kana exercises", () => {
       { id: "kana.word.soto", hiragana: "そと", romaji: "soto" },
       { id: "kana.word.hato", hiragana: "はと", romaji: "hato" },
       { id: "kana.word.sato", hiragana: "さと", romaji: "sato" },
+      { id: "kana.word.mimi", hiragana: "みみ", romaji: "mimi" },
+      { id: "kana.word.neko", hiragana: "ねこ", romaji: "neko" },
     ]);
     expect(hiraganaToRomajiExercise).toEqual({
       id: "kana.exercise.soto-to-romaji",
@@ -36,6 +39,12 @@ describe("curated beginner Kana exercises", () => {
       choices: ["そと", "はと", "さと"],
       answer: "そと",
     });
+    expect(hiraganaToRomajiTypedExercise).toEqual({
+      id: "kana.exercise.shibyura-to-romaji-typed",
+      kind: "typed-answer",
+      prompt: { script: "hiragana", text: "しびゅら" },
+      answer: "shibyura",
+    });
     expect(beginnerWordMatchingExercise).toEqual({
       id: "kana.exercise.beginner-word-matching",
       kind: "matching-pairs",
@@ -44,6 +53,7 @@ describe("curated beginner Kana exercises", () => {
     expect(kanaExercises).toEqual([
       hiraganaToRomajiExercise,
       romajiToHiraganaExercise,
+      hiraganaToRomajiTypedExercise,
       beginnerWordMatchingExercise,
     ]);
   });
@@ -80,6 +90,8 @@ describe("Kana pair-matching answer validation and scoring", () => {
     { romaji: "soto", hiragana: "そと" },
     { romaji: "hato", hiragana: "はと" },
     { romaji: "sato", hiragana: "さと" },
+    { romaji: "mimi", hiragana: "みみ" },
+    { romaji: "neko", hiragana: "ねこ" },
   ] as const;
 
   it("accepts all correct pairs in any order and scores each pair", () => {
@@ -90,7 +102,7 @@ describe("Kana pair-matching answer validation and scoring", () => {
     ).toBe(true);
     expect(
       scoreKanaMatchingAnswer(beginnerWordMatchingExercise, reversedAnswers),
-    ).toBe(3);
+    ).toBe(5);
   });
 
   it("normalizes answer text and awards partial credit only once per word", () => {

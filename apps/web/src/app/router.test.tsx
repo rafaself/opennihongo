@@ -37,6 +37,17 @@ describe("web application routes", () => {
 
     await screen.findByRole("heading", { name: "Learn the five vowels" });
     expect(document.title).toBe("Kana · OpenNihongo");
+    expect(
+      screen.queryByRole("navigation", { name: "Primary navigation" }),
+    ).toBeNull();
+    expect(screen.queryByRole("button", { name: "Open menu" })).toBeNull();
+    await user.click(screen.getByRole("link", { name: "Leave lesson" }));
+    await screen.findByRole("heading", {
+      name: "Make steady progress, one step at a time.",
+    });
+    expect(
+      screen.getByRole("navigation", { name: "Primary navigation" }),
+    ).toBeTruthy();
   });
 
   it("opens Practice and upcoming sections, with mobile menu dismissal", async () => {
@@ -66,12 +77,15 @@ describe("web application routes", () => {
     });
     expect(document.title).toBe("Practice · OpenNihongo");
     expect(
-      screen
-        .getByRole("button", { name: "Open menu" })
-        .getAttribute("aria-expanded"),
-    ).toBe("false");
+      screen.queryByRole("navigation", { name: "Primary navigation" }),
+    ).toBeNull();
+    expect(screen.queryByRole("button", { name: "Open menu" })).toBeNull();
     expect(document.activeElement).toBe(screen.getByRole("main"));
 
+    await user.click(screen.getByRole("link", { name: "Leave practice" }));
+    await screen.findByRole("heading", {
+      name: "Make steady progress, one step at a time.",
+    });
     await user.click(screen.getByRole("link", { name: /Progress/ }));
     await screen.findByRole("heading", { name: "Progress" });
     await user.click(screen.getByRole("link", { name: /Quests/ }));

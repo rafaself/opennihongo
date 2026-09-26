@@ -3,13 +3,19 @@ import {
   kanaExercises,
   scoreKanaChoiceAnswer,
   scoreKanaMatchingAnswer,
+  scoreKanaTypedAnswer,
   validateKanaChoiceAnswer,
-  type KanaMatchingExercise,
+  validateKanaTypedAnswer,
   type KanaPairAnswer,
 } from "@opennihongo/core";
 import { Button, Surface, Text } from "@opennihongo/ui";
+import { Icon } from "@opennihongo/ui/icons";
 import { useEffect, useState } from "react";
+import { MatchingExercise } from "./MatchingExercise";
+import { PracticeFeedback } from "./PracticeFeedback";
+import { PracticeResults } from "./PracticeResults";
 import { PronunciationButton } from "./PronunciationButton";
+import { TypedAnswerExercise } from "./TypedAnswerExercise";
 import "./practice.css";
 
 type Feedback = { correct: boolean; message: string };
@@ -23,17 +29,17 @@ const totalPoints = kanaExercises.reduce(
 export function PracticeView() {
   const [index, setIndex] = useState(0);
   const [selectedChoice, setSelectedChoice] = useState("");
-  const [selectedRomaji, setSelectedRomaji] = useState<string | null>(null);
-  const [selectedHiragana, setSelectedHiragana] = useState<string | null>(null);
+  const [typedAnswer, setTypedAnswer] = useState("");
   const [matchedPairs, setMatchedPairs] = useState<KanaPairAnswer[]>([]);
   const [feedback, setFeedback] = useState<Feedback | null>(null);
-  const [selectionMessage, setSelectionMessage] = useState("");
   const [score, setScore] = useState(0);
 
   const complete = index >= kanaExercises.length;
   // The tuple is non-empty and the session index only moves forward.
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion -- modulo always produces a tuple index
   const exercise = kanaExercises[index % kanaExercises.length]!;
+  const choiceExercise =
+    exercise.kind === "multiple-choice" ? exercise : undefined;
 
   useEffect(() => {
     if (complete) {
@@ -41,13 +47,53 @@ export function PracticeView() {
     }
   }, [complete]);
 
+  useEffect(() => {
+    if (!choiceExercise || feedback !== null) {
+      return;
+    }
+    const choices = choiceExercise.choices;
+
+    function handleKeyDown(event: KeyboardEvent) {
+      if (
+        event.repeat ||
+        event.altKey ||
+        event.ctrlKey ||
+        event.metaKey ||
+        event.defaultPrevented
+      ) {
+        return;
+      }
+
+      const target = event.target;
+      if (
+        target instanceof HTMLElement &&
+        (target.isContentEditable ||
+          target.closest("input, textarea, select, [contenteditable='true']"))
+      ) {
+        return;
+      }
+
+      const choiceIndex = Number(event.key) - 1;
+      const choice = choices[choiceIndex];
+      if (!choice) {
+        return;
+      }
+
+      event.preventDefault();
+      setSelectedChoice(choice);
+    }
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [choiceExercise, feedback]);
+
   function resetExerciseState() {
     setSelectedChoice("");
-    setSelectedRomaji(null);
-    setSelectedHiragana(null);
+    setTypedAnswer("");
     setMatchedPairs([]);
     setFeedback(null);
-    setSelectionMessage("");
   }
 
   function continuePractice() {
@@ -68,8 +114,22 @@ export function PracticeView() {
       setFeedback({
         correct,
         message: correct
-          ? "That’s right!"
+          ? "You chose the right answer."
           : `The correct answer is ${exercise.answer}.`,
+      });
+      return;
+    }
+
+    if (exercise.kind === "typed-answer") {
+      const correct = validateKanaTypedAnswer(exercise, typedAnswer);
+      setScore(
+        (current) => current + scoreKanaTypedAnswer(exercise, typedAnswer),
+      );
+      setFeedback({
+        correct,
+        message: correct
+          ? "Your reading is correct."
+          : `The correct reading is ${exercise.answer}.`,
       });
       return;
     }
@@ -79,52 +139,8 @@ export function PracticeView() {
     );
     setFeedback({
       correct: true,
-      message: "All pairs match!",
+      message: "All pairs matched.",
     });
-  }
-
-  function matchPair(
-    matchingExercise: KanaMatchingExercise,
-    romaji: string,
-    hiragana: string,
-  ) {
-    const pair = matchingExercise.pairs.find(
-      (candidate) =>
-        candidate.romaji === romaji && candidate.hiragana === hiragana,
-    );
-    if (pair) {
-      const nextPairs = [...matchedPairs, { romaji, hiragana }];
-      setMatchedPairs(nextPairs);
-      setSelectionMessage(`${romaji} matched with ${hiragana}.`);
-    } else {
-      setSelectionMessage("Those words do not match. Try a different pair.");
-    }
-    setSelectedRomaji(null);
-    setSelectedHiragana(null);
-  }
-
-  function selectRomaji(
-    matchingExercise: KanaMatchingExercise,
-    romaji: string,
-  ) {
-    if (selectedHiragana) {
-      matchPair(matchingExercise, romaji, selectedHiragana);
-    } else {
-      setSelectedRomaji(romaji);
-      setSelectionMessage("");
-    }
-  }
-
-  function selectHiragana(
-    matchingExercise: KanaMatchingExercise,
-    hiragana: string,
-  ) {
-    if (selectedRomaji) {
-      matchPair(matchingExercise, selectedRomaji, hiragana);
-    } else {
-      setSelectedHiragana(hiragana);
-      setSelectionMessage("");
-    }
   }
 
   function restartPractice() {
@@ -136,8 +152,74 @@ export function PracticeView() {
   const readyToCheck =
     exercise.kind === "multiple-choice"
       ? selectedChoice !== ""
-      : matchedPairs.length === exercise.pairs.length;
-  const progress = Math.round((index / kanaExercises.length) * 100);
+      : exercise.kind === "typed-answer"
+        ? typedAnswer.trim() !== ""
+        : matchedPairs.length === exercise.pairs.length;
+  const progress = Math.round(
+    ((index + Number(feedback !== null)) / kanaExercises.length) * 100,
+  );
+
+  useEffect(() => {
+    if (complete) {
+      return;
+    }
+
+    function handlePrimaryActionKeyDown(event: KeyboardEvent) {
+      if (
+        event.key !== "Enter" ||
+        event.repeat ||
+        event.altKey ||
+        event.ctrlKey ||
+        event.metaKey ||
+        event.isComposing ||
+        event.defaultPrevented
+      ) {
+        return;
+      }
+
+      const target = event.target;
+      if (!(target instanceof HTMLElement)) {
+        return;
+      }
+
+      if (
+        target.isContentEditable ||
+        target.closest(
+          "input, textarea, select, a[href], [contenteditable='true']",
+        )
+      ) {
+        return;
+      }
+
+      const focusedButton = target.closest("button");
+      const isAnswerOption = focusedButton?.matches(
+        ".practice-session__choice, .practice-session__match-option",
+      );
+      if (focusedButton && !isAnswerOption) {
+        return;
+      }
+
+      if (isAnswerOption && !feedback && !readyToCheck) {
+        return;
+      }
+
+      if (!feedback && !readyToCheck) {
+        return;
+      }
+
+      event.preventDefault();
+      if (feedback) {
+        continuePractice();
+      } else {
+        checkAnswer();
+      }
+    }
+
+    window.addEventListener("keydown", handlePrimaryActionKeyDown);
+    return () => {
+      window.removeEventListener("keydown", handlePrimaryActionKeyDown);
+    };
+  }, [checkAnswer, complete, continuePractice, feedback, readyToCheck]);
 
   return (
     <section
@@ -145,8 +227,13 @@ export function PracticeView() {
       className="practice-session"
     >
       <header className="practice-session__header">
-        <Link className="practice-session__exit" to="/">
-          Leave practice
+        <Link
+          aria-label="Leave practice"
+          className="practice-session__exit"
+          title="Leave practice"
+          to="/"
+        >
+          <Icon name="close" />
         </Link>
         <div
           aria-label="Practice progress"
@@ -166,189 +253,125 @@ export function PracticeView() {
         </span>
       </header>
 
-      <div className="practice-session__body">
-        {complete ? (
-          <Surface className="practice-session__complete" elevation="card">
-            <Text
-              as="h1"
-              id="practice-complete-title"
-              tabIndex={-1}
-              variant="display"
-            >
-              Practice complete
-            </Text>
-            <Text>
-              You matched {score} of {totalPoints} items correctly.
-            </Text>
-            <div className="practice-session__complete-actions">
-              <Button onClick={restartPractice}>Practice again</Button>
-              <Link className="ns-button" data-variant="secondary" to="/kana">
-                Learn more kana
-              </Link>
-            </div>
-          </Surface>
-        ) : exercise.kind === "multiple-choice" ? (
-          <div className="practice-session__question">
-            <Text color="secondary" variant="label">
-              Hiragana · Word practice
-            </Text>
-            <Text as="h1" id="practice-title" variant="display">
-              {exercise.direction === "hiragana-to-romaji"
-                ? "Which reading matches this word?"
-                : `Choose the characters for “${exercise.prompt.text}”.`}
-            </Text>
-            <div className="practice-session__exercise">
-              <Surface className="practice-session__prompt" elevation="card">
-                <Text
-                  className={
-                    exercise.prompt.script === "hiragana"
-                      ? "practice-session__prompt-kana"
-                      : "practice-session__prompt-romaji"
-                  }
-                >
-                  {exercise.prompt.text}
+      {complete ? (
+        <PracticeResults
+          score={score}
+          total={totalPoints}
+          onRestart={restartPractice}
+        />
+      ) : (
+        <>
+          <div className="practice-session__body">
+            {exercise.kind === "multiple-choice" ? (
+              <div className="practice-session__question">
+                <Text as="h1" id="practice-title" variant="display">
+                  {exercise.direction === "hiragana-to-romaji"
+                    ? "Which reading matches this word?"
+                    : `Choose the characters for “${exercise.prompt.text}”:`}
                 </Text>
-                {exercise.prompt.script === "hiragana" && (
-                  <PronunciationButton text={exercise.prompt.text} />
-                )}
-              </Surface>
-              <div
-                aria-label="Answer choices"
-                className="practice-session__choices"
-                role="group"
-              >
-                {exercise.choices.map((choice, choiceIndex) => (
-                  <Button
-                    aria-pressed={selectedChoice === choice}
-                    className="practice-session__choice"
-                    data-selected={selectedChoice === choice}
-                    disabled={feedback !== null}
-                    key={choice}
-                    onClick={() => {
-                      setSelectedChoice(choice);
-                    }}
-                    variant="secondary"
+                <div className="practice-session__exercise">
+                  <Surface
+                    className="practice-session__prompt"
+                    elevation="card"
                   >
-                    <span
-                      aria-hidden="true"
-                      className="practice-session__choice-number"
+                    <Text
+                      className={
+                        exercise.prompt.script === "hiragana"
+                          ? "practice-session__prompt-kana"
+                          : "practice-session__prompt-romaji"
+                      }
                     >
-                      {choiceIndex + 1}
-                    </span>
-                    <span>{choice}</span>
+                      {exercise.prompt.text}
+                    </Text>
+                    {exercise.prompt.script === "hiragana" && (
+                      <PronunciationButton text={exercise.prompt.text} />
+                    )}
+                  </Surface>
+                  <div
+                    aria-label="Answer choices"
+                    className="practice-session__choices"
+                    role="group"
+                  >
+                    {exercise.choices.map((choice, choiceIndex) => (
+                      <Button
+                        aria-keyshortcuts={String(choiceIndex + 1)}
+                        aria-pressed={selectedChoice === choice}
+                        className="practice-session__choice"
+                        data-selected={selectedChoice === choice}
+                        disabled={feedback !== null}
+                        key={choice}
+                        onClick={() => {
+                          setSelectedChoice(choice);
+                        }}
+                        variant="secondary"
+                      >
+                        <span
+                          aria-hidden="true"
+                          className="practice-session__choice-number"
+                        >
+                          {choiceIndex + 1}
+                        </span>
+                        <span>{choice}</span>
+                      </Button>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            ) : exercise.kind === "typed-answer" ? (
+              <div className="practice-session__question">
+                <Text as="h1" id="practice-title" variant="display">
+                  What is the corresponding sound?
+                </Text>
+                <TypedAnswerExercise
+                  disabled={feedback !== null}
+                  exercise={exercise}
+                  onChange={setTypedAnswer}
+                  onSubmit={() => {
+                    if (readyToCheck) {
+                      checkAnswer();
+                    }
+                  }}
+                  value={typedAnswer}
+                />
+              </div>
+            ) : (
+              <div className="practice-session__question">
+                <Text as="h1" id="practice-title" variant="display">
+                  Match the pairs:
+                </Text>
+                <MatchingExercise
+                  disabled={feedback !== null}
+                  exercise={exercise}
+                  matchedPairs={matchedPairs}
+                  onPairMatched={(pair) => {
+                    setMatchedPairs((current) => [...current, pair]);
+                  }}
+                />
+              </div>
+            )}
+          </div>
+          <div className="practice-session__action-slot">
+            {feedback ? (
+              <PracticeFeedback
+                correct={feedback.correct}
+                finalExercise={index === kanaExercises.length - 1}
+                message={feedback.message}
+                onContinue={continuePractice}
+              />
+            ) : (
+              <footer className="practice-session__actions">
+                <div className="practice-session__actions-inner">
+                  <Button onClick={skipExercise} variant="secondary">
+                    Skip
                   </Button>
-                ))}
-              </div>
-            </div>
+                  <Button disabled={!readyToCheck} onClick={checkAnswer}>
+                    Check answer
+                  </Button>
+                </div>
+              </footer>
+            )}
           </div>
-        ) : (
-          <div className="practice-session__question">
-            <Text color="secondary" variant="label">
-              Hiragana · Word practice
-            </Text>
-            <Text as="h1" id="practice-title" variant="display">
-              Match each reading with its hiragana word.
-            </Text>
-            <div className="practice-session__matching">
-              <div
-                aria-label="Romaji readings"
-                className="practice-session__match-column"
-              >
-                <Text as="h2" variant="label">
-                  Romaji
-                </Text>
-                {exercise.pairs.map(({ id, romaji }) => {
-                  const matched = matchedPairs.some(
-                    (pair) => pair.romaji === romaji,
-                  );
-                  return (
-                    <Button
-                      aria-pressed={selectedRomaji === romaji}
-                      className="practice-session__match-option"
-                      data-matched={matched}
-                      data-selected={selectedRomaji === romaji}
-                      disabled={matched || feedback !== null}
-                      key={id}
-                      onClick={() => {
-                        selectRomaji(exercise, romaji);
-                      }}
-                      variant="secondary"
-                    >
-                      {romaji}
-                    </Button>
-                  );
-                })}
-              </div>
-              <div
-                aria-label="Hiragana words"
-                className="practice-session__match-column"
-              >
-                <Text as="h2" variant="label">
-                  Hiragana
-                </Text>
-                {[...exercise.pairs].reverse().map(({ id, hiragana }) => {
-                  const matched = matchedPairs.some(
-                    (pair) => pair.hiragana === hiragana,
-                  );
-                  return (
-                    <Button
-                      aria-pressed={selectedHiragana === hiragana}
-                      className="practice-session__match-option practice-session__match-option--kana"
-                      data-matched={matched}
-                      data-selected={selectedHiragana === hiragana}
-                      disabled={matched || feedback !== null}
-                      key={id}
-                      onClick={() => {
-                        selectHiragana(exercise, hiragana);
-                      }}
-                      variant="secondary"
-                    >
-                      {hiragana}
-                    </Button>
-                  );
-                })}
-              </div>
-            </div>
-            <p aria-live="polite" className="practice-session__match-status">
-              {selectionMessage ||
-                `${String(matchedPairs.length)} of ${String(exercise.pairs.length)} pairs matched`}
-            </p>
-          </div>
-        )}
-      </div>
-
-      {!complete && (
-        <footer className="practice-session__actions">
-          {feedback ? (
-            <>
-              <p
-                aria-live="polite"
-                className={
-                  feedback.correct
-                    ? "practice-session__feedback practice-session__feedback--correct"
-                    : "practice-session__feedback practice-session__feedback--incorrect"
-                }
-                role="status"
-              >
-                {feedback.message}
-              </p>
-              <Button onClick={continuePractice}>
-                {index === kanaExercises.length - 1
-                  ? "See results"
-                  : "Continue"}
-              </Button>
-            </>
-          ) : (
-            <>
-              <Button onClick={skipExercise} variant="secondary">
-                Skip
-              </Button>
-              <Button disabled={!readyToCheck} onClick={checkAnswer}>
-                Check answer
-              </Button>
-            </>
-          )}
-        </footer>
+        </>
       )}
     </section>
   );

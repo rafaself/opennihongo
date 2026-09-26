@@ -3,6 +3,7 @@ import type {
   KanaChoiceExercise,
   KanaMatchingExercise,
   KanaPairAnswer,
+  KanaTypedAnswerExercise,
 } from "./types";
 
 export function validateKanaChoiceAnswer(
@@ -25,6 +26,20 @@ export function scoreKanaChoiceAnswer(
   answer: string,
 ): number {
   return validateKanaChoiceAnswer(exercise, answer) ? 1 : 0;
+}
+
+export function validateKanaTypedAnswer(
+  exercise: KanaTypedAnswerExercise,
+  answer: string,
+): boolean {
+  return normalizeKanaAnswer(answer) === normalizeKanaAnswer(exercise.answer);
+}
+
+export function scoreKanaTypedAnswer(
+  exercise: KanaTypedAnswerExercise,
+  answer: string,
+): number {
+  return validateKanaTypedAnswer(exercise, answer) ? 1 : 0;
 }
 
 export function scoreKanaMatchingAnswer(

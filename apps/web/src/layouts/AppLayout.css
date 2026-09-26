@@ -146,6 +146,34 @@
   text-align: center;
 }
 
+.app-shell--lesson {
+  display: block;
+  min-height: 100dvh;
+}
+
+.app-shell--lesson .app-shell__body {
+  min-height: 100dvh;
+}
+
+.app-shell--lesson .app-shell__main {
+  max-width: none;
+  padding: 0;
+}
+
+.app-shell__lesson-exit {
+  align-self: flex-start;
+  color: var(--ns-color-text-secondary);
+  font-size: var(--ns-text-button-size);
+  font-weight: var(--ns-text-button-weight);
+  margin: 1.5rem max(1.25rem, calc((100vw - 72rem) / 2));
+  text-decoration: none;
+}
+
+.app-shell__lesson-exit:focus-visible {
+  outline: var(--ns-border-width-focus) solid var(--ns-color-focus);
+  outline-offset: 3px;
+}
+
 .app-mobile-header {
   display: none;
 }

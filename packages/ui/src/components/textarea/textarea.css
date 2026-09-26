@@ -42,10 +42,12 @@
   resize: none;
 }
 
-.ns-textarea:focus-visible {
-  outline: var(--ns-border-width-focus) var(--ns-border-style-solid)
-    var(--ns-color-focus);
-  outline-offset: 2px;
+.ns-textarea:focus {
+  background-color: var(--ns-color-feedback-info-surface);
+  border-color: var(--ns-color-feedback-info);
+  box-shadow: inset 0 0 0 var(--ns-border-width-emphasis)
+    var(--ns-color-feedback-info);
+  outline: none;
 }
 
 .ns-textarea[aria-invalid="true"] {
@@ -57,5 +59,15 @@
   border-color: var(--ns-color-border);
   box-shadow: var(--ns-elevation-none);
   color: var(--ns-color-text-secondary);
-  cursor: not-allowed;
+  cursor: default;
+}
+
+@media (forced-colors: active) {
+  .ns-textarea:focus {
+    background-color: Field;
+    border-color: Highlight;
+    box-shadow: none;
+    outline: 2px solid Highlight;
+    outline-offset: -2px;
+  }
 }

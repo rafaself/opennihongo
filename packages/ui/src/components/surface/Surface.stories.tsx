@@ -28,6 +28,13 @@ export const Raised: Story = {
   },
 };
 
+export const Highlighted: Story = {
+  args: {
+    variant: "highlighted",
+    elevation: "card",
+  },
+};
+
 export const InteractiveContent: Story = {
   args: {
     elevation: "interactive",
