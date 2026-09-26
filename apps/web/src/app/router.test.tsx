@@ -107,4 +107,36 @@ describe("web application routes", () => {
       screen.getByRole("link", { name: "Back to Learn" }).getAttribute("href"),
     ).toBe("/");
   });
+
+  it("shows pronunciation voice attribution and license links in the app", async () => {
+    const user = userEvent.setup();
+    await renderHome();
+
+    await user.click(
+      screen.getByRole("link", { name: "Acknowledgements & licenses" }),
+    );
+
+    await screen.findByRole("heading", { name: "Pronunciation audio" });
+    screen.getByText(/VOICEVOX Nemo Engine using VOICEVOX Nemo/);
+    screen.getByText("VOICEVOX Nemo", { selector: "strong" });
+    screen.getByText(/女声1 \/ ノーマル \(style ID 10005\)/);
+    expect(
+      screen
+        .getByRole("link", { name: "VOICEVOX Nemo terms" })
+        .getAttribute("href"),
+    ).toBe("https://voicevox.hiroshiba.jp/nemo/term/");
+    expect(
+      screen
+        .getByRole("link", { name: "VOICEVOX software terms" })
+        .getAttribute("href"),
+    ).toBe("https://voicevox.hiroshiba.jp/term/");
+    expect(
+      screen
+        .getByRole("link", { name: "VOICEVOX Nemo Engine license" })
+        .getAttribute("href"),
+    ).toBe(
+      "https://github.com/VOICEVOX/voicevox_nemo_engine/blob/master/LICENSE",
+    );
+    screen.getByRole("link", { name: "LGPL v3 text" });
+  });
 });

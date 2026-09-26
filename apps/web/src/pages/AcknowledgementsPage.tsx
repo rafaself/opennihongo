@@ -63,6 +63,59 @@ export function AcknowledgementsPage() {
 
             <Divider decorative />
 
+            <section aria-labelledby="pronunciation-audio-title">
+              <Stack gap="3">
+                <Text id="pronunciation-audio-title" variant="heading">
+                  Pronunciation audio
+                </Text>
+                <Text>
+                  Our pronunciation audio is generated with VOICEVOX Nemo Engine
+                  using VOICEVOX Nemo, 女声1 / ノーマル (style ID 10005). The
+                  required voice credit is <strong>VOICEVOX Nemo</strong>.
+                </Text>
+                <Text>
+                  The{" "}
+                  <a
+                    className="font-bold text-brand-text underline"
+                    href="https://voicevox.hiroshiba.jp/nemo/term/"
+                  >
+                    VOICEVOX Nemo terms
+                  </a>{" "}
+                  permit commercial and non-commercial use of generated audio
+                  with credit and list additional conditions. The{" "}
+                  <a
+                    className="font-bold text-brand-text underline"
+                    href="https://voicevox.hiroshiba.jp/term/"
+                  >
+                    VOICEVOX software terms
+                  </a>{" "}
+                  also require a credit identifying VOICEVOX and compliance with
+                  the selected voice library&apos;s terms.
+                </Text>
+                <Text>
+                  The engine is used to generate assets and is not included in
+                  the application. Its source project offers the engine under
+                  LGPL v3 or a separate license by request. See the{" "}
+                  <a
+                    className="font-bold text-brand-text underline"
+                    href="https://github.com/VOICEVOX/voicevox_nemo_engine/blob/master/LICENSE"
+                  >
+                    VOICEVOX Nemo Engine license
+                  </a>{" "}
+                  and its{" "}
+                  <a
+                    className="font-bold text-brand-text underline"
+                    href="https://github.com/VOICEVOX/voicevox_nemo_engine/blob/master/LGPL_LICENSE"
+                  >
+                    LGPL v3 text
+                  </a>
+                  .
+                </Text>
+              </Stack>
+            </section>
+
+            <Divider decorative />
+
             <section aria-labelledby="dependency-policy-title">
               <Stack gap="2">
                 <Text id="dependency-policy-title" variant="heading">
