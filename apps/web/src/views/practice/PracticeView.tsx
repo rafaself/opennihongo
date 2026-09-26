@@ -3,7 +3,9 @@ import {
   kanaExercises,
   scoreKanaChoiceAnswer,
   scoreKanaMatchingAnswer,
+  scoreKanaTypedAnswer,
   validateKanaChoiceAnswer,
+  validateKanaTypedAnswer,
   type KanaMatchingExercise,
   type KanaPairAnswer,
 } from "@opennihongo/core";
@@ -13,6 +15,7 @@ import { useEffect, useState } from "react";
 import { PracticeFeedback } from "./PracticeFeedback";
 import { PracticeResults } from "./PracticeResults";
 import { PronunciationButton } from "./PronunciationButton";
+import { TypedAnswerExercise } from "./TypedAnswerExercise";
 import "./practice.css";
 
 type Feedback = { correct: boolean; message: string };
@@ -26,6 +29,7 @@ const totalPoints = kanaExercises.reduce(
 export function PracticeView() {
   const [index, setIndex] = useState(0);
   const [selectedChoice, setSelectedChoice] = useState("");
+  const [typedAnswer, setTypedAnswer] = useState("");
   const [selectedRomaji, setSelectedRomaji] = useState<string | null>(null);
   const [selectedHiragana, setSelectedHiragana] = useState<string | null>(null);
   const [matchedPairs, setMatchedPairs] = useState<KanaPairAnswer[]>([]);
@@ -46,6 +50,7 @@ export function PracticeView() {
 
   function resetExerciseState() {
     setSelectedChoice("");
+    setTypedAnswer("");
     setSelectedRomaji(null);
     setSelectedHiragana(null);
     setMatchedPairs([]);
@@ -73,6 +78,20 @@ export function PracticeView() {
         message: correct
           ? "You chose the right answer."
           : `The correct answer is ${exercise.answer}.`,
+      });
+      return;
+    }
+
+    if (exercise.kind === "typed-answer") {
+      const correct = validateKanaTypedAnswer(exercise, typedAnswer);
+      setScore(
+        (current) => current + scoreKanaTypedAnswer(exercise, typedAnswer),
+      );
+      setFeedback({
+        correct,
+        message: correct
+          ? "Your reading is correct."
+          : `The correct reading is ${exercise.answer}.`,
       });
       return;
     }
@@ -139,7 +158,9 @@ export function PracticeView() {
   const readyToCheck =
     exercise.kind === "multiple-choice"
       ? selectedChoice !== ""
-      : matchedPairs.length === exercise.pairs.length;
+      : exercise.kind === "typed-answer"
+        ? typedAnswer.trim() !== ""
+        : matchedPairs.length === exercise.pairs.length;
   const progress = Math.round(
     ((index + Number(feedback !== null)) / kanaExercises.length) * 100,
   );
@@ -190,7 +211,7 @@ export function PracticeView() {
                 <Text as="h1" id="practice-title" variant="display">
                   {exercise.direction === "hiragana-to-romaji"
                     ? "Which reading matches this word?"
-                    : `Choose the characters for “${exercise.prompt.text}”.`}
+                    : `Choose the characters for “${exercise.prompt.text}”:`}
                 </Text>
                 <div className="practice-session__exercise">
                   <Surface
@@ -238,6 +259,18 @@ export function PracticeView() {
                     ))}
                   </div>
                 </div>
+              </div>
+            ) : exercise.kind === "typed-answer" ? (
+              <div className="practice-session__question">
+                <Text as="h1" id="practice-title" variant="display">
+                  What is the corresponding sound?
+                </Text>
+                <TypedAnswerExercise
+                  disabled={feedback !== null}
+                  exercise={exercise}
+                  onChange={setTypedAnswer}
+                  value={typedAnswer}
+                />
               </div>
             ) : (
               <div className="practice-session__question">

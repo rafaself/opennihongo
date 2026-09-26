@@ -124,10 +124,18 @@
   white-space: nowrap;
 }
 
+.practice-session__prompt-kana--compact {
+  font-size: clamp(2.25rem, 5vw, 3rem);
+}
+
 .practice-session__prompt-romaji {
   font-size: clamp(2.25rem, 6vw, 3.25rem);
   font-weight: 700;
   line-height: 1;
+}
+
+.practice-session__typed-answer {
+  max-width: 22.5rem;
 }
 
 .practice-session__audio {

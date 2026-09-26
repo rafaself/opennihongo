@@ -3,6 +3,7 @@ import type {
   KanaChoiceExercise,
   KanaExercise,
   KanaMatchingExercise,
+  KanaTypedAnswerExercise,
 } from "./types";
 
 export const hiraganaToRomajiExercise = {
@@ -25,6 +26,13 @@ export const romajiToHiraganaExercise = {
   answer: "そと",
 } as const satisfies KanaChoiceExercise;
 
+export const hiraganaToRomajiTypedExercise = {
+  id: "kana.exercise.shibyura-to-romaji-typed",
+  kind: "typed-answer",
+  prompt: { script: "hiragana", text: "しびゅら" },
+  answer: "shibyura",
+} as const satisfies KanaTypedAnswerExercise;
+
 export const beginnerWordMatchingExercise = {
   id: "kana.exercise.beginner-word-matching",
   kind: "matching-pairs",
@@ -34,5 +42,6 @@ export const beginnerWordMatchingExercise = {
 export const kanaExercises = [
   hiraganaToRomajiExercise,
   romajiToHiraganaExercise,
+  hiraganaToRomajiTypedExercise,
   beginnerWordMatchingExercise,
 ] as const satisfies readonly KanaExercise[];

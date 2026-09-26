@@ -36,13 +36,21 @@ export type KanaChoiceExercise = Readonly<{
   answer: string;
 }>;
 
+export type KanaTypedAnswerExercise = Readonly<{
+  id: string;
+  kind: "typed-answer";
+  prompt: Readonly<{ script: "hiragana"; text: string }>;
+  answer: string;
+}>;
+
 export type KanaMatchingExercise = Readonly<{
   id: string;
   kind: "matching-pairs";
   pairs: readonly KanaWord[];
 }>;
 
-export type KanaExercise = KanaChoiceExercise | KanaMatchingExercise;
+export type KanaExercise =
+  KanaChoiceExercise | KanaTypedAnswerExercise | KanaMatchingExercise;
 
 export type KanaPairAnswer = Readonly<{
   romaji: string;

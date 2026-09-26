@@ -19,7 +19,7 @@ afterEach(() => {
 });
 
 describe("PracticeView", () => {
-  it("runs reading, kana choice, and matching exercises", async () => {
+  it("runs reading, kana choice, typed reading, and matching exercises", async () => {
     const user = userEvent.setup();
     const cancel = vi.fn();
     const speak = vi.fn();
@@ -51,13 +51,26 @@ describe("PracticeView", () => {
     await user.click(screen.getByRole("button", { name: "Continue" }));
 
     await screen.findByRole("heading", {
-      name: "Choose the characters for “soto”.",
+      name: "Choose the characters for “soto”:",
     });
     await user.click(screen.getByRole("button", { name: "はと" }));
     await user.click(screen.getByRole("button", { name: "Check answer" }));
     expect(screen.getByRole("status").textContent).toContain(
       "The correct answer is そと.",
     );
+    await user.click(screen.getByRole("button", { name: "Continue" }));
+
+    await screen.findByRole("heading", {
+      name: "What is the corresponding sound?",
+    });
+    await user.type(
+      screen.getByRole("textbox", {
+        name: "Type the romaji reading for しびゅら",
+      }),
+      "SHIBYURA",
+    );
+    await user.click(screen.getByRole("button", { name: "Check answer" }));
+    expect(screen.getByRole("status").textContent).toContain("That’s right!");
     await user.click(screen.getByRole("button", { name: "Continue" }));
 
     await screen.findByRole("heading", {
@@ -84,8 +97,8 @@ describe("PracticeView", () => {
       name: "Practice complete!",
     });
     expect(document.activeElement).toBe(resultsHeading);
-    expect(screen.getByText("4 / 5")).toBeTruthy();
-    expect(screen.getByText("80%")).toBeTruthy();
+    expect(screen.getByText("5 / 6")).toBeTruthy();
+    expect(screen.getByText("83%")).toBeTruthy();
 
     await user.click(screen.getByRole("button", { name: "Practice again" }));
     await screen.findByRole("heading", {
@@ -105,7 +118,11 @@ describe("PracticeView", () => {
 
     await user.click(screen.getByRole("button", { name: "Skip" }));
     await screen.findByRole("heading", {
-      name: "Choose the characters for “soto”.",
+      name: "Choose the characters for “soto”:",
+    });
+    await user.click(screen.getByRole("button", { name: "Skip" }));
+    await screen.findByRole("heading", {
+      name: "What is the corresponding sound?",
     });
     await user.click(screen.getByRole("button", { name: "Skip" }));
     await screen.findByRole("heading", {
@@ -113,7 +130,7 @@ describe("PracticeView", () => {
     });
     await user.click(screen.getByRole("button", { name: "Skip" }));
     await screen.findByRole("heading", { name: "Practice complete!" });
-    expect(screen.getByText("0 / 5")).toBeTruthy();
+    expect(screen.getByText("0 / 6")).toBeTruthy();
     expect(screen.getByText("0%")).toBeTruthy();
   });
 
@@ -124,6 +141,14 @@ describe("PracticeView", () => {
     await user.click(screen.getByRole("button", { name: "Check answer" }));
     await user.click(screen.getByRole("button", { name: "Continue" }));
     await user.click(screen.getByRole("button", { name: "そと" }));
+    await user.click(screen.getByRole("button", { name: "Check answer" }));
+    await user.click(screen.getByRole("button", { name: "Continue" }));
+    await user.type(
+      screen.getByRole("textbox", {
+        name: "Type the romaji reading for しびゅら",
+      }),
+      "shibyura",
+    );
     await user.click(screen.getByRole("button", { name: "Check answer" }));
     await user.click(screen.getByRole("button", { name: "Continue" }));
     for (const [romaji, hiragana] of [
@@ -138,7 +163,7 @@ describe("PracticeView", () => {
     await user.click(screen.getByRole("button", { name: "See results" }));
 
     await screen.findByRole("heading", { name: "Perfect practice!" });
-    expect(screen.getByText("5 / 5")).toBeTruthy();
+    expect(screen.getByText("6 / 6")).toBeTruthy();
     expect(screen.getByText("100%")).toBeTruthy();
   });
 });

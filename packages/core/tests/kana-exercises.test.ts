@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import {
   beginnerWordMatchingExercise,
   hiraganaToRomajiExercise,
+  hiraganaToRomajiTypedExercise,
   kanaBeginnerWords,
   kanaExercises,
   romajiToHiraganaExercise,
@@ -36,6 +37,12 @@ describe("curated beginner Kana exercises", () => {
       choices: ["そと", "はと", "さと"],
       answer: "そと",
     });
+    expect(hiraganaToRomajiTypedExercise).toEqual({
+      id: "kana.exercise.shibyura-to-romaji-typed",
+      kind: "typed-answer",
+      prompt: { script: "hiragana", text: "しびゅら" },
+      answer: "shibyura",
+    });
     expect(beginnerWordMatchingExercise).toEqual({
       id: "kana.exercise.beginner-word-matching",
       kind: "matching-pairs",
@@ -44,6 +51,7 @@ describe("curated beginner Kana exercises", () => {
     expect(kanaExercises).toEqual([
       hiraganaToRomajiExercise,
       romajiToHiraganaExercise,
+      hiraganaToRomajiTypedExercise,
       beginnerWordMatchingExercise,
     ]);
   });
