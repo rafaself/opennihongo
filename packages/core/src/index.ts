@@ -17,6 +17,7 @@ export {
   validateKanaTypedAnswer,
 } from "./kana/index";
 export type {
+  KanaAudioId,
   KanaChoiceExercise,
   KanaExercise,
   KanaId,

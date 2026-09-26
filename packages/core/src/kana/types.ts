@@ -31,28 +31,40 @@ export type KanaWord = Readonly<{
   romaji: string;
 }>;
 
-export type KanaChoiceExercise = Readonly<{
-  id: string;
-  kind: "multiple-choice";
-  direction: "hiragana-to-romaji" | "romaji-to-hiragana";
-  wordId: KanaWordId;
-  prompt: Readonly<{ script: "hiragana" | "romaji"; text: string }>;
-  choices: readonly string[];
-  answer: string;
+export type KanaAudioId = KanaId | KanaWordId;
+
+type KanaExerciseAudio = Readonly<{
+  audioIds: readonly KanaAudioId[];
 }>;
 
-export type KanaTypedAnswerExercise = Readonly<{
-  id: string;
-  kind: "typed-answer";
-  prompt: Readonly<{ script: "hiragana"; text: string }>;
-  answer: string;
-}>;
+export type KanaChoiceExercise = Readonly<
+  KanaExerciseAudio & {
+    id: string;
+    kind: "multiple-choice";
+    direction: "hiragana-to-romaji" | "romaji-to-hiragana";
+    wordId: KanaWordId;
+    prompt: Readonly<{ script: "hiragana" | "romaji"; text: string }>;
+    choices: readonly string[];
+    answer: string;
+  }
+>;
 
-export type KanaMatchingExercise = Readonly<{
-  id: string;
-  kind: "matching-pairs";
-  pairs: readonly KanaWord[];
-}>;
+export type KanaTypedAnswerExercise = Readonly<
+  KanaExerciseAudio & {
+    id: string;
+    kind: "typed-answer";
+    prompt: Readonly<{ script: "hiragana"; text: string }>;
+    answer: string;
+  }
+>;
+
+export type KanaMatchingExercise = Readonly<
+  KanaExerciseAudio & {
+    id: string;
+    kind: "matching-pairs";
+    pairs: readonly KanaWord[];
+  }
+>;
 
 export type KanaExercise =
   KanaChoiceExercise | KanaTypedAnswerExercise | KanaMatchingExercise;

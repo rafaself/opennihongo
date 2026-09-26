@@ -8,14 +8,13 @@ import {
   validateKanaTypedAnswer,
   type KanaPairAnswer,
 } from "@opennihongo/core";
-import { Button, Surface, Text } from "@opennihongo/ui";
+import { Button } from "@opennihongo/ui";
 import { Icon } from "@opennihongo/ui/icons";
 import { useEffect, useState } from "react";
-import { MatchingExercise } from "./MatchingExercise";
 import { PracticeFeedback } from "./PracticeFeedback";
+import { PracticeExerciseContent } from "./PracticeExerciseContent";
 import { PracticeResults } from "./PracticeResults";
-import { PronunciationButton } from "./PronunciationButton";
-import { TypedAnswerExercise } from "./TypedAnswerExercise";
+import { useExerciseAudio } from "./audio/useExerciseAudio";
 import "./practice.css";
 
 type Feedback = { correct: boolean; message: string };
@@ -28,6 +27,7 @@ const totalPoints = kanaExercises.reduce(
 
 export function PracticeView() {
   const [index, setIndex] = useState(0);
+  const [sessionId, setSessionId] = useState(0);
   const [selectedChoice, setSelectedChoice] = useState("");
   const [typedAnswer, setTypedAnswer] = useState("");
   const [matchedPairs, setMatchedPairs] = useState<KanaPairAnswer[]>([]);
@@ -40,7 +40,11 @@ export function PracticeView() {
   const exercise = kanaExercises[index % kanaExercises.length]!;
   const choiceExercise =
     exercise.kind === "multiple-choice" ? exercise : undefined;
-
+  const exerciseAudio = useExerciseAudio(
+    exercise.audioIds,
+    `${String(sessionId)}:${exercise.id}`,
+    !complete,
+  );
   useEffect(() => {
     if (complete) {
       document.getElementById("practice-complete-title")?.focus();
@@ -146,6 +150,7 @@ export function PracticeView() {
   function restartPractice() {
     setScore(0);
     setIndex(0);
+    setSessionId((current) => current + 1);
     resetExerciseState();
   }
 
@@ -223,7 +228,16 @@ export function PracticeView() {
 
   return (
     <section
-      aria-labelledby={complete ? "practice-complete-title" : "practice-title"}
+      aria-label={
+        !complete && !exerciseAudio.isReady ? "Practice session" : undefined
+      }
+      aria-labelledby={
+        complete
+          ? "practice-complete-title"
+          : exerciseAudio.isReady
+            ? "practice-title"
+            : undefined
+      }
       className="practice-session"
     >
       <header className="practice-session__header">
@@ -259,96 +273,34 @@ export function PracticeView() {
           total={totalPoints}
           onRestart={restartPractice}
         />
+      ) : !exerciseAudio.isReady ? (
+        <div className="practice-session__body">
+          <div className="practice-session__audio-loading" role="status">
+            Preparing pronunciation audio…
+          </div>
+        </div>
       ) : (
         <>
           <div className="practice-session__body">
-            {exercise.kind === "multiple-choice" ? (
-              <div className="practice-session__question">
-                <Text as="h1" id="practice-title" variant="display">
-                  {exercise.direction === "hiragana-to-romaji"
-                    ? "Which reading matches this word?"
-                    : `Choose the characters for “${exercise.prompt.text}”:`}
-                </Text>
-                <div className="practice-session__exercise">
-                  <Surface
-                    className="practice-session__prompt"
-                    elevation="card"
-                  >
-                    <Text
-                      className={
-                        exercise.prompt.script === "hiragana"
-                          ? "practice-session__prompt-kana"
-                          : "practice-session__prompt-romaji"
-                      }
-                    >
-                      {exercise.prompt.text}
-                    </Text>
-                    {exercise.prompt.script === "hiragana" && (
-                      <PronunciationButton text={exercise.prompt.text} />
-                    )}
-                  </Surface>
-                  <div
-                    aria-label="Answer choices"
-                    className="practice-session__choices"
-                    role="group"
-                  >
-                    {exercise.choices.map((choice, choiceIndex) => (
-                      <Button
-                        aria-keyshortcuts={String(choiceIndex + 1)}
-                        aria-pressed={selectedChoice === choice}
-                        className="practice-session__choice"
-                        data-selected={selectedChoice === choice}
-                        disabled={feedback !== null}
-                        key={choice}
-                        onClick={() => {
-                          setSelectedChoice(choice);
-                        }}
-                        variant="secondary"
-                      >
-                        <span
-                          aria-hidden="true"
-                          className="practice-session__choice-number"
-                        >
-                          {choiceIndex + 1}
-                        </span>
-                        <span>{choice}</span>
-                      </Button>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            ) : exercise.kind === "typed-answer" ? (
-              <div className="practice-session__question">
-                <Text as="h1" id="practice-title" variant="display">
-                  What is the corresponding sound?
-                </Text>
-                <TypedAnswerExercise
-                  disabled={feedback !== null}
-                  exercise={exercise}
-                  onChange={setTypedAnswer}
-                  onSubmit={() => {
-                    if (readyToCheck) {
-                      checkAnswer();
-                    }
-                  }}
-                  value={typedAnswer}
-                />
-              </div>
-            ) : (
-              <div className="practice-session__question">
-                <Text as="h1" id="practice-title" variant="display">
-                  Match the pairs:
-                </Text>
-                <MatchingExercise
-                  disabled={feedback !== null}
-                  exercise={exercise}
-                  matchedPairs={matchedPairs}
-                  onPairMatched={(pair) => {
-                    setMatchedPairs((current) => [...current, pair]);
-                  }}
-                />
-              </div>
-            )}
+            <PracticeExerciseContent
+              disabled={feedback !== null}
+              exercise={exercise}
+              loadedAudioIds={exerciseAudio.loadedAudioIds}
+              matchedPairs={matchedPairs}
+              onChoiceSelected={setSelectedChoice}
+              onPairMatched={(pair) => {
+                setMatchedPairs((current) => [...current, pair]);
+              }}
+              onPlayAudio={exerciseAudio.playAudio}
+              onTypedAnswerChanged={setTypedAnswer}
+              onTypedAnswerSubmit={() => {
+                if (readyToCheck) {
+                  checkAnswer();
+                }
+              }}
+              selectedChoice={selectedChoice}
+              typedAnswer={typedAnswer}
+            />
           </div>
           <div className="practice-session__action-slot">
             {feedback ? (

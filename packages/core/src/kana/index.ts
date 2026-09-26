@@ -18,6 +18,7 @@ export { hiraganaVowels } from "./items";
 export { recordKanaAnswer } from "./progress";
 export { kanaBeginnerWords } from "./words";
 export type {
+  KanaAudioId,
   KanaChoiceExercise,
   KanaExercise,
   KanaId,

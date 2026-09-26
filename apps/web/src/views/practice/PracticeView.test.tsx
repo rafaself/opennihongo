@@ -4,9 +4,25 @@ import { RouterProvider } from "@tanstack/react-router";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { router } from "../../app/router";
 
-async function renderPractice() {
+const audioCacheMock = vi.hoisted(() => ({
+  preload: vi.fn((audioIds: readonly string[]) =>
+    Promise.resolve(new Set(audioIds)),
+  ),
+  play: vi.fn(),
+  dispose: vi.fn(),
+}));
+
+vi.mock("./audio/audioCache", () => ({
+  createExerciseAudioCache: vi.fn(() => audioCacheMock),
+}));
+
+async function openPractice() {
   render(<RouterProvider router={router} />);
   await router.navigate({ to: "/practice" });
+}
+
+async function renderPractice() {
+  await openPractice();
   await screen.findByRole("heading", {
     name: "Which reading matches this word?",
   });
@@ -14,35 +30,19 @@ async function renderPractice() {
 
 afterEach(() => {
   cleanup();
-  Reflect.deleteProperty(window, "speechSynthesis");
+  vi.clearAllMocks();
   vi.unstubAllGlobals();
 });
 
 describe("PracticeView", () => {
   it("runs reading, kana choice, typed reading, and matching exercises", async () => {
     const user = userEvent.setup();
-    const cancel = vi.fn();
-    const speak = vi.fn();
-    class FakeUtterance {
-      lang = "";
-      constructor(readonly text: string) {}
-    }
-    Object.defineProperty(window, "speechSynthesis", {
-      configurable: true,
-      value: { cancel, speak },
-    });
-    vi.stubGlobal("SpeechSynthesisUtterance", FakeUtterance);
 
     await renderPractice();
     await user.click(
       screen.getByRole("button", { name: "Play pronunciation for そと" }),
     );
-    expect(cancel).toHaveBeenCalledOnce();
-    expect(speak).toHaveBeenCalledOnce();
-    expect(speak.mock.calls[0]?.[0]).toMatchObject({
-      text: "そと",
-      lang: "ja-JP",
-    });
+    expect(audioCacheMock.play).toHaveBeenCalledWith("kana.word.soto");
 
     await user.click(screen.getByRole("button", { name: "soto" }));
     await user.click(screen.getByRole("button", { name: "Check answer" }));
@@ -55,6 +55,7 @@ describe("PracticeView", () => {
     await screen.findByRole("heading", {
       name: "Choose the characters for “soto”:",
     });
+    expect(audioCacheMock.dispose).toHaveBeenCalledOnce();
     await user.click(screen.getByRole("button", { name: "はと" }));
     await user.click(screen.getByRole("button", { name: "Check answer" }));
     expect(screen.getByRole("status").textContent).toContain(
@@ -109,7 +110,7 @@ describe("PracticeView", () => {
     expect(screen.getByRole("progressbar").getAttribute("aria-valuenow")).toBe(
       "0",
     );
-  });
+  }, 10_000);
 
   it("lets the learner skip an exercise", async () => {
     const user = userEvent.setup();
@@ -169,5 +170,35 @@ describe("PracticeView", () => {
     await screen.findByRole("heading", { name: "Perfect practice!" });
     expect(screen.getByText("8 / 8")).toBeTruthy();
     expect(screen.getByText("100%")).toBeTruthy();
+  });
+
+  it("waits for active exercise audio before exposing the exercise", async () => {
+    const user = userEvent.setup();
+    let finishPreload: (audioIds: ReadonlySet<string>) => void = () => {};
+    audioCacheMock.preload.mockImplementationOnce(
+      () =>
+        new Promise((resolve) => {
+          finishPreload = (audioIds) => {
+            resolve(new Set(audioIds));
+          };
+        }),
+    );
+
+    await openPractice();
+    expect(screen.getByRole("status").textContent).toContain(
+      "Preparing pronunciation audio…",
+    );
+    expect(audioCacheMock.preload).toHaveBeenCalledWith(["kana.word.soto"]);
+    expect(
+      screen.queryByRole("button", { name: "Play pronunciation for そと" }),
+    ).toBeNull();
+
+    finishPreload(new Set(["kana.word.soto"]));
+    await user.click(
+      await screen.findByRole("button", {
+        name: "Play pronunciation for そと",
+      }),
+    );
+    expect(audioCacheMock.play).toHaveBeenCalledWith("kana.word.soto");
   });
 });

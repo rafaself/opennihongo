@@ -154,6 +154,11 @@
   width: 2.75rem;
 }
 
+.practice-session__audio-loading {
+  color: var(--ns-color-text-secondary);
+  justify-self: center;
+}
+
 .practice-session__choices {
   display: grid;
   gap: 0.5rem;

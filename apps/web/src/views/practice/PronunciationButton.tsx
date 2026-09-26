@@ -1,19 +1,5 @@
+import type { KanaAudioId } from "@opennihongo/core";
 import { Button } from "@opennihongo/ui";
-
-function playPronunciation(text: string): void {
-  if (
-    typeof window === "undefined" ||
-    typeof window.speechSynthesis === "undefined" ||
-    typeof SpeechSynthesisUtterance === "undefined"
-  ) {
-    return;
-  }
-
-  const utterance = new SpeechSynthesisUtterance(text);
-  utterance.lang = "ja-JP";
-  window.speechSynthesis.cancel();
-  window.speechSynthesis.speak(utterance);
-}
 
 function SpeakerIcon() {
   return (
@@ -41,13 +27,23 @@ function SpeakerIcon() {
   );
 }
 
-export function PronunciationButton({ text }: { text: string }) {
+type PronunciationButtonProps = Readonly<{
+  audioId: KanaAudioId;
+  text: string;
+  onPlay: (audioId: KanaAudioId) => void;
+}>;
+
+export function PronunciationButton({
+  audioId,
+  text,
+  onPlay,
+}: PronunciationButtonProps) {
   return (
     <Button
       aria-label={`Play pronunciation for ${text}`}
       className="practice-session__audio"
       onClick={() => {
-        playPronunciation(text);
+        onPlay(audioId);
       }}
       variant="secondary"
     >

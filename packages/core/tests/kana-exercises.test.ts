@@ -8,8 +8,10 @@ import {
   romajiToHiraganaExercise,
   scoreKanaChoiceAnswer,
   scoreKanaMatchingAnswer,
+  scoreKanaTypedAnswer,
   validateKanaChoiceAnswer,
   validateKanaMatchingAnswer,
+  validateKanaTypedAnswer,
 } from "../src/index";
 
 describe("curated beginner Kana exercises", () => {
@@ -26,6 +28,7 @@ describe("curated beginner Kana exercises", () => {
       kind: "multiple-choice",
       direction: "hiragana-to-romaji",
       wordId: "kana.word.soto",
+      audioIds: ["kana.word.soto"],
       prompt: { script: "hiragana", text: "そと" },
       choices: ["soto", "hato", "sato"],
       answer: "soto",
@@ -35,6 +38,7 @@ describe("curated beginner Kana exercises", () => {
       kind: "multiple-choice",
       direction: "romaji-to-hiragana",
       wordId: "kana.word.soto",
+      audioIds: [],
       prompt: { script: "romaji", text: "soto" },
       choices: ["そと", "はと", "さと"],
       answer: "そと",
@@ -42,12 +46,14 @@ describe("curated beginner Kana exercises", () => {
     expect(hiraganaToRomajiTypedExercise).toEqual({
       id: "kana.exercise.shibyura-to-romaji-typed",
       kind: "typed-answer",
+      audioIds: [],
       prompt: { script: "hiragana", text: "しびゅら" },
       answer: "shibyura",
     });
     expect(beginnerWordMatchingExercise).toEqual({
       id: "kana.exercise.beginner-word-matching",
       kind: "matching-pairs",
+      audioIds: [],
       pairs: kanaBeginnerWords,
     });
     expect(kanaExercises).toEqual([
@@ -56,6 +62,23 @@ describe("curated beginner Kana exercises", () => {
       hiraganaToRomajiTypedExercise,
       beginnerWordMatchingExercise,
     ]);
+  });
+});
+
+describe("Kana typed-answer validation and scoring", () => {
+  it("accepts normalized readings and awards no points for incorrect answers", () => {
+    expect(
+      validateKanaTypedAnswer(hiraganaToRomajiTypedExercise, " SHIBYURA "),
+    ).toBe(true);
+    expect(
+      validateKanaTypedAnswer(hiraganaToRomajiTypedExercise, "wrong"),
+    ).toBe(false);
+    expect(
+      scoreKanaTypedAnswer(hiraganaToRomajiTypedExercise, "shibyura"),
+    ).toBe(1);
+    expect(scoreKanaTypedAnswer(hiraganaToRomajiTypedExercise, "wrong")).toBe(
+      0,
+    );
   });
 });
 

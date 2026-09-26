@@ -11,6 +11,7 @@ export const hiraganaToRomajiExercise = {
   kind: "multiple-choice",
   direction: "hiragana-to-romaji",
   wordId: "kana.word.soto",
+  audioIds: ["kana.word.soto"],
   prompt: { script: "hiragana", text: "そと" },
   choices: ["soto", "hato", "sato"],
   answer: "soto",
@@ -21,6 +22,7 @@ export const romajiToHiraganaExercise = {
   kind: "multiple-choice",
   direction: "romaji-to-hiragana",
   wordId: "kana.word.soto",
+  audioIds: [],
   prompt: { script: "romaji", text: "soto" },
   choices: ["そと", "はと", "さと"],
   answer: "そと",
@@ -29,6 +31,7 @@ export const romajiToHiraganaExercise = {
 export const hiraganaToRomajiTypedExercise = {
   id: "kana.exercise.shibyura-to-romaji-typed",
   kind: "typed-answer",
+  audioIds: [],
   prompt: { script: "hiragana", text: "しびゅら" },
   answer: "shibyura",
 } as const satisfies KanaTypedAnswerExercise;
@@ -36,6 +39,7 @@ export const hiraganaToRomajiTypedExercise = {
 export const beginnerWordMatchingExercise = {
   id: "kana.exercise.beginner-word-matching",
   kind: "matching-pairs",
+  audioIds: [],
   pairs: kanaBeginnerWords,
 } as const satisfies KanaMatchingExercise;
 
