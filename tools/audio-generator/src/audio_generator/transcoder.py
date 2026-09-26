@@ -2,7 +2,14 @@
 
 from __future__ import annotations
 
+import io
 import subprocess
+import wave
+
+OPUS_APPLICATION = "voip"
+OPUS_CHANNELS = 1
+OPUS_SAMPLE_RATE_HZ = 48000
+OPUS_VBR_MODE = "off"
 
 
 class TranscodeError(RuntimeError):
@@ -42,6 +49,7 @@ class FfmpegTranscoder:
         return version[0].strip()
 
     def convert_wav_to_opus(self, wav: bytes) -> bytes:
+        validate_wav(wav)
         command = [
             self.ffmpeg_path,
             "-nostdin",
@@ -56,17 +64,17 @@ class FfmpegTranscoder:
             "-1",
             "-vn",
             "-ac",
-            "1",
+            str(OPUS_CHANNELS),
             "-ar",
-            "48000",
+            str(OPUS_SAMPLE_RATE_HZ),
             "-c:a",
             "libopus",
             "-application",
-            "voip",
+            OPUS_APPLICATION,
             "-b:a",
             self.bitrate,
             "-vbr",
-            "off",
+            OPUS_VBR_MODE,
             "-flags:a",
             "+bitexact",
             "-f",
@@ -97,6 +105,30 @@ class FfmpegTranscoder:
         opus = normalize_ogg_serial(result.stdout)
         validate_opus(opus)
         return opus
+
+
+def validate_wav(audio: bytes) -> None:
+    """Reject malformed, empty, or truncated PCM WAV input before encoding."""
+    try:
+        with wave.open(io.BytesIO(audio), "rb") as source:
+            channels = source.getnchannels()
+            sample_width = source.getsampwidth()
+            sample_rate = source.getframerate()
+            frame_count = source.getnframes()
+            frame_size = channels * sample_width
+            if (
+                channels < 1
+                or sample_width < 1
+                or sample_rate < 1
+                or frame_count < 1
+            ):
+                raise TranscodeError("VOICEVOX returned an empty WAV stream")
+            frames = source.readframes(frame_count)
+    except (EOFError, wave.Error) as error:
+        raise TranscodeError("VOICEVOX returned an invalid PCM WAV stream") from error
+
+    if len(frames) != frame_count * frame_size:
+        raise TranscodeError("VOICEVOX returned a truncated WAV stream")
 
 
 def normalize_ogg_serial(audio: bytes) -> bytes:

@@ -1,7 +1,9 @@
 import hashlib
+import io
 import json
 import tempfile
 import unittest
+import wave
 from datetime import datetime, timezone
 from pathlib import Path
 from unittest.mock import patch
@@ -33,6 +35,16 @@ def make_ogg_page(serial: int) -> bytes:
 OPUS = normalize_ogg_serial(make_ogg_page(0))
 
 
+def make_wav() -> bytes:
+    output = io.BytesIO()
+    with wave.open(output, "wb") as audio:
+        audio.setnchannels(1)
+        audio.setsampwidth(2)
+        audio.setframerate(24000)
+        audio.writeframes(bytes(2400))
+    return output.getvalue()
+
+
 class FakeClient:
     config = load_config(Path(__file__).resolve().parents[1] / "voice.json")
     speaker_id = "speaker-uuid"
@@ -45,7 +57,7 @@ class FakeClient:
 
     def synthesize(self, definition: AudioDefinition) -> bytes:
         self.definitions.append(definition)
-        return b"RIFF\x04\x00\x00\x00WAVE"
+        return b"RIFF" + bytes(1024)
 
 
 class FakeTranscoder:
@@ -92,8 +104,16 @@ class GenerationTests(unittest.TestCase):
             self.assertEqual(metadata["style_id"], 10005)
             self.assertEqual(metadata["style_name"], "ノーマル")
             self.assertEqual(metadata["ffmpeg_version"], "ffmpeg version 7.1.5")
-            self.assertEqual(metadata["metadata_version"], 2)
+            self.assertEqual(metadata["metadata_version"], 3)
             self.assertEqual(metadata["generator_version"], "0.1.0")
+            self.assertEqual(metadata["opus_application"], "voip")
+            self.assertEqual(metadata["opus_bitrate"], "32k")
+            self.assertEqual(metadata["opus_channels"], 1)
+            self.assertEqual(metadata["opus_sample_rate_hz"], 48000)
+            self.assertEqual(metadata["opus_vbr_mode"], "off")
+            self.assertEqual(metadata["source_wav_size_bytes"], 1028)
+            self.assertEqual(metadata["optimized_size_bytes"], len(OPUS))
+            self.assertGreater(metadata["size_reduction_percent"], 90)
             self.assertEqual(metadata["speaker_id"], "speaker-uuid")
             self.assertTrue(metadata["attribution_required"])
             self.assertTrue(metadata["terms_url"].startswith("https://"))
@@ -245,6 +265,24 @@ class GenerationTests(unittest.TestCase):
                     output_dir,
                 )
 
+    def test_rejects_output_that_does_not_compress_the_wav(self) -> None:
+        class SmallWavClient(FakeClient):
+            def synthesize(self, definition: AudioDefinition) -> bytes:
+                self.definitions.append(definition)
+                return b"RIFF1234"
+
+        with tempfile.TemporaryDirectory() as directory:
+            output_dir = Path(directory) / "generated"
+            with self.assertRaisesRegex(GenerationError, "not smaller"):
+                generate_batch(
+                    [AudioDefinition("short", "あ", "あ")],
+                    SmallWavClient(),
+                    FakeTranscoder(),
+                    output_dir,
+                )
+
+            self.assertFalse(output_dir.exists())
+
     def test_rejects_naive_generation_timestamps(self) -> None:
         with (
             tempfile.TemporaryDirectory() as directory,
@@ -324,8 +362,8 @@ class GenerationTests(unittest.TestCase):
             "audio_generator.transcoder.subprocess.run", side_effect=completed
         ) as run:
             transcoder = FfmpegTranscoder("ffmpeg", "32k")
-            first = transcoder.convert_wav_to_opus(b"wav")
-            second = transcoder.convert_wav_to_opus(b"wav")
+            first = transcoder.convert_wav_to_opus(make_wav())
+            second = transcoder.convert_wav_to_opus(make_wav())
 
         self.assertEqual(first, second)
         self.assertEqual(first[14:18], bytes(4))

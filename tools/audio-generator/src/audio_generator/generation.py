@@ -14,7 +14,13 @@ from typing import Protocol
 from audio_generator import __version__
 from audio_generator.config import GeneratorConfig
 from audio_generator.models import AudioDefinition
-from audio_generator.transcoder import validate_opus
+from audio_generator.transcoder import (
+    OPUS_APPLICATION,
+    OPUS_CHANNELS,
+    OPUS_SAMPLE_RATE_HZ,
+    OPUS_VBR_MODE,
+    validate_opus,
+)
 
 MANIFEST_NAME = ".manifest.json"
 
@@ -115,8 +121,13 @@ def generate_batch(
     ) as staging_name:
         staging = Path(staging_name)
         for definition in pending:
-            opus = transcoder.convert_wav_to_opus(client.synthesize(definition))
+            wav = client.synthesize(definition)
+            opus = transcoder.convert_wav_to_opus(wav)
             validate_opus(opus)
+            if len(opus) >= len(wav):
+                raise GenerationError(
+                    f"optimized audio for {definition.id} is not smaller than its WAV source"
+                )
             metadata = _metadata(
                 definition,
                 client.config,
@@ -124,6 +135,7 @@ def generate_batch(
                 speaker_id,
                 ffmpeg_version,
                 timestamp_text,
+                wav,
                 opus,
             )
             audio_stage = staging / f"{definition.id}.opus"
@@ -217,9 +229,13 @@ def _metadata_fields(
         "ffmpeg_version": ffmpeg_version,
         "generator_version": __version__,
         "id": definition.id,
-        "metadata_version": 2,
+        "metadata_version": 3,
         "output_format": "opus",
+        "opus_application": OPUS_APPLICATION,
         "opus_bitrate": config.opus_bitrate,
+        "opus_channels": OPUS_CHANNELS,
+        "opus_sample_rate_hz": OPUS_SAMPLE_RATE_HZ,
+        "opus_vbr_mode": OPUS_VBR_MODE,
         "provider": config.provider,
         "reading": definition.reading,
         "speaker_id": speaker_id,
@@ -254,6 +270,7 @@ def _metadata(
     speaker_id: str,
     ffmpeg_version: str,
     generated_at: str,
+    wav: bytes,
     opus: bytes,
 ) -> dict[str, object]:
     fields = _metadata_fields(
@@ -265,7 +282,10 @@ def _metadata(
         "generation_fingerprint": _generation_fingerprint(
             definition, config, reported_engine_version, speaker_id, ffmpeg_version
         ),
+        "optimized_size_bytes": len(opus),
+        "size_reduction_percent": round((1 - len(opus) / len(wav)) * 100, 2),
         "sha256": hashlib.sha256(opus).hexdigest(),
+        "source_wav_size_bytes": len(wav),
     }
 
 

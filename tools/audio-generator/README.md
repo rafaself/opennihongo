@@ -84,6 +84,17 @@ to write somewhere else. Complete assets with matching fingerprints are reused.
 Changed inputs or incomplete existing assets are left untouched unless
 `--force` is passed to regenerate them.
 
+The default encoder profile is mono Opus at 48 kHz and 32 kb/s constant bitrate,
+with FFmpeg's `voip` application mode, which favors speech intelligibility
+([FFmpeg libopus options](https://ffmpeg.org/ffmpeg-codecs.html#libopus)). The
+voice-focused profile preserves a consistent bitrate for short pronunciation
+clips while keeping files much smaller than their PCM WAV sources. The
+generation fingerprint and sidecar record the bitrate, channel count, sample
+rate, application mode, VBR mode, source and optimized byte counts, and size
+reduction percentage. Each input must be a non-empty, complete PCM WAV, and the
+batch is rejected before publication if any encoded asset is not smaller than
+its source.
+
 The Python package uses only the standard library. FFmpeg is a development-time
 system tool and is not included in the production application.
 

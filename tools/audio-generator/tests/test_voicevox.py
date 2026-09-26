@@ -175,6 +175,11 @@ class VoicevoxClientTests(unittest.TestCase):
         self.assertEqual(metadata["style_id"], STYLE_ID)
         self.assertEqual(metadata["generator_version"], "0.1.0")
         self.assertEqual(len(metadata["generation_fingerprint"]), 64)
+        self.assertLess(len(audio), len(WAV))
+        self.assertEqual(metadata["source_wav_size_bytes"], len(WAV))
+        self.assertEqual(metadata["optimized_size_bytes"], len(audio))
+        self.assertGreater(metadata["size_reduction_percent"], 0)
+        self.assertEqual(metadata["opus_application"], "voip")
         self.assertIn("ffmpeg version", metadata["ffmpeg_version"])
 
     def test_rejects_engine_with_wrong_version(self) -> None:
