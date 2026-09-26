@@ -84,7 +84,7 @@
 .gallery-doc-practices-grid {
   display: grid;
   gap: 1rem;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
 }
 
 .gallery-doc-example-grid {
@@ -280,10 +280,7 @@
 }
 
 @media (max-width: 36rem) {
-  .gallery-doc-example-grid,
-  .gallery-doc-guidance-grid,
-  .gallery-doc-notes-grid,
-  .gallery-doc-practices-grid {
+  .gallery-doc-example-grid {
     grid-template-columns: minmax(0, 1fr);
   }
 
