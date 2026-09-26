@@ -269,6 +269,11 @@ export function PracticeView() {
                   disabled={feedback !== null}
                   exercise={exercise}
                   onChange={setTypedAnswer}
+                  onSubmit={() => {
+                    if (readyToCheck) {
+                      checkAnswer();
+                    }
+                  }}
                   value={typedAnswer}
                 />
               </div>

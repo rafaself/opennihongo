@@ -6,6 +6,7 @@ type TypedAnswerExerciseProps = {
   value: string;
   disabled: boolean;
   onChange: (value: string) => void;
+  onSubmit: () => void;
 };
 
 export function TypedAnswerExercise({
@@ -13,6 +14,7 @@ export function TypedAnswerExercise({
   value,
   disabled,
   onChange,
+  onSubmit,
 }: TypedAnswerExerciseProps) {
   return (
     <div className="practice-session__exercise">
@@ -32,6 +34,12 @@ export function TypedAnswerExercise({
         className="practice-session__typed-answer"
         disabled={disabled}
         inputMode="text"
+        onKeyDown={(event) => {
+          if (event.key === "Enter" && !event.nativeEvent.isComposing) {
+            event.preventDefault();
+            onSubmit();
+          }
+        }}
         onChange={(event) => {
           onChange(event.currentTarget.value);
         }}
