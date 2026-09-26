@@ -204,8 +204,12 @@
 }
 
 .practice-session__match-option {
+  align-items: center;
   cursor: pointer;
+  display: grid;
+  grid-template-columns: 2rem minmax(0, 1fr) 2rem;
   min-height: 3.5rem;
+  text-align: center;
   text-transform: none;
   user-select: none;
   width: 100%;

@@ -89,6 +89,10 @@ describe("PracticeView", () => {
     await user.click(screen.getByRole("button", { name: "はと" }));
     await user.click(screen.getByRole("button", { name: "sato" }));
     await user.click(screen.getByRole("button", { name: "さと" }));
+    await user.click(screen.getByRole("button", { name: "mimi" }));
+    await user.click(screen.getByRole("button", { name: "みみ" }));
+    await user.click(screen.getByRole("button", { name: "neko" }));
+    await user.click(screen.getByRole("button", { name: "ねこ" }));
     await user.click(screen.getByRole("button", { name: "Check answer" }));
     expect(screen.getByRole("status").textContent).toContain("That’s right!");
     await user.click(screen.getByRole("button", { name: "See results" }));
@@ -97,8 +101,8 @@ describe("PracticeView", () => {
       name: "Practice complete!",
     });
     expect(document.activeElement).toBe(resultsHeading);
-    expect(screen.getByText("5 / 6")).toBeTruthy();
-    expect(screen.getByText("83%")).toBeTruthy();
+    expect(screen.getByText("7 / 8")).toBeTruthy();
+    expect(screen.getByText("88%")).toBeTruthy();
 
     await user.click(screen.getByRole("button", { name: "Practice again" }));
     await screen.findByRole("heading", {
@@ -130,7 +134,7 @@ describe("PracticeView", () => {
     });
     await user.click(screen.getByRole("button", { name: "Skip" }));
     await screen.findByRole("heading", { name: "Practice complete!" });
-    expect(screen.getByText("0 / 6")).toBeTruthy();
+    expect(screen.getByText("0 / 8")).toBeTruthy();
     expect(screen.getByText("0%")).toBeTruthy();
   });
 
@@ -155,6 +159,8 @@ describe("PracticeView", () => {
       ["soto", "そと"],
       ["hato", "はと"],
       ["sato", "さと"],
+      ["mimi", "みみ"],
+      ["neko", "ねこ"],
     ] as const) {
       await user.click(screen.getByRole("button", { name: romaji }));
       await user.click(screen.getByRole("button", { name: hiragana }));
@@ -163,7 +169,7 @@ describe("PracticeView", () => {
     await user.click(screen.getByRole("button", { name: "See results" }));
 
     await screen.findByRole("heading", { name: "Perfect practice!" });
-    expect(screen.getByText("6 / 6")).toBeTruthy();
+    expect(screen.getByText("8 / 8")).toBeTruthy();
     expect(screen.getByText("100%")).toBeTruthy();
   });
 });

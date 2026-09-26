@@ -6,12 +6,12 @@ import {
   scoreKanaTypedAnswer,
   validateKanaChoiceAnswer,
   validateKanaTypedAnswer,
-  type KanaMatchingExercise,
   type KanaPairAnswer,
 } from "@opennihongo/core";
 import { Button, Surface, Text } from "@opennihongo/ui";
 import { Icon } from "@opennihongo/ui/icons";
 import { useEffect, useState } from "react";
+import { MatchingExercise } from "./MatchingExercise";
 import { PracticeFeedback } from "./PracticeFeedback";
 import { PracticeResults } from "./PracticeResults";
 import { PronunciationButton } from "./PronunciationButton";
@@ -30,11 +30,8 @@ export function PracticeView() {
   const [index, setIndex] = useState(0);
   const [selectedChoice, setSelectedChoice] = useState("");
   const [typedAnswer, setTypedAnswer] = useState("");
-  const [selectedRomaji, setSelectedRomaji] = useState<string | null>(null);
-  const [selectedHiragana, setSelectedHiragana] = useState<string | null>(null);
   const [matchedPairs, setMatchedPairs] = useState<KanaPairAnswer[]>([]);
   const [feedback, setFeedback] = useState<Feedback | null>(null);
-  const [selectionMessage, setSelectionMessage] = useState("");
   const [score, setScore] = useState(0);
 
   const complete = index >= kanaExercises.length;
@@ -51,11 +48,8 @@ export function PracticeView() {
   function resetExerciseState() {
     setSelectedChoice("");
     setTypedAnswer("");
-    setSelectedRomaji(null);
-    setSelectedHiragana(null);
     setMatchedPairs([]);
     setFeedback(null);
-    setSelectionMessage("");
   }
 
   function continuePractice() {
@@ -103,50 +97,6 @@ export function PracticeView() {
       correct: true,
       message: "All pairs matched.",
     });
-  }
-
-  function matchPair(
-    matchingExercise: KanaMatchingExercise,
-    romaji: string,
-    hiragana: string,
-  ) {
-    const pair = matchingExercise.pairs.find(
-      (candidate) =>
-        candidate.romaji === romaji && candidate.hiragana === hiragana,
-    );
-    if (pair) {
-      const nextPairs = [...matchedPairs, { romaji, hiragana }];
-      setMatchedPairs(nextPairs);
-      setSelectionMessage(`${romaji} matched with ${hiragana}.`);
-    } else {
-      setSelectionMessage("Those words do not match. Try a different pair.");
-    }
-    setSelectedRomaji(null);
-    setSelectedHiragana(null);
-  }
-
-  function selectRomaji(
-    matchingExercise: KanaMatchingExercise,
-    romaji: string,
-  ) {
-    if (selectedHiragana) {
-      matchPair(matchingExercise, romaji, selectedHiragana);
-    } else {
-      setSelectedRomaji(romaji);
-      setSelectionMessage("");
-    }
-  }
-
-  function selectHiragana(
-    matchingExercise: KanaMatchingExercise,
-    hiragana: string,
-  ) {
-    if (selectedRomaji) {
-      matchPair(matchingExercise, selectedRomaji, hiragana);
-    } else {
-      setSelectedHiragana(hiragana);
-      setSelectionMessage("");
-    }
   }
 
   function restartPractice() {
@@ -282,73 +232,14 @@ export function PracticeView() {
                 <Text as="h1" id="practice-title" variant="display">
                   Match each reading with its hiragana word.
                 </Text>
-                <div className="practice-session__matching">
-                  <div
-                    aria-label="Romaji readings"
-                    className="practice-session__match-column"
-                  >
-                    <Text as="h2" variant="label">
-                      Romaji
-                    </Text>
-                    {exercise.pairs.map(({ id, romaji }) => {
-                      const matched = matchedPairs.some(
-                        (pair) => pair.romaji === romaji,
-                      );
-                      return (
-                        <Button
-                          aria-pressed={selectedRomaji === romaji}
-                          className="practice-session__match-option"
-                          data-matched={matched}
-                          data-selected={selectedRomaji === romaji}
-                          disabled={matched || feedback !== null}
-                          key={id}
-                          onClick={() => {
-                            selectRomaji(exercise, romaji);
-                          }}
-                          variant="secondary"
-                        >
-                          {romaji}
-                        </Button>
-                      );
-                    })}
-                  </div>
-                  <div
-                    aria-label="Hiragana words"
-                    className="practice-session__match-column"
-                  >
-                    <Text as="h2" variant="label">
-                      Hiragana
-                    </Text>
-                    {[...exercise.pairs].reverse().map(({ id, hiragana }) => {
-                      const matched = matchedPairs.some(
-                        (pair) => pair.hiragana === hiragana,
-                      );
-                      return (
-                        <Button
-                          aria-pressed={selectedHiragana === hiragana}
-                          className="practice-session__match-option practice-session__match-option--kana"
-                          data-matched={matched}
-                          data-selected={selectedHiragana === hiragana}
-                          disabled={matched || feedback !== null}
-                          key={id}
-                          onClick={() => {
-                            selectHiragana(exercise, hiragana);
-                          }}
-                          variant="secondary"
-                        >
-                          {hiragana}
-                        </Button>
-                      );
-                    })}
-                  </div>
-                </div>
-                <p
-                  aria-live="polite"
-                  className="practice-session__match-status"
-                >
-                  {selectionMessage ||
-                    `${String(matchedPairs.length)} of ${String(exercise.pairs.length)} pairs matched`}
-                </p>
+                <MatchingExercise
+                  disabled={feedback !== null}
+                  exercise={exercise}
+                  matchedPairs={matchedPairs}
+                  onPairMatched={(pair) => {
+                    setMatchedPairs((current) => [...current, pair]);
+                  }}
+                />
               </div>
             )}
           </div>

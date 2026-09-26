@@ -18,7 +18,12 @@ export type KanaProgress = Readonly<{
   lastAnsweredAt: string;
 }>;
 
-export type KanaWordId = "kana.word.soto" | "kana.word.hato" | "kana.word.sato";
+export type KanaWordId =
+  | "kana.word.soto"
+  | "kana.word.hato"
+  | "kana.word.sato"
+  | "kana.word.mimi"
+  | "kana.word.neko";
 
 export type KanaWord = Readonly<{
   id: KanaWordId;
