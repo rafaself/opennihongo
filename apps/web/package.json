@@ -11,6 +11,7 @@
     "test": "vitest run"
   },
   "dependencies": {
+    "@opennihongo/audio-assets": "workspace:*",
     "@opennihongo/core": "workspace:*",
     "@opennihongo/persistence": "workspace:*",
     "@opennihongo/ui": "workspace:*",

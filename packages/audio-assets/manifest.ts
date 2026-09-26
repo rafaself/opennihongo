@@ -15,6 +15,16 @@ export const audioManifest = {
   "kana.word.soto": "./generated/kana.word.soto.opus",
 } as const satisfies Record<AudioAssetId, string>;
 
-export function resolveAudioAsset(id: AudioAssetId): string {
-  return new URL(audioManifest[id], import.meta.url).href;
+const generatedAudioUrls = import.meta.glob<string>("./generated/*.opus", {
+  eager: true,
+  import: "default",
+  query: "?url",
+});
+
+export function getAudioAsset(id: string): string | undefined {
+  if (!Object.hasOwn(audioManifest, id)) {
+    return undefined;
+  }
+
+  return generatedAudioUrls[audioManifest[id as AudioAssetId]];
 }
