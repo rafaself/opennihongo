@@ -19,14 +19,13 @@ export const appSections = {
     path: "/kana",
     label: "Kana",
     icon: "kana",
-    status: "upcoming",
-    description: "A dedicated place to learn and review hiragana and katakana.",
+    status: "available",
   },
   practice: {
     path: "/practice",
     label: "Practice",
     icon: "practice",
-    status: "upcoming",
+    status: "available",
     description: "Short practice sessions to reinforce what you have learned.",
   },
   progress: {

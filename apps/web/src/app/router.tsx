@@ -5,8 +5,10 @@ import {
 } from "@tanstack/react-router";
 import { AppLayout } from "../layouts/AppLayout";
 import { HomePage } from "../pages/HomePage";
+import { KanaPage } from "../pages/KanaPage";
 import { NotFoundPage } from "../pages/NotFoundPage";
 import { UpcomingSectionPage } from "../pages/UpcomingSectionPage";
+import { PracticeView } from "../views/practice/PracticeView";
 import { appSections } from "./sections";
 
 const rootRoute = createRootRoute({
@@ -23,13 +25,13 @@ const homeRoute = createRoute({
 const kanaRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: appSections.kana.path,
-  component: () => <UpcomingSectionPage {...appSections.kana} />,
+  component: KanaPage,
 });
 
 const practiceRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: appSections.practice.path,
-  component: () => <UpcomingSectionPage {...appSections.practice} />,
+  component: PracticeView,
 });
 
 const progressRoute = createRoute({
