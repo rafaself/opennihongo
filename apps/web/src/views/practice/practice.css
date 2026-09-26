@@ -1,5 +1,12 @@
 .practice-session {
   --practice-action-panel-height: 8.75rem;
+  --practice-selection-blue: #1899d6;
+  --practice-selection-blue-edge: #3f85a7;
+  --practice-selection-blue-surface: color-mix(
+    in srgb,
+    var(--practice-selection-blue) 12%,
+    var(--ns-color-surface)
+  );
 
   display: grid;
   flex: none;
@@ -145,13 +152,6 @@
   width: 100%;
 }
 
-.practice-session__choice[data-selected="true"] {
-  background: var(--ns-color-action-secondary-edge);
-  border-color: var(--ns-color-action-primary);
-  box-shadow: var(--ns-elevation-button-secondary);
-  color: var(--ns-color-action-secondary-foreground);
-}
-
 .practice-session__choice-number {
   align-items: center;
   border: 2px solid currentColor;
@@ -192,23 +192,35 @@
   width: 100%;
 }
 
+.practice-session
+  .ns-button.practice-session__choice:not([data-selected="true"]),
+.practice-session
+  .ns-button.practice-session__match-option:not([data-selected="true"]):not(
+    [data-matched="true"]
+  ) {
+  color: var(--ns-color-text-primary);
+}
+
+.practice-session__choice[data-selected="true"],
 .practice-session__match-option[data-selected="true"] {
-  background: color-mix(in srgb, #1899d6 12%, var(--ns-color-surface));
-  border-color: #1899d6;
+  background: var(--practice-selection-blue-surface);
+  border-color: var(--practice-selection-blue);
   box-shadow:
-    0 2px 0 #3f85a7,
-    0 0 0 1px #1899d6;
+    0 2px 0 var(--practice-selection-blue-edge),
+    0 0 0 1px var(--practice-selection-blue);
   color: var(--ns-color-feedback-info);
 }
 
+.ns-button.practice-session__choice[data-selected="true"]:hover:not(:disabled),
 .ns-button.practice-session__match-option[data-selected="true"]:hover:not(
     :disabled
   ) {
-  background: color-mix(in srgb, #1899d6 12%, var(--ns-color-surface));
+  background: var(--practice-selection-blue-surface);
 }
 
+.practice-session__choice[data-selected="true"]:focus-visible,
 .practice-session__match-option[data-selected="true"]:focus-visible {
-  outline-color: #1899d6;
+  outline-color: var(--practice-selection-blue);
 }
 
 .practice-session__match-option--kana {
