@@ -1,5 +1,5 @@
 services:
   voicevox:
-    image: voicevox/voicevox_nemo_engine:cpu-ubuntu20.04-latest
+    image: voicevox/voicevox_engine:cpu-ubuntu22.04-0.24.0
     ports:
       - "127.0.0.1:50021:50121"

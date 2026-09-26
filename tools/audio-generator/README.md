@@ -36,8 +36,9 @@ Stop and remove the container with:
 docker compose -f tools/audio-generator/compose.yaml down
 ```
 
-The Compose service uses VOICEVOX Nemo's CPU image. Its selected speaker,
-style, engine version, and attribution are recorded in [voice.json](voice.json).
+The Compose service uses the VOICEVOX CPU image pinned to release 0.24.0. Its
+selected Nemo speaker, style, engine version, and attribution are recorded in
+[voice.json](voice.json).
 See [speaker selection](../../docs/audio/voicevox-speaker-selection.md) for the
 selection rationale and licensing requirements.
 
@@ -76,8 +77,9 @@ PYTHONPATH=tools/audio-generator/src python3 -m audio_generator \
   --input tools/audio-generator/inputs/kana-practice.json
 ```
 
-It checks the running engine's version response against `voice.json` (also
-accepting VOICEVOX's Docker `latest` marker) and verifies the configured style.
+It checks that the running engine reports the exact version in `voice.json` and
+verifies the configured style. Unversioned responses such as `latest` are
+rejected.
 Metadata records both the configured engine release and the version response.
 The generator sends each explicit `reading` to VOICEVOX, converts the returned
 WAV to deterministic mono Opus with FFmpeg, and writes `<id>.opus` plus a

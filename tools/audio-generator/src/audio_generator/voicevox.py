@@ -40,7 +40,7 @@ class VoicevoxClient:
         version_value = self._json_request("/version")
         if not isinstance(version_value, str):
             raise VoicevoxError("VOICEVOX /version returned an invalid response")
-        if version_value not in {self.config.engine_version, "latest"}:
+        if version_value != self.config.engine_version:
             raise VoicevoxError(
                 f"VOICEVOX engine version mismatch: configured {self.config.engine_version}, "
                 f"running {version_value}"

@@ -118,13 +118,12 @@ class VoicevoxClientTests(unittest.TestCase):
         finally:
             SPEAKER_UUID = "speaker-uuid"
 
-    def test_accepts_docker_latest_marker_and_records_it(self) -> None:
+    def test_rejects_unversioned_engine_report(self) -> None:
         global ENGINE_VERSION
         ENGINE_VERSION = "latest"
         try:
-            self.assertEqual(
-                self.client.verify_engine(), ("latest", "speaker-uuid")
-            )
+            with self.assertRaisesRegex(VoicevoxError, "running latest"):
+                self.client.verify_engine()
         finally:
             ENGINE_VERSION = "0.24.0"
 
@@ -146,21 +145,16 @@ class VoicevoxClientTests(unittest.TestCase):
     )
     def test_full_pipeline_writes_valid_opus_and_metadata(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
-            global ENGINE_VERSION
-            ENGINE_VERSION = "latest"
-            try:
-                generated = generate_batch(
-                    [AudioDefinition("nihongo", "日本語", "にほんご")],
-                    self.client,
-                    FfmpegTranscoder(
-                        self.client.config.ffmpeg_path,
-                        self.client.config.opus_bitrate,
-                        self.client.config.timeout_seconds,
-                    ),
-                    directory,
-                )
-            finally:
-                ENGINE_VERSION = "0.24.0"
+            generated = generate_batch(
+                [AudioDefinition("nihongo", "日本語", "にほんご")],
+                self.client,
+                FfmpegTranscoder(
+                    self.client.config.ffmpeg_path,
+                    self.client.config.opus_bitrate,
+                    self.client.config.timeout_seconds,
+                ),
+                directory,
+            )
             audio = generated.generated[0].read_bytes()
             metadata = json.loads(
                 (Path(directory) / "nihongo.json").read_text(encoding="utf-8")
@@ -170,7 +164,7 @@ class VoicevoxClientTests(unittest.TestCase):
         self.assertIn(b"OpusHead", audio[:512])
         self.assertEqual(metadata["reading"], "にほんご")
         self.assertEqual(metadata["engine_version"], "0.24.0")
-        self.assertEqual(metadata["engine_version_reported"], "latest")
+        self.assertEqual(metadata["engine_version_reported"], "0.24.0")
         self.assertEqual(metadata["speaker_id"], "speaker-uuid")
         self.assertEqual(metadata["style_id"], STYLE_ID)
         self.assertEqual(metadata["generator_version"], "0.1.0")
