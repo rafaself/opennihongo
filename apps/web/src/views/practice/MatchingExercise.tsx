@@ -1,5 +1,5 @@
 import type { KanaMatchingExercise, KanaPairAnswer } from "@opennihongo/core";
-import { Button, Text } from "@opennihongo/ui";
+import { Button } from "@opennihongo/ui";
 import { useCallback, useEffect, useMemo, useState } from "react";
 
 type MatchingExerciseProps = {
@@ -152,10 +152,8 @@ export function MatchingExercise({
         <div
           aria-label="Romaji readings"
           className="practice-session__match-column"
+          role="group"
         >
-          <Text as="h2" variant="label">
-            Romaji
-          </Text>
           {exercise.pairs.map(({ id, romaji }, index) => {
             const matched = matchedPairs.some((pair) => pair.romaji === romaji);
             const shortcut = leftShortcuts[index];
@@ -188,10 +186,8 @@ export function MatchingExercise({
         <div
           aria-label="Hiragana words"
           className="practice-session__match-column"
+          role="group"
         >
-          <Text as="h2" variant="label">
-            Hiragana
-          </Text>
           {rightPairs.map(({ id, hiragana }, index) => {
             const matched = matchedPairs.some(
               (pair) => pair.hiragana === hiragana,
@@ -225,8 +221,7 @@ export function MatchingExercise({
         </div>
       </div>
       <p aria-live="polite" className="practice-session__match-status">
-        {selectionMessage ||
-          `${String(matchedPairs.length)} of ${String(exercise.pairs.length)} pairs matched`}
+        {selectionMessage}
       </p>
     </>
   );

@@ -275,7 +275,7 @@ export function PracticeView() {
             ) : (
               <div className="practice-session__question">
                 <Text as="h1" id="practice-title" variant="display">
-                  Match each reading with its hiragana word.
+                  Match the pairs:
                 </Text>
                 <MatchingExercise
                   disabled={feedback !== null}

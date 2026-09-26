@@ -74,7 +74,7 @@ describe("PracticeView", () => {
     await user.click(screen.getByRole("button", { name: "Continue" }));
 
     await screen.findByRole("heading", {
-      name: "Match each reading with its hiragana word.",
+      name: "Match the pairs:",
     });
     await user.click(screen.getByRole("button", { name: "soto" }));
     await user.click(screen.getByRole("button", { name: "はと" }));
@@ -130,7 +130,7 @@ describe("PracticeView", () => {
     });
     await user.click(screen.getByRole("button", { name: "Skip" }));
     await screen.findByRole("heading", {
-      name: "Match each reading with its hiragana word.",
+      name: "Match the pairs:",
     });
     await user.click(screen.getByRole("button", { name: "Skip" }));
     await screen.findByRole("heading", { name: "Practice complete!" });
