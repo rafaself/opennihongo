@@ -69,15 +69,20 @@ accepting VOICEVOX's Docker `latest` marker) and verifies the configured style.
 Metadata records both the configured engine release and the version response.
 The generator sends each explicit `reading` to VOICEVOX, converts the returned
 WAV to deterministic mono Opus with FFmpeg, and writes `<id>.opus` plus a
-metadata sidecar `<id>.json` under `packages/audio-assets/generated/`. Metadata
-records the source text and reading, speaker/style, engine version, UTC
-generation time, attribution, output format, and audio SHA-256. Outputs are
-staged as a batch and are not published if synthesis or encoding fails.
+metadata sidecar `<id>.json` under `packages/audio-assets/generated/`. It also
+maintains `.manifest.json` as an inventory of every sidecar and its matching
+audio checksum. Metadata records the source text and reading, VOICEVOX speaker
+UUID and style ID, engine and generator versions, UTC generation time,
+attribution, output format, SHA-256 checksum, and a fingerprint of all
+generation inputs. Matching assets are reused without synthesis; changed inputs
+require `--force` before existing audio is replaced. Outputs are staged as a
+batch and are not published if synthesis or encoding fails.
 
 The speaker, engine URL, timeout, FFmpeg executable, and Opus bitrate can be
 changed in an alternate config file passed with `--config`. Use `--output-dir`
-to write somewhere else. Existing files are preserved by default; pass `--force`
-to intentionally replace generated audio and metadata.
+to write somewhere else. Complete assets with matching fingerprints are reused.
+Changed inputs or incomplete existing assets are left untouched unless
+`--force` is passed to regenerate them.
 
 The Python package uses only the standard library. FFmpeg is a development-time
 system tool and is not included in the production application.

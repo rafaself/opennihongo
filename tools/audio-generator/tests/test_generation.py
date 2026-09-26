@@ -1,3 +1,4 @@
+import hashlib
 import json
 import tempfile
 import unittest
@@ -34,12 +35,13 @@ OPUS = normalize_ogg_serial(make_ogg_page(0))
 
 class FakeClient:
     config = load_config(Path(__file__).resolve().parents[1] / "voice.json")
+    speaker_id = "speaker-uuid"
 
     def __init__(self) -> None:
         self.definitions: list[AudioDefinition] = []
 
-    def verify_engine(self) -> str:
-        return "0.24.0"
+    def verify_engine(self) -> tuple[str, str]:
+        return "0.24.0", self.speaker_id
 
     def synthesize(self, definition: AudioDefinition) -> bytes:
         self.definitions.append(definition)
@@ -72,30 +74,170 @@ class GenerationTests(unittest.TestCase):
             )
 
             self.assertEqual(
-                results,
-                [output_dir / "nihongo.opus", output_dir / "kana.hiragana.a.opus"],
+                results.generated,
+                (output_dir / "nihongo.opus", output_dir / "kana.hiragana.a.opus"),
             )
+            self.assertEqual(results.reused, ())
             self.assertEqual((output_dir / "nihongo.opus").read_bytes(), OPUS)
             self.assertEqual((output_dir / "kana.hiragana.a.opus").read_bytes(), OPUS)
             metadata = json.loads(
                 (output_dir / "nihongo.json").read_text(encoding="utf-8")
             )
             self.assertEqual(metadata["reading"], "にほんご")
+            self.assertEqual(metadata["text"], "日本語")
+            self.assertEqual(metadata["id"], "nihongo")
             self.assertEqual(metadata["engine_version"], "0.24.0")
             self.assertEqual(metadata["engine_version_reported"], "0.24.0")
+            self.assertEqual(metadata["speaker_name"], "女声1")
+            self.assertEqual(metadata["style_id"], 10005)
+            self.assertEqual(metadata["style_name"], "ノーマル")
             self.assertEqual(metadata["ffmpeg_version"], "ffmpeg version 7.1.5")
-            self.assertEqual(metadata["metadata_version"], 1)
+            self.assertEqual(metadata["metadata_version"], 2)
+            self.assertEqual(metadata["generator_version"], "0.1.0")
+            self.assertEqual(metadata["speaker_id"], "speaker-uuid")
             self.assertTrue(metadata["attribution_required"])
             self.assertTrue(metadata["terms_url"].startswith("https://"))
             self.assertEqual(metadata["generated_at_utc"], "2026-09-26T00:00:00+00:00")
             self.assertEqual(len(metadata["sha256"]), 64)
+            self.assertEqual(metadata["sha256"], hashlib.sha256(OPUS).hexdigest())
+            self.assertEqual(len(metadata["generation_fingerprint"]), 64)
+            manifest = json.loads(
+                (output_dir / ".manifest.json").read_text(encoding="utf-8")
+            )
+            self.assertEqual(manifest["manifest_version"], 1)
+            self.assertEqual(
+                manifest["assets"]["nihongo"],
+                {
+                    "audio_file": "nihongo.opus",
+                    "generation_fingerprint": metadata["generation_fingerprint"],
+                    "metadata_file": "nihongo.json",
+                    "sha256": metadata["sha256"],
+                },
+            )
+
+    def test_reuses_assets_when_generation_inputs_are_unchanged(self) -> None:
+        definition = AudioDefinition("nihongo", "日本語", "にほんご")
+        timestamp = datetime(2026, 9, 26, tzinfo=timezone.utc)
+        with tempfile.TemporaryDirectory() as directory:
+            output_dir = Path(directory)
+            generate_batch(
+                [definition],
+                FakeClient(),
+                FakeTranscoder(),
+                output_dir,
+                generated_at=timestamp,
+            )
+            metadata_before = (output_dir / "nihongo.json").read_bytes()
+            second_client = FakeClient()
+
+            second = generate_batch(
+                [definition], second_client, FakeTranscoder(), output_dir
+            )
+
+            self.assertEqual(second.generated, ())
+            self.assertEqual(second.reused, (output_dir / "nihongo.opus",))
+            self.assertEqual(second_client.definitions, [])
+            self.assertEqual((output_dir / "nihongo.json").read_bytes(), metadata_before)
+
+    def test_manifest_keeps_assets_from_previous_batches(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            output_dir = Path(directory)
+            generate_batch(
+                [AudioDefinition("nihongo", "日本語", "にほんご")],
+                FakeClient(),
+                FakeTranscoder(),
+                output_dir,
+            )
+            generate_batch(
+                [AudioDefinition("tokyo", "東京", "とうきょう")],
+                FakeClient(),
+                FakeTranscoder(),
+                output_dir,
+            )
+
+            manifest = json.loads(
+                (output_dir / ".manifest.json").read_text(encoding="utf-8")
+            )
+            self.assertEqual(set(manifest["assets"]), {"nihongo", "tokyo"})
+
+    def test_force_replaces_changed_inputs_and_refreshes_metadata(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            output_dir = Path(directory)
+            generate_batch(
+                [AudioDefinition("nihongo", "日本語", "にほんご")],
+                FakeClient(),
+                FakeTranscoder(),
+                output_dir,
+            )
+            previous_metadata = json.loads(
+                (output_dir / "nihongo.json").read_text(encoding="utf-8")
+            )
+            replacement = AudioDefinition("nihongo", "日本語", "ニホンゴ")
+
+            result = generate_batch(
+                [replacement],
+                FakeClient(),
+                FakeTranscoder(),
+                output_dir,
+                force=True,
+            )
+
+            current_metadata = json.loads(
+                (output_dir / "nihongo.json").read_text(encoding="utf-8")
+            )
+            self.assertEqual(result.generated, (output_dir / "nihongo.opus",))
+            self.assertEqual(current_metadata["reading"], "ニホンゴ")
+            self.assertNotEqual(
+                current_metadata["generation_fingerprint"],
+                previous_metadata["generation_fingerprint"],
+            )
+
+    def test_rejects_audio_that_no_longer_matches_its_metadata(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            output_dir = Path(directory)
+            generate_batch(
+                [AudioDefinition("nihongo", "日本語", "にほんご")],
+                FakeClient(),
+                FakeTranscoder(),
+                output_dir,
+            )
+            (output_dir / "nihongo.opus").write_bytes(b"changed")
+
+            with self.assertRaisesRegex(GenerationError, "audio checksum"):
+                generate_batch(
+                    [AudioDefinition("nihongo", "日本語", "にほんご")],
+                    FakeClient(),
+                    FakeTranscoder(),
+                    output_dir,
+                )
+
+    def test_rejects_changed_inputs_without_force(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            output_dir = Path(directory)
+            generate_batch(
+                [AudioDefinition("nihongo", "日本語", "にほんご")],
+                FakeClient(),
+                FakeTranscoder(),
+                output_dir,
+            )
+            replacement_client = FakeClient()
+
+            with self.assertRaisesRegex(GenerationError, "use --force"):
+                generate_batch(
+                    [AudioDefinition("nihongo", "日本語", "ニホンゴ")],
+                    replacement_client,
+                    FakeTranscoder(),
+                    output_dir,
+                )
+
+            self.assertEqual(replacement_client.definitions, [])
 
     def test_refuses_to_overwrite_without_force(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             output_dir = Path(directory)
             (output_dir / "nihongo.opus").write_bytes(OPUS)
 
-            with self.assertRaisesRegex(GenerationError, "already exist"):
+            with self.assertRaisesRegex(GenerationError, "incomplete existing asset"):
                 generate_batch(
                     [AudioDefinition("nihongo", "日本語", "にほんご")],
                     FakeClient(),

@@ -56,7 +56,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         transcoder = FfmpegTranscoder(
             config.ffmpeg_path, config.opus_bitrate, config.timeout_seconds
         )
-        generated = generate_batch(
+        result = generate_batch(
             definitions, client, transcoder, args.output_dir, force=args.force
         )
     except (
@@ -70,7 +70,12 @@ def main(argv: Sequence[str] | None = None) -> int:
         print(f"{parser.prog}: error: {error}", file=sys.stderr)
         return 2
 
-    print(f"Generated {len(generated)} pronunciation asset(s):")
-    for path in generated:
-        print(path)
+    print(
+        f"Generated {len(result.generated)} pronunciation asset(s); "
+        f"reused {len(result.reused)} unchanged asset(s):"
+    )
+    for path in result.generated:
+        print(f"generated: {path}")
+    for path in result.reused:
+        print(f"reused: {path}")
     return 0

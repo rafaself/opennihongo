@@ -6,23 +6,33 @@ import hashlib
 import json
 import os
 import tempfile
+from dataclasses import dataclass
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Protocol
 
+from audio_generator import __version__
 from audio_generator.config import GeneratorConfig
 from audio_generator.models import AudioDefinition
 from audio_generator.transcoder import validate_opus
+
+MANIFEST_NAME = ".manifest.json"
 
 
 class GenerationError(RuntimeError):
     """Raised when a batch cannot safely be generated or published."""
 
 
+@dataclass(frozen=True)
+class GenerationResult:
+    generated: tuple[Path, ...]
+    reused: tuple[Path, ...]
+
+
 class SynthesisClient(Protocol):
     config: GeneratorConfig
 
-    def verify_engine(self) -> str: ...
+    def verify_engine(self) -> tuple[str, str]: ...
 
     def synthesize(self, definition: AudioDefinition) -> bytes: ...
 
@@ -41,8 +51,8 @@ def generate_batch(
     *,
     force: bool = False,
     generated_at: datetime | None = None,
-) -> list[Path]:
-    """Generate a batch into staging, then publish its audio and metadata files."""
+) -> GenerationResult:
+    """Generate changed assets, reuse unchanged ones, and refresh the manifest."""
     if not definitions:
         raise GenerationError("cannot generate an empty batch")
     if generated_at is not None and (
@@ -52,53 +62,75 @@ def generate_batch(
     ids = [definition.id for definition in definitions]
     if len(ids) != len(set(ids)):
         raise GenerationError("batch contains duplicate asset IDs")
+
     output = Path(output_dir)
     if output.exists() and not output.is_dir():
         raise GenerationError(f"output path is not a directory: {output}")
-    targets = [
-        path for definition in definitions for path in _output_paths(output, definition)
-    ]
-    existing = [path for path in targets if path.exists()]
-    if existing and not force:
-        raise GenerationError(
-            "output files already exist; use --force to replace them: "
-            + ", ".join(path.name for path in existing)
-        )
 
-    reported_engine_version = client.verify_engine()
+    reported_engine_version, speaker_id = client.verify_engine()
     ffmpeg_version = transcoder.version()
     timestamp = generated_at or datetime.now(timezone.utc)
-    timestamp = timestamp.astimezone(timezone.utc).isoformat(timespec="seconds")
-    output.parent.mkdir(parents=True, exist_ok=True)
+    timestamp_text = timestamp.astimezone(timezone.utc).isoformat(timespec="seconds")
+    existing_metadata = _read_existing_metadata(output, set(ids))
+    reused: list[Path] = []
+    pending: list[AudioDefinition] = []
+    metadata_by_id = existing_metadata
 
+    for definition in definitions:
+        audio_path, metadata_path = _output_paths(output, definition)
+        audio_exists = audio_path.exists()
+        metadata_exists = metadata_path.exists()
+        if not force and audio_exists and metadata_exists:
+            metadata = _read_metadata(metadata_path)
+            if metadata.get("id") != definition.id:
+                raise GenerationError(f"metadata ID does not match {metadata_path.name}")
+            digest = _file_sha256(audio_path)
+            if metadata.get("sha256") != digest:
+                raise GenerationError(f"audio checksum does not match {metadata_path.name}")
+            expected_fingerprint = _generation_fingerprint(
+                definition,
+                client.config,
+                reported_engine_version,
+                speaker_id,
+                ffmpeg_version,
+            )
+            if metadata.get("generation_fingerprint") != expected_fingerprint:
+                raise GenerationError(
+                    f"generation inputs changed for {definition.id}; use --force to replace it"
+                )
+            metadata_by_id[definition.id] = metadata
+            reused.append(audio_path)
+        elif not force and (audio_exists or metadata_exists):
+            raise GenerationError(
+                f"incomplete existing asset {definition.id}; use --force to replace it"
+            )
+        else:
+            pending.append(definition)
+
+    output.parent.mkdir(parents=True, exist_ok=True)
     staged: list[tuple[Path, Path]] = []
+    generated: list[Path] = []
     with tempfile.TemporaryDirectory(
         prefix=".audio-generator-", dir=output.parent
     ) as staging_name:
         staging = Path(staging_name)
-        for definition in definitions:
-            wav = client.synthesize(definition)
-            opus = transcoder.convert_wav_to_opus(wav)
+        for definition in pending:
+            opus = transcoder.convert_wav_to_opus(client.synthesize(definition))
             validate_opus(opus)
+            metadata = _metadata(
+                definition,
+                client.config,
+                reported_engine_version,
+                speaker_id,
+                ffmpeg_version,
+                timestamp_text,
+                opus,
+            )
             audio_stage = staging / f"{definition.id}.opus"
             metadata_stage = staging / f"{definition.id}.json"
             audio_stage.write_bytes(opus)
             metadata_stage.write_text(
-                json.dumps(
-                    _metadata(
-                        definition,
-                        client.config,
-                        reported_engine_version,
-                        ffmpeg_version,
-                        timestamp,
-                        opus,
-                    ),
-                    ensure_ascii=False,
-                    indent=2,
-                    sort_keys=True,
-                )
-                + "\n",
-                encoding="utf-8",
+                _encode_json(metadata), encoding="utf-8"
             )
             staged.extend(
                 [
@@ -106,7 +138,13 @@ def generate_batch(
                     (metadata_stage, output / metadata_stage.name),
                 ]
             )
+            metadata_by_id[definition.id] = metadata
+            generated.append(output / audio_stage.name)
 
+        manifest_stage = staging / MANIFEST_NAME
+        manifest_stage.write_text(
+            _encode_json(_manifest(metadata_by_id)), encoding="utf-8"
+        )
         if output.exists() and not output.is_dir():
             raise GenerationError(f"output path is not a directory: {output}")
         if not force:
@@ -118,21 +156,57 @@ def generate_batch(
         output.mkdir(parents=True, exist_ok=True)
         for source, target in staged:
             os.replace(source, target)
+        os.replace(manifest_stage, output / MANIFEST_NAME)
 
-    return [output / f"{definition.id}.opus" for definition in definitions]
+    return GenerationResult(tuple(generated), tuple(reused))
 
 
 def _output_paths(output: Path, definition: AudioDefinition) -> tuple[Path, Path]:
     return output / f"{definition.id}.opus", output / f"{definition.id}.json"
 
 
-def _metadata(
+def _read_existing_metadata(
+    output: Path, ignored_ids: set[str]
+) -> dict[str, dict[str, object]]:
+    if not output.exists():
+        return {}
+    metadata_by_id: dict[str, dict[str, object]] = {}
+    for metadata_path in sorted(output.glob("*.json")):
+        if metadata_path.name == MANIFEST_NAME or metadata_path.stem in ignored_ids:
+            continue
+        metadata = _read_metadata(metadata_path)
+        asset_id = metadata.get("id")
+        if asset_id != metadata_path.stem:
+            raise GenerationError(f"metadata ID does not match {metadata_path.name}")
+        audio_path = output / f"{asset_id}.opus"
+        if not audio_path.is_file():
+            raise GenerationError(f"audio file is missing for {metadata_path.name}")
+        if metadata.get("sha256") != _file_sha256(audio_path):
+            raise GenerationError(f"audio checksum does not match {metadata_path.name}")
+        metadata_by_id[str(asset_id)] = metadata
+    return metadata_by_id
+
+
+def _read_metadata(path: Path) -> dict[str, object]:
+    try:
+        value = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, UnicodeError, json.JSONDecodeError) as error:
+        raise GenerationError(f"cannot read metadata file {path}: {error}") from error
+    if not isinstance(value, dict):
+        raise GenerationError(f"metadata file must contain an object: {path}")
+    return value
+
+
+def _file_sha256(path: Path) -> str:
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def _metadata_fields(
     definition: AudioDefinition,
     config: GeneratorConfig,
     reported_engine_version: str,
+    speaker_id: str,
     ffmpeg_version: str,
-    generated_at: str,
-    opus: bytes,
 ) -> dict[str, object]:
     return {
         "attribution": config.attribution_text if config.attribution_required else None,
@@ -141,17 +215,71 @@ def _metadata(
         "engine_version": config.engine_version,
         "engine_version_reported": reported_engine_version,
         "ffmpeg_version": ffmpeg_version,
-        "generated_at_utc": generated_at,
+        "generator_version": __version__,
         "id": definition.id,
-        "metadata_version": 1,
+        "metadata_version": 2,
         "output_format": "opus",
         "opus_bitrate": config.opus_bitrate,
         "provider": config.provider,
         "reading": definition.reading,
-        "sha256": hashlib.sha256(opus).hexdigest(),
+        "speaker_id": speaker_id,
         "speaker_name": config.speaker_name,
         "style_id": config.style_id,
         "style_name": config.style_name,
         "terms_url": config.terms_url,
         "text": definition.text,
     }
+
+
+def _generation_fingerprint(
+    definition: AudioDefinition,
+    config: GeneratorConfig,
+    reported_engine_version: str,
+    speaker_id: str,
+    ffmpeg_version: str,
+) -> str:
+    fields = _metadata_fields(
+        definition, config, reported_engine_version, speaker_id, ffmpeg_version
+    )
+    canonical = json.dumps(
+        fields, ensure_ascii=False, sort_keys=True, separators=(",", ":")
+    ).encode("utf-8")
+    return hashlib.sha256(canonical).hexdigest()
+
+
+def _metadata(
+    definition: AudioDefinition,
+    config: GeneratorConfig,
+    reported_engine_version: str,
+    speaker_id: str,
+    ffmpeg_version: str,
+    generated_at: str,
+    opus: bytes,
+) -> dict[str, object]:
+    fields = _metadata_fields(
+        definition, config, reported_engine_version, speaker_id, ffmpeg_version
+    )
+    return {
+        **fields,
+        "generated_at_utc": generated_at,
+        "generation_fingerprint": _generation_fingerprint(
+            definition, config, reported_engine_version, speaker_id, ffmpeg_version
+        ),
+        "sha256": hashlib.sha256(opus).hexdigest(),
+    }
+
+
+def _manifest(metadata_by_id: dict[str, dict[str, object]]) -> dict[str, object]:
+    assets: dict[str, dict[str, object]] = {}
+    for asset_id, metadata in sorted(metadata_by_id.items()):
+        assets[asset_id] = {
+            "audio_file": f"{asset_id}.opus",
+            "generation_fingerprint": metadata.get("generation_fingerprint"),
+            "metadata_file": f"{asset_id}.json",
+            "sha256": metadata["sha256"],
+        }
+    return {"assets": assets, "manifest_version": 1}
+
+
+def _encode_json(value: dict[str, object]) -> str:
+    return json.dumps(value, ensure_ascii=False, indent=2, sort_keys=True) + "\n"

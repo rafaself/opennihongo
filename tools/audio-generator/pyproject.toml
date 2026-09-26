@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "opennihongo-audio-generator"
-version = "0.1.0"
+dynamic = ["version"]
 description = "Development-only VOICEVOX pronunciation asset generator"
 requires-python = ">=3.11"
 dependencies = []
@@ -14,6 +14,9 @@ opennihongo-audio = "audio_generator.cli:main"
 
 [tool.setuptools]
 package-dir = {"" = "src"}
+
+[tool.setuptools.dynamic]
+version = {attr = "audio_generator.__version__"}
 
 [tool.setuptools.packages.find]
 where = ["src"]

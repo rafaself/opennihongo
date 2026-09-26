@@ -36,7 +36,7 @@ class VoicevoxClient:
         self.base_url = config.engine_url.rstrip("/")
         self._opener = build_opener(_NoRedirectHandler)
 
-    def verify_engine(self) -> str:
+    def verify_engine(self) -> tuple[str, str]:
         version_value = self._json_request("/version")
         if not isinstance(version_value, str):
             raise VoicevoxError("VOICEVOX /version returned an invalid response")
@@ -64,7 +64,12 @@ class VoicevoxClient:
                     and style.get("id") == self.config.style_id
                     and style.get("name") == self.config.style_name
                 ):
-                    return version_value
+                    speaker_id = speaker.get("speaker_uuid")
+                    if not isinstance(speaker_id, str) or not speaker_id:
+                        raise VoicevoxError(
+                            "configured VOICEVOX speaker has no valid speaker UUID"
+                        )
+                    return version_value, speaker_id
             break
         raise VoicevoxError(
             "configured VOICEVOX style is unavailable: "

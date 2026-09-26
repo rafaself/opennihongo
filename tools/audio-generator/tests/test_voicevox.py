@@ -31,10 +31,12 @@ WAV = make_wav()
 REQUESTS: list[tuple[str, str, bytes]] = []
 STYLE_ID = 10005
 ENGINE_VERSION = "0.24.0"
+SPEAKER_UUID: str | None = "speaker-uuid"
 
 
 class FakeEngine(BaseHTTPRequestHandler):
     def do_GET(self) -> None:
+        global SPEAKER_UUID
         REQUESTS.append((self.command, self.path, b""))
         if self.path == "/version":
             self.respond(200, json.dumps(ENGINE_VERSION).encode())
@@ -45,6 +47,7 @@ class FakeEngine(BaseHTTPRequestHandler):
                     [
                         {
                             "name": "女声1",
+                            "speaker_uuid": SPEAKER_UUID,
                             "styles": [{"name": "ノーマル", "id": STYLE_ID}],
                         }
                     ]
@@ -104,13 +107,24 @@ class VoicevoxClientTests(unittest.TestCase):
         self.client = VoicevoxClient(config)
 
     def test_verifies_pinned_engine_version_and_style(self) -> None:
-        self.assertEqual(self.client.verify_engine(), "0.24.0")
+        self.assertEqual(self.client.verify_engine(), ("0.24.0", "speaker-uuid"))
+
+    def test_rejects_selected_speaker_without_uuid(self) -> None:
+        global SPEAKER_UUID
+        SPEAKER_UUID = None
+        try:
+            with self.assertRaisesRegex(VoicevoxError, "speaker UUID"):
+                self.client.verify_engine()
+        finally:
+            SPEAKER_UUID = "speaker-uuid"
 
     def test_accepts_docker_latest_marker_and_records_it(self) -> None:
         global ENGINE_VERSION
         ENGINE_VERSION = "latest"
         try:
-            self.assertEqual(self.client.verify_engine(), "latest")
+            self.assertEqual(
+                self.client.verify_engine(), ("latest", "speaker-uuid")
+            )
         finally:
             ENGINE_VERSION = "0.24.0"
 
@@ -147,7 +161,7 @@ class VoicevoxClientTests(unittest.TestCase):
                 )
             finally:
                 ENGINE_VERSION = "0.24.0"
-            audio = generated[0].read_bytes()
+            audio = generated.generated[0].read_bytes()
             metadata = json.loads(
                 (Path(directory) / "nihongo.json").read_text(encoding="utf-8")
             )
@@ -157,7 +171,10 @@ class VoicevoxClientTests(unittest.TestCase):
         self.assertEqual(metadata["reading"], "にほんご")
         self.assertEqual(metadata["engine_version"], "0.24.0")
         self.assertEqual(metadata["engine_version_reported"], "latest")
+        self.assertEqual(metadata["speaker_id"], "speaker-uuid")
         self.assertEqual(metadata["style_id"], STYLE_ID)
+        self.assertEqual(metadata["generator_version"], "0.1.0")
+        self.assertEqual(len(metadata["generation_fingerprint"]), 64)
         self.assertIn("ffmpeg version", metadata["ffmpeg_version"])
 
     def test_rejects_engine_with_wrong_version(self) -> None:
