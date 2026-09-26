@@ -1,0 +1,3 @@
+interface:
+  display_name: "VOICEVOX Japanese Speech"
+  short_description: "Generate Japanese speech with local VOICEVOX"
