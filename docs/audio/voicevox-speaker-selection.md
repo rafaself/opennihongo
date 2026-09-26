@@ -1,40 +1,43 @@
 # VOICEVOX speaker selection
 
-Issue #107 records the initial speaker for the pronunciation asset pipeline.
+## Selected voices
 
-## Decision
+Use these four VOICEVOX Nemo styles for Japanese speech generation:
 
-Use VOICEVOX Nemo, speaker 女声1, style ノーマル, style ID 10005, with VOICEVOX Nemo Engine 0.24.0. The machine-readable selection is in [voice.json](../../tools/audio-generator/voice.json), so the generation tool can load the same speaker and attribution settings.
+| Voice and style | Style ID | Official voice description |
+| --- | ---: | --- |
+| 女声1 / ノーマル | 10005 | Transparent and calm |
+| 男声3 / ノーマル | 10002 | Energetic yet calm |
+| 男声2 / ノーマル | 10000 | Deep and weighty |
+| 女声6 / ノーマル | 10006 | Fresh and reassuring |
 
-VOICEVOX names the synthesis API parameter `speaker` for compatibility, but its value is a style ID. The selected configuration therefore stores the explicit `style_id` field. The engine must expose style ID 10005 for 女声1 / ノーマル; the generator should fail clearly if its installed engine does not.
+Nemo is a characterless voice library. These four styles use the same Nemo audio terms and required credit; choosing a different style does not change the permissions.
 
-## Comparison
+## Listen to the samples
 
-This first-pass review compares official voice descriptions and stated usage terms for a shortlist. It is a qualitative selection, not a blinded listening or pronunciation-error benchmark. The generator should use identical sample text when validating the voice in its actual engine environment.
+[Play the four-voice comparison](voice-comparison/four-nemo-voices.wav). It sequences the retained samples in the order below, with a one-second pause between voices. Individual clips are available for focused listening.
 
-| Candidate                      | Clarity and delivery                                          | Fit for study audio                                                                                                                                                                                                                 | Decision                           |
-| ------------------------------ | ------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------- |
-| VOICEVOX Nemo 女声1 / ノーマル | Official materials describe it as transparent and calm.       | Nemo is characterless and intended for neutral use across settings, which keeps repeated word and phrase readings from inheriting a fictional character persona.                                                                    | Selected.                          |
-| 四国めたん / ノーマル          | Official materials describe a clear voice with a strong core. | Strong articulation is promising, but the named character gives the default voice a more distinct persona than the neutral delivery requested by the epic.                                                                          | Considered; neutral fit is weaker. |
-| ずんだもん / ノーマル          | Official materials describe a high, childlike voice.          | Its distinctive register and character are less suitable as a neutral reference voice for repeated beginner drills.                                                                                                                 | Not selected.                      |
-| もち子さん / ノーマル          | Official materials describe a clear, gentle voice.            | The voice library requires the voice actor credit and prior contact for enterprise use; its terms also restrict distributing generated audio materials without prior contact. That is a poor fit for reusable pronunciation assets. | Not selected.                      |
+| Order | Voice and style | Style ID | Individual sample |
+| ---: | --- | ---: | --- |
+| 1 | 女声1 / ノーマル | 10005 | [WAV](voice-comparison/10005-female-1-normal.wav) |
+| 2 | 男声3 / ノーマル | 10002 | [WAV](voice-comparison/10002-male-3-normal.wav) |
+| 3 | 男声2 / ノーマル | 10000 | [WAV](voice-comparison/10000-male-2-normal.wav) |
+| 4 | 女声6 / ノーマル | 10006 | [WAV](voice-comparison/10006-female-6-normal.wav) |
 
-The shortlist is intentionally small: it compares the neutral option against two widely available character voices and one especially clear, gentle option whose usage terms add constraints relevant to generated assets.
+## Usage terms and credit
 
-## Licensing and attribution
+Generated audio may be used commercially or non-commercially when credited as **VOICEVOX Nemo**. The terms prohibit use without credit, uses grossly against public morals or damaging VOICEVOX's or the voice provider's reputation or image, rights violations, false attribution, promoting crime, machine-learning use, and other violations of the terms. Review the linked terms again before publishing generated audio because they may change.
 
-- The VOICEVOX software terms require a credit identifying VOICEVOX and require generated audio to follow the selected voice library's terms.
-- The VOICEVOX Nemo terms allow commercial and non-commercial use of generated audio when credited. The required text is exactly “VOICEVOX Nemo”. Record this credit wherever the application exposes its audio and license credits. The official Q&A recommends an audible credit at the beginning or end when audio is used on its own; standalone redistribution or reuse of a clip must preserve the required credit in that context.
-- The Nemo Engine is a separate development-time tool. Its source repository offers LGPL v3 and an alternate license by request. Run it only in the generation environment; the production app consumes generated static audio and must not depend on or redistribute the engine.
-- Recheck the linked terms before producing or publishing the audio library because speaker licenses and engine releases can change.
+Keep the credit with the audio wherever the application presents its audio and license credits. The VOICEVOX software terms also require identifying VOICEVOX and following the selected voice library's terms.
+
+## Production status
+
+The selected set is a voice-generation choice; it has not yet been integrated across the production audio. The current generator configuration and checked-in pronunciation assets still use 女声1 / ノーマル (10005). The machine-readable configuration is [voice.json](../../tools/audio-generator/voice.json). Before generating with another style, confirm its ID is available in the running engine's `/speakers` response.
 
 ## Sources
 
-- [VOICEVOX Nemo overview](https://voicevox.hiroshiba.jp/nemo/) describes the characterless voice library and its intended broad, neutral use.
-- [VOICEVOX Nemo voice descriptions](https://prtimes.jp/main/html/rd/p/000000001.000132725.html) describes 女声1 as transparent and calm, alongside the other Nemo voices.
-- [VOICEVOX Nemo terms](https://voicevox.hiroshiba.jp/nemo/term/) state the required attribution and permitted use.
-- [VOICEVOX software terms](https://voicevox.hiroshiba.jp/term/) cover the engine's general credit and voice-library requirements.
-- [VOICEVOX audio model list](https://github.com/VOICEVOX/voicevox_vvm/blob/main/README.md) maps Nemo 女声1 / ノーマル to style ID 10005 and documents model and library terms.
-- [VOICEVOX Nemo Engine 0.24.0](https://github.com/VOICEVOX/voicevox_nemo_engine/releases/tag/0.24.0) is the latest stable engine release selected for reproducible generation.
-- [VOICEVOX Nemo Engine license](https://github.com/VOICEVOX/voicevox_nemo_engine/blob/master/LICENSE) describes the LGPL v3 and alternate-license terms.
-- [四国めたん profile](https://voicevox.hiroshiba.jp/product/shikoku_metan/), [ずんだもん profile](https://voicevox.hiroshiba.jp/product/zundamon/), and [もち子さん profile](https://voicevox.hiroshiba.jp/product/mochikosan/) support the comparison above. See the [もち子さん terms](https://vtubermochio.wixsite.com/mochizora/%E5%88%A9%E7%94%A8%E8%A6%8F%E7%B4%84) for its additional credit and distribution requirements.
+- [VOICEVOX Nemo overview](https://voicevox.hiroshiba.jp/nemo/) describes Nemo as a characterless voice library.
+- [VOICEVOX Nemo terms](https://voicevox.hiroshiba.jp/nemo/term/) specify the required credit, permitted uses, and restrictions.
+- [VOICEVOX audio model list](https://github.com/VOICEVOX/voicevox_vvm/blob/main/README.md) maps Nemo style names to style IDs and repeats the required Nemo credit.
+- [VOICEVOX Nemo voice descriptions](https://prtimes.jp/main/html/rd/p/000000001.000132725.html) describes 女声1, 男声2, 男声3, and 女声6.
+- [VOICEVOX software terms](https://voicevox.hiroshiba.jp/term/) cover VOICEVOX credit and use of each voice library under its own terms.
