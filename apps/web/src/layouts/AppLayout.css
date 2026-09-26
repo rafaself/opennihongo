@@ -50,14 +50,9 @@
 }
 
 .app-brand__mark {
-  align-items: center;
-  background: var(--ns-primitive-color-hinomaru-600);
-  border-radius: var(--ns-radius-lg);
-  color: #fff;
-  display: inline-flex;
-  font-size: 1.1rem;
+  display: block;
+  flex: none;
   height: 2.25rem;
-  justify-content: center;
   width: 2.25rem;
 }
 
@@ -139,11 +134,24 @@
 }
 
 .app-shell__footer {
+  align-items: center;
   border-top: 1px solid var(--ns-color-border-subtle);
   color: var(--ns-color-text-secondary);
+  display: flex;
   font-size: var(--ns-text-label-size);
+  gap: 0.75rem 1.5rem;
+  justify-content: space-between;
   padding: 1.25rem;
-  text-align: center;
+}
+
+.app-shell__footer-link {
+  color: var(--ns-color-brand-text);
+  font-weight: 700;
+}
+
+.app-shell__footer-link:focus-visible {
+  outline: var(--ns-border-width-focus) solid var(--ns-color-focus);
+  outline-offset: 3px;
 }
 
 .app-shell--lesson {
@@ -256,5 +264,11 @@
 
   .app-shell__main {
     padding: 2rem 1.25rem;
+  }
+
+  .app-shell__footer {
+    flex-wrap: wrap;
+    justify-content: center;
+    text-align: center;
   }
 }

@@ -11,9 +11,13 @@ function AppBrand({ compact = false }: { compact?: boolean }) {
       className={`app-brand${compact ? " app-brand--compact" : ""}`}
       to="/"
     >
-      <span aria-hidden="true" className="app-brand__mark">
-        日
-      </span>
+      <img
+        alt=""
+        className="app-brand__mark"
+        height="36"
+        src={`${import.meta.env.BASE_URL}kitsune.svg`}
+        width="36"
+      />
       <span className="app-brand__name">OpenNihongo</span>
     </Link>
   );
@@ -31,10 +35,12 @@ export function AppLayout() {
   const previousPath = useRef(pathname);
 
   useEffect(() => {
-    const section = navigationSections.find(
-      ({ path }) => path === activePath,
-    );
-    document.title = `${section?.label ?? "Page not found"} · OpenNihongo`;
+    const section = navigationSections.find(({ path }) => path === activePath);
+    const pageTitle =
+      activePath === "/acknowledgements"
+        ? "Acknowledgements & licenses"
+        : (section?.label ?? "Page not found");
+    document.title = `${pageTitle} · OpenNihongo`;
 
     if (previousPath.current !== pathname) {
       previousPath.current = pathname;
@@ -112,7 +118,10 @@ export function AppLayout() {
         </main>
         {!lesson && (
           <footer className="app-shell__footer">
-            A local-first Japanese learning space
+            <span>A local-first Japanese learning space</span>
+            <Link className="app-shell__footer-link" to="/acknowledgements">
+              Acknowledgements &amp; licenses
+            </Link>
           </footer>
         )}
       </div>

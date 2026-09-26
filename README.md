@@ -22,6 +22,9 @@ for public imports, Storybook and Gallery responsibilities, and local validation
 See [CONTRIBUTING.md](CONTRIBUTING.md) for repository conventions and
 development workflow.
 
-## License
+## Licensing status
 
-MIT
+The project license is pending a final decision. Until a project license is
+published, do not assume permission to copy, modify, distribute, or reuse
+OpenNihongo code. Third-party software and assets remain subject to their own
+license terms and notices.

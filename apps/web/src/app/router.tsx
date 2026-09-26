@@ -4,6 +4,7 @@ import {
   createRouter,
 } from "@tanstack/react-router";
 import { AppLayout } from "../layouts/AppLayout";
+import { AcknowledgementsPage } from "../pages/AcknowledgementsPage";
 import { HomePage } from "../pages/HomePage";
 import { KanaPage } from "../pages/KanaPage";
 import { NotFoundPage } from "../pages/NotFoundPage";
@@ -52,6 +53,12 @@ const libraryRoute = createRoute({
   component: () => <UpcomingSectionPage {...appSections.library} />,
 });
 
+const acknowledgementsRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/acknowledgements",
+  component: AcknowledgementsPage,
+});
+
 const routeTree = rootRoute.addChildren([
   homeRoute,
   kanaRoute,
@@ -59,6 +66,7 @@ const routeTree = rootRoute.addChildren([
   progressRoute,
   questsRoute,
   libraryRoute,
+  acknowledgementsRoute,
 ]);
 
 export const router = createRouter({ routeTree });
