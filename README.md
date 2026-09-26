@@ -16,6 +16,8 @@ See [the frontend architecture guide](docs/architecture/frontend.md) for module
 ownership and dependency rules. The UI package's isolated component workshop is
 available with `pnpm storybook`. See the [Design System developer workflow](docs/architecture/design-system-workflow.md)
 for public imports, Storybook and Gallery responsibilities, and local validation commands.
+See the [local VOICEVOX generation guide](tools/audio-generator/README.md) to
+run the development-only audio engine.
 
 ## Contributing
 
