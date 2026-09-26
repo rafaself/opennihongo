@@ -3,6 +3,7 @@ import unittest
 import wave
 from unittest.mock import patch
 
+from audio_fixtures import make_ogg_opus
 from audio_generator.transcoder import (
     FfmpegTranscoder,
     TranscodeError,
@@ -22,17 +23,7 @@ def make_wav(frame_count: int = 2400) -> bytes:
 
 
 def make_opus_page(serial: int = 0) -> bytes:
-    packet = b"OpusHead" + bytes(11)
-    page = (
-        b"OggS"
-        + bytes([0, 2])
-        + bytes(8)
-        + serial.to_bytes(4, "little")
-        + bytes(8)
-        + bytes([1, len(packet)])
-        + packet
-    )
-    return normalize_ogg_serial(page)
+    return make_ogg_opus(serial)
 
 
 class WavValidationTests(unittest.TestCase):
@@ -51,9 +42,11 @@ class WavValidationTests(unittest.TestCase):
             validate_wav(make_wav()[:-2])
 
     def test_transcoder_validates_before_running_ffmpeg(self) -> None:
-        with patch("audio_generator.transcoder.subprocess.run") as run:
-            with self.assertRaisesRegex(TranscodeError, "invalid PCM WAV"):
-                FfmpegTranscoder().convert_wav_to_opus(b"invalid")
+        with (
+            patch("audio_generator.transcoder.subprocess.run") as run,
+            self.assertRaisesRegex(TranscodeError, "invalid PCM WAV"),
+        ):
+            FfmpegTranscoder().convert_wav_to_opus(b"invalid")
 
         run.assert_not_called()
 
@@ -72,7 +65,7 @@ class OpusSettingsTests(unittest.TestCase):
         ) as run:
             output = FfmpegTranscoder(bitrate="32k").convert_wav_to_opus(wav)
 
-        self.assertEqual(output, make_opus_page())
+        self.assertEqual(output, normalize_ogg_serial(make_opus_page()))
         self.assertLess(len(output), len(wav))
         command = run.call_args.args[0]
         self.assertEqual(command[command.index("-ac") + 1], "1")

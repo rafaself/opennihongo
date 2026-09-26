@@ -8,6 +8,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from unittest.mock import patch
 
+from audio_fixtures import make_ogg_opus
 from audio_generator.config import load_config
 from audio_generator.generation import GenerationError, generate_batch
 from audio_generator.models import AudioDefinition
@@ -19,20 +20,10 @@ from audio_generator.transcoder import (
 
 
 def make_ogg_page(serial: int) -> bytes:
-    packet = b"OpusHead" + bytes(11)
-    return (
-        b"OggS"
-        + bytes([0, 2])
-        + bytes(8)
-        + serial.to_bytes(4, "little")
-        + bytes(4)
-        + bytes(4)
-        + bytes([1, len(packet)])
-        + packet
-    )
+    return make_ogg_opus(serial)
 
 
-OPUS = normalize_ogg_serial(make_ogg_page(0))
+OPUS = normalize_ogg_serial(make_ogg_opus())
 
 
 def make_wav() -> bytes:
@@ -157,7 +148,9 @@ class GenerationTests(unittest.TestCase):
             self.assertEqual(second.generated, ())
             self.assertEqual(second.reused, (output_dir / "nihongo.opus",))
             self.assertEqual(second_client.definitions, [])
-            self.assertEqual((output_dir / "nihongo.json").read_bytes(), metadata_before)
+            self.assertEqual(
+                (output_dir / "nihongo.json").read_bytes(), metadata_before
+            )
 
     def test_manifest_keeps_assets_from_previous_batches(self) -> None:
         with tempfile.TemporaryDirectory() as directory:

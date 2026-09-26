@@ -76,7 +76,23 @@ UUID and style ID, engine and generator versions, UTC generation time,
 attribution, output format, SHA-256 checksum, and a fingerprint of all
 generation inputs. Matching assets are reused without synthesis; changed inputs
 require `--force` before existing audio is replaced. Outputs are staged as a
-batch and are not published if synthesis or encoding fails.
+batch and are not published unless the complete Opus stream, metadata, checksum,
+and updated inventory pass validation. Retained assets are checked before they
+are carried into the new inventory, and unpaired audio files are rejected.
+Successful generation reports how many requested assets passed validation.
+
+To audit an already generated directory without contacting VOICEVOX, run:
+
+```sh
+PYTHONPATH=tools/audio-generator/src python3 -m audio_generator \
+  --validate-only
+```
+
+The validator checks that every audio file and metadata sidecar exists, parses
+as the supported non-empty Ogg Opus format, passes Ogg page CRC checks, and
+agrees on the audio SHA-256, synthesis fingerprint, metadata sizes, and
+`.manifest.json` inventory. It also rejects orphan audio files. Use
+`--output-dir` to validate a different directory.
 
 The speaker, engine URL, timeout, FFmpeg executable, and Opus bitrate can be
 changed in an alternate config file passed with `--config`. Use `--output-dir`

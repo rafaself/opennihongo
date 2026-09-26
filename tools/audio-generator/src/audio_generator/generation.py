@@ -21,6 +21,12 @@ from audio_generator.transcoder import (
     OPUS_VBR_MODE,
     validate_opus,
 )
+from audio_generator.validation import (
+    AssetValidationError,
+    metadata_fingerprint,
+    validate_asset_file,
+    validate_manifest,
+)
 
 MANIFEST_NAME = ".manifest.json"
 
@@ -88,11 +94,7 @@ def generate_batch(
         metadata_exists = metadata_path.exists()
         if not force and audio_exists and metadata_exists:
             metadata = _read_metadata(metadata_path)
-            if metadata.get("id") != definition.id:
-                raise GenerationError(f"metadata ID does not match {metadata_path.name}")
-            digest = _file_sha256(audio_path)
-            if metadata.get("sha256") != digest:
-                raise GenerationError(f"audio checksum does not match {metadata_path.name}")
+            _validate_asset(audio_path, metadata, metadata_path, definition.id)
             expected_fingerprint = _generation_fingerprint(
                 definition,
                 client.config,
@@ -141,22 +143,27 @@ def generate_batch(
             audio_stage = staging / f"{definition.id}.opus"
             metadata_stage = staging / f"{definition.id}.json"
             audio_stage.write_bytes(opus)
-            metadata_stage.write_text(
-                _encode_json(metadata), encoding="utf-8"
-            )
+            metadata_stage.write_text(_encode_json(metadata), encoding="utf-8")
+            staged_metadata = _read_metadata(metadata_stage)
+            _validate_asset(audio_stage, staged_metadata, metadata_stage, definition.id)
             staged.extend(
                 [
                     (audio_stage, output / audio_stage.name),
                     (metadata_stage, output / metadata_stage.name),
                 ]
             )
-            metadata_by_id[definition.id] = metadata
+            metadata_by_id[definition.id] = staged_metadata
             generated.append(output / audio_stage.name)
 
         manifest_stage = staging / MANIFEST_NAME
-        manifest_stage.write_text(
-            _encode_json(_manifest(metadata_by_id)), encoding="utf-8"
-        )
+        manifest = _manifest(metadata_by_id)
+        manifest_stage.write_text(_encode_json(manifest), encoding="utf-8")
+        try:
+            validate_manifest(_read_metadata(manifest_stage), metadata_by_id)
+        except AssetValidationError as error:
+            raise GenerationError(
+                f"asset manifest validation failed: {error}"
+            ) from error
         if output.exists() and not output.is_dir():
             raise GenerationError(f"output path is not a directory: {output}")
         if not force:
@@ -191,11 +198,13 @@ def _read_existing_metadata(
         if asset_id != metadata_path.stem:
             raise GenerationError(f"metadata ID does not match {metadata_path.name}")
         audio_path = output / f"{asset_id}.opus"
-        if not audio_path.is_file():
-            raise GenerationError(f"audio file is missing for {metadata_path.name}")
-        if metadata.get("sha256") != _file_sha256(audio_path):
-            raise GenerationError(f"audio checksum does not match {metadata_path.name}")
+        _validate_asset(audio_path, metadata, metadata_path, str(asset_id))
         metadata_by_id[str(asset_id)] = metadata
+    for audio_path in sorted(output.glob("*.opus")):
+        if not audio_path.is_file():
+            raise GenerationError(f"audio asset is not a file: {audio_path}")
+        if audio_path.stem not in metadata_by_id and audio_path.stem not in ignored_ids:
+            raise GenerationError(f"metadata file is missing for {audio_path.name}")
     return metadata_by_id
 
 
@@ -209,8 +218,21 @@ def _read_metadata(path: Path) -> dict[str, object]:
     return value
 
 
-def _file_sha256(path: Path) -> str:
-    return hashlib.sha256(path.read_bytes()).hexdigest()
+def _validate_asset(
+    audio_path: Path,
+    metadata: dict[str, object],
+    metadata_path: Path,
+    expected_id: str,
+) -> None:
+    try:
+        validate_asset_file(
+            audio_path,
+            metadata,
+            metadata_path=metadata_path,
+            expected_id=expected_id,
+        )
+    except AssetValidationError as error:
+        raise GenerationError(f"asset validation failed: {error}") from error
 
 
 def _metadata_fields(
@@ -257,10 +279,7 @@ def _generation_fingerprint(
     fields = _metadata_fields(
         definition, config, reported_engine_version, speaker_id, ffmpeg_version
     )
-    canonical = json.dumps(
-        fields, ensure_ascii=False, sort_keys=True, separators=(",", ":")
-    ).encode("utf-8")
-    return hashlib.sha256(canonical).hexdigest()
+    return metadata_fingerprint(fields)
 
 
 def _metadata(
