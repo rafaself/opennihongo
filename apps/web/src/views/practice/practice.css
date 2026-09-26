@@ -117,6 +117,10 @@
   width: 100%;
 }
 
+.practice-session__prompt--typed {
+  padding-inline: 1rem;
+}
+
 .practice-session__prompt-kana {
   font-size: clamp(3rem, 8vw, 4.5rem);
   font-weight: 700;
@@ -125,7 +129,9 @@
 }
 
 .practice-session__prompt-kana--compact {
-  font-size: clamp(2.25rem, 5vw, 3rem);
+  font-size: clamp(2.25rem, 5vw, 2.75rem);
+  text-align: center;
+  width: 100%;
 }
 
 .practice-session__prompt-romaji {

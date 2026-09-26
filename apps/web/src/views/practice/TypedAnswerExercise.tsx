@@ -16,7 +16,10 @@ export function TypedAnswerExercise({
 }: TypedAnswerExerciseProps) {
   return (
     <div className="practice-session__exercise">
-      <Surface className="practice-session__prompt" elevation="card">
+      <Surface
+        className="practice-session__prompt practice-session__prompt--typed"
+        elevation="card"
+      >
         <Text className="practice-session__prompt-kana practice-session__prompt-kana--compact">
           {exercise.prompt.text}
         </Text>
