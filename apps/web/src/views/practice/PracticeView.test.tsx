@@ -78,13 +78,9 @@ describe("PracticeView", () => {
     });
     await user.click(screen.getByRole("button", { name: "soto" }));
     await user.click(screen.getByRole("button", { name: "はと" }));
-    expect(
-      screen.getByText("Those words do not match. Try a different pair."),
-    ).toBeTruthy();
 
     await user.click(screen.getByRole("button", { name: "そと" }));
     await user.click(screen.getByRole("button", { name: "soto" }));
-    expect(screen.getByText("soto matched with そと.")).toBeTruthy();
     await user.click(screen.getByRole("button", { name: "hato" }));
     await user.click(screen.getByRole("button", { name: "はと" }));
     await user.click(screen.getByRole("button", { name: "sato" }));

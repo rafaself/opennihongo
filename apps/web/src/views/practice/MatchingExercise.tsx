@@ -20,11 +20,25 @@ export function MatchingExercise({
 }: MatchingExerciseProps) {
   const [selectedRomaji, setSelectedRomaji] = useState<string | null>(null);
   const [selectedHiragana, setSelectedHiragana] = useState<string | null>(null);
-  const [selectionMessage, setSelectionMessage] = useState("");
+  const [errorPair, setErrorPair] = useState<KanaPairAnswer | null>(null);
   const rightPairs = useMemo(
     () => [...exercise.pairs].reverse(),
     [exercise.pairs],
   );
+
+  useEffect(() => {
+    if (!errorPair) {
+      return;
+    }
+
+    const timeoutId = window.setTimeout(() => {
+      setErrorPair(null);
+    }, 1000);
+
+    return () => {
+      window.clearTimeout(timeoutId);
+    };
+  }, [errorPair]);
 
   const matchPair = useCallback(
     (romaji: string, hiragana: string) => {
@@ -41,10 +55,10 @@ export function MatchingExercise({
         (pair) => pair.romaji === romaji && pair.hiragana === hiragana,
       );
       if (isCorrectPair) {
+        setErrorPair(null);
         onPairMatched({ romaji, hiragana });
-        setSelectionMessage(`${romaji} matched with ${hiragana}.`);
       } else {
-        setSelectionMessage("Those words do not match. Try a different pair.");
+        setErrorPair({ romaji, hiragana });
       }
       setSelectedRomaji(null);
       setSelectedHiragana(null);
@@ -58,7 +72,6 @@ export function MatchingExercise({
         matchPair(romaji, selectedHiragana);
       } else {
         setSelectedRomaji(romaji);
-        setSelectionMessage("");
       }
     },
     [matchPair, selectedHiragana],
@@ -70,7 +83,6 @@ export function MatchingExercise({
         matchPair(selectedRomaji, hiragana);
       } else {
         setSelectedHiragana(hiragana);
-        setSelectionMessage("");
       }
     },
     [matchPair, selectedRomaji],
@@ -162,6 +174,7 @@ export function MatchingExercise({
                 aria-keyshortcuts={shortcut}
                 aria-pressed={selectedRomaji === romaji}
                 className="practice-session__match-option"
+                data-error={errorPair?.romaji === romaji}
                 data-matched={matched}
                 data-selected={selectedRomaji === romaji}
                 disabled={matched || disabled}
@@ -198,6 +211,7 @@ export function MatchingExercise({
                 aria-keyshortcuts={shortcut}
                 aria-pressed={selectedHiragana === hiragana}
                 className="practice-session__match-option practice-session__match-option--kana"
+                data-error={errorPair?.hiragana === hiragana}
                 data-matched={matched}
                 data-selected={selectedHiragana === hiragana}
                 disabled={matched || disabled}
@@ -220,9 +234,6 @@ export function MatchingExercise({
           })}
         </div>
       </div>
-      <p aria-live="polite" className="practice-session__match-status">
-        {selectionMessage}
-      </p>
     </>
   );
 }
