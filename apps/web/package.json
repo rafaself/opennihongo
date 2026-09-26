@@ -25,6 +25,7 @@
     ]
   },
   "devDependencies": {
+    "@vitest/coverage-v8": "5.0.1",
     "@testing-library/react": "16.3.3",
     "@testing-library/user-event": "14.6.7",
     "@tailwindcss/vite": "^4.3.3",

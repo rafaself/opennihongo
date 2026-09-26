@@ -1,5 +1,5 @@
 // @vitest-environment jsdom
-import { cleanup, render, screen } from "@testing-library/react";
+import { act, cleanup, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import type { KanaItem, KanaProgress } from "@opennihongo/core";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
@@ -64,10 +64,35 @@ describe("first hiragana session", () => {
       }
     }
 
-    screen.getByRole("heading", { name: /session complete/i });
+    const heading = screen.getByRole("heading", { name: /session complete/i });
+    expect(document.activeElement).toBe(heading);
     screen.getByText(/5 of 5 correct/i);
     expect(storage.saveKanaAnswer).toHaveBeenCalledTimes(5);
     expect(storage.saveKanaAnswer.mock.calls[0]?.[1]).toBe(true);
+  });
+
+  it("can start another session without discarding saved progress", async () => {
+    const user = userEvent.setup();
+    render(<KanaPage />);
+
+    await screen.findByText("あ");
+    for (const [index, answer] of ["a", "i", "u", "e", "o"].entries()) {
+      await user.type(screen.getByRole("textbox", { name: /romaji/i }), answer);
+      await user.click(screen.getByRole("button", { name: /check answer/i }));
+      await screen.findByText("Correct!");
+      await user.click(
+        screen.getByRole("button", {
+          name: index === 4 ? /see results/i : /next kana/i,
+        }),
+      );
+    }
+
+    await user.click(screen.getByRole("button", { name: /practice again/i }));
+    screen.getByText("あ");
+    screen.getByText(/character 1 of 5 · 5 practiced on this device/i);
+    expect(document.activeElement).toBe(
+      screen.getByRole("textbox", { name: /romaji/i }),
+    );
   });
 
   it("shows the expected answer and records an incorrect response", async () => {
@@ -95,6 +120,55 @@ describe("first hiragana session", () => {
     expect(
       screen.getByRole("textbox", { name: /romaji/i }).hasAttribute("disabled"),
     ).toBe(false);
+  });
+
+  it("ignores a stale progress read after leaving the lesson", async () => {
+    let resolveFirst!: (value: KanaProgress[]) => void;
+    storage.loadKanaProgress.mockImplementationOnce(
+      () =>
+        new Promise<KanaProgress[]>((resolve) => {
+          resolveFirst = resolve;
+        }),
+    );
+    const first = render(<KanaPage />);
+    first.unmount();
+
+    render(<KanaPage />);
+    await screen.findByText(/0 practiced on this device/i);
+    await act(async () => {
+      resolveFirst([
+        {
+          itemId: "kana.hiragana.a",
+          correctCount: 1,
+          incorrectCount: 0,
+          lastAnsweredAt: "2026-09-26T00:00:00.000Z",
+        },
+      ]);
+      await Promise.resolve();
+    });
+
+    screen.getByText(/0 practiced on this device/i);
+  });
+
+  it("ignores a stale storage error after leaving the lesson", async () => {
+    let rejectFirst!: (reason: Error) => void;
+    storage.loadKanaProgress.mockImplementationOnce(
+      () =>
+        new Promise<KanaProgress[]>((_resolve, reject) => {
+          rejectFirst = reject;
+        }),
+    );
+    const first = render(<KanaPage />);
+    first.unmount();
+
+    render(<KanaPage />);
+    await screen.findByText(/0 practiced on this device/i);
+    await act(async () => {
+      rejectFirst(new Error("storage unavailable"));
+      await Promise.resolve();
+    });
+
+    expect(screen.queryByRole("alert")).toBeNull();
   });
 
   it("reports a failed save and still lets the learner continue", async () => {

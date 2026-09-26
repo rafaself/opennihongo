@@ -49,6 +49,12 @@ export function KanaPage() {
     hiraganaVowels.some((vowel) => vowel.id === entry.itemId),
   ).length;
 
+  useEffect(() => {
+    if (complete) {
+      document.getElementById("kana-session-complete")?.focus();
+    }
+  }, [complete]);
+
   async function submitAnswer(event: SyntheticEvent<HTMLFormElement>) {
     event.preventDefault();
     if (!item || !answer.trim() || feedback || saving) return;
@@ -81,9 +87,11 @@ export function KanaPage() {
     setIndex((current) => current + 1);
     setAnswer("");
     setFeedback(null);
-    window.requestAnimationFrame(() =>
-      document.getElementById("kana-answer")?.focus(),
-    );
+    if (index < hiraganaVowels.length - 1) {
+      window.requestAnimationFrame(() =>
+        document.getElementById("kana-answer")?.focus(),
+      );
+    }
   }
 
   function restartSession() {
@@ -129,7 +137,12 @@ export function KanaPage() {
         ) : complete ? (
           <Stack gap="6">
             <Stack gap="2">
-              <Text as="h2" variant="heading">
+              <Text
+                as="h2"
+                id="kana-session-complete"
+                tabIndex={-1}
+                variant="heading"
+              >
                 Session complete
               </Text>
               <Text>
