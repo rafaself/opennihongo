@@ -35,10 +35,18 @@
   transform: translateY(var(--ns-motion-button-secondary-press-offset));
 }
 
-.ns-select__trigger:focus-visible {
-  outline: var(--ns-border-width-focus) var(--ns-border-style-solid)
-    var(--ns-color-focus);
-  outline-offset: 2px;
+.ns-select__trigger:focus {
+  background-color: var(--ns-color-feedback-info-surface);
+  border-color: var(--ns-color-feedback-info);
+  box-shadow: inset 0 0 0 var(--ns-border-width-emphasis)
+    var(--ns-color-feedback-info);
+  outline: none;
+}
+
+.ns-select__trigger:focus:not(:active) {
+  box-shadow:
+    inset 0 0 0 var(--ns-border-width-emphasis) var(--ns-color-feedback-info),
+    var(--ns-elevation-button-secondary);
 }
 
 .ns-select__trigger[aria-invalid="true"] {
@@ -153,5 +161,23 @@
 @media (prefers-reduced-motion: reduce) {
   .ns-select__trigger {
     transition: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .ns-select__trigger:focus {
+    background-color: Field;
+    border-color: Highlight;
+    box-shadow: none;
+    outline: 2px solid Highlight;
+    outline-offset: -2px;
+  }
+
+  .ns-select__trigger:focus:active {
+    box-shadow: none;
+  }
+
+  .ns-select__trigger:focus:not(:active) {
+    box-shadow: none;
   }
 }

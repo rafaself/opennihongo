@@ -34,10 +34,12 @@
   padding-inline: var(--ns-space-4);
 }
 
-.ns-input:focus-visible {
-  outline: var(--ns-border-width-focus) var(--ns-border-style-solid)
-    var(--ns-color-focus);
-  outline-offset: 2px;
+.ns-input:focus {
+  background-color: var(--ns-color-feedback-info-surface);
+  border-color: var(--ns-color-feedback-info);
+  box-shadow: inset 0 0 0 var(--ns-border-width-emphasis)
+    var(--ns-color-feedback-info);
+  outline: none;
 }
 
 .ns-input[aria-invalid="true"] {
@@ -50,4 +52,14 @@
   box-shadow: var(--ns-elevation-none);
   color: var(--ns-color-text-secondary);
   cursor: default;
+}
+
+@media (forced-colors: active) {
+  .ns-input:focus {
+    background-color: Field;
+    border-color: Highlight;
+    box-shadow: none;
+    outline: 2px solid Highlight;
+    outline-offset: -2px;
+  }
 }
