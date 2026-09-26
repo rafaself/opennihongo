@@ -1,0 +1,158 @@
+.kana-chart {
+  margin-inline: auto;
+  max-width: 54rem;
+  padding-block: 1rem 3rem;
+  width: 100%;
+}
+
+.kana-chart__page-title {
+  color: var(--ns-color-text-primary);
+  font-size: var(--ns-text-heading-size);
+  font-weight: var(--ns-text-heading-weight);
+  margin: 0 0 1.5rem;
+  text-align: center;
+}
+
+.kana-chart__tabs {
+  width: 100%;
+}
+
+.kana-chart__tab-list {
+  justify-content: center;
+  margin-inline: auto;
+  max-width: 34rem;
+}
+
+.kana-chart__panel {
+  padding-top: 1.5rem;
+}
+
+.kana-chart__intro {
+  margin-inline: auto;
+  max-width: 38rem;
+  text-align: center;
+}
+
+.kana-chart__title {
+  color: var(--ns-color-text-primary);
+  font-size: clamp(1.6rem, 3vw, 2.1rem);
+  font-weight: 800;
+  line-height: 1.15;
+  margin: 0;
+}
+
+.kana-chart__description {
+  color: var(--ns-color-text-secondary);
+  margin: 0.75rem 0 1.25rem;
+}
+
+.kana-chart__learn-button {
+  min-width: min(100%, 20rem);
+  text-decoration: none;
+}
+
+.kana-chart__section {
+  margin-top: 2.25rem;
+}
+
+.kana-chart__section-header {
+  margin: 0 auto 1rem;
+  max-width: 38rem;
+  text-align: center;
+}
+
+.kana-chart__section-title {
+  color: var(--ns-color-text-primary);
+  font-size: 1.2rem;
+  font-weight: 800;
+  margin: 0;
+}
+
+.kana-chart__section-description {
+  color: var(--ns-color-text-secondary);
+  margin: 0.35rem 0 0;
+}
+
+.kana-chart__rows {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.kana-chart__row {
+  display: grid;
+  gap: 0.5rem;
+  justify-content: center;
+  margin-inline: auto;
+  max-width: 100%;
+  width: max-content;
+}
+
+.kana-chart__tile {
+  align-items: center;
+  aspect-ratio: 1 / 0.95;
+  background: var(--ns-color-surface);
+  border: 1px solid var(--ns-color-border-subtle);
+  border-radius: var(--ns-radius-lg);
+  color: var(--ns-color-text-primary);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 0;
+  padding: 0.35rem 0.2rem 0.7rem;
+  position: relative;
+  transition:
+    border-color 120ms ease,
+    transform 120ms ease;
+}
+
+.kana-chart__tile:hover {
+  border-color: var(--ns-primitive-color-blue-500);
+  transform: translateY(-1px);
+}
+
+.kana-chart__tile:focus-visible,
+.kana-chart__learn-button:focus-visible {
+  outline: var(--ns-border-width-focus) solid var(--ns-color-focus);
+  outline-offset: 3px;
+}
+
+.kana-chart__glyph {
+  font-size: 1.8rem;
+  font-weight: 700;
+  line-height: 1.05;
+}
+
+.kana-chart__romanization {
+  color: var(--ns-color-text-secondary);
+  font-size: var(--ns-text-label-size);
+  line-height: 1.2;
+}
+
+.kana-chart__progress {
+  background: var(--ns-color-border-subtle);
+  border-radius: 999px;
+  bottom: 0.35rem;
+  height: 0.25rem;
+  left: 20%;
+  position: absolute;
+  right: 20%;
+}
+
+.kana-chart__empty {
+  aspect-ratio: 1 / 0.95;
+}
+
+@media (max-width: 34rem) {
+  .kana-chart__row {
+    gap: 0.35rem;
+  }
+
+  .kana-chart__tile {
+    padding-inline: 0.1rem;
+  }
+
+  .kana-chart__glyph {
+    font-size: 1.5rem;
+  }
+}

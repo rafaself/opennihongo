@@ -1,6 +1,7 @@
 export {
   beginnerWordMatchingExercise,
   checkKanaAnswer,
+  kanaCharacterCharts,
   hiraganaToRomajiExercise,
   hiraganaToRomajiTypedExercise,
   kanaBeginnerWords,
@@ -21,6 +22,12 @@ export {
 export type {
   KanaAudioId,
   KanaChoiceExercise,
+  KanaCharacterChart,
+  KanaChartRow,
+  KanaChartScript,
+  KanaChartSection,
+  KanaChartSectionId,
+  KanaChartTile,
   KanaExercise,
   KanaId,
   KanaItem,

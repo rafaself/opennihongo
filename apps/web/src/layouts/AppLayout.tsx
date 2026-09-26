@@ -1,6 +1,6 @@
 import { Link, Outlet, useRouterState } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
-import { navigationSections } from "../app/sections";
+import { appSections, navigationSections } from "../app/sections";
 import { AppNavigation } from "./AppNavigation";
 import "./AppLayout.css";
 
@@ -31,7 +31,7 @@ export function AppLayout() {
     select: (state) => state.location.pathname,
   });
   const activePath = pathname === "/" ? pathname : pathname.replace(/\/+$/, "");
-  const lesson = activePath === "/kana" || activePath === "/practice";
+  const lesson = activePath === "/kana/lesson" || activePath === "/practice";
   const previousPath = useRef(pathname);
 
   useEffect(() => {
@@ -39,7 +39,9 @@ export function AppLayout() {
     const pageTitle =
       activePath === "/acknowledgements"
         ? "Acknowledgements & licenses"
-        : (section?.label ?? "Page not found");
+        : activePath === "/kana/lesson"
+          ? appSections.kana.label
+          : (section?.label ?? "Page not found");
     document.title = `${pageTitle} · OpenNihongo`;
 
     if (previousPath.current !== pathname) {
@@ -103,7 +105,7 @@ export function AppLayout() {
       )}
 
       <div className="app-shell__body">
-        {activePath === "/kana" && (
+        {activePath === "/kana/lesson" && (
           <Link className="app-shell__lesson-exit" to="/">
             Leave lesson
           </Link>

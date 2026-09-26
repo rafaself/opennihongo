@@ -163,10 +163,11 @@ app/main.tsx -> app/router.tsx -> layouts/AppLayout.tsx
                                   -> pages/NotFoundPage.tsx
 ```
 
-The Learn route is `/`. Kana has a first lesson at `/kana`, and Practice has
-beginner word exercises at `/practice`. Progress, Quests, and Library have
-dedicated URLs and show an explicit coming-soon state until their features are
-implemented. The Gallery owns its own router and navigation independently.
+The Learn route is `/`. The Kana character chart is at `/kana`, with the first
+five-vowel lesson at `/kana/lesson`. Practice has beginner word exercises at
+`/practice`. Progress, Quests, and Library have dedicated URLs and show an
+explicit coming-soon state until their features are implemented. The Gallery
+owns its own router and navigation independently.
 
 Run `pnpm dev` for the app, `pnpm lint` for ESLint and dependency-boundary
 checks, `pnpm format:check` to verify formatting, `pnpm typecheck` for

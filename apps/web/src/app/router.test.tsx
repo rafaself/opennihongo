@@ -6,9 +6,24 @@ import {
   waitFor,
 } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { afterEach, describe, expect, it } from "vitest";
+import type { KanaItem, KanaProgress } from "@opennihongo/core";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { RouterProvider } from "@tanstack/react-router";
 import { router } from "./router";
+
+const storage = vi.hoisted(() => ({
+  loadKanaProgress: vi.fn<() => Promise<KanaProgress[]>>(),
+  saveKanaAnswer:
+    vi.fn<
+      (
+        item: KanaItem,
+        correct: boolean,
+        answeredAt: string,
+      ) => Promise<KanaProgress>
+    >(),
+}));
+
+vi.mock("@opennihongo/persistence", () => storage);
 
 async function renderHome() {
   render(<RouterProvider router={router} />);
@@ -18,8 +33,37 @@ async function renderHome() {
   });
 }
 
+function installSpeechMocks() {
+  const cancel = vi.fn();
+  const speak = vi.fn();
+  class FakeUtterance {
+    lang = "";
+    constructor(readonly text: string) {}
+  }
+  Object.defineProperty(window, "speechSynthesis", {
+    configurable: true,
+    value: { cancel, speak },
+  });
+  vi.stubGlobal("SpeechSynthesisUtterance", FakeUtterance);
+  return { cancel, speak };
+}
+
+beforeEach(() => {
+  storage.loadKanaProgress.mockReset().mockResolvedValue([]);
+  storage.saveKanaAnswer.mockReset().mockImplementation((item, correct) =>
+    Promise.resolve({
+      itemId: item.id,
+      correctCount: Number(correct),
+      incorrectCount: Number(!correct),
+      lastAnsweredAt: "2026-09-26T00:00:00.000Z",
+    }),
+  );
+});
+
 afterEach(() => {
   cleanup();
+  Reflect.deleteProperty(window, "speechSynthesis");
+  vi.unstubAllGlobals();
 });
 
 describe("web application routes", () => {
@@ -31,7 +75,7 @@ describe("web application routes", () => {
     ).toBeTruthy();
     expect(
       screen.getByRole("link", { name: "Learn hiragana" }).getAttribute("href"),
-    ).toBe("/kana");
+    ).toBe("/kana/lesson");
 
     await user.click(screen.getByRole("link", { name: "Learn hiragana" }));
 
@@ -48,6 +92,70 @@ describe("web application routes", () => {
     expect(
       screen.getByRole("navigation", { name: "Primary navigation" }),
     ).toBeTruthy();
+  });
+
+  it("shows every chart tile, plays pronunciation, and opens the lesson", async () => {
+    const user = userEvent.setup();
+    const speech = installSpeechMocks();
+    await renderHome();
+
+    await user.click(screen.getByRole("link", { name: "Kana" }));
+    await screen.findByRole("heading", { name: "Let's learn Hiragana!" });
+    expect(
+      screen
+        .getByRole("tab", { name: "Hiragana" })
+        .getAttribute("aria-selected"),
+    ).toBe("true");
+    expect(
+      screen.getByRole("heading", { name: "Dakuon and handakuon" }),
+    ).toBeTruthy();
+    expect(screen.getByRole("heading", { name: "Combinations" })).toBeTruthy();
+    expect(screen.getByRole("heading", { name: "Small っ" })).toBeTruthy();
+    expect(
+      screen.getByRole("button", { name: "Play pronunciation for きゃ, kya" }),
+    ).toBeTruthy();
+    expect(
+      screen.getByRole("button", { name: "Play pronunciation for ああ, aa" }),
+    ).toBeTruthy();
+    expect(
+      screen.getAllByRole("button", { name: /Play pronunciation for/ }),
+    ).toHaveLength(115);
+    expect(document.querySelectorAll(".kana-chart__progress")).toHaveLength(
+      115,
+    );
+    for (const strip of document.querySelectorAll(".kana-chart__progress")) {
+      expect(strip.getAttribute("aria-hidden")).toBe("true");
+    }
+
+    await user.click(
+      screen.getByRole("button", { name: "Play pronunciation for あ, a" }),
+    );
+    expect(speech.cancel).toHaveBeenCalledOnce();
+    expect(speech.speak).toHaveBeenCalledOnce();
+    expect(speech.speak.mock.calls[0]?.[0]).toMatchObject({
+      text: "あ",
+      lang: "ja-JP",
+    });
+    expect(storage.saveKanaAnswer).not.toHaveBeenCalled();
+
+    await user.click(screen.getByRole("tab", { name: "Hiragana" }));
+    await user.keyboard("{ArrowRight}");
+    await screen.findByRole("heading", { name: "Let's learn Katakana!" });
+    expect(
+      screen
+        .getByRole("tab", { name: "Katakana" })
+        .getAttribute("aria-selected"),
+    ).toBe("true");
+    expect(
+      screen.getAllByRole("button", { name: /Play pronunciation for/ }),
+    ).toHaveLength(113);
+    expect(
+      screen.getByRole("button", { name: "Play pronunciation for ア, a" }),
+    ).toBeTruthy();
+
+    await user.click(screen.getByRole("link", { name: "Learn characters" }));
+    await screen.findByRole("heading", { name: "Learn the five vowels" });
+    expect(document.title).toBe("Kana · OpenNihongo");
   });
 
   it("opens Practice and upcoming sections, with mobile menu dismissal", async () => {

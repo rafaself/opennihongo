@@ -1,4 +1,13 @@
 export { checkKanaAnswer, normalizeKanaAnswer } from "./answer";
+export { kanaCharacterCharts } from "./chart";
+export type {
+  KanaCharacterChart,
+  KanaChartRow,
+  KanaChartScript,
+  KanaChartSection,
+  KanaChartSectionId,
+  KanaChartTile,
+} from "./chart";
 export {
   scoreKanaChoiceAnswer,
   scoreKanaMatchingAnswer,

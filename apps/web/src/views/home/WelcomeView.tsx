@@ -34,7 +34,7 @@ export function WelcomeView() {
             <Link
               className="ns-button w-full"
               data-variant="primary"
-              to="/kana"
+              to="/kana/lesson"
             >
               Learn hiragana
             </Link>

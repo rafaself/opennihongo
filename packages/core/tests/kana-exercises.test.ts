@@ -108,6 +108,23 @@ describe("Kana multiple-choice answer validation and scoring", () => {
   });
 });
 
+describe("Kana typed answer validation and scoring", () => {
+  it("accepts normalized correct answers and rejects incorrect answers", () => {
+    expect(
+      validateKanaTypedAnswer(hiraganaToRomajiTypedExercise, " SHIBYURA "),
+    ).toBe(true);
+    expect(
+      scoreKanaTypedAnswer(hiraganaToRomajiTypedExercise, "shibyura"),
+    ).toBe(1);
+    expect(
+      validateKanaTypedAnswer(hiraganaToRomajiTypedExercise, "shibyuri"),
+    ).toBe(false);
+    expect(
+      scoreKanaTypedAnswer(hiraganaToRomajiTypedExercise, "shibyuri"),
+    ).toBe(0);
+  });
+});
+
 describe("Kana pair-matching answer validation and scoring", () => {
   const completeAnswers = [
     { romaji: "soto", hiragana: "そと" },

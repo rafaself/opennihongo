@@ -5,6 +5,7 @@ import {
 } from "@tanstack/react-router";
 import { AppLayout } from "../layouts/AppLayout";
 import { AcknowledgementsPage } from "../pages/AcknowledgementsPage";
+import { KanaChartPage } from "../pages/KanaChartPage";
 import { HomePage } from "../pages/HomePage";
 import { KanaPage } from "../pages/KanaPage";
 import { NotFoundPage } from "../pages/NotFoundPage";
@@ -26,6 +27,12 @@ const homeRoute = createRoute({
 const kanaRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: appSections.kana.path,
+  component: KanaChartPage,
+});
+
+const kanaLessonRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/kana/lesson",
   component: KanaPage,
 });
 
@@ -62,6 +69,7 @@ const acknowledgementsRoute = createRoute({
 const routeTree = rootRoute.addChildren([
   homeRoute,
   kanaRoute,
+  kanaLessonRoute,
   practiceRoute,
   progressRoute,
   questsRoute,
