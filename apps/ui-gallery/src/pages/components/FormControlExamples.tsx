@@ -5,6 +5,7 @@ import {
   Input,
   Radio,
   RadioGroup,
+  SegmentedControl,
   Select,
   SelectContent,
   SelectGroup,
@@ -18,6 +19,9 @@ import {
 
 export function FormControlExamples() {
   const [remindersEnabled, setRemindersEnabled] = useState(true);
+  const [selectedScript, setSelectedScript] = useState<"hiragana" | "katakana">(
+    "hiragana",
+  );
 
   return (
     <>
@@ -72,6 +76,26 @@ export function FormControlExamples() {
         <FormField id="unavailable-summary" label="Unavailable sample option">
           <Checkbox disabled />
         </FormField>
+      </article>
+
+      <article className="gallery-doc-example-card">
+        <h3>SegmentedControl selection</h3>
+        <p>
+          Use a compact segmented radio group to choose between a few peer
+          options. Tab to enter, then use the arrow keys to change the value.
+        </p>
+        <SegmentedControl
+          aria-label="Kana scripts"
+          onValueChange={setSelectedScript}
+          options={[
+            { value: "hiragana", label: "Hiragana" },
+            { value: "katakana", label: "Katakana" },
+          ]}
+          value={selectedScript}
+        />
+        <p aria-live="polite" role="status">
+          Showing {selectedScript === "hiragana" ? "Hiragana" : "Katakana"}.
+        </p>
       </article>
 
       <article className="gallery-doc-example-card">

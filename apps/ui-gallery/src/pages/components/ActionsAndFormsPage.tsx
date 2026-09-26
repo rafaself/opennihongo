@@ -31,10 +31,21 @@ export function ActionsAndFormsPage() {
           title: "Support keyboard selection",
           content: (
             <p>
-              Tab to a radio group and use the arrow keys to move between
-              choices. Focus the Select trigger and press Arrow Down to open its
-              options; use the arrow keys and Enter to choose, or Escape to
-              close.
+              Tab to a radio group or segmented control and use the arrow keys
+              to move between choices. Focus the Select trigger and press Arrow
+              Down to open its options; use the arrow keys and Enter to choose,
+              or Escape to close.
+            </p>
+          ),
+        },
+        {
+          title: "Use a segmented control for compact peer choices",
+          content: (
+            <p>
+              <code>SegmentedControl</code> presents a small set of mutually
+              exclusive choices with a compact selected surface. Use it for a
+              local view choice, and use <code>RadioGroup</code> when options
+              need more room or supporting content.
             </p>
           ),
         },

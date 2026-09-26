@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   kanaCharacterCharts,
   type KanaChartSection,
@@ -5,7 +6,7 @@ import {
   type KanaChartTile,
 } from "@opennihongo/core";
 import { Link } from "@tanstack/react-router";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@opennihongo/ui";
+import { SegmentedControl } from "@opennihongo/ui";
 import { playJapanesePronunciation } from "../lib/pronunciation";
 import "./KanaChartPage.css";
 
@@ -68,11 +69,14 @@ function ChartSection({ section }: { section: KanaChartSection }) {
 
 function KanaChartPanel({ script }: { script: KanaChartScript }) {
   const chart = kanaCharacterCharts[script];
+  const titleId = `kana-chart-${script}-title`;
 
   return (
-    <TabsContent className="kana-chart__panel" value={script}>
+    <section aria-labelledby={titleId} className="kana-chart__panel">
       <header className="kana-chart__intro">
-        <h2 className="kana-chart__title">{chart.heading}</h2>
+        <h2 className="kana-chart__title" id={titleId}>
+          {chart.heading}
+        </h2>
         <p className="kana-chart__description">{chart.description}</p>
         <Link
           className="ns-button kana-chart__learn-button"
@@ -85,24 +89,30 @@ function KanaChartPanel({ script }: { script: KanaChartScript }) {
       {chart.sections.map((section) => (
         <ChartSection key={section.id} section={section} />
       ))}
-    </TabsContent>
+    </section>
   );
 }
 
 export function KanaChartPage() {
+  const [script, setScript] = useState<KanaChartScript>("hiragana");
+
   return (
     <section aria-labelledby="kana-chart-page-title" className="kana-chart">
       <h1 className="kana-chart__page-title" id="kana-chart-page-title">
         Kana characters
       </h1>
-      <Tabs className="kana-chart__tabs" defaultValue="hiragana">
-        <TabsList aria-label="Kana scripts" className="kana-chart__tab-list">
-          <TabsTrigger value="hiragana">Hiragana</TabsTrigger>
-          <TabsTrigger value="katakana">Katakana</TabsTrigger>
-        </TabsList>
-        <KanaChartPanel script="hiragana" />
-        <KanaChartPanel script="katakana" />
-      </Tabs>
+      <div className="kana-chart__script-selector">
+        <SegmentedControl
+          aria-label="Kana scripts"
+          onValueChange={setScript}
+          options={[
+            { value: "hiragana", label: "Hiragana" },
+            { value: "katakana", label: "Katakana" },
+          ]}
+          value={script}
+        />
+      </div>
+      <KanaChartPanel script={script} />
     </section>
   );
 }

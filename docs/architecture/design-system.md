@@ -56,16 +56,18 @@ Use `Switch` for an on/off setting that takes effect immediately. Use
 `Checkbox` for selecting items and `Button` for actions that require explicit
 submission or confirmation.
 
-Use `RadioGroup` for one persistent choice. `Radio` provides a `card` variant
-for content-rich options such as language or display preferences. A checked
-card uses the theme's brand text and selection colors with a soft accent glow;
-this visual treatment supplements the radio's checked semantics. Use
-`ActionCard` when the full tile performs an action.
+Use `SegmentedControl` for a compact single-choice view option, such as a
+script selector. It preserves radio semantics and arrow-key behavior. Use
+`RadioGroup` for other single-choice settings; `Radio` provides a `card`
+variant for content-rich options such as language or display preferences. A
+checked card uses the theme's brand text and selection colors with a soft
+accent glow; this visual treatment supplements the radio's checked semantics.
+Use `ActionCard` when the full tile performs an action.
 
-Use `Tabs` to switch between related panels in the current view. Keep
-route-backed navigation in the router and use links for it. Give each tab list
-an accessible name; horizontal lists scroll inline on narrow containers so
-their triggers remain unwrapped and reachable.
+Use `Tabs` when users switch between related panels with tab/tabpanel
+semantics. Keep route-backed navigation in the router and use links for it.
+Give each tab list an accessible name; horizontal lists scroll inline on
+narrow containers so their triggers remain unwrapped and reachable.
 
 ## Structural surfaces and cards
 

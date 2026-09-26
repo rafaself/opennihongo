@@ -1,5 +1,11 @@
 // @vitest-environment jsdom
-import { cleanup, fireEvent, render, screen } from "@testing-library/react";
+import {
+  cleanup,
+  fireEvent,
+  render,
+  screen,
+  within,
+} from "@testing-library/react";
 import { afterEach, beforeAll, describe, expect, it, vi } from "vitest";
 import { ActionsAndFormsPage } from "./ActionsAndFormsPage";
 
@@ -33,7 +39,15 @@ describe("ActionsAndFormsPage", () => {
       weeklySummary instanceof HTMLInputElement && weeklySummary.checked,
     ).toBe(true);
     expect(
-      screen
+      within(screen.getByRole("radiogroup", { name: "RadioGroup selection" }))
+        .getByRole("radio", { name: "Hiragana" })
+        .getAttribute("aria-checked"),
+    ).toBe("true");
+    const segmentedControl = screen.getByRole("radiogroup", {
+      name: "Kana scripts",
+    });
+    expect(
+      within(segmentedControl)
         .getByRole("radio", { name: "Hiragana" })
         .getAttribute("aria-checked"),
     ).toBe("true");

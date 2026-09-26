@@ -13,11 +13,8 @@
   text-align: center;
 }
 
-.kana-chart__tabs {
-  width: 100%;
-}
-
-.kana-chart__tab-list {
+.kana-chart__script-selector {
+  display: flex;
   justify-content: center;
   margin-inline: auto;
   max-width: 34rem;

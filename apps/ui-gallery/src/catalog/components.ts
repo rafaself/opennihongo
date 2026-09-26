@@ -14,6 +14,7 @@ export const componentCatalogCategories = [
       "Switch",
       "Radio",
       "RadioGroup",
+      "SegmentedControl",
       "Select",
       "SelectTrigger",
       "SelectValue",

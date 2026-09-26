@@ -103,8 +103,8 @@ describe("web application routes", () => {
     await screen.findByRole("heading", { name: "Let's learn Hiragana!" });
     expect(
       screen
-        .getByRole("tab", { name: "Hiragana" })
-        .getAttribute("aria-selected"),
+        .getByRole("radio", { name: "Hiragana" })
+        .getAttribute("aria-checked"),
     ).toBe("true");
     expect(
       screen.getByRole("heading", { name: "Dakuon and handakuon" }),
@@ -138,13 +138,14 @@ describe("web application routes", () => {
     });
     expect(storage.saveKanaAnswer).not.toHaveBeenCalled();
 
-    await user.click(screen.getByRole("tab", { name: "Hiragana" }));
-    await user.keyboard("{ArrowRight}");
+    await user.click(screen.getByRole("radio", { name: "Hiragana" }));
+    await user.keyboard("{ArrowRight>}");
     await screen.findByRole("heading", { name: "Let's learn Katakana!" });
+    await user.keyboard("{/ArrowRight}");
     expect(
       screen
-        .getByRole("tab", { name: "Katakana" })
-        .getAttribute("aria-selected"),
+        .getByRole("radio", { name: "Katakana" })
+        .getAttribute("aria-checked"),
     ).toBe("true");
     expect(
       screen.getAllByRole("button", { name: /Play pronunciation for/ }),
