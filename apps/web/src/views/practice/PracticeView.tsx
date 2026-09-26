@@ -9,6 +9,8 @@ import {
 } from "@opennihongo/core";
 import { Button, Surface, Text } from "@opennihongo/ui";
 import { useEffect, useState } from "react";
+import { PracticeFeedback } from "./PracticeFeedback";
+import { PracticeResults } from "./PracticeResults";
 import { PronunciationButton } from "./PronunciationButton";
 import "./practice.css";
 
@@ -68,7 +70,7 @@ export function PracticeView() {
       setFeedback({
         correct,
         message: correct
-          ? "That’s right!"
+          ? "You chose the right answer."
           : `The correct answer is ${exercise.answer}.`,
       });
       return;
@@ -79,7 +81,7 @@ export function PracticeView() {
     );
     setFeedback({
       correct: true,
-      message: "All pairs match!",
+      message: "All pairs matched.",
     });
   }
 
@@ -137,7 +139,9 @@ export function PracticeView() {
     exercise.kind === "multiple-choice"
       ? selectedChoice !== ""
       : matchedPairs.length === exercise.pairs.length;
-  const progress = Math.round((index / kanaExercises.length) * 100);
+  const progress = Math.round(
+    ((index + Number(feedback !== null)) / kanaExercises.length) * 100,
+  );
 
   return (
     <section
@@ -166,189 +170,170 @@ export function PracticeView() {
         </span>
       </header>
 
-      <div className="practice-session__body">
-        {complete ? (
-          <Surface className="practice-session__complete" elevation="card">
-            <Text
-              as="h1"
-              id="practice-complete-title"
-              tabIndex={-1}
-              variant="display"
-            >
-              Practice complete
-            </Text>
-            <Text>
-              You matched {score} of {totalPoints} items correctly.
-            </Text>
-            <div className="practice-session__complete-actions">
-              <Button onClick={restartPractice}>Practice again</Button>
-              <Link className="ns-button" data-variant="secondary" to="/kana">
-                Learn more kana
-              </Link>
-            </div>
-          </Surface>
-        ) : exercise.kind === "multiple-choice" ? (
-          <div className="practice-session__question">
-            <Text color="secondary" variant="label">
-              Hiragana · Word practice
-            </Text>
-            <Text as="h1" id="practice-title" variant="display">
-              {exercise.direction === "hiragana-to-romaji"
-                ? "Which reading matches this word?"
-                : `Choose the characters for “${exercise.prompt.text}”.`}
-            </Text>
-            <div className="practice-session__exercise">
-              <Surface className="practice-session__prompt" elevation="card">
-                <Text
-                  className={
-                    exercise.prompt.script === "hiragana"
-                      ? "practice-session__prompt-kana"
-                      : "practice-session__prompt-romaji"
-                  }
-                >
-                  {exercise.prompt.text}
+      {complete ? (
+        <PracticeResults
+          score={score}
+          total={totalPoints}
+          onRestart={restartPractice}
+        />
+      ) : (
+        <>
+          <div className="practice-session__body">
+            {exercise.kind === "multiple-choice" ? (
+              <div className="practice-session__question">
+                <Text color="secondary" variant="label">
+                  Hiragana · Word practice
                 </Text>
-                {exercise.prompt.script === "hiragana" && (
-                  <PronunciationButton text={exercise.prompt.text} />
-                )}
-              </Surface>
-              <div
-                aria-label="Answer choices"
-                className="practice-session__choices"
-                role="group"
-              >
-                {exercise.choices.map((choice, choiceIndex) => (
-                  <Button
-                    aria-pressed={selectedChoice === choice}
-                    className="practice-session__choice"
-                    data-selected={selectedChoice === choice}
-                    disabled={feedback !== null}
-                    key={choice}
-                    onClick={() => {
-                      setSelectedChoice(choice);
-                    }}
-                    variant="secondary"
+                <Text as="h1" id="practice-title" variant="display">
+                  {exercise.direction === "hiragana-to-romaji"
+                    ? "Which reading matches this word?"
+                    : `Choose the characters for “${exercise.prompt.text}”.`}
+                </Text>
+                <div className="practice-session__exercise">
+                  <Surface
+                    className="practice-session__prompt"
+                    elevation="card"
                   >
-                    <span
-                      aria-hidden="true"
-                      className="practice-session__choice-number"
+                    <Text
+                      className={
+                        exercise.prompt.script === "hiragana"
+                          ? "practice-session__prompt-kana"
+                          : "practice-session__prompt-romaji"
+                      }
                     >
-                      {choiceIndex + 1}
-                    </span>
-                    <span>{choice}</span>
-                  </Button>
-                ))}
+                      {exercise.prompt.text}
+                    </Text>
+                    {exercise.prompt.script === "hiragana" && (
+                      <PronunciationButton text={exercise.prompt.text} />
+                    )}
+                  </Surface>
+                  <div
+                    aria-label="Answer choices"
+                    className="practice-session__choices"
+                    role="group"
+                  >
+                    {exercise.choices.map((choice, choiceIndex) => (
+                      <Button
+                        aria-pressed={selectedChoice === choice}
+                        className="practice-session__choice"
+                        data-selected={selectedChoice === choice}
+                        disabled={feedback !== null}
+                        key={choice}
+                        onClick={() => {
+                          setSelectedChoice(choice);
+                        }}
+                        variant="secondary"
+                      >
+                        <span
+                          aria-hidden="true"
+                          className="practice-session__choice-number"
+                        >
+                          {choiceIndex + 1}
+                        </span>
+                        <span>{choice}</span>
+                      </Button>
+                    ))}
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
-        ) : (
-          <div className="practice-session__question">
-            <Text color="secondary" variant="label">
-              Hiragana · Word practice
-            </Text>
-            <Text as="h1" id="practice-title" variant="display">
-              Match each reading with its hiragana word.
-            </Text>
-            <div className="practice-session__matching">
-              <div
-                aria-label="Romaji readings"
-                className="practice-session__match-column"
-              >
-                <Text as="h2" variant="label">
-                  Romaji
+            ) : (
+              <div className="practice-session__question">
+                <Text color="secondary" variant="label">
+                  Hiragana · Word practice
                 </Text>
-                {exercise.pairs.map(({ id, romaji }) => {
-                  const matched = matchedPairs.some(
-                    (pair) => pair.romaji === romaji,
-                  );
-                  return (
-                    <Button
-                      aria-pressed={selectedRomaji === romaji}
-                      className="practice-session__match-option"
-                      data-matched={matched}
-                      data-selected={selectedRomaji === romaji}
-                      disabled={matched || feedback !== null}
-                      key={id}
-                      onClick={() => {
-                        selectRomaji(exercise, romaji);
-                      }}
-                      variant="secondary"
-                    >
-                      {romaji}
-                    </Button>
-                  );
-                })}
-              </div>
-              <div
-                aria-label="Hiragana words"
-                className="practice-session__match-column"
-              >
-                <Text as="h2" variant="label">
-                  Hiragana
+                <Text as="h1" id="practice-title" variant="display">
+                  Match each reading with its hiragana word.
                 </Text>
-                {[...exercise.pairs].reverse().map(({ id, hiragana }) => {
-                  const matched = matchedPairs.some(
-                    (pair) => pair.hiragana === hiragana,
-                  );
-                  return (
-                    <Button
-                      aria-pressed={selectedHiragana === hiragana}
-                      className="practice-session__match-option practice-session__match-option--kana"
-                      data-matched={matched}
-                      data-selected={selectedHiragana === hiragana}
-                      disabled={matched || feedback !== null}
-                      key={id}
-                      onClick={() => {
-                        selectHiragana(exercise, hiragana);
-                      }}
-                      variant="secondary"
-                    >
-                      {hiragana}
-                    </Button>
-                  );
-                })}
+                <div className="practice-session__matching">
+                  <div
+                    aria-label="Romaji readings"
+                    className="practice-session__match-column"
+                  >
+                    <Text as="h2" variant="label">
+                      Romaji
+                    </Text>
+                    {exercise.pairs.map(({ id, romaji }) => {
+                      const matched = matchedPairs.some(
+                        (pair) => pair.romaji === romaji,
+                      );
+                      return (
+                        <Button
+                          aria-pressed={selectedRomaji === romaji}
+                          className="practice-session__match-option"
+                          data-matched={matched}
+                          data-selected={selectedRomaji === romaji}
+                          disabled={matched || feedback !== null}
+                          key={id}
+                          onClick={() => {
+                            selectRomaji(exercise, romaji);
+                          }}
+                          variant="secondary"
+                        >
+                          {romaji}
+                        </Button>
+                      );
+                    })}
+                  </div>
+                  <div
+                    aria-label="Hiragana words"
+                    className="practice-session__match-column"
+                  >
+                    <Text as="h2" variant="label">
+                      Hiragana
+                    </Text>
+                    {[...exercise.pairs].reverse().map(({ id, hiragana }) => {
+                      const matched = matchedPairs.some(
+                        (pair) => pair.hiragana === hiragana,
+                      );
+                      return (
+                        <Button
+                          aria-pressed={selectedHiragana === hiragana}
+                          className="practice-session__match-option practice-session__match-option--kana"
+                          data-matched={matched}
+                          data-selected={selectedHiragana === hiragana}
+                          disabled={matched || feedback !== null}
+                          key={id}
+                          onClick={() => {
+                            selectHiragana(exercise, hiragana);
+                          }}
+                          variant="secondary"
+                        >
+                          {hiragana}
+                        </Button>
+                      );
+                    })}
+                  </div>
+                </div>
+                <p
+                  aria-live="polite"
+                  className="practice-session__match-status"
+                >
+                  {selectionMessage ||
+                    `${String(matchedPairs.length)} of ${String(exercise.pairs.length)} pairs matched`}
+                </p>
               </div>
-            </div>
-            <p aria-live="polite" className="practice-session__match-status">
-              {selectionMessage ||
-                `${String(matchedPairs.length)} of ${String(exercise.pairs.length)} pairs matched`}
-            </p>
+            )}
           </div>
-        )}
-      </div>
-
-      {!complete && (
-        <footer className="practice-session__actions">
           {feedback ? (
-            <>
-              <p
-                aria-live="polite"
-                className={
-                  feedback.correct
-                    ? "practice-session__feedback practice-session__feedback--correct"
-                    : "practice-session__feedback practice-session__feedback--incorrect"
-                }
-                role="status"
-              >
-                {feedback.message}
-              </p>
-              <Button onClick={continuePractice}>
-                {index === kanaExercises.length - 1
-                  ? "See results"
-                  : "Continue"}
-              </Button>
-            </>
+            <PracticeFeedback
+              correct={feedback.correct}
+              finalExercise={index === kanaExercises.length - 1}
+              message={feedback.message}
+              onContinue={continuePractice}
+            />
           ) : (
-            <>
-              <Button onClick={skipExercise} variant="secondary">
-                Skip
-              </Button>
-              <Button disabled={!readyToCheck} onClick={checkAnswer}>
-                Check answer
-              </Button>
-            </>
+            <footer className="practice-session__actions">
+              <div className="practice-session__actions-inner">
+                <Button onClick={skipExercise} variant="secondary">
+                  Skip
+                </Button>
+                <Button disabled={!readyToCheck} onClick={checkAnswer}>
+                  Check answer
+                </Button>
+              </div>
+            </footer>
           )}
-        </footer>
+        </>
       )}
     </section>
   );

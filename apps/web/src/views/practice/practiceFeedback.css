@@ -1,0 +1,80 @@
+.practice-feedback {
+  background: var(--ns-color-feedback-success-surface);
+  border-top: 2px solid var(--ns-color-feedback-success);
+  color: var(--ns-color-feedback-success);
+  width: 100%;
+}
+
+.practice-feedback[data-correct="false"] {
+  background: var(--ns-color-feedback-danger-surface);
+  border-color: var(--ns-color-feedback-danger);
+  color: var(--ns-color-feedback-danger);
+}
+
+.practice-feedback__inner {
+  align-items: center;
+  display: grid;
+  gap: 1.25rem;
+  grid-template-columns: 4.25rem minmax(0, 1fr) auto;
+  margin-inline: auto;
+  max-width: 64rem;
+  min-height: 8rem;
+  padding: 1rem 2rem;
+}
+
+.practice-feedback__icon {
+  align-items: center;
+  background: var(--ns-color-canvas);
+  border-radius: 50%;
+  display: flex;
+  height: 4.25rem;
+  justify-content: center;
+  width: 4.25rem;
+}
+
+.practice-feedback__icon svg {
+  height: 2.5rem;
+  width: 2.5rem;
+}
+
+.practice-feedback__copy {
+  display: grid;
+  gap: 0.25rem;
+}
+
+.practice-feedback__copy strong {
+  font-size: 1.35rem;
+  line-height: 1.2;
+}
+
+.practice-feedback__copy span {
+  color: var(--ns-color-text-primary);
+  font-size: var(--ns-text-body-size);
+}
+
+.practice-feedback__inner > button {
+  min-width: 9rem;
+}
+
+@media (max-width: 40rem) {
+  .practice-feedback__inner {
+    gap: 0.75rem 1rem;
+    grid-template-columns: 3rem minmax(0, 1fr);
+    padding: 1rem 1.25rem max(1rem, env(safe-area-inset-bottom));
+  }
+
+  .practice-feedback__icon {
+    height: 3rem;
+    width: 3rem;
+  }
+
+  .practice-feedback__icon svg {
+    height: 1.75rem;
+    width: 1.75rem;
+  }
+
+  .practice-feedback__inner > button {
+    grid-column: 1 / -1;
+    width: 100%;
+  }
+}

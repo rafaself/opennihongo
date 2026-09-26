@@ -26,13 +26,13 @@ export function AppLayout() {
   const pathname = useRouterState({
     select: (state) => state.location.pathname,
   });
+  const activePath = pathname === "/" ? pathname : pathname.replace(/\/+$/, "");
+  const lesson = activePath === "/kana" || activePath === "/practice";
   const previousPath = useRef(pathname);
 
   useEffect(() => {
-    const normalizedPath =
-      pathname === "/" ? pathname : pathname.replace(/\/+$/, "");
     const section = navigationSections.find(
-      ({ path }) => path === normalizedPath,
+      ({ path }) => path === activePath,
     );
     document.title = `${section?.label ?? "Page not found"} · OpenNihongo`;
 
@@ -40,59 +40,68 @@ export function AppLayout() {
       previousPath.current = pathname;
       mainRef.current?.focus();
     }
-  }, [pathname]);
+  }, [activePath, pathname]);
 
   return (
-    <div className="app-shell">
+    <div className={`app-shell${lesson ? " app-shell--lesson" : ""}`}>
       <a className="app-skip-link" href="#app-main">
         Skip to content
       </a>
 
-      <header className="app-mobile-header">
-        <AppBrand compact />
-        <button
-          aria-controls="app-sidebar"
-          aria-expanded={menuOpen}
-          aria-label={menuOpen ? "Close menu" : "Open menu"}
-          className="app-mobile-header__button"
-          onClick={() => {
-            setMenuOpen((open) => !open);
-          }}
-          ref={menuButtonRef}
-          type="button"
-        >
-          <span aria-hidden="true" className="app-mobile-header__icon">
-            <span />
-            <span />
-            <span />
-          </span>
-          Menu
-        </button>
-      </header>
+      {!lesson && (
+        <header className="app-mobile-header">
+          <AppBrand compact />
+          <button
+            aria-controls="app-sidebar"
+            aria-expanded={menuOpen}
+            aria-label={menuOpen ? "Close menu" : "Open menu"}
+            className="app-mobile-header__button"
+            onClick={() => {
+              setMenuOpen((open) => !open);
+            }}
+            ref={menuButtonRef}
+            type="button"
+          >
+            <span aria-hidden="true" className="app-mobile-header__icon">
+              <span />
+              <span />
+              <span />
+            </span>
+            Menu
+          </button>
+        </header>
+      )}
 
-      <aside
-        className="app-sidebar"
-        data-open={menuOpen}
-        id="app-sidebar"
-        onKeyDown={(event) => {
-          if (event.key === "Escape" && menuOpen) {
-            setMenuOpen(false);
-            menuButtonRef.current?.focus();
-          }
-        }}
-      >
-        <div className="app-sidebar__brand">
-          <AppBrand />
-        </div>
-        <AppNavigation
-          onNavigate={() => {
-            setMenuOpen(false);
-            mainRef.current?.focus();
+      {!lesson && (
+        <aside
+          className="app-sidebar"
+          data-open={menuOpen}
+          id="app-sidebar"
+          onKeyDown={(event) => {
+            if (event.key === "Escape" && menuOpen) {
+              setMenuOpen(false);
+              menuButtonRef.current?.focus();
+            }
           }}
-        />
-      </aside>
+        >
+          <div className="app-sidebar__brand">
+            <AppBrand />
+          </div>
+          <AppNavigation
+            onNavigate={() => {
+              setMenuOpen(false);
+              mainRef.current?.focus();
+            }}
+          />
+        </aside>
+      )}
 
       <div className="app-shell__body">
+        {activePath === "/kana" && (
+          <Link className="app-shell__lesson-exit" to="/">
+            Leave lesson
+          </Link>
+        )}
         <main
           className="app-shell__main"
           id="app-main"
@@ -101,9 +110,11 @@ export function AppLayout() {
         >
           <Outlet />
         </main>
-        <footer className="app-shell__footer">
-          A local-first Japanese learning space
-        </footer>
+        {!lesson && (
+          <footer className="app-shell__footer">
+            A local-first Japanese learning space
+          </footer>
+        )}
       </div>
     </div>
   );
