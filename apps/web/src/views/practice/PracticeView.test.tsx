@@ -47,7 +47,9 @@ describe("PracticeView", () => {
     await user.click(screen.getByRole("button", { name: "soto" }));
     await user.click(screen.getByRole("button", { name: "Check answer" }));
     expect(screen.getByRole("status").textContent).toContain("That’s right!");
-    expect(document.activeElement?.textContent).toBe("That’s right!");
+    expect(document.activeElement).toBe(
+      screen.getByRole("button", { name: "Continue" }),
+    );
     await user.click(screen.getByRole("button", { name: "Continue" }));
 
     await screen.findByRole("heading", {

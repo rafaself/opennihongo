@@ -16,7 +16,7 @@ export function PracticeFeedback({
   onContinue,
 }: PracticeFeedbackProps) {
   useEffect(() => {
-    document.getElementById("practice-feedback-title")?.focus();
+    document.getElementById("practice-feedback-action")?.focus();
   }, []);
 
   return (
@@ -49,12 +49,10 @@ export function PracticeFeedback({
           role="status"
           aria-live="polite"
         >
-          <strong id="practice-feedback-title" tabIndex={-1}>
-            {correct ? "That’s right!" : "Not quite yet"}
-          </strong>
+          <strong>{correct ? "That’s right!" : "Not quite yet"}</strong>
           <span>{message}</span>
         </div>
-        <Button onClick={onContinue}>
+        <Button id="practice-feedback-action" onClick={onContinue}>
           {finalExercise ? "See results" : "Continue"}
         </Button>
       </div>
