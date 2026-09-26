@@ -25,7 +25,7 @@ export const appSections = {
     path: "/practice",
     label: "Practice",
     icon: "practice",
-    status: "upcoming",
+    status: "available",
     description: "Short practice sessions to reinforce what you have learned.",
   },
   progress: {

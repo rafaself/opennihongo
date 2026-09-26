@@ -39,7 +39,7 @@ describe("web application routes", () => {
     expect(document.title).toBe("Kana · OpenNihongo");
   });
 
-  it("renders upcoming sections and supports mobile menu dismissal", async () => {
+  it("opens Practice and upcoming sections, with mobile menu dismissal", async () => {
     const user = userEvent.setup();
     await renderHome();
 
@@ -61,7 +61,9 @@ describe("web application routes", () => {
 
     await user.click(screen.getByRole("button", { name: "Open menu" }));
     await user.click(screen.getByRole("link", { name: /Practice/ }));
-    await screen.findByRole("heading", { name: "Practice" });
+    await screen.findByRole("heading", {
+      name: "Which reading matches this word?",
+    });
     expect(document.title).toBe("Practice · OpenNihongo");
     expect(
       screen

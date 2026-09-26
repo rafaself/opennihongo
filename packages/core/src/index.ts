@@ -1,7 +1,26 @@
 export {
+  beginnerWordMatchingExercise,
   checkKanaAnswer,
+  hiraganaToRomajiExercise,
+  kanaBeginnerWords,
+  kanaExercises,
   hiraganaVowels,
+  romajiToHiraganaExercise,
   normalizeKanaAnswer,
   recordKanaAnswer,
+  scoreKanaChoiceAnswer,
+  scoreKanaMatchingAnswer,
+  validateKanaChoiceAnswer,
+  validateKanaMatchingAnswer,
 } from "./kana/index";
-export type { KanaId, KanaItem, KanaProgress } from "./kana/index";
+export type {
+  KanaChoiceExercise,
+  KanaExercise,
+  KanaId,
+  KanaItem,
+  KanaMatchingExercise,
+  KanaPairAnswer,
+  KanaProgress,
+  KanaWord,
+  KanaWordId,
+} from "./kana/index";
