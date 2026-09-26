@@ -44,7 +44,9 @@ test("captures the core red and neutral theme in light and dark", async ({
       textTransform: "uppercase",
     });
   await expect
-    .poll(() => button.evaluate((element) => getComputedStyle(element).boxShadow))
+    .poll(() =>
+      button.evaluate((element) => getComputedStyle(element).boxShadow),
+    )
     .toContain("0px 4px 0px");
 
   for (const theme of ["light", "dark"] as const) {
@@ -131,7 +133,9 @@ test("captures the elevated secondary Button state", async ({ page }) => {
       borderWidth: "2px",
     });
   await expect
-    .poll(() => button.evaluate((element) => getComputedStyle(element).boxShadow))
+    .poll(() =>
+      button.evaluate((element) => getComputedStyle(element).boxShadow),
+    )
     .toContain("0px 2px 0px");
 
   await expect(page).toHaveScreenshot("button-secondary.png");
@@ -175,7 +179,9 @@ test("applies reduced motion to portaled Popover content", async ({ page }) => {
   await expect(content).toBeVisible();
   await expect(page.locator("html")).toHaveAttribute("data-motion", "reduced");
   await expect
-    .poll(() => content.evaluate((element) => getComputedStyle(element).animationName))
+    .poll(() =>
+      content.evaluate((element) => getComputedStyle(element).animationName),
+    )
     .toBe("none");
 });
 
@@ -189,7 +195,9 @@ test("applies reduced motion to portaled Tooltip content", async ({ page }) => {
   await expect(content).toBeVisible();
   await expect(page.locator("html")).toHaveAttribute("data-motion", "reduced");
   await expect
-    .poll(() => content.evaluate((element) => getComputedStyle(element).animationName))
+    .poll(() =>
+      content.evaluate((element) => getComputedStyle(element).animationName),
+    )
     .toBe("none");
 });
 

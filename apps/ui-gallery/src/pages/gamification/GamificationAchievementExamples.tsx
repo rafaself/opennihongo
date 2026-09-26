@@ -7,6 +7,7 @@ import {
   RewardCard,
   RewardReceived,
 } from "@opennihongo/ui";
+import { GamificationQuestListExample } from "./GamificationQuestListExample";
 
 export function GamificationAchievementExamples() {
   return (
@@ -114,6 +115,7 @@ export function GamificationAchievementExamples() {
           />
         </div>
       </article>
+      <GamificationQuestListExample />
       <article className="gallery-doc-example-card gallery-gamification-card--wide">
         <h3>Leaderboard</h3>
         <p>Supply ordered rows and rank changes from the owning feature.</p>

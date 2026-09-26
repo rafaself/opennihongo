@@ -44,7 +44,7 @@ afterEach(() => {
 });
 
 describe("OverlaysAndNavigationPage", () => {
-  it("shows all five public component examples and shared presentation controls", () => {
+  it("shows all five examples and keeps motion preview local to the page", () => {
     render(<OverlaysAndNavigationPage />);
 
     expect(
@@ -55,18 +55,17 @@ describe("OverlaysAndNavigationPage", () => {
     expect(screen.getByRole("heading", { name: "Dialog" })).toBeTruthy();
     expect(screen.getByRole("heading", { name: "Tabs" })).toBeTruthy();
     expect(screen.getByRole("heading", { name: "Toast" })).toBeTruthy();
-    expect(screen.getByRole("radio", { name: "Dark theme" })).toBeTruthy();
+    expect(screen.queryByRole("radio", { name: "Dark theme" })).toBeNull();
     expect(screen.getByRole("radio", { name: "Reduced motion" })).toBeTruthy();
   });
 
-  it("applies the shared theme to portaled content and restores motion settings", async () => {
+  it("inherits theme from the gallery shell and restores motion settings", async () => {
     const { container } = render(<OverlaysAndNavigationPage />);
     const preview = container.querySelector(".gallery-doc-example-grid");
     const portalHost = container.querySelector(".gallery-overlay-portal-host");
 
-    fireEvent.click(screen.getByRole("radio", { name: "Dark theme" }));
-    expect(preview?.getAttribute("data-theme")).toBe("dark");
-    expect(portalHost?.getAttribute("data-theme")).toBe("dark");
+    expect(preview?.hasAttribute("data-theme")).toBe(false);
+    expect(portalHost?.hasAttribute("data-theme")).toBe(false);
 
     fireEvent.click(screen.getByRole("radio", { name: "Reduced motion" }));
     expect(document.documentElement.getAttribute("data-motion")).toBe(

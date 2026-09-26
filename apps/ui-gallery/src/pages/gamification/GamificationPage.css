@@ -31,13 +31,12 @@
 }
 
 .gallery-gamification-card--wide {
-  grid-column: span 2;
+  grid-column: 1 / -1;
 }
 
 .gallery-gamification-stage {
   align-items: start;
-  background-image: radial-gradient(#dce5e1 0.65px, transparent 0.65px);
-  background-size: 12px 12px;
+  background: var(--ns-color-canvas);
   border-radius: 0.75rem;
   display: grid;
   justify-items: stretch;

@@ -4,7 +4,6 @@ import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import { PlaygroundPage } from "./PlaygroundPage";
 
 const root = document.documentElement;
-let originalTheme: string | null;
 let originalMotion: string | null;
 
 function restoreAttribute(name: string, value: string | null) {
@@ -17,42 +16,42 @@ function restoreAttribute(name: string, value: string | null) {
 
 describe("PlaygroundPage presentation controls", () => {
   beforeEach(() => {
-    originalTheme = root.getAttribute("data-theme");
     originalMotion = root.getAttribute("data-motion");
   });
 
   afterEach(() => {
     cleanup();
-    restoreAttribute("data-theme", originalTheme);
     restoreAttribute("data-motion", originalMotion);
   });
 
-  it("applies the selected shared theme and restores the prior theme on exit", () => {
-    const { unmount } = render(<PlaygroundPage />);
-
-    expect(root.getAttribute("data-theme")).toBe("light");
-    fireEvent.click(screen.getByRole("radio", { name: "Dark" }));
-    expect(root.getAttribute("data-theme")).toBe("dark");
-
-    unmount();
-    expect(root.getAttribute("data-theme")).toBe(originalTheme);
-  });
-
-  it("simulates reduced motion and resets to the light theme and system preference", () => {
+  it("leaves theme ownership to the gallery shell", () => {
     render(<PlaygroundPage />);
 
-    fireEvent.click(screen.getByRole("radio", { name: "Dark" }));
+    expect(screen.queryByRole("radio", { name: "Light" })).toBeNull();
+    expect(screen.queryByRole("radio", { name: "Dark" })).toBeNull();
+    expect(screen.queryByRole("radio", { name: "Color theme" })).toBeNull();
+  });
+
+  it("uses the same accessible split-workbench structure for both examples", () => {
+    render(<PlaygroundPage />);
+
+    expect(screen.getByRole("group", { name: "Motion examples" })).toBeTruthy();
+    expect(screen.getByRole("group", { name: "Button preview" })).toBeTruthy();
+  });
+
+  it("simulates reduced motion and resets to system preference", () => {
+    render(<PlaygroundPage />);
+
     fireEvent.click(screen.getByRole("radio", { name: "Reduced motion" }));
     expect(root.getAttribute("data-motion")).toBe("reduced");
     expect(
-      screen.getByRole("status", { name: "Presentation settings" }).textContent,
+      screen.getByRole("status", { name: "Motion settings" }).textContent,
     ).toContain("Reduced motion simulation is on");
 
     fireEvent.click(
-      screen.getByRole("button", { name: "Reset global controls" }),
+      screen.getByRole("button", { name: "Reset motion setting" }),
     );
 
-    expect(root.getAttribute("data-theme")).toBe("light");
     expect(root.getAttribute("data-motion")).toBe(originalMotion);
     expect(
       screen.getByRole("radio", { name: "System preference" }),

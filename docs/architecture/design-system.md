@@ -174,6 +174,11 @@ Status is not derived from progress. It does not generate quests, determine
 completion, or award rewards; the owning feature supplies those decisions and
 values.
 
+`QuestList` presents a compact group of caller-supplied quests with decorative
+artwork, determinate progress, optional reward images, and optional time text.
+It does not run a countdown, determine quest completion, or grant rewards.
+The caller provides accessible reward labels and localized progress text.
+
 `LeaderboardItem` presents a caller-supplied rank, participant identity, and
 score, with an optional rank-change indicator and current-user marker. Its
 current-user state has a visible label and `aria-current` semantics. It does

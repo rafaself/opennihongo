@@ -30,7 +30,7 @@ export function ActionsExamples() {
           alternative, and disabled when the action is unavailable.
         </p>
         <div className="gallery-doc-example-stage">
-          <div>
+          <div className="gallery-doc-action-stack">
             <Button
               onClick={() => {
                 setAnnouncement("Continue lesson selected.");

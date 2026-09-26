@@ -68,13 +68,11 @@
     0 3px 8px rgb(24 24 23 / 14%), 0 1px 2px rgb(24 24 23 / 8%);
   --ns-elevation-pressed:
     inset 0 1px 2px rgb(24 24 23 / 12%), 0 0 1px rgb(24 24 23 / 8%);
-  --ns-elevation-button-primary:
-    0 var(--ns-size-button-edge-primary) 0 var(--ns-color-action-primary-edge);
-  --ns-elevation-button-primary-hover:
-    0 var(--ns-size-button-edge-primary) 0
+  --ns-elevation-button-primary: 0 var(--ns-size-button-edge-primary) 0
+    var(--ns-color-action-primary-edge);
+  --ns-elevation-button-primary-hover: 0 var(--ns-size-button-edge-primary) 0
     var(--ns-color-action-primary-hover-edge);
-  --ns-elevation-button-secondary:
-    0 var(--ns-size-button-edge-secondary) 0
+  --ns-elevation-button-secondary: 0 var(--ns-size-button-edge-secondary) 0
     var(--ns-color-action-secondary-edge);
   --ns-elevation-dialog:
     0 12px 24px rgb(24 24 23 / 16%), 0 4px 8px rgb(24 24 23 / 10%);
@@ -161,13 +159,11 @@
   --ns-elevation-interactive: 0 1px 2px rgb(0 0 0 / 28%);
   --ns-elevation-hover: 0 3px 8px rgb(0 0 0 / 34%), 0 1px 2px rgb(0 0 0 / 22%);
   --ns-elevation-pressed: inset 0 1px 2px rgb(0 0 0 / 28%);
-  --ns-elevation-button-primary:
-    0 var(--ns-size-button-edge-primary) 0 var(--ns-color-action-primary-edge);
-  --ns-elevation-button-primary-hover:
-    0 var(--ns-size-button-edge-primary) 0
+  --ns-elevation-button-primary: 0 var(--ns-size-button-edge-primary) 0
+    var(--ns-color-action-primary-edge);
+  --ns-elevation-button-primary-hover: 0 var(--ns-size-button-edge-primary) 0
     var(--ns-color-action-primary-hover-edge);
-  --ns-elevation-button-secondary:
-    0 var(--ns-size-button-edge-secondary) 0
+  --ns-elevation-button-secondary: 0 var(--ns-size-button-edge-secondary) 0
     var(--ns-color-action-secondary-edge);
   --ns-elevation-dialog:
     0 12px 24px rgb(0 0 0 / 42%), 0 4px 8px rgb(0 0 0 / 28%);

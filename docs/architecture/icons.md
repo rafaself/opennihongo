@@ -64,7 +64,8 @@ so their action is announced independently of the icon artwork.
 ## Initial catalog
 
 Keep this registry small and add icons only when a shared component needs one.
-The current set contains `CheckIcon`, `CloseIcon`, and `StarIcon`, available as
-`check`, `close`, and `star` through `Icon`, to represent status, dismissal,
-and progression markers. Do not add feature-specific marks, decorative
-illustrations, or a speculative general-purpose catalog here.
+The current set contains `CheckIcon`, `CloseIcon`, `MoonIcon`, `StarIcon`, and
+`SunIcon`, available as `check`, `close`, `moon`, `star`, and `sun` through
+`Icon`. These cover status, dismissal, theme selection, and progression
+markers. Do not add feature-specific marks, decorative illustrations, or a
+speculative general-purpose catalog here.

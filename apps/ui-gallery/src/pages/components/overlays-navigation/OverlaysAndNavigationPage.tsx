@@ -66,12 +66,12 @@ export function OverlaysAndNavigationPage() {
           title: "Theme and motion contracts",
           content: (
             <p>
-              Theme is scoped with the shared <code>data-theme</code> attribute
-              on both the examples and their stable portal host, so portaled
-              content receives the same semantic tokens. The motion control
-              exercises the shared <code>data-motion="reduced"</code> contract
-              and restores the previous document setting when you leave this
-              page; system reduced-motion preferences are also honored.
+              The examples and their portal host inherit the shared theme from
+              the Gallery shell, so portaled content receives the same semantic
+              tokens. The motion control exercises the shared
+              <code> data-motion="reduced"</code> contract and restores the
+              previous document setting when you leave this page; system
+              reduced-motion preferences are also honored.
             </p>
           ),
         },
@@ -86,7 +86,7 @@ export function OverlaysAndNavigationPage() {
           "Use tabs to navigate to another route or as a substitute for page navigation.",
         ],
       }}
-      summary="Live examples of shared overlays and local navigation, with their keyboard, focus, dismissal, theme, and reduced-motion behavior available for inspection."
+      summary="Live examples of shared overlays and local navigation, with their keyboard, focus, dismissal, and reduced-motion behavior available for inspection."
       title="Overlays & Navigation"
     />
   );

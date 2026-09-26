@@ -14,12 +14,6 @@ export function HomePage() {
         <a className="gallery-text-link" href="#components">
           Explore the components <span aria-hidden="true">↓</span>
         </a>
-        <div aria-hidden="true" className="gallery-intro-stamp">
-          <span>学</span>
-          <span>ぶ</span>
-          <span>毎</span>
-          <span>日</span>
-        </div>
       </section>
 
       <section
@@ -75,27 +69,29 @@ export function HomePage() {
 <Button>Continue lesson</Button>
 <Button variant="secondary">View details</Button>`}</code>
         </pre>
-        <Link className="gallery-text-link" to="/components">
-          Browse the component catalog
-        </Link>
-        <br />
-        <Link className="gallery-text-link" to="/components/actions-and-forms">
-          Explore actions and form controls
-        </Link>
-        <br />
-        <Link
-          className="gallery-text-link"
-          to="/components/content-and-progress"
-        >
-          Explore content and progress components
-        </Link>
-        <br />
-        <Link
-          className="gallery-text-link"
-          to="/components/overlays-and-navigation"
-        >
-          Explore overlays and navigation components
-        </Link>
+        <nav aria-label="Component guides" className="gallery-home-links">
+          <Link className="gallery-text-link" to="/components">
+            Browse the component catalog
+          </Link>
+          <Link
+            className="gallery-text-link"
+            to="/components/actions-and-forms"
+          >
+            Actions and form controls
+          </Link>
+          <Link
+            className="gallery-text-link"
+            to="/components/content-and-progress"
+          >
+            Content and progress
+          </Link>
+          <Link
+            className="gallery-text-link"
+            to="/components/overlays-and-navigation"
+          >
+            Overlays and navigation
+          </Link>
+        </nav>
       </section>
     </>
   );

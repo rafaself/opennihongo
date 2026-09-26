@@ -1,7 +1,5 @@
 .gallery-doc-page {
-  margin: 0 auto;
-  max-width: 64rem;
-  padding: clamp(3rem, 7vw, 5.5rem) 0 4.5rem;
+  padding: var(--gallery-page-padding) 0 4rem;
 }
 
 .gallery-doc-heading {
@@ -9,7 +7,7 @@
 }
 
 .gallery-doc-heading h1 {
-  font-size: clamp(2.5rem, 5.5vw, 4.5rem);
+  font-size: var(--gallery-title-size);
   font-weight: var(--ns-text-display-weight);
   letter-spacing: var(--ns-text-display-letter-spacing);
   line-height: var(--ns-text-display-line-height);
@@ -18,45 +16,67 @@
 
 .gallery-doc-summary {
   color: var(--ns-color-muted);
-  font-size: 1.0625rem;
+  font-size: 1rem;
   line-height: 1.7;
-  margin: 1.25rem 0 0;
+  margin: 1rem 0 0;
   max-width: 42rem;
 }
 
 .gallery-doc-section {
-  border-top: 1px solid var(--ns-color-border);
-  margin-top: 3.5rem;
-  padding-top: 2.5rem;
+  border-top: 1px solid var(--ns-color-border-subtle);
+  margin-top: 2.5rem;
+  padding-top: 2rem;
+}
+
+.gallery-doc-contents {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.25rem;
+  margin-top: 1.25rem;
+}
+
+.gallery-doc-contents a {
+  color: var(--ns-color-brand-text);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  padding-block: 0.25rem;
+  text-decoration: none;
+}
+
+.gallery-doc-contents a:hover {
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+.gallery-doc-contents a:focus-visible {
+  outline: 2px solid var(--ns-color-focus);
+  outline-offset: 0.2rem;
 }
 
 .gallery-doc-section-heading {
-  margin-bottom: 1.5rem;
-}
-
-.gallery-doc-section-heading .gallery-eyebrow {
-  margin-bottom: 0.6rem;
+  margin-bottom: 1.25rem;
 }
 
 .gallery-doc-section-heading h2 {
-  font-size: clamp(1.75rem, 4vw, 2.25rem);
+  font-size: 1.5rem;
   font-weight: var(--ns-text-heading-weight);
   letter-spacing: var(--ns-text-heading-letter-spacing);
   line-height: var(--ns-text-heading-line-height);
   margin: 0;
 }
 
-.gallery-doc-examples,
+.gallery-doc-example-card,
 .gallery-doc-guidance-card,
 .gallery-doc-note,
 .gallery-doc-practices-grid > section {
   background: var(--ns-color-surface);
-  border: 1px solid var(--ns-color-border);
-  border-radius: 1rem;
+  border: 1px solid var(--ns-color-border-subtle);
+  border-radius: 0.75rem;
+  color: var(--ns-color-ink);
 }
 
 .gallery-doc-examples {
-  padding: 1rem;
+  min-width: 0;
 }
 
 .gallery-doc-guidance-grid,
@@ -69,13 +89,15 @@
 
 .gallery-doc-example-grid {
   display: grid;
-  gap: 1rem;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+  gap: 1.25rem;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 19rem), 1fr));
 }
 
 .gallery-doc-example-card {
+  display: flex;
+  flex-direction: column;
   min-width: 0;
-  padding: 0.5rem;
+  padding: 1.25rem;
 }
 
 .gallery-doc-example-card--wide {
@@ -100,21 +122,66 @@
 }
 
 .gallery-doc-example-card > p {
-  margin: 0.4rem 0 0.85rem;
+  margin: 0.5rem 0 1.25rem;
 }
 
 .gallery-doc-example-stage {
   align-items: center;
-  background-image: radial-gradient(#dce5e1 0.65px, transparent 0.65px);
-  background-size: 12px 12px;
-  border-radius: 0.75rem;
+  background: var(--ns-color-canvas);
+  border-radius: 0.5rem;
   display: flex;
+  flex: 1;
+  gap: 1rem;
   justify-content: center;
-  min-height: 7rem;
+  min-height: 9rem;
+  min-width: 0;
   padding: 1.25rem;
 }
 
+.gallery-doc-action-stack {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.gallery-preview-controls {
+  border: 1px solid var(--ns-color-border-subtle);
+  border-radius: 0.75rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.25rem;
+  margin: 0 0 1.5rem;
+  min-width: 0;
+  padding: 0.75rem 1rem;
+}
+
+.gallery-preview-controls legend {
+  color: var(--ns-color-muted);
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0 0.35rem;
+}
+
+.gallery-preview-controls label {
+  align-items: center;
+  cursor: pointer;
+  display: inline-flex;
+  font-size: 0.8125rem;
+  gap: 0.5rem;
+  min-height: 2rem;
+}
+
+.gallery-preview-controls input {
+  accent-color: var(--ns-color-brand);
+  height: 1rem;
+  margin: 0;
+  width: 1rem;
+}
+
 .gallery-action-card-grid {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 8rem), 1fr));
   inline-size: 100%;
 }
 
@@ -206,9 +273,9 @@
   margin-top: 0.5rem;
 }
 
-@media (max-width: 48rem) {
-  .gallery-doc-page {
-    padding-top: 3rem;
+@media (min-width: 85rem) {
+  .gallery-doc-contents {
+    display: none;
   }
 }
 
@@ -220,7 +287,11 @@
     grid-template-columns: minmax(0, 1fr);
   }
 
-  .gallery-doc-examples {
-    padding: 0.75rem;
+  .gallery-doc-example-card {
+    padding: 1rem;
+  }
+
+  .gallery-doc-example-stage {
+    padding: 1rem;
   }
 }

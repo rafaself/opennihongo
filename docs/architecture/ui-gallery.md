@@ -67,9 +67,9 @@ component from `@opennihongo/ui`; the gallery demonstrates the API and must not
 copy its styling or behavior. Keep page-specific controls and state with their
 example rather than adding a shared state layer for a single use case.
 
-When a later control represents a gallery-wide presentation preference, move
-only that shared preference to the gallery shell and expose it to pages through
-a small gallery-owned provider or explicit props. Pages should still translate
-the preference into public Design System props or semantic tokens. The shell
-must not own component behavior, and global theme and reduced-motion controls
-belong to issue #91.
+The Gallery shell owns the shared theme preference and exposes its toggle in
+the header. Pages and their portal hosts inherit that theme; they should not add
+local theme controls or override the shell's `data-theme`. Keep motion behavior
+previews with the relevant examples and restore any temporary document-level
+motion setting when those examples unmount. The shell must not own component
+behavior.

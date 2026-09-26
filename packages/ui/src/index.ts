@@ -27,6 +27,11 @@ export type {
   QuestCardReward,
   QuestCardStatus,
 } from "./components/indicators/quest-card/QuestCard";
+export { QuestList } from "./patterns/quest-list/QuestList";
+export type {
+  QuestListItem,
+  QuestListProps,
+} from "./patterns/quest-list/QuestList";
 export { LeaderboardItem } from "./components/indicators/leaderboard-item/LeaderboardItem";
 export type {
   LeaderboardItemChange,

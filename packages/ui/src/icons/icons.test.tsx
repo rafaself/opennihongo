@@ -5,7 +5,9 @@ import {
   CheckIcon,
   CloseIcon,
   Icon,
+  MoonIcon,
   StarIcon,
+  SunIcon,
   type IconComponentProps,
 } from "@opennihongo/ui/icons";
 
@@ -22,12 +24,14 @@ describe("functional icon registry", () => {
       <>
         <CheckIcon />
         <CloseIcon />
+        <MoonIcon />
         <StarIcon />
+        <SunIcon />
       </>,
     );
 
     const icons = container.querySelectorAll("svg");
-    expect(icons).toHaveLength(3);
+    expect(icons).toHaveLength(5);
     expect(icons[0]?.querySelector("path")).toHaveAttribute(
       "d",
       "m5 12 4 4L19 6",
@@ -38,8 +42,13 @@ describe("functional icon registry", () => {
     );
     expect(icons[2]?.querySelector("path")).toHaveAttribute(
       "d",
+      "M20.5 15.5A8.5 8.5 0 0 1 8.5 3.5a8.5 8.5 0 1 0 12 12Z",
+    );
+    expect(icons[3]?.querySelector("path")).toHaveAttribute(
+      "d",
       "m12 3 2.7 5.5 6.1.9-4.4 4.3 1 6.1-5.4-2.9-5.4 2.9 1-6.1-4.4-4.3 6.1-.9L12 3Z",
     );
+    expect(icons[4]?.querySelector("circle")).toHaveAttribute("r", "4");
   });
 
   it("renders names from the canonical icon registry", () => {
@@ -47,12 +56,14 @@ describe("functional icon registry", () => {
       <>
         <Icon name="check" />
         <Icon name="close" />
+        <Icon name="moon" />
         <Icon name="star" />
+        <Icon name="sun" />
       </>,
     );
 
     const icons = container.querySelectorAll("svg");
-    expect(icons).toHaveLength(3);
+    expect(icons).toHaveLength(5);
     expect(icons[0]?.querySelector("path")).toHaveAttribute(
       "d",
       "m5 12 4 4L19 6",
@@ -63,8 +74,13 @@ describe("functional icon registry", () => {
     );
     expect(icons[2]?.querySelector("path")).toHaveAttribute(
       "d",
+      "M20.5 15.5A8.5 8.5 0 0 1 8.5 3.5a8.5 8.5 0 1 0 12 12Z",
+    );
+    expect(icons[3]?.querySelector("path")).toHaveAttribute(
+      "d",
       "m12 3 2.7 5.5 6.1.9-4.4 4.3 1 6.1-5.4-2.9-5.4 2.9 1-6.1-4.4-4.3 6.1-.9L12 3Z",
     );
+    expect(icons[4]?.querySelector("circle")).toHaveAttribute("r", "4");
   });
 
   it("supports semantic colors and accessible names on registered icons", () => {

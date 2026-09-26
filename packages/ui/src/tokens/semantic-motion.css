@@ -8,7 +8,9 @@
   --ns-motion-duration-indeterminate: var(--ns-primitive-motion-duration-5);
   --ns-motion-press-offset: 1px;
   --ns-motion-button-press-offset: var(--ns-size-button-edge-primary);
-  --ns-motion-button-secondary-press-offset: var(--ns-size-button-edge-secondary);
+  --ns-motion-button-secondary-press-offset: var(
+    --ns-size-button-edge-secondary
+  );
 
   --ns-motion-easing-standard: var(--ns-primitive-motion-easing-standard);
   --ns-motion-easing-enter: var(--ns-primitive-motion-easing-enter);
