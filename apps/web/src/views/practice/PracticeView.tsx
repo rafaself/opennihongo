@@ -314,25 +314,27 @@ export function PracticeView() {
               </div>
             )}
           </div>
-          {feedback ? (
-            <PracticeFeedback
-              correct={feedback.correct}
-              finalExercise={index === kanaExercises.length - 1}
-              message={feedback.message}
-              onContinue={continuePractice}
-            />
-          ) : (
-            <footer className="practice-session__actions">
-              <div className="practice-session__actions-inner">
-                <Button onClick={skipExercise} variant="secondary">
-                  Skip
-                </Button>
-                <Button disabled={!readyToCheck} onClick={checkAnswer}>
-                  Check answer
-                </Button>
-              </div>
-            </footer>
-          )}
+          <div className="practice-session__action-slot">
+            {feedback ? (
+              <PracticeFeedback
+                correct={feedback.correct}
+                finalExercise={index === kanaExercises.length - 1}
+                message={feedback.message}
+                onContinue={continuePractice}
+              />
+            ) : (
+              <footer className="practice-session__actions">
+                <div className="practice-session__actions-inner">
+                  <Button onClick={skipExercise} variant="secondary">
+                    Skip
+                  </Button>
+                  <Button disabled={!readyToCheck} onClick={checkAnswer}>
+                    Check answer
+                  </Button>
+                </div>
+              </footer>
+            )}
+          </div>
         </>
       )}
     </section>

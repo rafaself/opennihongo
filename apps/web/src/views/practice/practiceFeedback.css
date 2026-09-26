@@ -1,8 +1,13 @@
 .practice-feedback {
   background: var(--ns-color-feedback-success-surface);
   border-top: 2px solid var(--ns-color-feedback-success);
+  bottom: 0;
   color: var(--ns-color-feedback-success);
+  left: 0;
+  position: fixed;
+  right: 0;
   width: 100%;
+  z-index: var(--ns-layer-sticky);
 }
 
 .practice-feedback[data-correct="false"] {

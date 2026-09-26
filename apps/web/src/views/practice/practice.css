@@ -207,8 +207,13 @@
   text-align: center;
 }
 
+.practice-session__action-slot {
+  height: 6.5rem;
+}
+
 .practice-session__actions {
   border-top: 1px solid var(--ns-color-border-subtle);
+  height: 100%;
   width: 100%;
 }
 
@@ -219,6 +224,7 @@
   justify-content: space-between;
   margin-inline: auto;
   max-width: 64rem;
+  min-height: 100%;
   padding: 1.5rem 2rem;
   width: 100%;
 }
@@ -259,6 +265,10 @@
 
   .practice-session__actions-inner {
     padding: 1rem 1.25rem max(1rem, env(safe-area-inset-bottom));
+  }
+
+  .practice-session__action-slot {
+    height: 5.5rem;
   }
 }
 
