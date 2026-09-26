@@ -8,6 +8,7 @@ import {
   type KanaPairAnswer,
 } from "@opennihongo/core";
 import { Button, Surface, Text } from "@opennihongo/ui";
+import { Icon } from "@opennihongo/ui/icons";
 import { useEffect, useState } from "react";
 import { PracticeFeedback } from "./PracticeFeedback";
 import { PracticeResults } from "./PracticeResults";
@@ -149,8 +150,13 @@ export function PracticeView() {
       className="practice-session"
     >
       <header className="practice-session__header">
-        <Link className="practice-session__exit" to="/">
-          Leave practice
+        <Link
+          aria-label="Leave practice"
+          className="practice-session__exit"
+          title="Leave practice"
+          to="/"
+        >
+          <Icon name="close" />
         </Link>
         <div
           aria-label="Practice progress"

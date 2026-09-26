@@ -28,12 +28,15 @@
 }
 
 .practice-session__exit {
+  align-items: center;
   border-radius: var(--ns-radius-control);
   color: var(--ns-color-text-secondary);
-  font-size: var(--ns-text-button-size);
-  font-weight: var(--ns-text-button-weight);
-  padding: 0.5rem;
+  display: inline-flex;
+  height: 2.75rem;
+  justify-content: center;
+  padding: 0;
   text-decoration: none;
+  width: 2.75rem;
 }
 
 .practice-session__exit:hover {
@@ -66,8 +69,8 @@
 
 .practice-session__step {
   color: var(--ns-color-text-secondary);
-  font-size: var(--ns-text-label-size);
-  font-weight: 700;
+  font-size: var(--ns-text-body-size);
+  font-weight: 800;
   min-width: 2.5rem;
   text-align: right;
 }
