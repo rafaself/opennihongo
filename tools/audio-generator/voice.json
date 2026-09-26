@@ -1,0 +1,13 @@
+{
+  "provider": "VOICEVOX",
+  "engine": "voicevox_nemo_engine",
+  "engine_version": "0.24.0",
+  "speaker_name": "女声1",
+  "style_name": "ノーマル",
+  "style_id": 10005,
+  "attribution": {
+    "required": true,
+    "text": "VOICEVOX Nemo",
+    "terms_url": "https://voicevox.hiroshiba.jp/nemo/term/"
+  }
+}
