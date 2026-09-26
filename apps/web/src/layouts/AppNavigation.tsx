@@ -1,44 +1,26 @@
 import { Link } from "@tanstack/react-router";
-import { AppNavIcon, type AppNavIconName } from "./AppNavIcon";
-
-const upcomingSections: readonly {
-  label: string;
-  icon: AppNavIconName;
-}[] = [
-  { label: "Kana", icon: "kana" },
-  { label: "Practice", icon: "practice" },
-  { label: "Progress", icon: "progress" },
-  { label: "Quests", icon: "quests" },
-  { label: "Library", icon: "library" },
-];
+import { navigationSections } from "../app/sections";
+import { AppNavIcon } from "./AppNavIcon";
 
 export function AppNavigation({ onNavigate }: { onNavigate: () => void }) {
   return (
     <nav aria-label="Primary navigation" className="app-navigation">
       <ul className="app-navigation__list">
-        <li>
-          <Link
-            activeOptions={{ exact: true }}
-            activeProps={{ "aria-current": "page" }}
-            className="app-navigation__item"
-            onClick={onNavigate}
-            to="/"
-          >
-            <AppNavIcon name="learn" />
-            <span className="app-navigation__label">Learn</span>
-          </Link>
-        </li>
-        {upcomingSections.map(({ icon, label }) => (
-          <li key={label}>
-            <span
-              aria-disabled="true"
-              className="app-navigation__item app-navigation__item--upcoming"
-              title={`${label} coming soon`}
+        {navigationSections.map(({ icon, label, path, status }) => (
+          <li key={path}>
+            <Link
+              activeOptions={{ exact: true }}
+              activeProps={{ "aria-current": "page" }}
+              className="app-navigation__item"
+              onClick={onNavigate}
+              to={path}
             >
               <AppNavIcon name={icon} />
               <span className="app-navigation__label">{label}</span>
-              <span className="app-navigation__soon">Soon</span>
-            </span>
+              {status === "upcoming" && (
+                <span className="app-navigation__soon">Soon</span>
+              )}
+            </Link>
           </li>
         ))}
       </ul>

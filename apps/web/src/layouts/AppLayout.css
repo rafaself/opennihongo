@@ -111,10 +111,6 @@
   text-transform: uppercase;
 }
 
-.app-navigation__item--upcoming {
-  cursor: default;
-}
-
 .app-navigation__soon {
   color: #aebdc3;
   font-size: 0.625rem;

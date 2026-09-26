@@ -1,5 +1,6 @@
-import { Link, Outlet } from "@tanstack/react-router";
-import { useRef, useState } from "react";
+import { Link, Outlet, useRouterState } from "@tanstack/react-router";
+import { useEffect, useRef, useState } from "react";
+import { navigationSections } from "../app/sections";
 import { AppNavigation } from "./AppNavigation";
 import "./AppLayout.css";
 
@@ -21,6 +22,25 @@ function AppBrand({ compact = false }: { compact?: boolean }) {
 export function AppLayout() {
   const [menuOpen, setMenuOpen] = useState(false);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
+  const mainRef = useRef<HTMLElement>(null);
+  const pathname = useRouterState({
+    select: (state) => state.location.pathname,
+  });
+  const previousPath = useRef(pathname);
+
+  useEffect(() => {
+    const normalizedPath =
+      pathname === "/" ? pathname : pathname.replace(/\/+$/, "");
+    const section = navigationSections.find(
+      ({ path }) => path === normalizedPath,
+    );
+    document.title = `${section?.label ?? "Page not found"} · OpenNihongo`;
+
+    if (previousPath.current !== pathname) {
+      previousPath.current = pathname;
+      mainRef.current?.focus();
+    }
+  }, [pathname]);
 
   return (
     <div className="app-shell">
@@ -67,12 +87,18 @@ export function AppLayout() {
         <AppNavigation
           onNavigate={() => {
             setMenuOpen(false);
+            mainRef.current?.focus();
           }}
         />
       </aside>
 
       <div className="app-shell__body">
-        <main className="app-shell__main" id="app-main">
+        <main
+          className="app-shell__main"
+          id="app-main"
+          ref={mainRef}
+          tabIndex={-1}
+        >
           <Outlet />
         </main>
         <footer className="app-shell__footer">

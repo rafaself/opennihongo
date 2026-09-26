@@ -145,14 +145,21 @@ suggestions.
 
 ## Current composition
 
-The starter route is intentionally small:
+The web app registers its routes in `app/router.tsx`. `app/sections.ts` is the
+shared source for sidebar labels, paths, and availability; route-level content
+stays in `pages/`. The shared layout renders the active route through its
+outlet:
 
 ```text
 app/main.tsx -> app/router.tsx -> layouts/AppLayout.tsx
-                                  -> pages/HomePage.tsx
-                                     -> views/home/WelcomeView.tsx
-                                        -> @opennihongo/ui
+                                  -> pages/HomePage.tsx -> views/home/WelcomeView.tsx
+                                  -> pages/UpcomingSectionPage.tsx
+                                  -> pages/NotFoundPage.tsx
 ```
+
+The Learn route is `/`. Kana, Practice, Progress, Quests, and Library have
+dedicated URLs and show an explicit coming-soon state until their features are
+implemented. The Gallery owns its own router and navigation independently.
 
 Run `pnpm dev` for the app, `pnpm lint` for ESLint and dependency-boundary
 checks, `pnpm format:check` to verify formatting, `pnpm typecheck` for
