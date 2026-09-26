@@ -174,7 +174,7 @@
 .practice-session__choice-number {
   align-items: center;
   border: 2px solid currentColor;
-  border-radius: var(--ns-radius-sm);
+  border-radius: var(--ns-radius-pill);
   display: inline-flex;
   font-size: 0.75rem;
   font-weight: 700;
