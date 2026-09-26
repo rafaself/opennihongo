@@ -26,6 +26,7 @@ export function TypedAnswerExercise({
       </Surface>
       <Input
         aria-label={`Type the romaji reading for ${exercise.prompt.text}`}
+        autoFocus
         autoCapitalize="none"
         autoComplete="off"
         className="practice-session__typed-answer"
