@@ -56,12 +56,18 @@ batch generation:
 ]
 ```
 
+The initial practice catalog is in
+[`inputs/kana-practice.json`](inputs/kana-practice.json). It mirrors the seeded
+vowels and beginner words in `packages/core/src/kana/`; keep its IDs, display
+text, and readings aligned with that content. Use it as input when regenerating
+the assets.
+
 With the VOICEVOX container running, run the generator from the repository
 root:
 
 ```sh
 PYTHONPATH=tools/audio-generator/src python3 -m audio_generator \
-  --input /path/to/content.json
+  --input tools/audio-generator/inputs/kana-practice.json
 ```
 
 It checks the running engine's version response against `voice.json` (also

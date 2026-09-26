@@ -1,0 +1,52 @@
+[
+  {
+    "id": "kana.hiragana.a",
+    "text": "あ",
+    "reading": "あ"
+  },
+  {
+    "id": "kana.hiragana.i",
+    "text": "い",
+    "reading": "い"
+  },
+  {
+    "id": "kana.hiragana.u",
+    "text": "う",
+    "reading": "う"
+  },
+  {
+    "id": "kana.hiragana.e",
+    "text": "え",
+    "reading": "え"
+  },
+  {
+    "id": "kana.hiragana.o",
+    "text": "お",
+    "reading": "お"
+  },
+  {
+    "id": "kana.word.soto",
+    "text": "そと",
+    "reading": "そと"
+  },
+  {
+    "id": "kana.word.hato",
+    "text": "はと",
+    "reading": "はと"
+  },
+  {
+    "id": "kana.word.sato",
+    "text": "さと",
+    "reading": "さと"
+  },
+  {
+    "id": "kana.word.mimi",
+    "text": "みみ",
+    "reading": "みみ"
+  },
+  {
+    "id": "kana.word.neko",
+    "text": "ねこ",
+    "reading": "ねこ"
+  }
+]

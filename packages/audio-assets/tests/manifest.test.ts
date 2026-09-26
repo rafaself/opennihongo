@@ -17,7 +17,7 @@ describe("audio manifest", () => {
     }
   });
 
-  it("returns a URL only when the generated asset exists", () => {
+  it("bundles a generated URL for every supported audio identifier", () => {
     for (const id of Object.keys(audioManifest)) {
       const assetPath = audioManifest[id as keyof typeof audioManifest];
       const fileExists = existsSync(
@@ -25,10 +25,8 @@ describe("audio manifest", () => {
       );
       const audioAsset = getAudioAsset(id);
 
-      expect(audioAsset !== undefined).toBe(fileExists);
-      if (fileExists) {
-        expect(audioAsset).toEqual(expect.any(String));
-      }
+      expect(fileExists).toBe(true);
+      expect(audioAsset).toEqual(expect.any(String));
     }
   });
 

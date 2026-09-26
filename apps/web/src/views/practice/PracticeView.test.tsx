@@ -201,4 +201,14 @@ describe("PracticeView", () => {
     );
     expect(audioCacheMock.play).toHaveBeenCalledWith("kana.word.soto");
   });
+
+  it("hides pronunciation controls when exercise audio is unavailable", async () => {
+    audioCacheMock.preload.mockResolvedValueOnce(new Set());
+
+    await renderPractice();
+
+    expect(
+      screen.queryByRole("button", { name: "Play pronunciation for そと" }),
+    ).toBeNull();
+  });
 });

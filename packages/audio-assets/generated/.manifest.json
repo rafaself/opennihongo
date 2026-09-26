@@ -1,0 +1,65 @@
+{
+  "assets": {
+    "kana.hiragana.a": {
+      "audio_file": "kana.hiragana.a.opus",
+      "generation_fingerprint": "9815c9208e27cf065507f2d0691adaf327ab58b5b0fa7df3ec909dd2cce83e72",
+      "metadata_file": "kana.hiragana.a.json",
+      "sha256": "757d856f301d1eb77ecfb3eed196a9989482116ba30ed91f11a377a3c2b830be"
+    },
+    "kana.hiragana.e": {
+      "audio_file": "kana.hiragana.e.opus",
+      "generation_fingerprint": "c7f933b85c20b49de3057f40057e70c72b45f30d26f5cce2e2fafcb36612e597",
+      "metadata_file": "kana.hiragana.e.json",
+      "sha256": "1485f8dadb5211728c4c4d907ad5105a9d0040b883f931db3fe23a1b6c232dd3"
+    },
+    "kana.hiragana.i": {
+      "audio_file": "kana.hiragana.i.opus",
+      "generation_fingerprint": "17b4469ff7971ba05f475fbea5b077db7902409d2e12369539e418185fbf4ecb",
+      "metadata_file": "kana.hiragana.i.json",
+      "sha256": "7bed37c09bd9a945f812843aeb2724e94770018a003f26d027e992b6ceaa971d"
+    },
+    "kana.hiragana.o": {
+      "audio_file": "kana.hiragana.o.opus",
+      "generation_fingerprint": "f5d2c2591ca5d5aaa6241fab398c469f59a07c17e7eae5cd5fec5c7dfd29c4c7",
+      "metadata_file": "kana.hiragana.o.json",
+      "sha256": "7cfb749d938651eb5af72f227a3c43f2d4745ac425697e633d83888f6d50d6e2"
+    },
+    "kana.hiragana.u": {
+      "audio_file": "kana.hiragana.u.opus",
+      "generation_fingerprint": "5ab2fdea950336341403efc6d2acf72a099cba4fb76dbdabb2524b262bf520ca",
+      "metadata_file": "kana.hiragana.u.json",
+      "sha256": "7b0dcc031b6bbbd678e9eee8c04ee8626dd9e18535894f6ab60585908bd3ff86"
+    },
+    "kana.word.hato": {
+      "audio_file": "kana.word.hato.opus",
+      "generation_fingerprint": "3f35d40ca3ae774ffe9122c45f932ebd2e8ac88ec84b5f8c4b34c820dc360d23",
+      "metadata_file": "kana.word.hato.json",
+      "sha256": "90217c90c6c8312193d7b0b4c436a336849b00ea2de4ace4f694746d7e5d3f20"
+    },
+    "kana.word.mimi": {
+      "audio_file": "kana.word.mimi.opus",
+      "generation_fingerprint": "67a6563b1ee1739c607af1815599957a929366bd891dd78ca48fc44616bdf94d",
+      "metadata_file": "kana.word.mimi.json",
+      "sha256": "9a5b185d6996c76cc695fc738aa8d48223006062e863e04477e12a7120b24dca"
+    },
+    "kana.word.neko": {
+      "audio_file": "kana.word.neko.opus",
+      "generation_fingerprint": "034e2b9acce75bd0e070636de749b74d9b0ff96ec4f1b5c2ea5c0216a384af49",
+      "metadata_file": "kana.word.neko.json",
+      "sha256": "604156f3f391089c1742dbd4f78b626c0edca1882533ae7dab2bdc94658c7e2f"
+    },
+    "kana.word.sato": {
+      "audio_file": "kana.word.sato.opus",
+      "generation_fingerprint": "43e545d30876e3092a828bda392d8f6a22a255e44877e4f5353d1ec177f44811",
+      "metadata_file": "kana.word.sato.json",
+      "sha256": "e5d1d7810e468db0dba284a1a45f435e8476b02279f1b215973ef8146d71b75e"
+    },
+    "kana.word.soto": {
+      "audio_file": "kana.word.soto.opus",
+      "generation_fingerprint": "c0ed560ed5ca198745e6aafa47758dcc3b3c68e3b2b8db853264b8751278ea48",
+      "metadata_file": "kana.word.soto.json",
+      "sha256": "c9f5cd44bca47336e61fa0a700e8b799a100bfbc7c4bac652076c668e6475e22"
+    }
+  },
+  "manifest_version": 1
+}
