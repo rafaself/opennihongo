@@ -38,12 +38,56 @@ export function PracticeView() {
   // The tuple is non-empty and the session index only moves forward.
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion -- modulo always produces a tuple index
   const exercise = kanaExercises[index % kanaExercises.length]!;
+  const choiceExercise =
+    exercise.kind === "multiple-choice" ? exercise : undefined;
 
   useEffect(() => {
     if (complete) {
       document.getElementById("practice-complete-title")?.focus();
     }
   }, [complete]);
+
+  useEffect(() => {
+    if (!choiceExercise || feedback !== null) {
+      return;
+    }
+    const choices = choiceExercise.choices;
+
+    function handleKeyDown(event: KeyboardEvent) {
+      if (
+        event.repeat ||
+        event.altKey ||
+        event.ctrlKey ||
+        event.metaKey ||
+        event.defaultPrevented
+      ) {
+        return;
+      }
+
+      const target = event.target;
+      if (
+        target instanceof HTMLElement &&
+        (target.isContentEditable ||
+          target.closest("input, textarea, select, [contenteditable='true']"))
+      ) {
+        return;
+      }
+
+      const choiceIndex = Number(event.key) - 1;
+      const choice = choices[choiceIndex];
+      if (!choice) {
+        return;
+      }
+
+      event.preventDefault();
+      setSelectedChoice(choice);
+    }
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [choiceExercise, feedback]);
 
   function resetExerciseState() {
     setSelectedChoice("");
@@ -188,6 +232,7 @@ export function PracticeView() {
                   >
                     {exercise.choices.map((choice, choiceIndex) => (
                       <Button
+                        aria-keyshortcuts={String(choiceIndex + 1)}
                         aria-pressed={selectedChoice === choice}
                         className="practice-session__choice"
                         data-selected={selectedChoice === choice}
