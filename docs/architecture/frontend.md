@@ -7,7 +7,7 @@ resolution, and workspace linking. Nx reads the package locations from
 `pnpm-workspace.yaml`; each package declares its architectural `type:*` tag in
 its `package.json`.
 
-The workspace has five explicit project boundaries:
+The workspace has six explicit project boundaries:
 
 - `apps/web` owns the browser application and composes workspace packages.
 - `apps/ui-gallery` owns the standalone visual catalog for public Design System
@@ -20,6 +20,9 @@ The workspace has five explicit project boundaries:
 - `packages/persistence` owns persistence adapters, repositories, IndexedDB,
   backup, and migration behavior. Add contracts to `core` only when domain
   behavior needs to remain independent from those implementations.
+- `packages/audio-assets` owns generated pronunciation files and the public
+  manifest that resolves stable content IDs to asset URLs. Audio-generation
+  tooling stays under `tools/`.
 - `packages/ui` owns domain-agnostic design-system components and styles. It may
   depend on its UI framework, but it must not depend on product features,
   `core`, or `persistence`.
@@ -132,7 +135,8 @@ suggestions.
 
 ## Dependency and state rules
 
-- `web` composes the public exports of `core`, `persistence`, and `ui`.
+- `web` composes the public exports of `core`, `persistence`, `audio-assets`,
+  and `ui`.
 - `ui` stays domain-agnostic; product-specific learning UI belongs in `web`.
 - Features do not import another feature's internals. Promote a component only
   when it has a genuine reuse case and a clear owner.
