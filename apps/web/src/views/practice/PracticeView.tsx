@@ -187,9 +187,6 @@ export function PracticeView() {
           <div className="practice-session__body">
             {exercise.kind === "multiple-choice" ? (
               <div className="practice-session__question">
-                <Text color="secondary" variant="label">
-                  Hiragana · Word practice
-                </Text>
                 <Text as="h1" id="practice-title" variant="display">
                   {exercise.direction === "hiragana-to-romaji"
                     ? "Which reading matches this word?"
@@ -244,9 +241,6 @@ export function PracticeView() {
               </div>
             ) : (
               <div className="practice-session__question">
-                <Text color="secondary" variant="label">
-                  Hiragana · Word practice
-                </Text>
                 <Text as="h1" id="practice-title" variant="display">
                   Match each reading with its hiragana word.
                 </Text>
