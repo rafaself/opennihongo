@@ -3,8 +3,20 @@
   "version": "0.0.0",
   "private": true,
   "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
   "scripts": {
-    "lint": "eslint . --no-error-on-unmatched-pattern --max-warnings=0"
+    "lint": "eslint . --no-error-on-unmatched-pattern --max-warnings=0",
+    "test": "vitest run",
+    "typecheck": "tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "@opennihongo/core": "workspace:*"
+  },
+  "devDependencies": {
+    "fake-indexeddb": "6.2.5",
+    "vitest": "^5.0.1"
   },
   "nx": {
     "projectType": "library",

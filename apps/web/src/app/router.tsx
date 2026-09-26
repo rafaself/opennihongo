@@ -5,6 +5,7 @@ import {
 } from "@tanstack/react-router";
 import { AppLayout } from "../layouts/AppLayout";
 import { HomePage } from "../pages/HomePage";
+import { KanaPage } from "../pages/KanaPage";
 import { NotFoundPage } from "../pages/NotFoundPage";
 import { UpcomingSectionPage } from "../pages/UpcomingSectionPage";
 import { appSections } from "./sections";
@@ -23,7 +24,7 @@ const homeRoute = createRoute({
 const kanaRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: appSections.kana.path,
-  component: () => <UpcomingSectionPage {...appSections.kana} />,
+  component: KanaPage,
 });
 
 const practiceRoute = createRoute({

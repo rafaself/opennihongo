@@ -70,17 +70,18 @@ unreachable-code and side-effect-import checks. It also rejects unused locals
 and parameters and switch fallthroughs. ESLint applies strict type-aware
 TypeScript rules to `web` and `ui`, rejects explicit `any` and TypeScript
 suppression comments, and enforces package boundaries. `core` and `persistence`
-do not yet contain TypeScript code or have typecheck targets. Dependency
-declaration files are checked for `web`. `ui` skips dependency declaration
+have their own typecheck targets for their domain and storage implementations.
+Dependency declaration files are checked for `web`. `ui` skips dependency declaration
 checks because its current Storybook declarations fail when checked alongside
 exact optional property types.
 
 Prettier is the formatting authority for supported source, configuration, and
 Markdown files. Its options and ignore list are defined at the workspace root.
 
-The `core` and `persistence` packages currently contain only workspace metadata:
-there is no domain or persisted behavior to implement yet. Add code when a real
-feature establishes a contract, rather than creating placeholder APIs.
+`core` defines the first Kana lesson's stable item IDs, answer checking, and
+progress updates. `persistence` stores Kana progress in a versioned IndexedDB
+database. The web app consumes their public exports; it does not own storage
+schema or domain rules.
 
 ## Web application ownership
 
@@ -153,13 +154,15 @@ outlet:
 ```text
 app/main.tsx -> app/router.tsx -> layouts/AppLayout.tsx
                                   -> pages/HomePage.tsx -> views/home/WelcomeView.tsx
+                                  -> pages/KanaPage.tsx
                                   -> pages/UpcomingSectionPage.tsx
                                   -> pages/NotFoundPage.tsx
 ```
 
-The Learn route is `/`. Kana, Practice, Progress, Quests, and Library have
-dedicated URLs and show an explicit coming-soon state until their features are
-implemented. The Gallery owns its own router and navigation independently.
+The Learn route is `/`. Kana has a first lesson at `/kana`; Practice, Progress,
+Quests, and Library have dedicated URLs and show an explicit coming-soon state
+until their features are implemented. The Gallery owns its own router and
+navigation independently.
 
 Run `pnpm dev` for the app, `pnpm lint` for ESLint and dependency-boundary
 checks, `pnpm format:check` to verify formatting, `pnpm typecheck` for

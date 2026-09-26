@@ -1,4 +1,5 @@
-import { Button, Stack, Surface, Text } from "@opennihongo/ui";
+import { Link } from "@tanstack/react-router";
+import { Stack, Surface, Text } from "@opennihongo/ui";
 
 export function WelcomeView() {
   return (
@@ -14,8 +15,8 @@ export function WelcomeView() {
           Make steady progress, one step at a time.
         </Text>
         <Text className="max-w-xl" color="secondary">
-          OpenNihongo is being prepared as a calm, local-first place to learn
-          Japanese.
+          Start with the five hiragana vowels. Each short session saves your
+          answers on this device.
         </Text>
       </Stack>
 
@@ -27,12 +28,16 @@ export function WelcomeView() {
                 Getting started
               </Text>
               <Text as="p" variant="heading">
-                Your study space is on its way.
+                Your first kana session is ready.
               </Text>
             </Stack>
-            <Button className="w-full" disabled>
-              Study content coming soon
-            </Button>
+            <Link
+              className="ns-button w-full"
+              data-variant="primary"
+              to="/kana"
+            >
+              Learn hiragana
+            </Link>
           </Stack>
         </Surface>
       </aside>
