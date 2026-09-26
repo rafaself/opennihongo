@@ -159,6 +159,68 @@ export function PracticeView() {
     ((index + Number(feedback !== null)) / kanaExercises.length) * 100,
   );
 
+  useEffect(() => {
+    if (complete) {
+      return;
+    }
+
+    function handlePrimaryActionKeyDown(event: KeyboardEvent) {
+      if (
+        event.key !== "Enter" ||
+        event.repeat ||
+        event.altKey ||
+        event.ctrlKey ||
+        event.metaKey ||
+        event.isComposing ||
+        event.defaultPrevented
+      ) {
+        return;
+      }
+
+      const target = event.target;
+      if (!(target instanceof HTMLElement)) {
+        return;
+      }
+
+      if (
+        target.isContentEditable ||
+        target.closest(
+          "input, textarea, select, a[href], [contenteditable='true']",
+        )
+      ) {
+        return;
+      }
+
+      const focusedButton = target.closest("button");
+      const isAnswerOption = focusedButton?.matches(
+        ".practice-session__choice, .practice-session__match-option",
+      );
+      if (focusedButton && !isAnswerOption) {
+        return;
+      }
+
+      if (isAnswerOption && !feedback && !readyToCheck) {
+        return;
+      }
+
+      if (!feedback && !readyToCheck) {
+        return;
+      }
+
+      event.preventDefault();
+      if (feedback) {
+        continuePractice();
+      } else {
+        checkAnswer();
+      }
+    }
+
+    window.addEventListener("keydown", handlePrimaryActionKeyDown);
+    return () => {
+      window.removeEventListener("keydown", handlePrimaryActionKeyDown);
+    };
+  }, [checkAnswer, complete, continuePractice, feedback, readyToCheck]);
+
   return (
     <section
       aria-labelledby={complete ? "practice-complete-title" : "practice-title"}
