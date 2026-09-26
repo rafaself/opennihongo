@@ -1,6 +1,7 @@
 # Generated pronunciation files
 
-Place generated WAV files here, named `<audio-id>.wav`. The ID is the stable
-content identifier from `@opennihongo/core`, for example
-`kana.hiragana.a.wav`. Keep generation tooling and its engine outside this
-directory; only the generated audio assets belong here.
+Place generated pronunciation audio here using the stable content identifier
+as its filename. The VOICEVOX generator writes `<audio-id>.opus` audio and a
+matching `<audio-id>.json` metadata sidecar. Keep generation tooling and its
+engine outside this directory. See `tools/audio-generator/README.md` for the
+generation workflow.

@@ -5,6 +5,10 @@
   "speaker_name": "女声1",
   "style_name": "ノーマル",
   "style_id": 10005,
+  "engine_url": "http://127.0.0.1:50021",
+  "timeout_seconds": 60,
+  "ffmpeg_path": "ffmpeg",
+  "opus_bitrate": "32k",
   "attribution": {
     "required": true,
     "text": "VOICEVOX Nemo",
