@@ -1,0 +1,462 @@
+[
+  {
+    "id": "kana.hiragana.a",
+    "text": "あ",
+    "reading": "あ"
+  },
+  {
+    "id": "kana.hiragana.i",
+    "text": "い",
+    "reading": "い"
+  },
+  {
+    "id": "kana.hiragana.u",
+    "text": "う",
+    "reading": "う"
+  },
+  {
+    "id": "kana.hiragana.e",
+    "text": "え",
+    "reading": "え"
+  },
+  {
+    "id": "kana.hiragana.o",
+    "text": "お",
+    "reading": "お"
+  },
+  {
+    "id": "kana.hiragana.ka",
+    "text": "か",
+    "reading": "か"
+  },
+  {
+    "id": "kana.hiragana.ki",
+    "text": "き",
+    "reading": "き"
+  },
+  {
+    "id": "kana.hiragana.ku",
+    "text": "く",
+    "reading": "く"
+  },
+  {
+    "id": "kana.hiragana.ke",
+    "text": "け",
+    "reading": "け"
+  },
+  {
+    "id": "kana.hiragana.ko",
+    "text": "こ",
+    "reading": "こ"
+  },
+  {
+    "id": "kana.hiragana.sa",
+    "text": "さ",
+    "reading": "さ"
+  },
+  {
+    "id": "kana.hiragana.shi",
+    "text": "し",
+    "reading": "し"
+  },
+  {
+    "id": "kana.hiragana.su",
+    "text": "す",
+    "reading": "す"
+  },
+  {
+    "id": "kana.hiragana.se",
+    "text": "せ",
+    "reading": "せ"
+  },
+  {
+    "id": "kana.hiragana.so",
+    "text": "そ",
+    "reading": "そ"
+  },
+  {
+    "id": "kana.hiragana.ta",
+    "text": "た",
+    "reading": "た"
+  },
+  {
+    "id": "kana.hiragana.chi",
+    "text": "ち",
+    "reading": "ち"
+  },
+  {
+    "id": "kana.hiragana.tsu",
+    "text": "つ",
+    "reading": "つ"
+  },
+  {
+    "id": "kana.hiragana.te",
+    "text": "て",
+    "reading": "て"
+  },
+  {
+    "id": "kana.hiragana.to",
+    "text": "と",
+    "reading": "と"
+  },
+  {
+    "id": "kana.hiragana.na",
+    "text": "な",
+    "reading": "な"
+  },
+  {
+    "id": "kana.hiragana.ni",
+    "text": "に",
+    "reading": "に"
+  },
+  {
+    "id": "kana.hiragana.nu",
+    "text": "ぬ",
+    "reading": "ぬ"
+  },
+  {
+    "id": "kana.hiragana.ne",
+    "text": "ね",
+    "reading": "ね"
+  },
+  {
+    "id": "kana.hiragana.no",
+    "text": "の",
+    "reading": "の"
+  },
+  {
+    "id": "kana.hiragana.ha",
+    "text": "は",
+    "reading": "は"
+  },
+  {
+    "id": "kana.hiragana.hi",
+    "text": "ひ",
+    "reading": "ひ"
+  },
+  {
+    "id": "kana.hiragana.fu",
+    "text": "ふ",
+    "reading": "ふ"
+  },
+  {
+    "id": "kana.hiragana.he",
+    "text": "へ",
+    "reading": "へ"
+  },
+  {
+    "id": "kana.hiragana.ho",
+    "text": "ほ",
+    "reading": "ほ"
+  },
+  {
+    "id": "kana.hiragana.ma",
+    "text": "ま",
+    "reading": "ま"
+  },
+  {
+    "id": "kana.hiragana.mi",
+    "text": "み",
+    "reading": "み"
+  },
+  {
+    "id": "kana.hiragana.mu",
+    "text": "む",
+    "reading": "む"
+  },
+  {
+    "id": "kana.hiragana.me",
+    "text": "め",
+    "reading": "め"
+  },
+  {
+    "id": "kana.hiragana.mo",
+    "text": "も",
+    "reading": "も"
+  },
+  {
+    "id": "kana.hiragana.ya",
+    "text": "や",
+    "reading": "や"
+  },
+  {
+    "id": "kana.hiragana.yu",
+    "text": "ゆ",
+    "reading": "ゆ"
+  },
+  {
+    "id": "kana.hiragana.yo",
+    "text": "よ",
+    "reading": "よ"
+  },
+  {
+    "id": "kana.hiragana.ra",
+    "text": "ら",
+    "reading": "ら"
+  },
+  {
+    "id": "kana.hiragana.ri",
+    "text": "り",
+    "reading": "り"
+  },
+  {
+    "id": "kana.hiragana.ru",
+    "text": "る",
+    "reading": "る"
+  },
+  {
+    "id": "kana.hiragana.re",
+    "text": "れ",
+    "reading": "れ"
+  },
+  {
+    "id": "kana.hiragana.ro",
+    "text": "ろ",
+    "reading": "ろ"
+  },
+  {
+    "id": "kana.hiragana.wa",
+    "text": "わ",
+    "reading": "わ"
+  },
+  {
+    "id": "kana.hiragana.wo",
+    "text": "を",
+    "reading": "を"
+  },
+  {
+    "id": "kana.hiragana.n",
+    "text": "ん",
+    "reading": "ん"
+  },
+  {
+    "id": "kana.katakana.a",
+    "text": "ア",
+    "reading": "ア"
+  },
+  {
+    "id": "kana.katakana.i",
+    "text": "イ",
+    "reading": "イ"
+  },
+  {
+    "id": "kana.katakana.u",
+    "text": "ウ",
+    "reading": "ウ"
+  },
+  {
+    "id": "kana.katakana.e",
+    "text": "エ",
+    "reading": "エ"
+  },
+  {
+    "id": "kana.katakana.o",
+    "text": "オ",
+    "reading": "オ"
+  },
+  {
+    "id": "kana.katakana.ka",
+    "text": "カ",
+    "reading": "カ"
+  },
+  {
+    "id": "kana.katakana.ki",
+    "text": "キ",
+    "reading": "キ"
+  },
+  {
+    "id": "kana.katakana.ku",
+    "text": "ク",
+    "reading": "ク"
+  },
+  {
+    "id": "kana.katakana.ke",
+    "text": "ケ",
+    "reading": "ケ"
+  },
+  {
+    "id": "kana.katakana.ko",
+    "text": "コ",
+    "reading": "コ"
+  },
+  {
+    "id": "kana.katakana.sa",
+    "text": "サ",
+    "reading": "サ"
+  },
+  {
+    "id": "kana.katakana.shi",
+    "text": "シ",
+    "reading": "シ"
+  },
+  {
+    "id": "kana.katakana.su",
+    "text": "ス",
+    "reading": "ス"
+  },
+  {
+    "id": "kana.katakana.se",
+    "text": "セ",
+    "reading": "セ"
+  },
+  {
+    "id": "kana.katakana.so",
+    "text": "ソ",
+    "reading": "ソ"
+  },
+  {
+    "id": "kana.katakana.ta",
+    "text": "タ",
+    "reading": "タ"
+  },
+  {
+    "id": "kana.katakana.chi",
+    "text": "チ",
+    "reading": "チ"
+  },
+  {
+    "id": "kana.katakana.tsu",
+    "text": "ツ",
+    "reading": "ツ"
+  },
+  {
+    "id": "kana.katakana.te",
+    "text": "テ",
+    "reading": "テ"
+  },
+  {
+    "id": "kana.katakana.to",
+    "text": "ト",
+    "reading": "ト"
+  },
+  {
+    "id": "kana.katakana.na",
+    "text": "ナ",
+    "reading": "ナ"
+  },
+  {
+    "id": "kana.katakana.ni",
+    "text": "ニ",
+    "reading": "ニ"
+  },
+  {
+    "id": "kana.katakana.nu",
+    "text": "ヌ",
+    "reading": "ヌ"
+  },
+  {
+    "id": "kana.katakana.ne",
+    "text": "ネ",
+    "reading": "ネ"
+  },
+  {
+    "id": "kana.katakana.no",
+    "text": "ノ",
+    "reading": "ノ"
+  },
+  {
+    "id": "kana.katakana.ha",
+    "text": "ハ",
+    "reading": "ハ"
+  },
+  {
+    "id": "kana.katakana.hi",
+    "text": "ヒ",
+    "reading": "ヒ"
+  },
+  {
+    "id": "kana.katakana.fu",
+    "text": "フ",
+    "reading": "フ"
+  },
+  {
+    "id": "kana.katakana.he",
+    "text": "ヘ",
+    "reading": "ヘ"
+  },
+  {
+    "id": "kana.katakana.ho",
+    "text": "ホ",
+    "reading": "ホ"
+  },
+  {
+    "id": "kana.katakana.ma",
+    "text": "マ",
+    "reading": "マ"
+  },
+  {
+    "id": "kana.katakana.mi",
+    "text": "ミ",
+    "reading": "ミ"
+  },
+  {
+    "id": "kana.katakana.mu",
+    "text": "ム",
+    "reading": "ム"
+  },
+  {
+    "id": "kana.katakana.me",
+    "text": "メ",
+    "reading": "メ"
+  },
+  {
+    "id": "kana.katakana.mo",
+    "text": "モ",
+    "reading": "モ"
+  },
+  {
+    "id": "kana.katakana.ya",
+    "text": "ヤ",
+    "reading": "ヤ"
+  },
+  {
+    "id": "kana.katakana.yu",
+    "text": "ユ",
+    "reading": "ユ"
+  },
+  {
+    "id": "kana.katakana.yo",
+    "text": "ヨ",
+    "reading": "ヨ"
+  },
+  {
+    "id": "kana.katakana.ra",
+    "text": "ラ",
+    "reading": "ラ"
+  },
+  {
+    "id": "kana.katakana.ri",
+    "text": "リ",
+    "reading": "リ"
+  },
+  {
+    "id": "kana.katakana.ru",
+    "text": "ル",
+    "reading": "ル"
+  },
+  {
+    "id": "kana.katakana.re",
+    "text": "レ",
+    "reading": "レ"
+  },
+  {
+    "id": "kana.katakana.ro",
+    "text": "ロ",
+    "reading": "ロ"
+  },
+  {
+    "id": "kana.katakana.wa",
+    "text": "ワ",
+    "reading": "ワ"
+  },
+  {
+    "id": "kana.katakana.wo",
+    "text": "ヲ",
+    "reading": "ヲ"
+  },
+  {
+    "id": "kana.katakana.n",
+    "text": "ン",
+    "reading": "ン"
+  }
+]

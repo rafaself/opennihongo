@@ -2,33 +2,555 @@
   "assets": {
     "kana.hiragana.a": {
       "audio_file": "kana.hiragana.a.opus",
-      "generation_fingerprint": "9815c9208e27cf065507f2d0691adaf327ab58b5b0fa7df3ec909dd2cce83e72",
+      "generation_fingerprint": "6d90a95b368b9e93b9ff5f751d7d6bbc5c51fb1a668058b30a328f240e95fc68",
       "metadata_file": "kana.hiragana.a.json",
       "sha256": "757d856f301d1eb77ecfb3eed196a9989482116ba30ed91f11a377a3c2b830be"
     },
+    "kana.hiragana.chi": {
+      "audio_file": "kana.hiragana.chi.opus",
+      "generation_fingerprint": "8e0557fad36aecf4283af196ef9c9ae88ddfcee2e1838f38d69ab209bb219cb8",
+      "metadata_file": "kana.hiragana.chi.json",
+      "sha256": "dcd86a14ab99d3c9f88babb972082d2904a4f6da824f88a74935804f71f0fcd7"
+    },
     "kana.hiragana.e": {
       "audio_file": "kana.hiragana.e.opus",
-      "generation_fingerprint": "c7f933b85c20b49de3057f40057e70c72b45f30d26f5cce2e2fafcb36612e597",
+      "generation_fingerprint": "a39abd9a7a5e457b8f63e864ee54908799b66a02d0ad53b9ed3e3579413741d7",
       "metadata_file": "kana.hiragana.e.json",
       "sha256": "1485f8dadb5211728c4c4d907ad5105a9d0040b883f931db3fe23a1b6c232dd3"
     },
+    "kana.hiragana.fu": {
+      "audio_file": "kana.hiragana.fu.opus",
+      "generation_fingerprint": "ee0efd672e942483325c017f624c9162b154e9c3563ea3a2dc8ba3a6cf48f558",
+      "metadata_file": "kana.hiragana.fu.json",
+      "sha256": "9b00c438b39bcf565190b5dc6d0e8058dd898b21e4f5c9ddc3dbbb8aa20cc64b"
+    },
+    "kana.hiragana.ha": {
+      "audio_file": "kana.hiragana.ha.opus",
+      "generation_fingerprint": "de8dbf7f613e5b576c3996610998a4e2a8f5dd9b067438d295c4d3906f39129a",
+      "metadata_file": "kana.hiragana.ha.json",
+      "sha256": "a28d07e4ce5506cf1c347b7b2b5d61b306370510823233c6e43aed2662007659"
+    },
+    "kana.hiragana.he": {
+      "audio_file": "kana.hiragana.he.opus",
+      "generation_fingerprint": "2a10e6c3156a15952803d930d0ab958b72ede5d36471d8a53b63d742efa673a1",
+      "metadata_file": "kana.hiragana.he.json",
+      "sha256": "1485f8dadb5211728c4c4d907ad5105a9d0040b883f931db3fe23a1b6c232dd3"
+    },
+    "kana.hiragana.hi": {
+      "audio_file": "kana.hiragana.hi.opus",
+      "generation_fingerprint": "89f87b612ec8336b454b116be8179a3b8d289d6c050d2339213d01b3464163a0",
+      "metadata_file": "kana.hiragana.hi.json",
+      "sha256": "32a59555cda1b760c00bbe3b6428373434a5d1b440cb778fabe265129c2c3353"
+    },
+    "kana.hiragana.ho": {
+      "audio_file": "kana.hiragana.ho.opus",
+      "generation_fingerprint": "90dd50591a253b707e07d68aa52754b3c9fd36f5d08dafafec55190f7868cce2",
+      "metadata_file": "kana.hiragana.ho.json",
+      "sha256": "18c5d8827e856818f35ab805887d22a8d260eb7fdf5378dcbd6ae1aefb81f4e1"
+    },
     "kana.hiragana.i": {
       "audio_file": "kana.hiragana.i.opus",
-      "generation_fingerprint": "17b4469ff7971ba05f475fbea5b077db7902409d2e12369539e418185fbf4ecb",
+      "generation_fingerprint": "6b978e681419e8b2d535eaa32d50923e8f29b2355775809190f766701dc7d58a",
       "metadata_file": "kana.hiragana.i.json",
       "sha256": "7bed37c09bd9a945f812843aeb2724e94770018a003f26d027e992b6ceaa971d"
     },
+    "kana.hiragana.ka": {
+      "audio_file": "kana.hiragana.ka.opus",
+      "generation_fingerprint": "f64d45aeb96df59309da3dbffa4d519848e5dc20b338051e71ab915c8c27c251",
+      "metadata_file": "kana.hiragana.ka.json",
+      "sha256": "b81d3f38341609422e244eacf2e114c5f420309b7ff82c73ae12a1070b535f0a"
+    },
+    "kana.hiragana.ke": {
+      "audio_file": "kana.hiragana.ke.opus",
+      "generation_fingerprint": "e15b5e1647b9a0ffd761230ad6e6574b146bffe76e021d72c2b3d0338896e403",
+      "metadata_file": "kana.hiragana.ke.json",
+      "sha256": "68690ad33245e764e51c4263a5b1c136804e8e94cca8efc2ace3bdf61b19b059"
+    },
+    "kana.hiragana.ki": {
+      "audio_file": "kana.hiragana.ki.opus",
+      "generation_fingerprint": "de9d11b91299b2bef2b4876d9ec6038e76b76721e73b911331900363f65cf944",
+      "metadata_file": "kana.hiragana.ki.json",
+      "sha256": "c264ef2e6311b8d7a67a5874138f35c1632034935728c32f912aa4381f6d08f8"
+    },
+    "kana.hiragana.ko": {
+      "audio_file": "kana.hiragana.ko.opus",
+      "generation_fingerprint": "97cbf336ec37c6aa71dd00cc2e02d2883773c88c5e268b259bc76edcc4f3c18c",
+      "metadata_file": "kana.hiragana.ko.json",
+      "sha256": "26fd1d30bc987f98afb4a600273da2c85fc518c2d4aab746e42ca6d21638e5fc"
+    },
+    "kana.hiragana.ku": {
+      "audio_file": "kana.hiragana.ku.opus",
+      "generation_fingerprint": "806b48ff7467b255d7edb071438cc9179edaae3582769e15aa6e434a0314bfe1",
+      "metadata_file": "kana.hiragana.ku.json",
+      "sha256": "30a4ee60847b7c21a5212f03b55a3037807c3df54205df568c16ab6469df73ec"
+    },
+    "kana.hiragana.ma": {
+      "audio_file": "kana.hiragana.ma.opus",
+      "generation_fingerprint": "1bec3f5551977586b1b4279bc5d51eccf81337b6bc0c9b4940292ace677f1e76",
+      "metadata_file": "kana.hiragana.ma.json",
+      "sha256": "c7f77073d795ff6c2ab4af59701ee89fc83943327ccbb5415384a343bcee04dc"
+    },
+    "kana.hiragana.me": {
+      "audio_file": "kana.hiragana.me.opus",
+      "generation_fingerprint": "bddd9b2d0f7c586638689a2c9b82874aaae55104ef14e81c72bbd53878b7d9a7",
+      "metadata_file": "kana.hiragana.me.json",
+      "sha256": "ebd898eeda1dc39f657fdf57e187268ad3ac49edb3ff051a6e28e4d817013ba8"
+    },
+    "kana.hiragana.mi": {
+      "audio_file": "kana.hiragana.mi.opus",
+      "generation_fingerprint": "0ccd4ba08596948a2cc2b28a2f808f2d2c19986e917e595fb3470f262299a77c",
+      "metadata_file": "kana.hiragana.mi.json",
+      "sha256": "13b211a7e86460850950205e48c318c1280fab996c17b2eb2fc8d1b55bdfd8a7"
+    },
+    "kana.hiragana.mo": {
+      "audio_file": "kana.hiragana.mo.opus",
+      "generation_fingerprint": "54e7ea490e3c305daf788cee01284ba7a640f53861a736b7e56644e001ab86bc",
+      "metadata_file": "kana.hiragana.mo.json",
+      "sha256": "4c10ffb6cc932b14bd26de0f0a2c8c597ef362202f8a121572b9a98a93b89863"
+    },
+    "kana.hiragana.mu": {
+      "audio_file": "kana.hiragana.mu.opus",
+      "generation_fingerprint": "3ea84d3aa0def046cad0f323a534e6182b2095a096676564d77ae04f7a784e08",
+      "metadata_file": "kana.hiragana.mu.json",
+      "sha256": "e17f3f1ce80b10251eb913f37a24ba29fe5598c5f86e35ac352fc20cefd3e00e"
+    },
+    "kana.hiragana.n": {
+      "audio_file": "kana.hiragana.n.opus",
+      "generation_fingerprint": "e4106777b479d2b49eacbbaa7d51cf2412d180b3603bb305ef91d011d6f5bb7b",
+      "metadata_file": "kana.hiragana.n.json",
+      "sha256": "5d8db468fc5762f0549827116cda71ab547567af406450570e195d867679093e"
+    },
+    "kana.hiragana.na": {
+      "audio_file": "kana.hiragana.na.opus",
+      "generation_fingerprint": "daef528c0e7b0d2ee884e3659c37155741a0cfbafaa347a7d3622e551f879c38",
+      "metadata_file": "kana.hiragana.na.json",
+      "sha256": "cc910015998ec53a54c43d320d03855799c1644873213d04c35a0ed7735cbb3a"
+    },
+    "kana.hiragana.ne": {
+      "audio_file": "kana.hiragana.ne.opus",
+      "generation_fingerprint": "3acd9bae36a0a2a6c073f749e35ceb832cf7102e8240586272bf98842c0803e2",
+      "metadata_file": "kana.hiragana.ne.json",
+      "sha256": "bc4a70b72388bf4ed6686ace560dc207f3608f71a64d71e527170132d1a2faa6"
+    },
+    "kana.hiragana.ni": {
+      "audio_file": "kana.hiragana.ni.opus",
+      "generation_fingerprint": "a329a9556678d9660f7011b5562ea9d1523a7be597c56d1b9ae332c1053dc14d",
+      "metadata_file": "kana.hiragana.ni.json",
+      "sha256": "c14fc30651ed2ff7fb92aab723187efd9d1978e1802999d430f09b299e254bed"
+    },
+    "kana.hiragana.no": {
+      "audio_file": "kana.hiragana.no.opus",
+      "generation_fingerprint": "5a9a08d486905c05af5e9baed236048bdb83e9c8aef64a47a3f31e9534554227",
+      "metadata_file": "kana.hiragana.no.json",
+      "sha256": "27495e54a7bfbe5cb224b437a4863c39c82135856955428bdb2b7cec46ffc038"
+    },
+    "kana.hiragana.nu": {
+      "audio_file": "kana.hiragana.nu.opus",
+      "generation_fingerprint": "768e0204c5c943f7855aed8c23028eac6e786a901df93515e33a989366f4b93f",
+      "metadata_file": "kana.hiragana.nu.json",
+      "sha256": "c2e394c6266f60603d55179a5a203889e0e4cd65c574e78b5c325d1333d5917c"
+    },
     "kana.hiragana.o": {
       "audio_file": "kana.hiragana.o.opus",
-      "generation_fingerprint": "f5d2c2591ca5d5aaa6241fab398c469f59a07c17e7eae5cd5fec5c7dfd29c4c7",
+      "generation_fingerprint": "9bebc682985a3e1efbe7aa8a67c2ff4e6af62e58e3463aa90e83770872b8537a",
       "metadata_file": "kana.hiragana.o.json",
       "sha256": "7cfb749d938651eb5af72f227a3c43f2d4745ac425697e633d83888f6d50d6e2"
     },
+    "kana.hiragana.ra": {
+      "audio_file": "kana.hiragana.ra.opus",
+      "generation_fingerprint": "5e60c73685d288dd8c70e3b4cdb0729d0a070c5f5dad7f5575b7ee1f2ad41774",
+      "metadata_file": "kana.hiragana.ra.json",
+      "sha256": "5116478c880afed36797659f317aaff3f944b2ee55ee2aeca150e3904a96aa51"
+    },
+    "kana.hiragana.re": {
+      "audio_file": "kana.hiragana.re.opus",
+      "generation_fingerprint": "d34c38ceade3dd7548e6f3940341b533646cce77418adf40f3e4f794191b3dea",
+      "metadata_file": "kana.hiragana.re.json",
+      "sha256": "589a595f0e72e85495bb1c1eadc8b7094221ad1f3ce6e20e97b383d7b0b645b7"
+    },
+    "kana.hiragana.ri": {
+      "audio_file": "kana.hiragana.ri.opus",
+      "generation_fingerprint": "9693a03fb99b2be7cb529f0d7ac1780fe8d3afd5059a019ea3928ba66654a1a7",
+      "metadata_file": "kana.hiragana.ri.json",
+      "sha256": "1645fa68fc28a663ebf0d0c9ad21107788ace40cab058a3a65fea7b9511b0804"
+    },
+    "kana.hiragana.ro": {
+      "audio_file": "kana.hiragana.ro.opus",
+      "generation_fingerprint": "3728cd7b83d47d7c6a398013277db16299e83fbc1f7cdb1bcd6b9afe0e2d4a55",
+      "metadata_file": "kana.hiragana.ro.json",
+      "sha256": "3b67630e14d2912b3e60c47e2b49fbdac356725ef6e34b877d37e2dedcd4028a"
+    },
+    "kana.hiragana.ru": {
+      "audio_file": "kana.hiragana.ru.opus",
+      "generation_fingerprint": "c50b91180842e560dcb443517f1af823a1d2386ac4121f458a8604df319a1011",
+      "metadata_file": "kana.hiragana.ru.json",
+      "sha256": "81a0297a805604ef72fd4d924acd8587d3ecfe6f5036e6b87afa68ad0a3ecd20"
+    },
+    "kana.hiragana.sa": {
+      "audio_file": "kana.hiragana.sa.opus",
+      "generation_fingerprint": "859079d8cea31a086c1609448f101e520e772c6109c79a6a4ecd11316250fd3b",
+      "metadata_file": "kana.hiragana.sa.json",
+      "sha256": "ebc8f1f79e98133b0ba3e5175c81706346cfae53d603e907f599521d347882cb"
+    },
+    "kana.hiragana.se": {
+      "audio_file": "kana.hiragana.se.opus",
+      "generation_fingerprint": "9b3311ed92f9464814055aa50873a3ed849a017b06115003489a360fd6371b15",
+      "metadata_file": "kana.hiragana.se.json",
+      "sha256": "45735959a45f60b66abbb09f1c32dbc0e785032cd6a9cc84b2f09b2b4b567896"
+    },
+    "kana.hiragana.shi": {
+      "audio_file": "kana.hiragana.shi.opus",
+      "generation_fingerprint": "d0a74b434be9b9ee4da31dea486185ac00ff53649ff0472d1b27a295e71514cb",
+      "metadata_file": "kana.hiragana.shi.json",
+      "sha256": "2394332b99685fb24426ebe6d98ee958129b2ab5db5ad7683af1487813be15ce"
+    },
+    "kana.hiragana.so": {
+      "audio_file": "kana.hiragana.so.opus",
+      "generation_fingerprint": "0a21ad12414cfe66f292ec3fbe5989031a8f3a19a7bc666941d400fdd71e383c",
+      "metadata_file": "kana.hiragana.so.json",
+      "sha256": "09de5a60f691ff9b1d19998bfd5e1d4babc76c8067734e1fbca87997c2831ad2"
+    },
+    "kana.hiragana.su": {
+      "audio_file": "kana.hiragana.su.opus",
+      "generation_fingerprint": "f66e3fb578c46b6013555e731de2372818bc9b8e265414cabe73f75063f4e642",
+      "metadata_file": "kana.hiragana.su.json",
+      "sha256": "bffd2eca05921e791b376ae910e8b6b71e8ae1c9f46f4fcec7edd897c204d42a"
+    },
+    "kana.hiragana.ta": {
+      "audio_file": "kana.hiragana.ta.opus",
+      "generation_fingerprint": "ccec43a314a2a4b3296617f8f3c9606a08ed7cc1a8441c8cb0b0a141c16e0862",
+      "metadata_file": "kana.hiragana.ta.json",
+      "sha256": "fd18cdd36ea85214c743a57549efb448a8f876e5a9d965e665f22e8293f59c54"
+    },
+    "kana.hiragana.te": {
+      "audio_file": "kana.hiragana.te.opus",
+      "generation_fingerprint": "4505a23f440354e721278618a30d4ca26f982bc85f1c607de7db0e045f854e28",
+      "metadata_file": "kana.hiragana.te.json",
+      "sha256": "60ac4c0634dd73a1424e1b58e9845bdde77bf525d20c8f460904848f2cf36541"
+    },
+    "kana.hiragana.to": {
+      "audio_file": "kana.hiragana.to.opus",
+      "generation_fingerprint": "1c994ae39a4f55417051ee67c06628ffec36ac13998c632cae9cea890227e82f",
+      "metadata_file": "kana.hiragana.to.json",
+      "sha256": "d6ef61e0a2695e6c3a352a1919e96c7c34bdf68612f6aecbe0c5b0990870cc11"
+    },
+    "kana.hiragana.tsu": {
+      "audio_file": "kana.hiragana.tsu.opus",
+      "generation_fingerprint": "e3eefe70ae054a774220f097bc7204139ee633e23e1163f9788a9e36d3c6f723",
+      "metadata_file": "kana.hiragana.tsu.json",
+      "sha256": "b62da544d0708cbad6615a182dfdaba7f8143d1eec29edad17b9602e14391aae"
+    },
     "kana.hiragana.u": {
       "audio_file": "kana.hiragana.u.opus",
-      "generation_fingerprint": "5ab2fdea950336341403efc6d2acf72a099cba4fb76dbdabb2524b262bf520ca",
+      "generation_fingerprint": "04af072d3a6f4fe96ab0b10f389ce29db45e53cbdcee72fcf58358180a394754",
       "metadata_file": "kana.hiragana.u.json",
       "sha256": "7b0dcc031b6bbbd678e9eee8c04ee8626dd9e18535894f6ab60585908bd3ff86"
+    },
+    "kana.hiragana.wa": {
+      "audio_file": "kana.hiragana.wa.opus",
+      "generation_fingerprint": "155aab3d5ff0838413d2cd5d45f773987dd17ceeb6745f0a3b6098c54d0643fa",
+      "metadata_file": "kana.hiragana.wa.json",
+      "sha256": "a28d07e4ce5506cf1c347b7b2b5d61b306370510823233c6e43aed2662007659"
+    },
+    "kana.hiragana.wo": {
+      "audio_file": "kana.hiragana.wo.opus",
+      "generation_fingerprint": "25489afa088872f371ceb28670425f62bcf25b5cda8613c319c17d800bfb1471",
+      "metadata_file": "kana.hiragana.wo.json",
+      "sha256": "7cfb749d938651eb5af72f227a3c43f2d4745ac425697e633d83888f6d50d6e2"
+    },
+    "kana.hiragana.ya": {
+      "audio_file": "kana.hiragana.ya.opus",
+      "generation_fingerprint": "cee5cca5aa327fbda6eccec2a8fb49eeedec5deb05cc7ad3198b04a7ae820359",
+      "metadata_file": "kana.hiragana.ya.json",
+      "sha256": "3936f59677b28195d5de2d5db5c88126738f148ef7aeb3a84c458d962b8439d9"
+    },
+    "kana.hiragana.yo": {
+      "audio_file": "kana.hiragana.yo.opus",
+      "generation_fingerprint": "332281f88b5e032f907d2f46c4e5ee6880ee13ccd7008dc0b3394eb9b24e4ee6",
+      "metadata_file": "kana.hiragana.yo.json",
+      "sha256": "161bb11dc85ea2a97479118416c59110b1e2dbd3d6aa423e5905cb7c876542a2"
+    },
+    "kana.hiragana.yu": {
+      "audio_file": "kana.hiragana.yu.opus",
+      "generation_fingerprint": "9f2295ed8b2ec858cb0932d20a2fe27922a1cea9bb4b94d058309f8ed700773c",
+      "metadata_file": "kana.hiragana.yu.json",
+      "sha256": "27f457c0f4bcb4845fdc01f0309589d264f7fe6fa2aeeb28333ec39946d54d32"
+    },
+    "kana.katakana.a": {
+      "audio_file": "kana.katakana.a.opus",
+      "generation_fingerprint": "6037ab7584fad9912384782d9fd0d8ebbebfd3c3185de36b788350c3c4e02500",
+      "metadata_file": "kana.katakana.a.json",
+      "sha256": "757d856f301d1eb77ecfb3eed196a9989482116ba30ed91f11a377a3c2b830be"
+    },
+    "kana.katakana.chi": {
+      "audio_file": "kana.katakana.chi.opus",
+      "generation_fingerprint": "42a20e74dddab857b75f2cf1f2f5696dbe8cd3371dc51e577f813dbe976bfa13",
+      "metadata_file": "kana.katakana.chi.json",
+      "sha256": "dcd86a14ab99d3c9f88babb972082d2904a4f6da824f88a74935804f71f0fcd7"
+    },
+    "kana.katakana.e": {
+      "audio_file": "kana.katakana.e.opus",
+      "generation_fingerprint": "25bbb0efe48f1826c710060da1e9ba448b0f075282c2e9007a0276abb498e43e",
+      "metadata_file": "kana.katakana.e.json",
+      "sha256": "1485f8dadb5211728c4c4d907ad5105a9d0040b883f931db3fe23a1b6c232dd3"
+    },
+    "kana.katakana.fu": {
+      "audio_file": "kana.katakana.fu.opus",
+      "generation_fingerprint": "b0aebb0f59dd5e07ee4821af96cdd0bb81e267f2cb8ce8e250c6a5e23890b2bc",
+      "metadata_file": "kana.katakana.fu.json",
+      "sha256": "9b00c438b39bcf565190b5dc6d0e8058dd898b21e4f5c9ddc3dbbb8aa20cc64b"
+    },
+    "kana.katakana.ha": {
+      "audio_file": "kana.katakana.ha.opus",
+      "generation_fingerprint": "ae10d7b9557cd41a70a02c5e148c754c13159dabff28b37bccb54f3575432ba3",
+      "metadata_file": "kana.katakana.ha.json",
+      "sha256": "c0ebacf74ca6847d58df5386087b9a7254be44fc314a3e09b07ce3119b9949b1"
+    },
+    "kana.katakana.he": {
+      "audio_file": "kana.katakana.he.opus",
+      "generation_fingerprint": "e5706ce22858d325c9bf3991250e992da75a00853506b0fd15b732896d3f3487",
+      "metadata_file": "kana.katakana.he.json",
+      "sha256": "7baf587de5f5aad7d26cac95b80d6291e84b97ad737b35f2654e9316ea214d0a"
+    },
+    "kana.katakana.hi": {
+      "audio_file": "kana.katakana.hi.opus",
+      "generation_fingerprint": "f094b7f355876a4486e1f319e78bdea8ad39dd1fa2955c41ee273a1a42e71f64",
+      "metadata_file": "kana.katakana.hi.json",
+      "sha256": "32a59555cda1b760c00bbe3b6428373434a5d1b440cb778fabe265129c2c3353"
+    },
+    "kana.katakana.ho": {
+      "audio_file": "kana.katakana.ho.opus",
+      "generation_fingerprint": "d07be0c5c6eb680e0ebf93569199bf24489ec7ea2c3366ed97095391cb18e1f4",
+      "metadata_file": "kana.katakana.ho.json",
+      "sha256": "18c5d8827e856818f35ab805887d22a8d260eb7fdf5378dcbd6ae1aefb81f4e1"
+    },
+    "kana.katakana.i": {
+      "audio_file": "kana.katakana.i.opus",
+      "generation_fingerprint": "375d2d51f58f400c2298b4c0413bbf0ab69b69a3285ec265718fc9cb4845cd93",
+      "metadata_file": "kana.katakana.i.json",
+      "sha256": "7bed37c09bd9a945f812843aeb2724e94770018a003f26d027e992b6ceaa971d"
+    },
+    "kana.katakana.ka": {
+      "audio_file": "kana.katakana.ka.opus",
+      "generation_fingerprint": "d87f9b4f1fcb0c9fdefba2afb51297c3da62684eb643fab9a3b46fd005726c61",
+      "metadata_file": "kana.katakana.ka.json",
+      "sha256": "b81d3f38341609422e244eacf2e114c5f420309b7ff82c73ae12a1070b535f0a"
+    },
+    "kana.katakana.ke": {
+      "audio_file": "kana.katakana.ke.opus",
+      "generation_fingerprint": "34c402a220f7857a57e49a25c88561a17b4885a79b582eb64db5cbb007eba824",
+      "metadata_file": "kana.katakana.ke.json",
+      "sha256": "68690ad33245e764e51c4263a5b1c136804e8e94cca8efc2ace3bdf61b19b059"
+    },
+    "kana.katakana.ki": {
+      "audio_file": "kana.katakana.ki.opus",
+      "generation_fingerprint": "3fa809c5c7b3fcccfa947620d31f8f04787a3d0281dc12c1a9586a8a268f0249",
+      "metadata_file": "kana.katakana.ki.json",
+      "sha256": "c264ef2e6311b8d7a67a5874138f35c1632034935728c32f912aa4381f6d08f8"
+    },
+    "kana.katakana.ko": {
+      "audio_file": "kana.katakana.ko.opus",
+      "generation_fingerprint": "8980fbf35cb3325637a2ff2663a37ed1b7214ce898d0e34242efaab3f5fac65e",
+      "metadata_file": "kana.katakana.ko.json",
+      "sha256": "26fd1d30bc987f98afb4a600273da2c85fc518c2d4aab746e42ca6d21638e5fc"
+    },
+    "kana.katakana.ku": {
+      "audio_file": "kana.katakana.ku.opus",
+      "generation_fingerprint": "ff535d65c4e2ba133991d975cdc03d34c96652907887ad8f29fefd1c922697a3",
+      "metadata_file": "kana.katakana.ku.json",
+      "sha256": "30a4ee60847b7c21a5212f03b55a3037807c3df54205df568c16ab6469df73ec"
+    },
+    "kana.katakana.ma": {
+      "audio_file": "kana.katakana.ma.opus",
+      "generation_fingerprint": "2a61f3a970abc7fed01336cda6e02b2bbc9f4c8d32d10a11d60a38cb97bc864c",
+      "metadata_file": "kana.katakana.ma.json",
+      "sha256": "c7f77073d795ff6c2ab4af59701ee89fc83943327ccbb5415384a343bcee04dc"
+    },
+    "kana.katakana.me": {
+      "audio_file": "kana.katakana.me.opus",
+      "generation_fingerprint": "2815a6f26c46b389fa917ce24652f78123703f9e22479c7769d4649f53fbe147",
+      "metadata_file": "kana.katakana.me.json",
+      "sha256": "ebd898eeda1dc39f657fdf57e187268ad3ac49edb3ff051a6e28e4d817013ba8"
+    },
+    "kana.katakana.mi": {
+      "audio_file": "kana.katakana.mi.opus",
+      "generation_fingerprint": "c20e740ad30c073d5bf0b812ab231906bebb2a8d272043b56513622783a3cdd5",
+      "metadata_file": "kana.katakana.mi.json",
+      "sha256": "13b211a7e86460850950205e48c318c1280fab996c17b2eb2fc8d1b55bdfd8a7"
+    },
+    "kana.katakana.mo": {
+      "audio_file": "kana.katakana.mo.opus",
+      "generation_fingerprint": "e570bec9aa7afe7c0f4b660d01b05b9df1037d403440489c0ab507bf454cf974",
+      "metadata_file": "kana.katakana.mo.json",
+      "sha256": "4c10ffb6cc932b14bd26de0f0a2c8c597ef362202f8a121572b9a98a93b89863"
+    },
+    "kana.katakana.mu": {
+      "audio_file": "kana.katakana.mu.opus",
+      "generation_fingerprint": "8fb3ce448878052abc02da0ddfc7c496b1cce230f68e308d65b0a9f1510fc60f",
+      "metadata_file": "kana.katakana.mu.json",
+      "sha256": "e17f3f1ce80b10251eb913f37a24ba29fe5598c5f86e35ac352fc20cefd3e00e"
+    },
+    "kana.katakana.n": {
+      "audio_file": "kana.katakana.n.opus",
+      "generation_fingerprint": "b5997414bf144ee2c32f1657fa46065a85c33403d24a4f8dafc035b5b8eed16d",
+      "metadata_file": "kana.katakana.n.json",
+      "sha256": "5d8db468fc5762f0549827116cda71ab547567af406450570e195d867679093e"
+    },
+    "kana.katakana.na": {
+      "audio_file": "kana.katakana.na.opus",
+      "generation_fingerprint": "b334f90c3cc48dffe292c19d5f47ee45622f3ad32f1cf181ec28d733e225cc95",
+      "metadata_file": "kana.katakana.na.json",
+      "sha256": "cc910015998ec53a54c43d320d03855799c1644873213d04c35a0ed7735cbb3a"
+    },
+    "kana.katakana.ne": {
+      "audio_file": "kana.katakana.ne.opus",
+      "generation_fingerprint": "5490146fdb40815da08ecf857ec7d077078c88ade22d56a422f4ac05036f307b",
+      "metadata_file": "kana.katakana.ne.json",
+      "sha256": "bc4a70b72388bf4ed6686ace560dc207f3608f71a64d71e527170132d1a2faa6"
+    },
+    "kana.katakana.ni": {
+      "audio_file": "kana.katakana.ni.opus",
+      "generation_fingerprint": "859fc4deb5757a9d5222339c4d1cdbedb3fbe7d02eb9363a5bc391e5bfd94ee3",
+      "metadata_file": "kana.katakana.ni.json",
+      "sha256": "c14fc30651ed2ff7fb92aab723187efd9d1978e1802999d430f09b299e254bed"
+    },
+    "kana.katakana.no": {
+      "audio_file": "kana.katakana.no.opus",
+      "generation_fingerprint": "16d1083e16e1c1a87b5d417974ca76e6278c0e30c1750a9d00790a8de8556abf",
+      "metadata_file": "kana.katakana.no.json",
+      "sha256": "27495e54a7bfbe5cb224b437a4863c39c82135856955428bdb2b7cec46ffc038"
+    },
+    "kana.katakana.nu": {
+      "audio_file": "kana.katakana.nu.opus",
+      "generation_fingerprint": "d3f193a87dd5db3a8f211e03123b1cb6ae0213c3b222ea43c853e87b9e8ce50f",
+      "metadata_file": "kana.katakana.nu.json",
+      "sha256": "c2e394c6266f60603d55179a5a203889e0e4cd65c574e78b5c325d1333d5917c"
+    },
+    "kana.katakana.o": {
+      "audio_file": "kana.katakana.o.opus",
+      "generation_fingerprint": "0b17d20b95a7c272ea878b1340e6c762f1630cc4542d83d9606363d0a7855b8c",
+      "metadata_file": "kana.katakana.o.json",
+      "sha256": "7cfb749d938651eb5af72f227a3c43f2d4745ac425697e633d83888f6d50d6e2"
+    },
+    "kana.katakana.ra": {
+      "audio_file": "kana.katakana.ra.opus",
+      "generation_fingerprint": "4cc4df2035771391355492987beee28a7a1092158ee23a8f56a71ea12feeacfa",
+      "metadata_file": "kana.katakana.ra.json",
+      "sha256": "5116478c880afed36797659f317aaff3f944b2ee55ee2aeca150e3904a96aa51"
+    },
+    "kana.katakana.re": {
+      "audio_file": "kana.katakana.re.opus",
+      "generation_fingerprint": "cc9fc0a936858b012bbd20519af0cbccd35ca4e70f4b28dafe9395ad0318c3b3",
+      "metadata_file": "kana.katakana.re.json",
+      "sha256": "589a595f0e72e85495bb1c1eadc8b7094221ad1f3ce6e20e97b383d7b0b645b7"
+    },
+    "kana.katakana.ri": {
+      "audio_file": "kana.katakana.ri.opus",
+      "generation_fingerprint": "fd206e40a617723e6df1fb1391f21603ab719057d6593abe21ba2b054db6851b",
+      "metadata_file": "kana.katakana.ri.json",
+      "sha256": "1645fa68fc28a663ebf0d0c9ad21107788ace40cab058a3a65fea7b9511b0804"
+    },
+    "kana.katakana.ro": {
+      "audio_file": "kana.katakana.ro.opus",
+      "generation_fingerprint": "1e501a95718a4ff474d626133fcfe3ef5d368ac50a611f6eb241c9e2ac1705e5",
+      "metadata_file": "kana.katakana.ro.json",
+      "sha256": "3b67630e14d2912b3e60c47e2b49fbdac356725ef6e34b877d37e2dedcd4028a"
+    },
+    "kana.katakana.ru": {
+      "audio_file": "kana.katakana.ru.opus",
+      "generation_fingerprint": "4568e6a79c1113b42d3faa0ce611dc7d1647a3c96f83bb8d647f4198feaf5b1c",
+      "metadata_file": "kana.katakana.ru.json",
+      "sha256": "81a0297a805604ef72fd4d924acd8587d3ecfe6f5036e6b87afa68ad0a3ecd20"
+    },
+    "kana.katakana.sa": {
+      "audio_file": "kana.katakana.sa.opus",
+      "generation_fingerprint": "73cab6c25ff0e03867e11ab6a0810f099b97d6a5141ae23edbc39454f1811126",
+      "metadata_file": "kana.katakana.sa.json",
+      "sha256": "ebc8f1f79e98133b0ba3e5175c81706346cfae53d603e907f599521d347882cb"
+    },
+    "kana.katakana.se": {
+      "audio_file": "kana.katakana.se.opus",
+      "generation_fingerprint": "268180c16f6b470785a2d4d675f08513372709b1544330647c949deb590e8ee6",
+      "metadata_file": "kana.katakana.se.json",
+      "sha256": "45735959a45f60b66abbb09f1c32dbc0e785032cd6a9cc84b2f09b2b4b567896"
+    },
+    "kana.katakana.shi": {
+      "audio_file": "kana.katakana.shi.opus",
+      "generation_fingerprint": "f1e0843f2be16a977efed899093d8458da12c84c916b3a1384b6265ef6ada265",
+      "metadata_file": "kana.katakana.shi.json",
+      "sha256": "2394332b99685fb24426ebe6d98ee958129b2ab5db5ad7683af1487813be15ce"
+    },
+    "kana.katakana.so": {
+      "audio_file": "kana.katakana.so.opus",
+      "generation_fingerprint": "631b42c7622481fb65c6917507d9c81475f7a5b3f0bca1f362273a6673d556bd",
+      "metadata_file": "kana.katakana.so.json",
+      "sha256": "09de5a60f691ff9b1d19998bfd5e1d4babc76c8067734e1fbca87997c2831ad2"
+    },
+    "kana.katakana.su": {
+      "audio_file": "kana.katakana.su.opus",
+      "generation_fingerprint": "0c572d5b0e06a8d4d114aef9c3ea5290b129b663406befea4f6a700bd41fa623",
+      "metadata_file": "kana.katakana.su.json",
+      "sha256": "bffd2eca05921e791b376ae910e8b6b71e8ae1c9f46f4fcec7edd897c204d42a"
+    },
+    "kana.katakana.ta": {
+      "audio_file": "kana.katakana.ta.opus",
+      "generation_fingerprint": "351f91759b6b5cf5d66956c4f451847f500c7272c72d77a92aad35ae1110dbe1",
+      "metadata_file": "kana.katakana.ta.json",
+      "sha256": "fd18cdd36ea85214c743a57549efb448a8f876e5a9d965e665f22e8293f59c54"
+    },
+    "kana.katakana.te": {
+      "audio_file": "kana.katakana.te.opus",
+      "generation_fingerprint": "6d78df59b6403ca49a0c6aa418b09311b0ce951c70df9fa860d33527f27742b9",
+      "metadata_file": "kana.katakana.te.json",
+      "sha256": "60ac4c0634dd73a1424e1b58e9845bdde77bf525d20c8f460904848f2cf36541"
+    },
+    "kana.katakana.to": {
+      "audio_file": "kana.katakana.to.opus",
+      "generation_fingerprint": "ca718be079a18338e51e1edb40bac78583b35d2ea0040bcdea2dfd9f56f8cb98",
+      "metadata_file": "kana.katakana.to.json",
+      "sha256": "d6ef61e0a2695e6c3a352a1919e96c7c34bdf68612f6aecbe0c5b0990870cc11"
+    },
+    "kana.katakana.tsu": {
+      "audio_file": "kana.katakana.tsu.opus",
+      "generation_fingerprint": "6a38c29e597ed5a09559ec2b261134d1dcf20563012c6c9be32e592c80ab5ff7",
+      "metadata_file": "kana.katakana.tsu.json",
+      "sha256": "b62da544d0708cbad6615a182dfdaba7f8143d1eec29edad17b9602e14391aae"
+    },
+    "kana.katakana.u": {
+      "audio_file": "kana.katakana.u.opus",
+      "generation_fingerprint": "2e5e136756dcf1fb8587449751b633e0bbbdf1750ac604c1b9d852b907e62f7e",
+      "metadata_file": "kana.katakana.u.json",
+      "sha256": "7b0dcc031b6bbbd678e9eee8c04ee8626dd9e18535894f6ab60585908bd3ff86"
+    },
+    "kana.katakana.wa": {
+      "audio_file": "kana.katakana.wa.opus",
+      "generation_fingerprint": "60ad34820130e1d4165814a2ce656d44b2f2edbd1b45209d9566711d524abec6",
+      "metadata_file": "kana.katakana.wa.json",
+      "sha256": "a28d07e4ce5506cf1c347b7b2b5d61b306370510823233c6e43aed2662007659"
+    },
+    "kana.katakana.wo": {
+      "audio_file": "kana.katakana.wo.opus",
+      "generation_fingerprint": "74aaa375cb051337263b1be8ff4ebf3cb8eb9ad8d04aea6afcde8051832392ad",
+      "metadata_file": "kana.katakana.wo.json",
+      "sha256": "7cfb749d938651eb5af72f227a3c43f2d4745ac425697e633d83888f6d50d6e2"
+    },
+    "kana.katakana.ya": {
+      "audio_file": "kana.katakana.ya.opus",
+      "generation_fingerprint": "a8212e2d2d75aa4cccd98d72e6d43bed687ab6575708c00d27b368a446129f17",
+      "metadata_file": "kana.katakana.ya.json",
+      "sha256": "3936f59677b28195d5de2d5db5c88126738f148ef7aeb3a84c458d962b8439d9"
+    },
+    "kana.katakana.yo": {
+      "audio_file": "kana.katakana.yo.opus",
+      "generation_fingerprint": "3ca511623c9f5b3d4e8820359a9e1e409dacbe369156eed6fc41817a65c386d7",
+      "metadata_file": "kana.katakana.yo.json",
+      "sha256": "161bb11dc85ea2a97479118416c59110b1e2dbd3d6aa423e5905cb7c876542a2"
+    },
+    "kana.katakana.yu": {
+      "audio_file": "kana.katakana.yu.opus",
+      "generation_fingerprint": "bd03fc599d071dfcfc60b635a0d1e94e966e518d8e2718f6324161fe2fc6c27f",
+      "metadata_file": "kana.katakana.yu.json",
+      "sha256": "27f457c0f4bcb4845fdc01f0309589d264f7fe6fa2aeeb28333ec39946d54d32"
     },
     "kana.word.hato": {
       "audio_file": "kana.word.hato.opus",

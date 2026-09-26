@@ -1,7 +1,9 @@
 import { describe, expect, it } from "vitest";
 import {
   checkKanaAnswer,
+  hiraganaSyllabary,
   hiraganaVowels,
+  katakanaSyllabary,
   normalizeKanaAnswer,
   recordKanaAnswer,
 } from "../src/index";
@@ -15,6 +17,27 @@ describe("hiragana vowels", () => {
       { id: "kana.hiragana.e", glyph: "え", answer: "e" },
       { id: "kana.hiragana.o", glyph: "お", answer: "o" },
     ]);
+  });
+});
+
+describe("basic Kana syllabaries", () => {
+  it("provides stable identifiers for all 46 basic sounds in each script", () => {
+    expect(hiraganaSyllabary).toHaveLength(46);
+    expect(katakanaSyllabary).toHaveLength(46);
+    expect(hiraganaSyllabary.map(({ glyph }) => glyph).join("")).toBe(
+      "あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをん",
+    );
+    expect(katakanaSyllabary.map(({ glyph }) => glyph).join("")).toBe(
+      "アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン",
+    );
+
+    const ids = [
+      ...hiraganaSyllabary.map(({ id }) => id),
+      ...katakanaSyllabary.map(({ id }) => id),
+    ];
+
+    expect(new Set(ids).size).toBe(92);
+    expect(hiraganaVowels.every(({ id }) => ids.includes(id))).toBe(true);
   });
 });
 

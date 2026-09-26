@@ -14,7 +14,9 @@ export {
   kanaExercises,
   romajiToHiraganaExercise,
 } from "./exercises";
+export { hiraganaSyllabary } from "./hiragana";
 export { hiraganaVowels } from "./items";
+export { katakanaSyllabary } from "./katakana";
 export { recordKanaAnswer } from "./progress";
 export { kanaBeginnerWords } from "./words";
 export type {

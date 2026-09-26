@@ -56,16 +56,22 @@ batch generation:
 ]
 ```
 
-The initial practice catalog is in
-[`inputs/kana-practice.json`](inputs/kana-practice.json). It mirrors the seeded
-vowels and beginner words in `packages/core/src/kana/`; keep its IDs, display
-text, and readings aligned with that content. Use it as input when regenerating
-the assets.
+The initial pronunciation dataset has two inputs:
 
-With the VOICEVOX container running, run the generator from the repository
+- [`inputs/kana-syllabary.json`](inputs/kana-syllabary.json) contains the 46
+  basic Hiragana and 46 basic Katakana characters. Its stable IDs and glyphs
+  mirror `packages/core/src/kana/hiragana.ts` and
+  `packages/core/src/kana/katakana.ts`.
+- [`inputs/kana-practice.json`](inputs/kana-practice.json) contains the seeded
+  Hiragana vowels and beginner vocabulary from `packages/core/src/kana/`.
+
+Keep IDs, display text, and Japanese readings aligned with the core content.
+With the VOICEVOX container running, generate both inputs from the repository
 root:
 
 ```sh
+PYTHONPATH=tools/audio-generator/src python3 -m audio_generator \
+  --input tools/audio-generator/inputs/kana-syllabary.json
 PYTHONPATH=tools/audio-generator/src python3 -m audio_generator \
   --input tools/audio-generator/inputs/kana-practice.json
 ```
