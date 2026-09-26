@@ -118,7 +118,6 @@
 }
 
 .practice-session__prompt--typed {
-  border: 2px solid var(--ns-color-border);
   padding-inline: 1rem;
 }
 

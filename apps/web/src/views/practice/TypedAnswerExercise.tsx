@@ -21,6 +21,7 @@ export function TypedAnswerExercise({
       <Surface
         className="practice-session__prompt practice-session__prompt--typed"
         elevation="card"
+        variant="highlighted"
       >
         <Text className="practice-session__prompt-kana practice-session__prompt-kana--compact">
           {exercise.prompt.text}

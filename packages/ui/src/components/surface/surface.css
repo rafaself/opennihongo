@@ -14,6 +14,11 @@
   background-color: var(--ns-color-surface-raised);
 }
 
+.ns-surface[data-variant="highlighted"] {
+  border: var(--ns-border-width-emphasis) var(--ns-border-style-solid)
+    var(--ns-color-border);
+}
+
 .ns-surface[data-elevation="none"] {
   box-shadow: var(--ns-elevation-none);
 }
