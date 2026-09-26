@@ -74,7 +74,7 @@
 
 .ns-tabs__trigger[data-disabled] {
   color: var(--ns-color-text-tertiary);
-  cursor: not-allowed;
+  cursor: default;
 }
 
 .ns-tabs__list[data-orientation="vertical"] .ns-tabs__trigger {

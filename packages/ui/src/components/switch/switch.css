@@ -75,7 +75,7 @@
 }
 
 .ns-switch:disabled {
-  cursor: not-allowed;
+  cursor: default;
 }
 
 .ns-switch:disabled .ns-switch__track {

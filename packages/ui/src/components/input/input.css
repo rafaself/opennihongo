@@ -49,5 +49,5 @@
   border-color: var(--ns-color-border);
   box-shadow: var(--ns-elevation-none);
   color: var(--ns-color-text-secondary);
-  cursor: not-allowed;
+  cursor: default;
 }

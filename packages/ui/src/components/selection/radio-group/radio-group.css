@@ -140,7 +140,7 @@
 
 .ns-radio[data-disabled] {
   color: var(--ns-color-text-secondary);
-  cursor: not-allowed;
+  cursor: default;
 }
 
 .ns-radio[data-variant="card"][data-disabled] {

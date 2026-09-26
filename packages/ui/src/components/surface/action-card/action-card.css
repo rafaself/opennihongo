@@ -42,7 +42,7 @@
   background-color: var(--ns-color-surface-subtle);
   border-color: var(--ns-color-border-subtle);
   color: var(--ns-color-text-secondary);
-  cursor: not-allowed;
+  cursor: default;
 }
 
 .ns-action-card__media {
