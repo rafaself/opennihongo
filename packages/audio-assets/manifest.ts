@@ -1,4 +1,4 @@
-import type { KanaAudioId, KanaId } from "@opennihongo/core";
+import { kanaCharacterCharts, type KanaAudioId } from "@opennihongo/core";
 
 export type AudioAssetId = KanaAudioId;
 
@@ -102,29 +102,73 @@ export const audioManifest = {
   "kana.word.soto": "./generated/kana.word.soto.opus",
 } as const satisfies Record<AudioAssetId, string>;
 
-export const kanaChartAudioManifest: Partial<Record<KanaId, string>> = {
-  "kana.hiragana.a": "./generated/kana.chart.hiragana.a.nemo-10000.opus",
-  "kana.hiragana.i": "./generated/kana.chart.hiragana.i.nemo-10000.opus",
-  "kana.hiragana.u": "./generated/kana.chart.hiragana.u.nemo-10000.opus",
-  "kana.hiragana.e": "./generated/kana.chart.hiragana.e.nemo-10000.opus",
-  "kana.hiragana.o": "./generated/kana.chart.hiragana.o.nemo-10000.opus",
-  "kana.hiragana.ka": "./generated/kana.chart.hiragana.ka.nemo-10000.opus",
-  "kana.hiragana.ki": "./generated/kana.chart.hiragana.ki.nemo-10000.opus",
-  "kana.hiragana.ku": "./generated/kana.chart.hiragana.ku.nemo-10000.opus",
-  "kana.hiragana.ke": "./generated/kana.chart.hiragana.ke.nemo-10000.opus",
-  "kana.hiragana.ko": "./generated/kana.chart.hiragana.ko.nemo-10000.opus",
-  "kana.hiragana.sa": "./generated/kana.chart.hiragana.sa.nemo-10000.opus",
-  "kana.hiragana.shi": "./generated/kana.chart.hiragana.shi.nemo-10000.opus",
-  "kana.hiragana.su": "./generated/kana.chart.hiragana.su.nemo-10000.opus",
-  "kana.hiragana.se": "./generated/kana.chart.hiragana.se.nemo-10000.opus",
-  "kana.hiragana.so": "./generated/kana.chart.hiragana.so.nemo-10000.opus",
-};
+const kanaChartAudioDirectory = "./generated/kana-chart-hiragana-nemo-10000";
+const hiraganaChartSections = kanaCharacterCharts.hiragana.sections;
+const hiraganaChartTiles = hiraganaChartSections.map((section) => ({
+  section,
+  tiles: section.rows.flatMap((row) => row.filter((tile) => tile !== null)),
+}));
+
+function getHiraganaChartAudioId(
+  sectionId: string,
+  romanization: string,
+  glyph: string,
+  duplicateRomanization: boolean,
+): string {
+  if (sectionId === "basic") {
+    const kanaSlug = glyph === "を" ? "wo" : romanization;
+    return `kana.chart.hiragana.${kanaSlug}.nemo-10000`;
+  }
+
+  const glyphSuffix = duplicateRomanization
+    ? `-u${Array.from(glyph)
+        .map((character) => character.codePointAt(0)?.toString(16))
+        .join("-")}`
+    : "";
+  return `kana.chart.hiragana.${sectionId}.${romanization}${glyphSuffix}.nemo-10000`;
+}
+
+const chartAudioEntries = hiraganaChartTiles.flatMap(({ section, tiles }) => {
+  const romanizationCounts = new Map<string, number>();
+  for (const tile of tiles) {
+    romanizationCounts.set(
+      tile.romanization,
+      (romanizationCounts.get(tile.romanization) ?? 0) + 1,
+    );
+  }
+  const duplicateRomanizations = new Set(
+    Array.from(romanizationCounts)
+      .filter(([, count]) => count > 1)
+      .map(([romanization]) => romanization),
+  );
+
+  return tiles.map((tile) => {
+    const audioId = getHiraganaChartAudioId(
+      section.id,
+      tile.romanization,
+      tile.glyph,
+      duplicateRomanizations.has(tile.romanization),
+    );
+    return [tile.id, `${kanaChartAudioDirectory}/${audioId}.opus`] as const;
+  });
+});
+
+export const kanaChartAudioManifest: Readonly<Record<string, string>> =
+  Object.fromEntries(chartAudioEntries);
 
 const generatedAudioUrls = import.meta.glob<string>("./generated/*.opus", {
   eager: true,
   import: "default",
-  query: "?url",
+  query: "?url&no-inline",
 });
+const generatedKanaChartAudioUrls = import.meta.glob<string>(
+  "./generated/kana-chart-hiragana-nemo-10000/*.opus",
+  {
+    eager: true,
+    import: "default",
+    query: "?url&no-inline",
+  },
+);
 
 export function getAudioAsset(id: string): string | undefined {
   if (!Object.hasOwn(audioManifest, id)) {
@@ -134,7 +178,11 @@ export function getAudioAsset(id: string): string | undefined {
   return generatedAudioUrls[audioManifest[id as AudioAssetId]];
 }
 
-export function getKanaChartAudioAsset(id: KanaId): string | undefined {
-  const path = kanaChartAudioManifest[id];
-  return path ? generatedAudioUrls[path] : undefined;
+export function getKanaChartAudioAsset(
+  chartTileId: string,
+): string | undefined {
+  const path = Object.hasOwn(kanaChartAudioManifest, chartTileId)
+    ? kanaChartAudioManifest[chartTileId]
+    : undefined;
+  return path ? generatedKanaChartAudioUrls[path] : undefined;
 }

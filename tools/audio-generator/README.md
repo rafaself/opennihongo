@@ -57,7 +57,7 @@ batch generation:
 ]
 ```
 
-The canonical pronunciation dataset has two inputs:
+The generator has two canonical inputs and one separate chart voice collection:
 
 - [`inputs/kana-syllabary.json`](inputs/kana-syllabary.json) contains the 46
   basic Hiragana and 46 basic Katakana characters. Its stable IDs and glyphs
@@ -66,9 +66,9 @@ The canonical pronunciation dataset has two inputs:
 - [`inputs/kana-practice.json`](inputs/kana-practice.json) contains the seeded
   Hiragana vowels and beginner vocabulary from `packages/core/src/kana/`.
 - [`inputs/kana-chart-hiragana-voice10000.json`](inputs/kana-chart-hiragana-voice10000.json)
-  is a separate 15-character test set for あ–お, か–こ, and さ–そ. Its IDs
-  include the `nemo-10000` suffix so these files cannot replace canonical
-  女声1 assets.
+  contains all 115 tiles from the Hiragana chart: basic characters, dakuten,
+  combinations, small っ examples, and long vowels. It uses the chart's speech
+  text for each tile and a unique style-qualified asset ID.
 
 Keep IDs, display text, and Japanese readings aligned with the core content.
 With the VOICEVOX container running, generate both inputs from the repository
@@ -81,18 +81,21 @@ PYTHONPATH=tools/audio-generator/src python3 -m audio_generator \
   --input tools/audio-generator/inputs/kana-practice.json
 ```
 
-For the chart test set, use its separate 男声2 / ノーマル configuration and
-the running container's internal Engine endpoint:
+For the Hiragana chart voice set, use its separate 男声2 / ノーマル
+configuration, collection directory, and the running container's internal
+Engine endpoint:
 
 ```sh
 PYTHONPATH=tools/audio-generator/src python3 -m audio_generator \
   --config tools/audio-generator/voice-nemo-male2.json \
   --docker-container audio-generator-voicevox-1 \
+  --output-dir packages/audio-assets/generated/kana-chart-hiragana-nemo-10000 \
   --input tools/audio-generator/inputs/kana-chart-hiragana-voice10000.json
 ```
 
 The alternate config pins style ID `10000`, engine `0.24.0`, and
 `http://127.0.0.1:50121` as seen from inside the existing VOICEVOX container.
+Its request timeout is 180 seconds to tolerate slower CPU synthesis calls.
 `--docker-container` runs only `curl` through `docker exec`, so this command
 works when the host's published loopback port is unavailable. It does not
 start, stop, or reconfigure the engine. The target container must already be
@@ -117,19 +120,26 @@ batch and are not published unless the complete Opus stream, metadata, checksum,
 and updated inventory pass validation. Retained assets are checked before they
 are carried into the new inventory, and unpaired audio files are rejected.
 Successful generation reports how many requested assets passed validation.
+The chart collection's own `.manifest.json` keeps its assets together and apart
+from the canonical 女声1 catalog. The generator reuses matching assets already
+in the collection and synthesizes missing tiles.
 
 To audit an already generated directory without contacting VOICEVOX, run:
 
 ```sh
 PYTHONPATH=tools/audio-generator/src python3 -m audio_generator \
   --validate-only
+PYTHONPATH=tools/audio-generator/src python3 -m audio_generator \
+  --validate-only \
+  --output-dir packages/audio-assets/generated/kana-chart-hiragana-nemo-10000
 ```
 
 The validator checks that every audio file and metadata sidecar exists, parses
 as the supported non-empty Ogg Opus format, passes Ogg page CRC checks, and
 agrees on the audio SHA-256, synthesis fingerprint, metadata sizes, and
 `.manifest.json` inventory. It also rejects orphan audio files. Use
-`--output-dir` to validate a different directory.
+`--output-dir` to validate a different collection directory. Validate each
+collection separately because each one has its own inventory.
 
 The speaker, engine URL, timeout, FFmpeg executable, and Opus bitrate can be
 changed in an alternate config file passed with `--config`. Use

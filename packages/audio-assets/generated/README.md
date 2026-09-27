@@ -1,10 +1,11 @@
 # Generated pronunciation files
 
-Place generated pronunciation audio here using the stable content identifier
-as its filename. Experimental voice variants use a distinct variant identifier
-that includes the tested style, such as
-`kana.chart.hiragana.a.nemo-10000`; they do not replace canonical audio. The
-VOICEVOX generator writes `<audio-id>.opus` audio, a
-matching `<audio-id>.json` metadata sidecar, and an aggregate `.manifest.json`
-inventory. Keep generation tooling and its engine outside this directory. See
-`tools/audio-generator/README.md` for the generation workflow.
+The root of this directory holds the canonical pronunciation catalog, with
+one `<audio-id>.opus` file and matching `<audio-id>.json` sidecar for each
+content ID. Keep alternate voice collections in their own named subdirectory,
+with a separate `.manifest.json` inventory for each collection. For example,
+`kana-chart-hiragana-nemo-10000/` contains the complete Hiragana chart set from
+VOICEVOX Nemo 男声2 / ノーマル. Style-qualified IDs preserve the relationship
+between each alternate file and its voice. Keep generation tooling and its
+engine outside this directory. See `tools/audio-generator/README.md` for the
+generation and validation workflow.

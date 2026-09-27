@@ -1,0 +1,695 @@
+{
+  "assets": {
+    "kana.chart.hiragana.a.nemo-10000": {
+      "audio_file": "kana.chart.hiragana.a.nemo-10000.opus",
+      "generation_fingerprint": "727013977abbfde4899d6b061bd8ed04b68ab78d3d200ae2912ee99413ae6e77",
+      "metadata_file": "kana.chart.hiragana.a.nemo-10000.json",
+      "sha256": "7a48596e25c7eb72d6307a04ddafb2ac2ffef6096a7514a87eb341a849d8b1af"
+    },
+    "kana.chart.hiragana.chi.nemo-10000": {
+      "audio_file": "kana.chart.hiragana.chi.nemo-10000.opus",
+      "generation_fingerprint": "bc66b188f40c70f1599f3aafbccf61415a6e2197677fadc8b8f00ee811869797",
+      "metadata_file": "kana.chart.hiragana.chi.nemo-10000.json",
+      "sha256": "3b4a1eb5480b0107f2e9a214196da583a4d79f723a4f0d9f503d9ef8ab11cfc6"
+    },
+    "kana.chart.hiragana.combinations.bya.nemo-10000": {
+      "audio_file": "kana.chart.hiragana.combinations.bya.nemo-10000.opus",
+      "generation_fingerprint": "81f45df34de42072d836a61b199b5c4d1abf5ea2c768750fffb4b30a54b7cb65",
+      "metadata_file": "kana.chart.hiragana.combinations.bya.nemo-10000.json",
+      "sha256": "0ab3a1ca1ae655b6d60869a22076f4f942115257443390d77671d39ea640f3cd"
+    },
+    "kana.chart.hiragana.combinations.byo.nemo-10000": {
+      "audio_file": "kana.chart.hiragana.combinations.byo.nemo-10000.opus",
+      "generation_fingerprint": "e08a72145da8e0df14e25333e6dc68b062eeebe847a4f48473f2c4e581432ec1",
+      "metadata_file": "kana.chart.hiragana.combinations.byo.nemo-10000.json",
+      "sha256": "8c93a8fff7374ebb4f9449a606b2061646aadfed0ae4e86c50cf890f93969b84"
+    },
+    "kana.chart.hiragana.combinations.byu.nemo-10000": {
+      "audio_file": "kana.chart.hiragana.combinations.byu.nemo-10000.opus",
+      "generation_fingerprint": "a62ab557b5792014ace5292343165555a96f0208df360c33cf8dec317ce1bbe8",
+      "metadata_file": "kana.chart.hiragana.combinations.byu.nemo-10000.json",
+      "sha256": "968df9b9d3f8eb0e0dc1cddfdcd37a33a87f14c88eec5e7369dc66a792996718"
+    },
+    "kana.chart.hiragana.combinations.cha.nemo-10000": {
+      "audio_file": "kana.chart.hiragana.combinations.cha.nemo-10000.opus",
+      "generation_fingerprint": "3f7d92d878117958f32df3cab40e2282559e01a4a3f146586c4883d466c1c32e",
+      "metadata_file": "kana.chart.hiragana.combinations.cha.nemo-10000.json",
+      "sha256": "50199bdedd5bf0d638194aecbd38f68edc3f92a0e56df3874819c57bbc2d2504"
+    },
+    "kana.chart.hiragana.combinations.cho.nemo-10000": {
+      "audio_file": "kana.chart.hiragana.combinations.cho.nemo-10000.opus",
+      "generation_fingerprint": "8f49d7c0dd89129a5f3aec7e8b49fe8be4f5f6d24e5f9a313799c729a5c7aacd",
+      "metadata_file": "kana.chart.hiragana.combinations.cho.nemo-10000.json",
+      "sha256": "4dbcfcbcbe604a329feab99e98580b3c7fcba124c54e8def33823d0d0ed2293b"
+    },
+    "kana.chart.hiragana.combinations.chu.nemo-10000": {
+      "audio_file": "kana.chart.hiragana.combinations.chu.nemo-10000.opus",
+      "generation_fingerprint": "2cc3a5be088cffd812eb66824f17b539ecf8e551e9b62a0d7bcf0254ab562272",
+      "metadata_file": "kana.chart.hiragana.combinations.chu.nemo-10000.json",
+      "sha256": "f3b93f55a43f992859ccc2cea2754b8eb7d0708c3cd06034238751affe177274"
+    },
+    "kana.chart.hiragana.combinations.gya.nemo-10000": {
+      "audio_file": "kana.chart.hiragana.combinations.gya.nemo-10000.opus",
+      "generation_fingerprint": "addee0984289d335c6a5f016f295264d6414651957d1df08b82ed495a8754b73",
+      "metadata_file": "kana.chart.hiragana.combinations.gya.nemo-10000.json",
+      "sha256": "7c8d3038ad17e7897c211de3724a343d932ad922a2970d61d9daaa2d6d0609ae"
+    },
+    "kana.chart.hiragana.combinations.gyo.nemo-10000": {
+      "audio_file": "kana.chart.hiragana.combinations.gyo.nemo-10000.opus",
+      "generation_fingerprint": "dd2b4313f426e32d8b0b860730eb3b57d790e57eaf2b7973732c60fb3038232a",
+      "metadata_file": "kana.chart.hiragana.combinations.gyo.nemo-10000.json",
+      "sha256": "7d0101b82bf3e95053e108a6a34c1cf6bf786fdef7d1501df51c9f92ec8c4a9c"
+    },
+    "kana.chart.hiragana.combinations.gyu.nemo-10000": {
+      "audio_file": "kana.chart.hiragana.combinations.gyu.nemo-10000.opus",
+      "generation_fingerprint": "724a64ab1617a0a7dbc58cfe8155d34849765a2553a7e50515fb22677b271e86",
+      "metadata_file": "kana.chart.hiragana.combinations.gyu.nemo-10000.json",
+      "sha256": "8f2921cec2fe6d374d299d911d23efae69ff18b17d515c0e4010f80569544229"
+    },
+    "kana.chart.hiragana.combinations.hya.nemo-10000": {
+      "audio_file": "kana.chart.hiragana.combinations.hya.nemo-10000.opus",
+      "generation_fingerprint": "bbc71a906a1eae543e843f90cc7c46e2ef996a1ded24ff44a31ea887756efa0f",
+      "metadata_file": "kana.chart.hiragana.combinations.hya.nemo-10000.json",
+      "sha256": "de2df74bf06c4de392dc025405def28f29d8caaefd6b83c4e066d7c825ddd38d"
+    },
+    "kana.chart.hiragana.combinations.hyo.nemo-10000": {
+      "audio_file": "kana.chart.hiragana.combinations.hyo.nemo-10000.opus",
+      "generation_fingerprint": "83a65294e0bf21c9bed18ee6d2e1a6d91adc496b9a01166498cd483023b72f0b",
+      "metadata_file": "kana.chart.hiragana.combinations.hyo.nemo-10000.json",
+      "sha256": "df92793446572d9e1624a8003381fb1691355ff4754201902aca721d8f2002d6"
+    },
+    "kana.chart.hiragana.combinations.hyu.nemo-10000": {
+      "audio_file": "kana.chart.hiragana.combinations.hyu.nemo-10000.opus",
+      "generation_fingerprint": "d1d5c88678d255b12d40ce885e45d6244b85fd77d5055ecdb568c0db9cf23f11",
+      "metadata_file": "kana.chart.hiragana.combinations.hyu.nemo-10000.json",
+      "sha256": "a316c14a1eb1880b0d1b4e856022c77f7ddbca806f2165fa1570177b539492c1"
+    },
+    "kana.chart.hiragana.combinations.ja.nemo-10000": {
+      "audio_file": "kana.chart.hiragana.combinations.ja.nemo-10000.opus",
+      "generation_fingerprint": "9ff252f5b85d85b65cbd942be28585690d83edfa269e26b3454fbf0d1fbe6b76",
+      "metadata_file": "kana.chart.hiragana.combinations.ja.nemo-10000.json",
+      "sha256": "742a373194a4fdd13999ffdc776904af6b7e45710238714eefddd72aeddb0de7"
+    },
+    "kana.chart.hiragana.combinations.jo.nemo-10000": {
+      "audio_file": "kana.chart.hiragana.combinations.jo.nemo-10000.opus",
+      "generation_fingerprint": "e8426a60869786758b0ad6642a62a96aa70efd95762bc21ba87f78a6ba647f6e",
+      "metadata_file": "kana.chart.hiragana.combinations.jo.nemo-10000.json",
+      "sha256": "1022ec000f5b5c19bb72c5ae29d47a9f5cd4112b4cf92f894fe0d431e46532d2"
+    },
+    "kana.chart.hiragana.combinations.ju.nemo-10000": {
+      "audio_file": "kana.chart.hiragana.combinations.ju.nemo-10000.opus",
+      "generation_fingerprint": "f49780af2e522b8715287fee1a10cba566a87fa56f663832ac7f9a1ad1811ee5",
+      "metadata_file": "kana.chart.hiragana.combinations.ju.nemo-10000.json",
+      "sha256": "afaa309e23010b9e06601bce731d79a8d6d4e0e0f5d6b0e4f61fb997788d82e4"
+    },
+    "kana.chart.hiragana.combinations.kya.nemo-10000": {
+      "audio_file": "kana.chart.hiragana.combinations.kya.nemo-10000.opus",
+      "generation_fingerprint": "62de8b045d393c222214eab43fcd662755fa69e4cb7a678f93480e09ea6f9cc4",
+      "metadata_file": "kana.chart.hiragana.combinations.kya.nemo-10000.json",
+      "sha256": "40e6c800df651a82351bd1e3835db1ad53c6467ccdb2ebbb787fa2b3c4b64b57"
+    },
+    "kana.chart.hiragana.combinations.kyo.nemo-10000": {
+      "audio_file": "kana.chart.hiragana.combinations.kyo.nemo-10000.opus",
+      "generation_fingerprint": "03c49bcd90899819ecf8a06af8745041b801d2a93f8fef63c32faf70751dcafe",
+      "metadata_file": "kana.chart.hiragana.combinations.kyo.nemo-10000.json",
+      "sha256": "9e92501f6aa0bb2c3499d64dce6976a20b3e05be947fe47772e02b06c439ae4c"
+    },
+    "kana.chart.hiragana.combinations.kyu.nemo-10000": {
+      "audio_file": "kana.chart.hiragana.combinations.kyu.nemo-10000.opus",
+      "generation_fingerprint": "b5fc9bfe9f1d8f1cb135c8febca51bc870656084d99c8682d922a5466087d37b",
+      "metadata_file": "kana.chart.hiragana.combinations.kyu.nemo-10000.json",
+      "sha256": "cafd145b331856bd9240ad66cf204aa8ccc1ac2affa541b6f3257700781acb0c"
+    },
+    "kana.chart.hiragana.combinations.mya.nemo-10000": {
+      "audio_file": "kana.chart.hiragana.combinations.mya.nemo-10000.opus",
+      "generation_fingerprint": "4088b3b6caf5276ffada126f2803d1c1ead51a450285fa3b07dbba3c071b016e",
+      "metadata_file": "kana.chart.hiragana.combinations.mya.nemo-10000.json",
+      "sha256": "2887bff79c705b8def47d47b7e0e47df205524fd200c38cd0c136b2d24c39fb8"
+    },
+    "kana.chart.hiragana.combinations.myo.nemo-10000": {
+      "audio_file": "kana.chart.hiragana.combinations.myo.nemo-10000.opus",
+      "generation_fingerprint": "ffa4eadf8ba42f5344d1597901c0754d774ebb16d6e7c34c3014ffb6fe48fe7f",
+      "metadata_file": "kana.chart.hiragana.combinations.myo.nemo-10000.json",
+      "sha256": "e0988222348952754cf67c6f606c241db88676facc78744f0925e59f9e42d09b"
+    },
+    "kana.chart.hiragana.combinations.myu.nemo-10000": {
+      "audio_file": "kana.chart.hiragana.combinations.myu.nemo-10000.opus",
+      "generation_fingerprint": "4fecab8fe3540a0a1c242e1a8658293bdf0d6981c1c8fb8aa2cb413bb22e5050",
+      "metadata_file": "kana.chart.hiragana.combinations.myu.nemo-10000.json",
+      "sha256": "7521f61d1563232074af33a5de8c2ded965d51c3d67fab290c7716273e325985"
+    },
+    "kana.chart.hiragana.combinations.nya.nemo-10000": {
+      "audio_file": "kana.chart.hiragana.combinations.nya.nemo-10000.opus",
+      "generation_fingerprint": "6f7c313bae0ebec7274a33f2d022a0654c6278e30b54092826ccc238a89fbe87",
+      "metadata_file": "kana.chart.hiragana.combinations.nya.nemo-10000.json",
+      "sha256": "ca8319a3fd9bfd078de58e230d3a2f9a17c38fdc234d81f92c268075faad040b"
+    },
+    "kana.chart.hiragana.combinations.nyo.nemo-10000": {
+      "audio_file": "kana.chart.hiragana.combinations.nyo.nemo-10000.opus",
+      "generation_fingerprint": "9b6e69788c4e83cfae60b08fc2bbdd29763e8dd91b1ab957a6e8ad92a4ee357c",
+      "metadata_file": "kana.chart.hiragana.combinations.nyo.nemo-10000.json",
+      "sha256": "24dce2ce703fa0eb6d513dea14a773a1c8fa2be69b9f49401f8d12a69493d0af"
+    },
+    "kana.chart.hiragana.combinations.nyu.nemo-10000": {
+      "audio_file": "kana.chart.hiragana.combinations.nyu.nemo-10000.opus",
+      "generation_fingerprint": "157c6b335d4e7a42301451c14660239e3f7ba2124a7ce9a2177f678e0cc4b416",
+      "metadata_file": "kana.chart.hiragana.combinations.nyu.nemo-10000.json",
+      "sha256": "00c4d8ca9b2fcceffc22a18356e572e088094d2387b8942dff3e02d3cd16200e"
+    },
+    "kana.chart.hiragana.combinations.pya.nemo-10000": {
+      "audio_file": "kana.chart.hiragana.combinations.pya.nemo-10000.opus",
+      "generation_fingerprint": "be200719a7669ebf8eb77367c6e0b5561dc504563dcc221f4515be712a3c24fd",
+      "metadata_file": "kana.chart.hiragana.combinations.pya.nemo-10000.json",
+      "sha256": "e53105db797aeafb0ed5ea580319e625cc7e4dce296d69748f56d1d244843e0c"
+    },
+    "kana.chart.hiragana.combinations.pyo.nemo-10000": {
+      "audio_file": "kana.chart.hiragana.combinations.pyo.nemo-10000.opus",
+      "generation_fingerprint": "618bbc0ce32d0aed3ed39f959a6fb9ab86cecf2d5edb8542c94108133dadd693",
+      "metadata_file": "kana.chart.hiragana.combinations.pyo.nemo-10000.json",
+      "sha256": "3dddf007c1ccccdfb5f1b88db5c4e0d176382808136ef24af151ebc8a8f28c99"
+    },
+    "kana.chart.hiragana.combinations.pyu.nemo-10000": {
+      "audio_file": "kana.chart.hiragana.combinations.pyu.nemo-10000.opus",
+      "generation_fingerprint": "f98bbfa7d4a9b409f39485556f4c7281c57e8e038ab7291765aedc0c0a7642f1",
+      "metadata_file": "kana.chart.hiragana.combinations.pyu.nemo-10000.json",
+      "sha256": "68a5018dfddd47bff06449eb57b5af9738bdc75ad86693d7f2ccb5a69e5df057"
+    },
+    "kana.chart.hiragana.combinations.rya.nemo-10000": {
+      "audio_file": "kana.chart.hiragana.combinations.rya.nemo-10000.opus",
+      "generation_fingerprint": "48a37b33cb4c472120452043396383e1dcc24a93e3be15189bd0c684c9cf5a06",
+      "metadata_file": "kana.chart.hiragana.combinations.rya.nemo-10000.json",
+      "sha256": "db600b461e304c8564ba915b0b6cdf8c1c23611198ba79eed3b3f736b4ae07c4"
+    },
+    "kana.chart.hiragana.combinations.ryo.nemo-10000": {
+      "audio_file": "kana.chart.hiragana.combinations.ryo.nemo-10000.opus",
+      "generation_fingerprint": "6ed76898365d3e92f97c19ab92a30f06492c0ffb5c3908e6a59d885abb2e0d49",
+      "metadata_file": "kana.chart.hiragana.combinations.ryo.nemo-10000.json",
+      "sha256": "7ccb5c985860aea30d8642cc7c787ce7cfbda8a22bd170e4291132542ddf1941"
+    },
+    "kana.chart.hiragana.combinations.ryu.nemo-10000": {
+      "audio_file": "kana.chart.hiragana.combinations.ryu.nemo-10000.opus",
+      "generation_fingerprint": "11c1d8d90e489b64e3bc41eb17dbf5200034daa1713536315dadefee71993b05",
+      "metadata_file": "kana.chart.hiragana.combinations.ryu.nemo-10000.json",
+      "sha256": "b100e6bf247341a2f82cd5f2f2b0a66d6b0b5216c7fe7aa8df668af5642b3bb5"
+    },
+    "kana.chart.hiragana.combinations.sha.nemo-10000": {
+      "audio_file": "kana.chart.hiragana.combinations.sha.nemo-10000.opus",
+      "generation_fingerprint": "dcba348bfe1018bdd1ce5d50bde43d49666c62cc85b0606f69620b0d8dd2837b",
+      "metadata_file": "kana.chart.hiragana.combinations.sha.nemo-10000.json",
+      "sha256": "d320bbc0df464d1d0925aec858d1d4a8c87a97b293ff02561638b51d1086da92"
+    },
+    "kana.chart.hiragana.combinations.sho.nemo-10000": {
+      "audio_file": "kana.chart.hiragana.combinations.sho.nemo-10000.opus",
+      "generation_fingerprint": "0e6d3cfe038d5b98b0915b5bda71cd7fa6ff7605b3c2b2d69606874de7f805a7",
+      "metadata_file": "kana.chart.hiragana.combinations.sho.nemo-10000.json",
+      "sha256": "80bb515d4ee6bc12d88d55815ea040e29bbd300d7af43015d31fe6caad451ebe"
+    },
+    "kana.chart.hiragana.combinations.shu.nemo-10000": {
+      "audio_file": "kana.chart.hiragana.combinations.shu.nemo-10000.opus",
+      "generation_fingerprint": "541cd8841001f1c82e0f29ac9761002c2cc7ea4ad7a984894ea058a4ae49c1c1",
+      "metadata_file": "kana.chart.hiragana.combinations.shu.nemo-10000.json",
+      "sha256": "7840a6c7ba56c3ac6a1ad20bb62c1424cc7c79be75d2624e7c707c6b5245b9ce"
+    },
+    "kana.chart.hiragana.dakuten.ba.nemo-10000": {
+      "audio_file": "kana.chart.hiragana.dakuten.ba.nemo-10000.opus",
+      "generation_fingerprint": "7fa0be3c58aae99be2b9f53787e2dfa6ab3f4a8e3f851e848bd605f03a49fc9e",
+      "metadata_file": "kana.chart.hiragana.dakuten.ba.nemo-10000.json",
+      "sha256": "b10db5913a7901167e79bde88374aff2c7511cb1ba90294a9f9ca6d33a0d01f6"
+    },
+    "kana.chart.hiragana.dakuten.be.nemo-10000": {
+      "audio_file": "kana.chart.hiragana.dakuten.be.nemo-10000.opus",
+      "generation_fingerprint": "776c612fb9587fb8b10cf24a07052601235bfe37d6cb0e563ed1163346c1d07d",
+      "metadata_file": "kana.chart.hiragana.dakuten.be.nemo-10000.json",
+      "sha256": "8234c702581e555f17e95d00926109e6985c5237d70424db6784b6e53159648c"
+    },
+    "kana.chart.hiragana.dakuten.bi.nemo-10000": {
+      "audio_file": "kana.chart.hiragana.dakuten.bi.nemo-10000.opus",
+      "generation_fingerprint": "a646478374f5b65ec074f87d9c4b14010dead00bdbaa36cc999cd8d8398ac28a",
+      "metadata_file": "kana.chart.hiragana.dakuten.bi.nemo-10000.json",
+      "sha256": "739d0d9c512bcbfe94b31013dff5e5f5921f077c17c699f578d9bd100693aa0e"
+    },
+    "kana.chart.hiragana.dakuten.bo.nemo-10000": {
+      "audio_file": "kana.chart.hiragana.dakuten.bo.nemo-10000.opus",
+      "generation_fingerprint": "076011f020e792439d0e919a6c3f47e222b6d2a56391f58096f130f93feab64a",
+      "metadata_file": "kana.chart.hiragana.dakuten.bo.nemo-10000.json",
+      "sha256": "c4afc5aff09da09ba1e3f0308dd61be9d3e80b33f1fb9b460094741761f78575"
+    },
+    "kana.chart.hiragana.dakuten.bu.nemo-10000": {
+      "audio_file": "kana.chart.hiragana.dakuten.bu.nemo-10000.opus",
+      "generation_fingerprint": "9b418bab40a9b758daf49f67faa7f8bc1ef33855667cb2ca8c535dd33e69427a",
+      "metadata_file": "kana.chart.hiragana.dakuten.bu.nemo-10000.json",
+      "sha256": "805984faade6af17e7849005500a25af938c1d93f74a89afac9d3efe13380fb6"
+    },
+    "kana.chart.hiragana.dakuten.da.nemo-10000": {
+      "audio_file": "kana.chart.hiragana.dakuten.da.nemo-10000.opus",
+      "generation_fingerprint": "3738d89cfe69b80623cc7700cd542eb21eab25f7fbdd7463d28982c57f01af63",
+      "metadata_file": "kana.chart.hiragana.dakuten.da.nemo-10000.json",
+      "sha256": "6c2ab96f043340c53939d809da05ca7859c530875ab4674e0811e130070c0ce9"
+    },
+    "kana.chart.hiragana.dakuten.de.nemo-10000": {
+      "audio_file": "kana.chart.hiragana.dakuten.de.nemo-10000.opus",
+      "generation_fingerprint": "2c1999d669bcf4a7ab42d2df25727f15065e0555df901ad4309a21a57af4f24a",
+      "metadata_file": "kana.chart.hiragana.dakuten.de.nemo-10000.json",
+      "sha256": "c2cb74ab06babcf97ef53c2da4e0a1dd8be6736d1634e7750646bfc8b154ac2c"
+    },
+    "kana.chart.hiragana.dakuten.do.nemo-10000": {
+      "audio_file": "kana.chart.hiragana.dakuten.do.nemo-10000.opus",
+      "generation_fingerprint": "41db8466f26758acb058ee3454dcc28d573d359d5ed090a31c4c8c2fecde2abe",
+      "metadata_file": "kana.chart.hiragana.dakuten.do.nemo-10000.json",
+      "sha256": "ffa888cf87952e8499b0aa25f71aec1c26a5539d6fbfc8d6f330cd36f37aac62"
+    },
+    "kana.chart.hiragana.dakuten.ga.nemo-10000": {
+      "audio_file": "kana.chart.hiragana.dakuten.ga.nemo-10000.opus",
+      "generation_fingerprint": "b2d451f32955f7978708c088f2d2b3dcc5468e63e98a41a62e87bd4cba2caa36",
+      "metadata_file": "kana.chart.hiragana.dakuten.ga.nemo-10000.json",
+      "sha256": "de6f76fb2a6d8f9df071c80ca4f27f86fed0775b58f1e0b8789ae2e28edc6688"
+    },
+    "kana.chart.hiragana.dakuten.ge.nemo-10000": {
+      "audio_file": "kana.chart.hiragana.dakuten.ge.nemo-10000.opus",
+      "generation_fingerprint": "8c24785f19037aed6764d327abdb4a943a2a0e8f1eacd459f6d1564fa7174a0a",
+      "metadata_file": "kana.chart.hiragana.dakuten.ge.nemo-10000.json",
+      "sha256": "5762422bddfc160433f21bd4be32bdc6c96e3cd17648a8f31a410036ae627883"
+    },
+    "kana.chart.hiragana.dakuten.gi.nemo-10000": {
+      "audio_file": "kana.chart.hiragana.dakuten.gi.nemo-10000.opus",
+      "generation_fingerprint": "a71d23f75f50948c8e61c22b25ce2911747ab5044e4eac0df1a4c855814f305a",
+      "metadata_file": "kana.chart.hiragana.dakuten.gi.nemo-10000.json",
+      "sha256": "d58a7e1fef46f1e93de5c8d2d779a3f96d22b7f6c6c123605eca69b67101085b"
+    },
+    "kana.chart.hiragana.dakuten.go.nemo-10000": {
+      "audio_file": "kana.chart.hiragana.dakuten.go.nemo-10000.opus",
+      "generation_fingerprint": "a8f25254e5b9bec5a5a8f9d38d58bd80a0eaddf35f4061d41d23ca8aafa62d7b",
+      "metadata_file": "kana.chart.hiragana.dakuten.go.nemo-10000.json",
+      "sha256": "ce49c6021e5b4dabc33463a9db10bcbd65e167fb07c69624ee227e67057a1f71"
+    },
+    "kana.chart.hiragana.dakuten.gu.nemo-10000": {
+      "audio_file": "kana.chart.hiragana.dakuten.gu.nemo-10000.opus",
+      "generation_fingerprint": "6b0bc049b1d22ca3a3aadc88515b54f14656e22fb5d92e39d486c3a2829ff41e",
+      "metadata_file": "kana.chart.hiragana.dakuten.gu.nemo-10000.json",
+      "sha256": "b739586c26ac24f8a525f448a5354229e989d40f7ebb08fbaa894038aae7b002"
+    },
+    "kana.chart.hiragana.dakuten.ji-u3058.nemo-10000": {
+      "audio_file": "kana.chart.hiragana.dakuten.ji-u3058.nemo-10000.opus",
+      "generation_fingerprint": "460242e1d2f17b1b338985c27287fd721dc26224d40ccf3d8d6fb4f3e8a96c40",
+      "metadata_file": "kana.chart.hiragana.dakuten.ji-u3058.nemo-10000.json",
+      "sha256": "1e505c28e2ff5f9f5aff4f77ce0888ece047cf5d001d6e79880c43acc8ba7f39"
+    },
+    "kana.chart.hiragana.dakuten.ji-u3062.nemo-10000": {
+      "audio_file": "kana.chart.hiragana.dakuten.ji-u3062.nemo-10000.opus",
+      "generation_fingerprint": "bc547024c6969a62e16c44c5f8c9cfd544b3dc42b8f86808103a0f122bdfb016",
+      "metadata_file": "kana.chart.hiragana.dakuten.ji-u3062.nemo-10000.json",
+      "sha256": "1e505c28e2ff5f9f5aff4f77ce0888ece047cf5d001d6e79880c43acc8ba7f39"
+    },
+    "kana.chart.hiragana.dakuten.pa.nemo-10000": {
+      "audio_file": "kana.chart.hiragana.dakuten.pa.nemo-10000.opus",
+      "generation_fingerprint": "78c3e09a02aac67e8057b9d4c547ef35e9df7de2a16f42a883ef5ac4c5aa667d",
+      "metadata_file": "kana.chart.hiragana.dakuten.pa.nemo-10000.json",
+      "sha256": "296c834017248c2ef192ee8835fb99439c86fa8ab674a086759dac81a38758bc"
+    },
+    "kana.chart.hiragana.dakuten.pe.nemo-10000": {
+      "audio_file": "kana.chart.hiragana.dakuten.pe.nemo-10000.opus",
+      "generation_fingerprint": "773fd83dadfb687406aff084c8ec372396cfb3b971a61ed400b6252314d7dc99",
+      "metadata_file": "kana.chart.hiragana.dakuten.pe.nemo-10000.json",
+      "sha256": "d28d0e74e18099bada9142ea9013f04498a05760fbeb4b9f2fc939e83b94ff87"
+    },
+    "kana.chart.hiragana.dakuten.pi.nemo-10000": {
+      "audio_file": "kana.chart.hiragana.dakuten.pi.nemo-10000.opus",
+      "generation_fingerprint": "bad90bae1fec469691b3d0e5dbf894e0e333683c66c8cbcfceb6cb2b2133c494",
+      "metadata_file": "kana.chart.hiragana.dakuten.pi.nemo-10000.json",
+      "sha256": "058cf082e5e7fc58f5fd64c341a804731af7734dccde74c7c6bf6581215b00e7"
+    },
+    "kana.chart.hiragana.dakuten.po.nemo-10000": {
+      "audio_file": "kana.chart.hiragana.dakuten.po.nemo-10000.opus",
+      "generation_fingerprint": "6963430fe6e0f98a3a68db95a9b4d9bde4c8d036fa1a38c1c2f7bda95609b787",
+      "metadata_file": "kana.chart.hiragana.dakuten.po.nemo-10000.json",
+      "sha256": "7358f91786af32cfb854bb8ae3b511b4d043fa9536656a5bdf207fba1f17184a"
+    },
+    "kana.chart.hiragana.dakuten.pu.nemo-10000": {
+      "audio_file": "kana.chart.hiragana.dakuten.pu.nemo-10000.opus",
+      "generation_fingerprint": "ccb51911324973f744dc533840c45a55261e2bf4a92a35685937d2179135f03b",
+      "metadata_file": "kana.chart.hiragana.dakuten.pu.nemo-10000.json",
+      "sha256": "625e54753b8be639b2c73def9ff1bfcb20841eee4bd83e80e089d38c5329967f"
+    },
+    "kana.chart.hiragana.dakuten.za.nemo-10000": {
+      "audio_file": "kana.chart.hiragana.dakuten.za.nemo-10000.opus",
+      "generation_fingerprint": "d8a74646540c121725e072f8c2b8bf548d6efaf8ee59600b8c3206a1444df98b",
+      "metadata_file": "kana.chart.hiragana.dakuten.za.nemo-10000.json",
+      "sha256": "9f403b7ec54593794d0a9de04abfdc6215129a7e6be45332972538d855dce8fe"
+    },
+    "kana.chart.hiragana.dakuten.ze.nemo-10000": {
+      "audio_file": "kana.chart.hiragana.dakuten.ze.nemo-10000.opus",
+      "generation_fingerprint": "0359bef55c926afc8c346484de1e560921c6ce8522124d5c406bfd0fffa2859d",
+      "metadata_file": "kana.chart.hiragana.dakuten.ze.nemo-10000.json",
+      "sha256": "fcf953ec6d0143094dedc14a3b0ca3e298b8dbc1dbd3cc4998b4ee062b94271d"
+    },
+    "kana.chart.hiragana.dakuten.zo.nemo-10000": {
+      "audio_file": "kana.chart.hiragana.dakuten.zo.nemo-10000.opus",
+      "generation_fingerprint": "55584e835c1a6fc7cbf4b2ed75acbf5077bd1952a66ee5ae8ca1e60a06eb9430",
+      "metadata_file": "kana.chart.hiragana.dakuten.zo.nemo-10000.json",
+      "sha256": "3da69f3528d6a23abca5b628994248a15a13194e11f94273729525694c7ab208"
+    },
+    "kana.chart.hiragana.dakuten.zu-u305a.nemo-10000": {
+      "audio_file": "kana.chart.hiragana.dakuten.zu-u305a.nemo-10000.opus",
+      "generation_fingerprint": "c4c90d1ce8f6e07fbea6da02e2757dca59c18472f300826a0b690b0b74fd7aa3",
+      "metadata_file": "kana.chart.hiragana.dakuten.zu-u305a.nemo-10000.json",
+      "sha256": "29e2cdaf2c8bc5056adf6d0dfd0598e189e4210e595987ed4f26ea3549fa376f"
+    },
+    "kana.chart.hiragana.dakuten.zu-u3065.nemo-10000": {
+      "audio_file": "kana.chart.hiragana.dakuten.zu-u3065.nemo-10000.opus",
+      "generation_fingerprint": "e7cee27242561bba3f4ac78b69b8574938a7e5de3e2f2e12c3c7ae1bb1f1ce28",
+      "metadata_file": "kana.chart.hiragana.dakuten.zu-u3065.nemo-10000.json",
+      "sha256": "29e2cdaf2c8bc5056adf6d0dfd0598e189e4210e595987ed4f26ea3549fa376f"
+    },
+    "kana.chart.hiragana.e.nemo-10000": {
+      "audio_file": "kana.chart.hiragana.e.nemo-10000.opus",
+      "generation_fingerprint": "faa8ee658c18e5607e4fb61afe83e6014ce7c2dfe43c4bf667a6656364f447c6",
+      "metadata_file": "kana.chart.hiragana.e.nemo-10000.json",
+      "sha256": "8cce8a26b5fa21220882a18f09a7933c9f3a2f513e7f440e0d32f663f610083b"
+    },
+    "kana.chart.hiragana.fu.nemo-10000": {
+      "audio_file": "kana.chart.hiragana.fu.nemo-10000.opus",
+      "generation_fingerprint": "a3425cc3ef1d464e8b7b4857a6e4a9d9cd2a61a03a9dce011a1dd8f31427d973",
+      "metadata_file": "kana.chart.hiragana.fu.nemo-10000.json",
+      "sha256": "5df58dc0e214842dd57d1f594061d58265499bdfadea120b8431ce94e8f33060"
+    },
+    "kana.chart.hiragana.ha.nemo-10000": {
+      "audio_file": "kana.chart.hiragana.ha.nemo-10000.opus",
+      "generation_fingerprint": "0df2eaa519078ff62c8611ce8a846bff4b98b64b3f3dda26db03cd3191cb7ab8",
+      "metadata_file": "kana.chart.hiragana.ha.nemo-10000.json",
+      "sha256": "350abddd576c2966141e41c3e59ff49bd79b1fb4364490633b9fa7bfa4de59c1"
+    },
+    "kana.chart.hiragana.he.nemo-10000": {
+      "audio_file": "kana.chart.hiragana.he.nemo-10000.opus",
+      "generation_fingerprint": "f1eabb917e095d58b2fb2ccdb33b11655ef2661e1d9bba2c5aa744823c0cfc47",
+      "metadata_file": "kana.chart.hiragana.he.nemo-10000.json",
+      "sha256": "8cce8a26b5fa21220882a18f09a7933c9f3a2f513e7f440e0d32f663f610083b"
+    },
+    "kana.chart.hiragana.hi.nemo-10000": {
+      "audio_file": "kana.chart.hiragana.hi.nemo-10000.opus",
+      "generation_fingerprint": "546f4a6b542d2a5129595fa11b0d56d36abcf3ddeb4984b0f60c935a01ce1ac7",
+      "metadata_file": "kana.chart.hiragana.hi.nemo-10000.json",
+      "sha256": "942be0e2ee61f6f3a77a30fa41c7f7204212c15906990a04f3a45a06e42e3c28"
+    },
+    "kana.chart.hiragana.ho.nemo-10000": {
+      "audio_file": "kana.chart.hiragana.ho.nemo-10000.opus",
+      "generation_fingerprint": "c8984ffd65ac9487c75b053861080dc00df01151d1a0b728dd966f6dbddd159e",
+      "metadata_file": "kana.chart.hiragana.ho.nemo-10000.json",
+      "sha256": "4748b63e5de2217a735cd25d1039c06762edb46ba8de3c2072f6ef7d88510055"
+    },
+    "kana.chart.hiragana.i.nemo-10000": {
+      "audio_file": "kana.chart.hiragana.i.nemo-10000.opus",
+      "generation_fingerprint": "85ed15590680444c35109e147ecc163c8ab4746efef50bcefdc33b3a7a048538",
+      "metadata_file": "kana.chart.hiragana.i.nemo-10000.json",
+      "sha256": "ff511c3c90abe6c82ca4e9364527ca3e081a72898ae7485859be7e54c9c3f947"
+    },
+    "kana.chart.hiragana.ka.nemo-10000": {
+      "audio_file": "kana.chart.hiragana.ka.nemo-10000.opus",
+      "generation_fingerprint": "0ea061f2ea62cf4a4e5f08b65c90da5f6ff6998e0f293a0f71ac9d8697f41bae",
+      "metadata_file": "kana.chart.hiragana.ka.nemo-10000.json",
+      "sha256": "1dafa0bc5d50507754a4cecfa0127cb4f4a992ebaa865c30ad99b21f3d7b3f5d"
+    },
+    "kana.chart.hiragana.ke.nemo-10000": {
+      "audio_file": "kana.chart.hiragana.ke.nemo-10000.opus",
+      "generation_fingerprint": "ffe3985668b00a0b5592a264c1bf8b4d4fee90a3313623e1266147eab05bde80",
+      "metadata_file": "kana.chart.hiragana.ke.nemo-10000.json",
+      "sha256": "bf8f304b6d8518ba4eb7cd074b071b510085638f29c41839791f49cbd2685983"
+    },
+    "kana.chart.hiragana.ki.nemo-10000": {
+      "audio_file": "kana.chart.hiragana.ki.nemo-10000.opus",
+      "generation_fingerprint": "9cb0610b523dcd99daef12ef3795df3773ba851e36253eccdab2e0aef3703e82",
+      "metadata_file": "kana.chart.hiragana.ki.nemo-10000.json",
+      "sha256": "ad1393a82f87424979f413cf5071c2ba97057c9455653d8b8a769abe25144d15"
+    },
+    "kana.chart.hiragana.ko.nemo-10000": {
+      "audio_file": "kana.chart.hiragana.ko.nemo-10000.opus",
+      "generation_fingerprint": "a9268b335afd87d260c70b62a498fb98ed88f29dd5dd2c6c9057d0e63f89e5cc",
+      "metadata_file": "kana.chart.hiragana.ko.nemo-10000.json",
+      "sha256": "2e423ce6b34acc41873658c9a21eca2841698da118457e0b4a0b76d6662514d5"
+    },
+    "kana.chart.hiragana.ku.nemo-10000": {
+      "audio_file": "kana.chart.hiragana.ku.nemo-10000.opus",
+      "generation_fingerprint": "43a0566eb9b090a5a72ad0bbe99e5093b242ce8ffbe2dfc9311d74d7a186001c",
+      "metadata_file": "kana.chart.hiragana.ku.nemo-10000.json",
+      "sha256": "025c32d481b81071871c7d74a8321636b433715638fecfbd4f524dc5ff29672c"
+    },
+    "kana.chart.hiragana.long-vowels.aa.nemo-10000": {
+      "audio_file": "kana.chart.hiragana.long-vowels.aa.nemo-10000.opus",
+      "generation_fingerprint": "8929f25d38fea29d2f185c6ab8236e550584e314b365a54624b42e679e5a9115",
+      "metadata_file": "kana.chart.hiragana.long-vowels.aa.nemo-10000.json",
+      "sha256": "6497509626fed00676f082589f732526e8ba612f62816a25987ffca1bef1cc14"
+    },
+    "kana.chart.hiragana.long-vowels.ee.nemo-10000": {
+      "audio_file": "kana.chart.hiragana.long-vowels.ee.nemo-10000.opus",
+      "generation_fingerprint": "fbb7cbd99e699a10ddecc92f4510267d607d93c9a3b758a9ef9057f4dd18f58b",
+      "metadata_file": "kana.chart.hiragana.long-vowels.ee.nemo-10000.json",
+      "sha256": "ba3cd7ef575a0748725246533606f3a958ca944f721934454b531930d7b6859c"
+    },
+    "kana.chart.hiragana.long-vowels.ei.nemo-10000": {
+      "audio_file": "kana.chart.hiragana.long-vowels.ei.nemo-10000.opus",
+      "generation_fingerprint": "ef3fdc4a6287ef4601780519a788d17c0960f4a5f649c521ad662a6a0e5a66b4",
+      "metadata_file": "kana.chart.hiragana.long-vowels.ei.nemo-10000.json",
+      "sha256": "72b93dff3cfc78ce7c8a2f3d134cd26639ccc7863933eed3bec51eece8023f93"
+    },
+    "kana.chart.hiragana.long-vowels.ii.nemo-10000": {
+      "audio_file": "kana.chart.hiragana.long-vowels.ii.nemo-10000.opus",
+      "generation_fingerprint": "522cebe4c74c775def4f00923d633babc31e94f99e73182eb4489c28f664f485",
+      "metadata_file": "kana.chart.hiragana.long-vowels.ii.nemo-10000.json",
+      "sha256": "e77cc62d433753b48e1b3cd175ddb3fb9304fcc845b5e59e2f259dc8183e1619"
+    },
+    "kana.chart.hiragana.long-vowels.oo.nemo-10000": {
+      "audio_file": "kana.chart.hiragana.long-vowels.oo.nemo-10000.opus",
+      "generation_fingerprint": "326f2d99ec82385719f62970d7d25502594d94d8e0160e6bc14b83e1a3fcd65d",
+      "metadata_file": "kana.chart.hiragana.long-vowels.oo.nemo-10000.json",
+      "sha256": "676de2f200afd6993dbfb0cd3643ea5ab526b9f608e9dfbfabb30fed2f9a91bc"
+    },
+    "kana.chart.hiragana.long-vowels.ou.nemo-10000": {
+      "audio_file": "kana.chart.hiragana.long-vowels.ou.nemo-10000.opus",
+      "generation_fingerprint": "8774e29e6e90330410c1e41bf6d0ea7d356dcfad98e794432d47596aee8dcf76",
+      "metadata_file": "kana.chart.hiragana.long-vowels.ou.nemo-10000.json",
+      "sha256": "fe1484413cee8abd43e5b9c6b88125de940b30b415ffff23454923af84217615"
+    },
+    "kana.chart.hiragana.long-vowels.uu.nemo-10000": {
+      "audio_file": "kana.chart.hiragana.long-vowels.uu.nemo-10000.opus",
+      "generation_fingerprint": "3e1ead573fd7f3e2674bedde7bcac22874d4d5460c10d404ae76021ac3426766",
+      "metadata_file": "kana.chart.hiragana.long-vowels.uu.nemo-10000.json",
+      "sha256": "651376b52453fb00ea9dd78ade59b4227c17688c44d5a782da74d9088accbca0"
+    },
+    "kana.chart.hiragana.ma.nemo-10000": {
+      "audio_file": "kana.chart.hiragana.ma.nemo-10000.opus",
+      "generation_fingerprint": "0f282ee85d37cc2be90cb18ec8a125d678405dd9a8c35a32310ef8624c4cc4c3",
+      "metadata_file": "kana.chart.hiragana.ma.nemo-10000.json",
+      "sha256": "b8b96126caf13d83b2048b5a3a1f2e6c4dddccda9f76d4a814bafcc83e0b8d57"
+    },
+    "kana.chart.hiragana.me.nemo-10000": {
+      "audio_file": "kana.chart.hiragana.me.nemo-10000.opus",
+      "generation_fingerprint": "6a0a52da7e3c48d59d75b3b902ae714a2e6f46775d899894aa35afb75f6f61b4",
+      "metadata_file": "kana.chart.hiragana.me.nemo-10000.json",
+      "sha256": "76e20d6054e59880af32b1dffce3733b6840a29ee9077e9bc9b8c505b72bcd40"
+    },
+    "kana.chart.hiragana.mi.nemo-10000": {
+      "audio_file": "kana.chart.hiragana.mi.nemo-10000.opus",
+      "generation_fingerprint": "f720069fdf74a26fdc6ce04c07edbf44b0439669fc494ff48daba99ed5d74a0f",
+      "metadata_file": "kana.chart.hiragana.mi.nemo-10000.json",
+      "sha256": "d53766d9cebc336a7f4a956c46197b684fda3056c27500f18f65d14d2c3538bc"
+    },
+    "kana.chart.hiragana.mo.nemo-10000": {
+      "audio_file": "kana.chart.hiragana.mo.nemo-10000.opus",
+      "generation_fingerprint": "30bf399b70bcd2a7de0824c66966d86239743578779d69d1f204eaf22e128498",
+      "metadata_file": "kana.chart.hiragana.mo.nemo-10000.json",
+      "sha256": "2fe62042570428ef37adc2fbd7f20455e440cde7990026a1743cbd63f1bc0782"
+    },
+    "kana.chart.hiragana.mu.nemo-10000": {
+      "audio_file": "kana.chart.hiragana.mu.nemo-10000.opus",
+      "generation_fingerprint": "baa184493c5db05f7c17198e1e8ccf6370e750247fcb1af62d712bae40b42e1a",
+      "metadata_file": "kana.chart.hiragana.mu.nemo-10000.json",
+      "sha256": "67e3f8db69870783b66f3f3f06b8580e7530894082866971c731f0757c2d1de0"
+    },
+    "kana.chart.hiragana.n.nemo-10000": {
+      "audio_file": "kana.chart.hiragana.n.nemo-10000.opus",
+      "generation_fingerprint": "19c1959caf07494963e20e654c7bd92ccd59b8acd96011a735177a627f2b0b86",
+      "metadata_file": "kana.chart.hiragana.n.nemo-10000.json",
+      "sha256": "8438d5ef66918fb7843b8a5879feac92c8ebf9fd19b2b192aaf78a9b65afa0c1"
+    },
+    "kana.chart.hiragana.na.nemo-10000": {
+      "audio_file": "kana.chart.hiragana.na.nemo-10000.opus",
+      "generation_fingerprint": "54275381c5bae749bd9a66707390e831165adc3449caf7a497deaae9bf46d480",
+      "metadata_file": "kana.chart.hiragana.na.nemo-10000.json",
+      "sha256": "1b20b3381bf84989a8ea9fd8662e01a73cc6cdf62f12adee460d532b639d603d"
+    },
+    "kana.chart.hiragana.ne.nemo-10000": {
+      "audio_file": "kana.chart.hiragana.ne.nemo-10000.opus",
+      "generation_fingerprint": "7f24f58c4140e20959dca6899d89edb2a8ca53c544e9aa7653cf0a5c6b1ffaed",
+      "metadata_file": "kana.chart.hiragana.ne.nemo-10000.json",
+      "sha256": "1b9e7a8fffe3176bda246f5d8429f2e7605bfd986023123fd61397174ca4c5b6"
+    },
+    "kana.chart.hiragana.ni.nemo-10000": {
+      "audio_file": "kana.chart.hiragana.ni.nemo-10000.opus",
+      "generation_fingerprint": "a3f93ec2499a70a5867f772e762e53329b0391d744b4809972659c0ec802c28e",
+      "metadata_file": "kana.chart.hiragana.ni.nemo-10000.json",
+      "sha256": "f7ad47ec0b5fdaab8beefc03ec37dcaa53f44612a7b878c1949703d18656d57e"
+    },
+    "kana.chart.hiragana.no.nemo-10000": {
+      "audio_file": "kana.chart.hiragana.no.nemo-10000.opus",
+      "generation_fingerprint": "a873e49e6a8b07d83a3ed6131537db7420f88cba572d269aee37be2577195a28",
+      "metadata_file": "kana.chart.hiragana.no.nemo-10000.json",
+      "sha256": "feabd5dec4dde7e46883cab96cbd5364292051c6337ad95407467a663fdd083a"
+    },
+    "kana.chart.hiragana.nu.nemo-10000": {
+      "audio_file": "kana.chart.hiragana.nu.nemo-10000.opus",
+      "generation_fingerprint": "0752b12729c03c3eb5b2fe3d5fab477161d4aa766467f7967964abff27e08cb7",
+      "metadata_file": "kana.chart.hiragana.nu.nemo-10000.json",
+      "sha256": "0722ccf4c057fab6a04b133bea43edf1ccdc460905edc715e077575b8b8de3b5"
+    },
+    "kana.chart.hiragana.o.nemo-10000": {
+      "audio_file": "kana.chart.hiragana.o.nemo-10000.opus",
+      "generation_fingerprint": "05735cf1307f8cfd9c98bfe4214b949696e1b606323cf3633cd77e9448c24b44",
+      "metadata_file": "kana.chart.hiragana.o.nemo-10000.json",
+      "sha256": "2b1934140cf64e55c154ee36e5b6b96d5ffb692f504ff4013d6a29f42041469a"
+    },
+    "kana.chart.hiragana.ra.nemo-10000": {
+      "audio_file": "kana.chart.hiragana.ra.nemo-10000.opus",
+      "generation_fingerprint": "3d7ff442b895f8ecd73c2bcb12c2facec60e29ac822b2cb4ff6fe356eace5cb5",
+      "metadata_file": "kana.chart.hiragana.ra.nemo-10000.json",
+      "sha256": "385293c820442e2b1a0d0b2bf838b14064f809d9fe6d4fca3456961a05ea632f"
+    },
+    "kana.chart.hiragana.re.nemo-10000": {
+      "audio_file": "kana.chart.hiragana.re.nemo-10000.opus",
+      "generation_fingerprint": "068dbc83abebfe6cb47ac9b95a8405f15bd0f960b02121f1c12652b21a994d60",
+      "metadata_file": "kana.chart.hiragana.re.nemo-10000.json",
+      "sha256": "c142a4a4b60bd61c1be69bb9b60cd69d51c6c321835fb84190f2c14351250635"
+    },
+    "kana.chart.hiragana.ri.nemo-10000": {
+      "audio_file": "kana.chart.hiragana.ri.nemo-10000.opus",
+      "generation_fingerprint": "64ddd17e0b389c3f41e2a84d1dd85d809c3a0247dc4fa13d09756b0494cfd719",
+      "metadata_file": "kana.chart.hiragana.ri.nemo-10000.json",
+      "sha256": "06cecc81170f55fae108fac84736646aa9e41d544f1438870b26890df34f2e36"
+    },
+    "kana.chart.hiragana.ro.nemo-10000": {
+      "audio_file": "kana.chart.hiragana.ro.nemo-10000.opus",
+      "generation_fingerprint": "b992b7b06dca5bfe323d26208b5d3c70314dd1e0395a9dc21d7d3a2437dd6c8d",
+      "metadata_file": "kana.chart.hiragana.ro.nemo-10000.json",
+      "sha256": "c2a68d43e2c7c3d013d0d6dc5307e272059522da9da3b2d4513206fb53082748"
+    },
+    "kana.chart.hiragana.ru.nemo-10000": {
+      "audio_file": "kana.chart.hiragana.ru.nemo-10000.opus",
+      "generation_fingerprint": "d490fc5da034a86128e2d390821015f37da3a3afa18b4a6bbab3a7c60325c88a",
+      "metadata_file": "kana.chart.hiragana.ru.nemo-10000.json",
+      "sha256": "62654011147b02dc34e040719471b9a9fca64c60f2eec45e2031e6af1f7f8727"
+    },
+    "kana.chart.hiragana.sa.nemo-10000": {
+      "audio_file": "kana.chart.hiragana.sa.nemo-10000.opus",
+      "generation_fingerprint": "bb0b23390cca3ada88acc47cc422bf213b9302dfc2f9e5c5df82bfe79f9803db",
+      "metadata_file": "kana.chart.hiragana.sa.nemo-10000.json",
+      "sha256": "63ccac7057e94c7f911702ebf11a02515375a75ae1d3d7f4b037b242c9bd9cc9"
+    },
+    "kana.chart.hiragana.se.nemo-10000": {
+      "audio_file": "kana.chart.hiragana.se.nemo-10000.opus",
+      "generation_fingerprint": "8832cb56c8b6bfbd6686a7e003b7b858f27626cf157d6a620e5410fe0f1e5859",
+      "metadata_file": "kana.chart.hiragana.se.nemo-10000.json",
+      "sha256": "11f94b889d3055297e76fbee7f6a4c62791e4136b4fbcac3b1b07f8363cf970f"
+    },
+    "kana.chart.hiragana.shi.nemo-10000": {
+      "audio_file": "kana.chart.hiragana.shi.nemo-10000.opus",
+      "generation_fingerprint": "21c34650315786590623704821ab9392f97e0ad6b1b8e1ecb24dbeede6b759e0",
+      "metadata_file": "kana.chart.hiragana.shi.nemo-10000.json",
+      "sha256": "15c23f0b67543a4c5f3f651d2853027bdf7a138874d3da21f006074cc79ce394"
+    },
+    "kana.chart.hiragana.small-tsu.kk.nemo-10000": {
+      "audio_file": "kana.chart.hiragana.small-tsu.kk.nemo-10000.opus",
+      "generation_fingerprint": "814dd0c8bd339004312105c97c673080d3d9c35a3c124fe7895ec65dffdc9fd6",
+      "metadata_file": "kana.chart.hiragana.small-tsu.kk.nemo-10000.json",
+      "sha256": "55ed9673c76e70f303e56e19865e3eeca7dc67ee2160efda34b5efdbe2c21e20"
+    },
+    "kana.chart.hiragana.small-tsu.pp.nemo-10000": {
+      "audio_file": "kana.chart.hiragana.small-tsu.pp.nemo-10000.opus",
+      "generation_fingerprint": "e22af937742b8ff8a2fb926b0550b1b2467a78bbecdc0026574a56e3526ce1a8",
+      "metadata_file": "kana.chart.hiragana.small-tsu.pp.nemo-10000.json",
+      "sha256": "cec55d833fc81cae012536ae9a272988eaf23564e71ff2013c994f078615dc3b"
+    },
+    "kana.chart.hiragana.small-tsu.ss.nemo-10000": {
+      "audio_file": "kana.chart.hiragana.small-tsu.ss.nemo-10000.opus",
+      "generation_fingerprint": "c4bd9bccf9a7e8f18e9c7a2f193fc04d0c863430091dfeacc4861bf24eea6b84",
+      "metadata_file": "kana.chart.hiragana.small-tsu.ss.nemo-10000.json",
+      "sha256": "1058a47a6c5a45a5905ab7d50efa5115f909c510c8926b5c4e5325c5a87565ce"
+    },
+    "kana.chart.hiragana.small-tsu.tt.nemo-10000": {
+      "audio_file": "kana.chart.hiragana.small-tsu.tt.nemo-10000.opus",
+      "generation_fingerprint": "1bc1c4182a1babca40bc37aad7e52d4e31958c0f8c21865033b1f3afc00c38a7",
+      "metadata_file": "kana.chart.hiragana.small-tsu.tt.nemo-10000.json",
+      "sha256": "497cbee9c599eba1a71a93d4ec23afdb02e7bb475edaa576ef00d1ccaa59fb13"
+    },
+    "kana.chart.hiragana.so.nemo-10000": {
+      "audio_file": "kana.chart.hiragana.so.nemo-10000.opus",
+      "generation_fingerprint": "1d00d491e3709a74a15be198c69fbcab74ec79006cea3cc1139d18da3acef83b",
+      "metadata_file": "kana.chart.hiragana.so.nemo-10000.json",
+      "sha256": "eb6b680480a5f30e41a1df78a810fa8f12754a36007dd52d48dc72330e3ea3e1"
+    },
+    "kana.chart.hiragana.su.nemo-10000": {
+      "audio_file": "kana.chart.hiragana.su.nemo-10000.opus",
+      "generation_fingerprint": "a672dc98e35f116bc5219973b7fa70cb0a802c0ef22021cdbe0313abf8ddb628",
+      "metadata_file": "kana.chart.hiragana.su.nemo-10000.json",
+      "sha256": "9323747cabb9f17c1a11e5a33a0865248ff62d3bada74712428348078864efbf"
+    },
+    "kana.chart.hiragana.ta.nemo-10000": {
+      "audio_file": "kana.chart.hiragana.ta.nemo-10000.opus",
+      "generation_fingerprint": "79258e774f83f4aa422d18d385f67a9903508765c8f91452d62063da4a63f5e4",
+      "metadata_file": "kana.chart.hiragana.ta.nemo-10000.json",
+      "sha256": "969368dbcdd6f0bdc3bdba7bea85fc7c15cabb54cbfe2f6e2d6068dd819631da"
+    },
+    "kana.chart.hiragana.te.nemo-10000": {
+      "audio_file": "kana.chart.hiragana.te.nemo-10000.opus",
+      "generation_fingerprint": "bcf66732d252b53ed2ed2d118fe6b8864fd843b6839eea6630357144edd4037f",
+      "metadata_file": "kana.chart.hiragana.te.nemo-10000.json",
+      "sha256": "24b79c8d621fca67054fa1ba36d3a74626684256eee537d63cdb3467b5e1c591"
+    },
+    "kana.chart.hiragana.to.nemo-10000": {
+      "audio_file": "kana.chart.hiragana.to.nemo-10000.opus",
+      "generation_fingerprint": "bba0f3ad32ca75c757b8f092f8fbb98747916c4232626ab7327c5db65979e5e6",
+      "metadata_file": "kana.chart.hiragana.to.nemo-10000.json",
+      "sha256": "68930bca381f6328b3564dd92a882417daf892a2d7db757023061cadd6c62815"
+    },
+    "kana.chart.hiragana.tsu.nemo-10000": {
+      "audio_file": "kana.chart.hiragana.tsu.nemo-10000.opus",
+      "generation_fingerprint": "7fcd74065c6816fa81f7726a5eca954870e534bf4be5b682be53d151460191ff",
+      "metadata_file": "kana.chart.hiragana.tsu.nemo-10000.json",
+      "sha256": "2117a3fcba1b2c97693991b706e4e522fd42c3e701ee771a559cb6dad46b2612"
+    },
+    "kana.chart.hiragana.u.nemo-10000": {
+      "audio_file": "kana.chart.hiragana.u.nemo-10000.opus",
+      "generation_fingerprint": "76876dce9bf0ad3d50ae60ab3580e653512aa1cc3434e09dd06363e7f5d1a3aa",
+      "metadata_file": "kana.chart.hiragana.u.nemo-10000.json",
+      "sha256": "cfe0e5e8f3970e2e5e6d3301dd25e3bd195faa487586755bd8224b6d101a7e56"
+    },
+    "kana.chart.hiragana.wa.nemo-10000": {
+      "audio_file": "kana.chart.hiragana.wa.nemo-10000.opus",
+      "generation_fingerprint": "0b82835ef417cf523f22113bbd057c833ce42aa59e6ffef3434b421cdebfffca",
+      "metadata_file": "kana.chart.hiragana.wa.nemo-10000.json",
+      "sha256": "350abddd576c2966141e41c3e59ff49bd79b1fb4364490633b9fa7bfa4de59c1"
+    },
+    "kana.chart.hiragana.wo.nemo-10000": {
+      "audio_file": "kana.chart.hiragana.wo.nemo-10000.opus",
+      "generation_fingerprint": "ba5f95c7485e9e8fba70866b8ead361b2100653a9a80c57fa9b5d6e5a7665fb1",
+      "metadata_file": "kana.chart.hiragana.wo.nemo-10000.json",
+      "sha256": "2b1934140cf64e55c154ee36e5b6b96d5ffb692f504ff4013d6a29f42041469a"
+    },
+    "kana.chart.hiragana.ya.nemo-10000": {
+      "audio_file": "kana.chart.hiragana.ya.nemo-10000.opus",
+      "generation_fingerprint": "b166bb0f496ab1dc13364deb6a157128e859fef56a556f4bc67f7333191984e1",
+      "metadata_file": "kana.chart.hiragana.ya.nemo-10000.json",
+      "sha256": "2103fc47343527494d25ebf2fe7dcb201a63a4171a2eba56d44235b78c15c753"
+    },
+    "kana.chart.hiragana.yo.nemo-10000": {
+      "audio_file": "kana.chart.hiragana.yo.nemo-10000.opus",
+      "generation_fingerprint": "02da79cd1ca577d757f11420bdbe2950dae4d247bab75e2de400ca29b276e35e",
+      "metadata_file": "kana.chart.hiragana.yo.nemo-10000.json",
+      "sha256": "df9a6bf388410281d3ea2fe6cebb428a3f6f59d02d0dab011523d2f185ffd602"
+    },
+    "kana.chart.hiragana.yu.nemo-10000": {
+      "audio_file": "kana.chart.hiragana.yu.nemo-10000.opus",
+      "generation_fingerprint": "5bc6dd2fda0bc41833bb2adf71495fdd81cff399e6a6e0cc5a95d8eb76527642",
+      "metadata_file": "kana.chart.hiragana.yu.nemo-10000.json",
+      "sha256": "19f407adce81ab7bac1c276134819474764a87968fe1202258c0d222345122aa"
+    }
+  },
+  "manifest_version": 1
+}

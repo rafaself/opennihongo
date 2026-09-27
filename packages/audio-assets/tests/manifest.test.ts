@@ -1,5 +1,6 @@
 import { existsSync, readFileSync } from "node:fs";
 import {
+  kanaCharacterCharts,
   hiraganaSyllabary,
   kanaBeginnerWords,
   kanaExercises,
@@ -31,11 +32,26 @@ describe("audio manifest", () => {
       reading: hiragana,
     })),
   ];
-  const chartVoice10000Content = hiraganaSyllabary.slice(0, 15).map((kana) => ({
-    id: kana.id,
-    variantId: `kana.chart.hiragana.${kana.id.replace("kana.hiragana.", "")}.nemo-10000`,
-    text: kana.glyph,
-  }));
+  const hiraganaChartTiles = kanaCharacterCharts.hiragana.sections.flatMap(
+    (section) =>
+      section.rows.flatMap((row) => row.filter((tile) => tile !== null)),
+  );
+  const chartVoice10000Content = hiraganaChartTiles.map((tile) => {
+    const path = kanaChartAudioManifest[tile.id];
+    if (!path) {
+      throw new Error(`Missing chart audio path for ${tile.id}`);
+    }
+
+    return {
+      tile,
+      path,
+      variantId:
+        path
+          .split("/")
+          .at(-1)
+          ?.replace(/\.opus$/, "") ?? "",
+    };
+  });
 
   it("maps every initial Japanese content identifier to its generated Opus path", () => {
     const audioIds = content.map(({ id }) => id);
@@ -70,22 +86,33 @@ describe("audio manifest", () => {
     }
   });
 
-  it("keeps the chart comparison voice on separate IDs and files", () => {
+  it("maps the complete Hiragana chart to separate Nemo voice assets", () => {
+    expect(chartVoice10000Content).toHaveLength(115);
     expect(Object.keys(kanaChartAudioManifest)).toEqual(
-      chartVoice10000Content.map(({ id }) => id),
+      hiraganaChartTiles.map(({ id }) => id),
     );
 
-    for (const { id, variantId, text } of chartVoice10000Content) {
-      const relativePath = `./generated/${variantId}.opus`;
-      expect(kanaChartAudioManifest[id]).toBe(relativePath);
-      expect(getKanaChartAudioAsset(id)).toEqual(expect.any(String));
-      expect(
-        existsSync(new URL(`../${relativePath}`, import.meta.url)),
-      ).toBe(true);
+    const collectionManifest = JSON.parse(
+      readFileSync(
+        new URL(
+          "../generated/kana-chart-hiragana-nemo-10000/.manifest.json",
+          import.meta.url,
+        ),
+        "utf-8",
+      ),
+    ) as { assets: Record<string, unknown> };
+    expect(Object.keys(collectionManifest.assets)).toHaveLength(115);
+
+    for (const { tile, variantId, path } of chartVoice10000Content) {
+      expect(path).toBe(
+        `./generated/kana-chart-hiragana-nemo-10000/${variantId}.opus`,
+      );
+      expect(getKanaChartAudioAsset(tile.id)).toEqual(expect.any(String));
+      expect(existsSync(new URL(`../${path}`, import.meta.url))).toBe(true);
 
       const metadata = JSON.parse(
         readFileSync(
-          new URL(`../generated/${variantId}.json`, import.meta.url),
+          new URL(`../${path.replace(/\.opus$/, ".json")}`, import.meta.url),
           "utf-8",
         ),
       ) as {
@@ -96,8 +123,8 @@ describe("audio manifest", () => {
         attribution: string;
       };
       expect(metadata).toMatchObject({
-        text,
-        reading: text,
+        text: tile.speechText,
+        reading: tile.speechText,
         speaker_name: "男声2",
         style_id: 10000,
         attribution: "VOICEVOX Nemo",
@@ -119,7 +146,7 @@ describe("audio manifest", () => {
     expect(generatorInput).toEqual(content.slice(0, 92));
   });
 
-  it("keeps the separate chart voice input aligned with the 15 selected tiles", () => {
+  it("keeps the chart voice input aligned with every Hiragana chart tile", () => {
     const generatorInput = JSON.parse(
       readFileSync(
         new URL(
@@ -131,10 +158,10 @@ describe("audio manifest", () => {
     ) as { id: string; text: string; reading: string }[];
 
     expect(generatorInput).toEqual(
-      chartVoice10000Content.map(({ variantId, text }) => ({
+      chartVoice10000Content.map(({ variantId, tile }) => ({
         id: variantId,
-        text,
-        reading: text,
+        text: tile.speechText,
+        reading: tile.speechText,
       })),
     );
   });
@@ -165,6 +192,6 @@ describe("audio manifest", () => {
     expect(getAudioAsset("nihongo")).toBeUndefined();
     expect(getAudioAsset("toString")).toBeUndefined();
     expect(getKanaChartAudioAsset("kana.hiragana.ta")).toBeUndefined();
-    expect(getKanaChartAudioAsset("kana.katakana.a")).toBeUndefined();
+    expect(getKanaChartAudioAsset("katakana.basic.ア")).toBeUndefined();
   });
 });

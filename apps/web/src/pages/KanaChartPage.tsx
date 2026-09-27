@@ -1,7 +1,6 @@
 import { useState } from "react";
 import {
   kanaCharacterCharts,
-  hiraganaSyllabary,
   type KanaChartSection,
   type KanaChartScript,
   type KanaChartTile,
@@ -22,11 +21,8 @@ function KanaTile({
   tile: KanaChartTile;
   script: KanaChartScript;
 }) {
-  const kanaId =
-    script === "hiragana"
-      ? hiraganaSyllabary.find((kana) => kana.glyph === tile.glyph)?.id
-      : undefined;
-  const audioAsset = kanaId ? getKanaChartAudioAsset(kanaId) : undefined;
+  const audioAsset =
+    script === "hiragana" ? getKanaChartAudioAsset(tile.id) : undefined;
 
   return (
     <button

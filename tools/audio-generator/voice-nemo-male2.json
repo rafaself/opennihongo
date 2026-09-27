@@ -6,7 +6,7 @@
   "style_name": "ノーマル",
   "style_id": 10000,
   "engine_url": "http://127.0.0.1:50121",
-  "timeout_seconds": 60,
+  "timeout_seconds": 180,
   "ffmpeg_path": "ffmpeg",
   "opus_bitrate": "32k",
   "attribution": {

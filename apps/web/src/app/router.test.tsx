@@ -157,11 +157,40 @@ describe("web application routes", () => {
       screen.getByRole("button", { name: "Play pronunciation for た, ta" }),
     );
     expect(audioElements[0]?.pause).toHaveBeenCalledOnce();
-    expect(speech.speak).toHaveBeenCalledOnce();
-    expect(speech.speak.mock.calls[0]?.[0]).toMatchObject({
-      text: "た",
-      lang: "ja-JP",
-    });
+    expect(audioElements).toHaveLength(2);
+    expect(audioElements[1]?.src).toContain(
+      "kana.chart.hiragana.ta.nemo-10000.opus",
+    );
+    expect(audioElements[1]?.play).toHaveBeenCalledOnce();
+
+    await user.click(
+      screen.getByRole("button", { name: "Play pronunciation for きゃ, kya" }),
+    );
+    expect(audioElements[1]?.pause).toHaveBeenCalledOnce();
+    expect(audioElements).toHaveLength(3);
+    expect(audioElements[2]?.src).toContain(
+      "kana.chart.hiragana.combinations.kya.nemo-10000.opus",
+    );
+    expect(audioElements[2]?.play).toHaveBeenCalledOnce();
+
+    await user.click(
+      screen.getByRole("button", { name: "Play pronunciation for っ+k, kk" }),
+    );
+    expect(audioElements[2]?.pause).toHaveBeenCalledOnce();
+    expect(audioElements).toHaveLength(4);
+    expect(audioElements[3]?.src).toContain(
+      "kana.chart.hiragana.small-tsu.kk.nemo-10000.opus",
+    );
+
+    await user.click(
+      screen.getByRole("button", { name: "Play pronunciation for ああ, aa" }),
+    );
+    expect(audioElements[3]?.pause).toHaveBeenCalledOnce();
+    expect(audioElements).toHaveLength(5);
+    expect(audioElements[4]?.src).toContain(
+      "kana.chart.hiragana.long-vowels.aa.nemo-10000.opus",
+    );
+    expect(speech.speak).not.toHaveBeenCalled();
     expect(storage.saveKanaAnswer).not.toHaveBeenCalled();
 
     await user.click(screen.getByRole("radio", { name: "Hiragana" }));
@@ -182,9 +211,10 @@ describe("web application routes", () => {
     await user.click(
       screen.getByRole("button", { name: "Play pronunciation for ア, a" }),
     );
-    expect(audioElements).toHaveLength(1);
-    expect(speech.speak).toHaveBeenCalledTimes(2);
-    expect(speech.speak.mock.calls[1]?.[0]).toMatchObject({
+    expect(audioElements).toHaveLength(5);
+    expect(audioElements[4]?.pause).toHaveBeenCalledOnce();
+    expect(speech.speak).toHaveBeenCalledOnce();
+    expect(speech.speak.mock.calls[0]?.[0]).toMatchObject({
       text: "ア",
       lang: "ja-JP",
     });
