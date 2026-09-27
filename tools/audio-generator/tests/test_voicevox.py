@@ -1,6 +1,7 @@
 import io
 import json
 import shutil
+import subprocess
 import tempfile
 import threading
 import unittest
@@ -8,6 +9,7 @@ import wave
 from dataclasses import replace
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
+from unittest.mock import patch
 from urllib.parse import parse_qs, urlsplit
 
 from audio_generator.config import load_config
@@ -195,6 +197,51 @@ class VoicevoxClientTests(unittest.TestCase):
             self.client.synthesize(AudioDefinition("redirect", "転送", "redirect"))
 
         self.assertFalse(any(method == "GET" for method, _, _ in REQUESTS))
+
+    def test_uses_only_curl_inside_the_explicit_docker_container(self) -> None:
+        config = replace(self.client.config, engine_url="http://127.0.0.1:50121")
+        client = VoicevoxClient(config, docker_container="voicevox-engine")
+        marker = b"\n__VOICEVOX_HTTP_STATUS__200"
+        responses = [
+            b'"0.24.0"' + marker,
+            json.dumps(
+                [
+                    {
+                        "name": "女声1",
+                        "speaker_uuid": "speaker-uuid",
+                        "styles": [{"name": "ノーマル", "id": STYLE_ID}],
+                    }
+                ]
+            ).encode()
+            + marker,
+            json.dumps({"kana": "ニホンゴ"}).encode() + marker,
+            WAV + marker,
+        ]
+
+        with patch("audio_generator.voicevox.subprocess.run") as run:
+            run.side_effect = [
+                subprocess.CompletedProcess([], 0, stdout=payload, stderr=b"")
+                for payload in responses
+            ]
+            self.assertEqual(client.verify_engine(), ("0.24.0", "speaker-uuid"))
+            self.assertEqual(
+                client.synthesize(AudioDefinition("nihongo", "日本語", "にほんご")),
+                WAV,
+            )
+
+        commands = [call.args[0] for call in run.call_args_list]
+        self.assertTrue(all("curl" in command for command in commands))
+        self.assertEqual(commands[0][:4], ["docker", "exec", "voicevox-engine", "curl"])
+        self.assertEqual(
+            commands[2][:5],
+            ["docker", "exec", "--interactive", "voicevox-engine", "curl"],
+        )
+        self.assertIn("http://127.0.0.1:50121/version", commands[0])
+        self.assertIn("http://127.0.0.1:50121/synthesis?speaker=10005", commands[-1])
+
+    def test_rejects_invalid_docker_container_names(self) -> None:
+        with self.assertRaisesRegex(VoicevoxError, "container name"):
+            VoicevoxClient(self.client.config, docker_container="-not-a-container")
 
 
 if __name__ == "__main__":

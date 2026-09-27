@@ -70,8 +70,10 @@ export function AcknowledgementsPage() {
                 </Text>
                 <Text>
                   Our pronunciation audio is generated with VOICEVOX Nemo Engine
-                  using VOICEVOX Nemo, 女声1 / ノーマル (style ID 10005). The
-                  required voice credit is <strong>VOICEVOX Nemo</strong>.
+                  using VOICEVOX Nemo. The canonical pronunciation catalog uses
+                  女声1 / ノーマル (style ID 10005); the first 15 Hiragana chart
+                  tiles use 男声2 / ノーマル (style ID 10000). The required voice
+                  credit is <strong>VOICEVOX Nemo</strong>.
                 </Text>
                 <Text>
                   The{" "}

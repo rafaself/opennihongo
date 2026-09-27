@@ -57,7 +57,7 @@ batch generation:
 ]
 ```
 
-The initial pronunciation dataset has two inputs:
+The canonical pronunciation dataset has two inputs:
 
 - [`inputs/kana-syllabary.json`](inputs/kana-syllabary.json) contains the 46
   basic Hiragana and 46 basic Katakana characters. Its stable IDs and glyphs
@@ -65,6 +65,10 @@ The initial pronunciation dataset has two inputs:
   `packages/core/src/kana/katakana.ts`.
 - [`inputs/kana-practice.json`](inputs/kana-practice.json) contains the seeded
   Hiragana vowels and beginner vocabulary from `packages/core/src/kana/`.
+- [`inputs/kana-chart-hiragana-voice10000.json`](inputs/kana-chart-hiragana-voice10000.json)
+  is a separate 15-character test set for あ–お, か–こ, and さ–そ. Its IDs
+  include the `nemo-10000` suffix so these files cannot replace canonical
+  女声1 assets.
 
 Keep IDs, display text, and Japanese readings aligned with the core content.
 With the VOICEVOX container running, generate both inputs from the repository
@@ -77,9 +81,28 @@ PYTHONPATH=tools/audio-generator/src python3 -m audio_generator \
   --input tools/audio-generator/inputs/kana-practice.json
 ```
 
-It checks that the running engine reports the exact version in `voice.json` and
-verifies the configured style. Unversioned responses such as `latest` are
-rejected.
+For the chart test set, use its separate 男声2 / ノーマル configuration and
+the running container's internal Engine endpoint:
+
+```sh
+PYTHONPATH=tools/audio-generator/src python3 -m audio_generator \
+  --config tools/audio-generator/voice-nemo-male2.json \
+  --docker-container audio-generator-voicevox-1 \
+  --input tools/audio-generator/inputs/kana-chart-hiragana-voice10000.json
+```
+
+The alternate config pins style ID `10000`, engine `0.24.0`, and
+`http://127.0.0.1:50121` as seen from inside the existing VOICEVOX container.
+`--docker-container` runs only `curl` through `docker exec`, so this command
+works when the host's published loopback port is unavailable. It does not
+start, stop, or reconfigure the engine. The target container must already be
+running, trusted, and contain `curl`; Docker CLI access is required. The normal
+generator configuration continues to use `http://127.0.0.1:50021` from the
+host.
+
+The generator checks that the running engine reports the exact version in the
+selected configuration and verifies the configured style. Unversioned
+responses such as `latest` are rejected.
 Metadata records both the configured engine release and the version response.
 The generator sends each explicit `reading` to VOICEVOX, converts the returned
 WAV to deterministic mono Opus with FFmpeg, and writes `<id>.opus` plus a
@@ -109,8 +132,11 @@ agrees on the audio SHA-256, synthesis fingerprint, metadata sizes, and
 `--output-dir` to validate a different directory.
 
 The speaker, engine URL, timeout, FFmpeg executable, and Opus bitrate can be
-changed in an alternate config file passed with `--config`. Use `--output-dir`
-to write somewhere else. Complete assets with matching fingerprints are reused.
+changed in an alternate config file passed with `--config`. Use
+`--docker-container` only when routing requests through the named running
+container; in that mode, `engine_url` must be its loopback URL. Use
+`--output-dir` to write somewhere else. Complete assets with matching
+fingerprints are reused.
 Changed inputs or incomplete existing assets are left untouched unless
 `--force` is passed to regenerate them.
 

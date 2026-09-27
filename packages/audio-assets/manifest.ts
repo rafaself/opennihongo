@@ -1,4 +1,4 @@
-import type { KanaAudioId } from "@opennihongo/core";
+import type { KanaAudioId, KanaId } from "@opennihongo/core";
 
 export type AudioAssetId = KanaAudioId;
 
@@ -102,6 +102,24 @@ export const audioManifest = {
   "kana.word.soto": "./generated/kana.word.soto.opus",
 } as const satisfies Record<AudioAssetId, string>;
 
+export const kanaChartAudioManifest: Partial<Record<KanaId, string>> = {
+  "kana.hiragana.a": "./generated/kana.chart.hiragana.a.nemo-10000.opus",
+  "kana.hiragana.i": "./generated/kana.chart.hiragana.i.nemo-10000.opus",
+  "kana.hiragana.u": "./generated/kana.chart.hiragana.u.nemo-10000.opus",
+  "kana.hiragana.e": "./generated/kana.chart.hiragana.e.nemo-10000.opus",
+  "kana.hiragana.o": "./generated/kana.chart.hiragana.o.nemo-10000.opus",
+  "kana.hiragana.ka": "./generated/kana.chart.hiragana.ka.nemo-10000.opus",
+  "kana.hiragana.ki": "./generated/kana.chart.hiragana.ki.nemo-10000.opus",
+  "kana.hiragana.ku": "./generated/kana.chart.hiragana.ku.nemo-10000.opus",
+  "kana.hiragana.ke": "./generated/kana.chart.hiragana.ke.nemo-10000.opus",
+  "kana.hiragana.ko": "./generated/kana.chart.hiragana.ko.nemo-10000.opus",
+  "kana.hiragana.sa": "./generated/kana.chart.hiragana.sa.nemo-10000.opus",
+  "kana.hiragana.shi": "./generated/kana.chart.hiragana.shi.nemo-10000.opus",
+  "kana.hiragana.su": "./generated/kana.chart.hiragana.su.nemo-10000.opus",
+  "kana.hiragana.se": "./generated/kana.chart.hiragana.se.nemo-10000.opus",
+  "kana.hiragana.so": "./generated/kana.chart.hiragana.so.nemo-10000.opus",
+};
+
 const generatedAudioUrls = import.meta.glob<string>("./generated/*.opus", {
   eager: true,
   import: "default",
@@ -114,4 +132,9 @@ export function getAudioAsset(id: string): string | undefined {
   }
 
   return generatedAudioUrls[audioManifest[id as AudioAssetId]];
+}
+
+export function getKanaChartAudioAsset(id: KanaId): string | undefined {
+  const path = kanaChartAudioManifest[id];
+  return path ? generatedAudioUrls[path] : undefined;
 }

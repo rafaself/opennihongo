@@ -23,6 +23,16 @@ class LoadConfigTests(unittest.TestCase):
         self.assertEqual(config.ffmpeg_path, "ffmpeg")
         self.assertEqual(config.opus_bitrate, "32k")
 
+    def test_loads_the_separate_nemo_male2_chart_config(self) -> None:
+        config = load_config(
+            Path(__file__).resolve().parents[1] / "voice-nemo-male2.json"
+        )
+
+        self.assertEqual(config.speaker_name, "男声2")
+        self.assertEqual(config.style_name, "ノーマル")
+        self.assertEqual(config.style_id, 10000)
+        self.assertEqual(config.engine_url, "http://127.0.0.1:50121")
+
     def test_rejects_missing_or_invalid_style_id(self) -> None:
         data = config_data()
         data["style_id"] = True

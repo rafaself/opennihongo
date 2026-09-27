@@ -32,7 +32,17 @@ Keep the credit with the audio wherever the application presents its audio and l
 
 ## Production status
 
-The selected set is a voice-generation choice; it has not yet been integrated across the production audio. The current generator configuration and checked-in pronunciation assets still use 女声1 / ノーマル (10005). The machine-readable configuration is [voice.json](../../tools/audio-generator/voice.json). Before generating with another style, confirm its ID is available in the running engine's `/speakers` response.
+The canonical pronunciation catalog and word audio continue to use 女声1 /
+ノーマル (10005), configured in [voice.json](../../tools/audio-generator/voice.json).
+For a focused comparison test, the first 15 Hiragana chart tiles (あ–お, か–こ,
+and さ–そ) use separate VOICEVOX Nemo 男声2 / ノーマル (10000) assets. These
+files carry the same required **VOICEVOX Nemo** credit and have distinct IDs,
+so they do not replace the canonical assets. Remaining chart tiles still use
+browser speech synthesis. The test set's configuration and input are
+[voice-nemo-male2.json](../../tools/audio-generator/voice-nemo-male2.json) and
+[kana-chart-hiragana-voice10000.json](../../tools/audio-generator/inputs/kana-chart-hiragana-voice10000.json).
+Always confirm a style ID in the running engine's `/speakers` response before
+generating with it.
 
 ## Sources
 

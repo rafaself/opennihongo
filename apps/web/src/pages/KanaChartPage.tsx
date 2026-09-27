@@ -1,21 +1,41 @@
 import { useState } from "react";
 import {
   kanaCharacterCharts,
+  hiraganaSyllabary,
   type KanaChartSection,
   type KanaChartScript,
   type KanaChartTile,
 } from "@opennihongo/core";
+import { getKanaChartAudioAsset } from "@opennihongo/audio-assets";
 import { Link } from "@tanstack/react-router";
 import { SegmentedControl } from "@opennihongo/ui";
-import { playJapanesePronunciation } from "../lib/pronunciation";
+import {
+  playJapaneseAudioAsset,
+  playJapanesePronunciation,
+} from "../lib/pronunciation";
 import "./KanaChartPage.css";
 
-function KanaTile({ tile }: { tile: KanaChartTile }) {
+function KanaTile({
+  tile,
+  script,
+}: {
+  tile: KanaChartTile;
+  script: KanaChartScript;
+}) {
+  const kanaId =
+    script === "hiragana"
+      ? hiraganaSyllabary.find((kana) => kana.glyph === tile.glyph)?.id
+      : undefined;
+  const audioAsset = kanaId ? getKanaChartAudioAsset(kanaId) : undefined;
+
   return (
     <button
       aria-label={`Play pronunciation for ${tile.glyph}, ${tile.romanization}`}
       className="kana-chart__tile"
       onClick={() => {
+        if (audioAsset && playJapaneseAudioAsset(audioAsset)) {
+          return;
+        }
         playJapanesePronunciation(tile.speechText);
       }}
       type="button"
@@ -29,7 +49,13 @@ function KanaTile({ tile }: { tile: KanaChartTile }) {
   );
 }
 
-function ChartSection({ section }: { section: KanaChartSection }) {
+function ChartSection({
+  section,
+  script,
+}: {
+  section: KanaChartSection;
+  script: KanaChartScript;
+}) {
   const titleId = `kana-chart-${section.id}-title`;
 
   return (
@@ -51,7 +77,7 @@ function ChartSection({ section }: { section: KanaChartSection }) {
           >
             {row.map((tile, columnIndex) =>
               tile ? (
-                <KanaTile key={tile.id} tile={tile} />
+                <KanaTile key={tile.id} script={script} tile={tile} />
               ) : (
                 <span
                   aria-hidden="true"
@@ -87,7 +113,7 @@ function KanaChartPanel({ script }: { script: KanaChartScript }) {
         </Link>
       </header>
       {chart.sections.map((section) => (
-        <ChartSection key={section.id} section={section} />
+        <ChartSection key={section.id} script={script} section={section} />
       ))}
     </section>
   );

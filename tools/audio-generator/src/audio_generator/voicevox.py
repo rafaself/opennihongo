@@ -3,6 +3,8 @@
 from __future__ import annotations
 
 import json
+import re
+import subprocess
 from typing import Any
 from urllib.error import HTTPError, URLError
 from urllib.parse import urlencode
@@ -30,10 +32,17 @@ class _NoRedirectHandler(HTTPRedirectHandler):
 
 
 class VoicevoxClient:
-    def __init__(self, config: GeneratorConfig) -> None:
+    def __init__(
+        self, config: GeneratorConfig, *, docker_container: str | None = None
+    ) -> None:
         self.config = config
         validate_engine_url(config.engine_url)
         self.base_url = config.engine_url.rstrip("/")
+        if docker_container is not None and not re.fullmatch(
+            r"[A-Za-z0-9][A-Za-z0-9_.-]*", docker_container
+        ):
+            raise VoicevoxError("Docker container name is invalid")
+        self.docker_container = docker_container
         self._opener = build_opener(_NoRedirectHandler)
 
     def verify_engine(self) -> tuple[str, str]:
@@ -127,6 +136,11 @@ class VoicevoxClient:
         if params:
             url = f"{url}?{urlencode(params)}"
         headers = {"Content-Type": content_type} if content_type else {}
+        if self.docker_container is not None:
+            return self._request_in_container(
+                url, path, method=method, body=body, headers=headers
+            )
+
         request = Request(url, data=body, headers=headers, method=method)
         try:
             with self._opener.open(
@@ -150,3 +164,78 @@ class VoicevoxClient:
             raise VoicevoxError(
                 f"cannot reach VOICEVOX engine at {self.base_url}: {error}"
             ) from error
+
+    def _request_in_container(
+        self,
+        url: str,
+        path: str,
+        *,
+        method: str,
+        body: bytes | None,
+        headers: dict[str, str],
+    ) -> bytes:
+        if self.docker_container is None:
+            raise VoicevoxError("Docker container was not configured")
+        marker = b"\n__VOICEVOX_HTTP_STATUS__"
+        command = ["docker", "exec"]
+        if body is not None:
+            command.append("--interactive")
+        command.extend(
+            [
+                self.docker_container,
+                "curl",
+                "--silent",
+                "--show-error",
+                "--max-time",
+                str(self.config.timeout_seconds),
+                "--request",
+                method,
+            ]
+        )
+        for name, value in headers.items():
+            command.extend(["--header", f"{name}: {value}"])
+        if body is not None:
+            command.extend(["--data-binary", "@-"])
+        command.extend(
+            ["--write-out", marker.decode() + "%{http_code}", url]
+        )
+
+        try:
+            response = subprocess.run(
+                command,
+                input=body,
+                capture_output=True,
+                check=False,
+                timeout=self.config.timeout_seconds + 5,
+            )
+        except (OSError, subprocess.TimeoutExpired) as error:
+            raise VoicevoxError(
+                f"cannot reach VOICEVOX inside Docker container "
+                f"{self.docker_container}: {error}"
+            ) from error
+
+        if response.returncode != 0:
+            detail = response.stderr.decode("utf-8", errors="replace").strip()
+            suffix = f": {detail}" if detail else ""
+            raise VoicevoxError(
+                f"Docker request to VOICEVOX {path} failed{suffix}"
+            )
+
+        marker_index = response.stdout.rfind(marker)
+        if marker_index < 0:
+            raise VoicevoxError(
+                f"Docker request to VOICEVOX {path} returned no HTTP status"
+            )
+        content = response.stdout[:marker_index]
+        status_bytes = response.stdout[marker_index + len(marker) :]
+        try:
+            status = int(status_bytes)
+        except ValueError as error:
+            raise VoicevoxError(
+                f"Docker request to VOICEVOX {path} returned an invalid HTTP status"
+            ) from error
+        if not 200 <= status < 300:
+            detail = content[:300].decode("utf-8", errors="replace").strip()
+            suffix = f": {detail}" if detail else ""
+            raise VoicevoxError(f"VOICEVOX {path} returned HTTP {status}{suffix}")
+        return content

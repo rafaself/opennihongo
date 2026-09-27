@@ -27,3 +27,10 @@ percentage, and audio checksum.
 The initial pronunciation catalog covers the 46 basic Hiragana characters, 46
 basic Katakana characters, and the five seeded beginner words. Exercise audio
 references are checked against the same manifest.
+
+The visible Kana chart has a separate experimental voice set for its first 15
+Hiragana characters. `kanaChartAudioManifest` maps those stable Kana IDs to
+distinct `kana.chart.hiragana.*.nemo-10000.opus` files generated with VOICEVOX
+Nemo 男声2 / ノーマル (style ID `10000`). This variant manifest leaves the
+canonical `audioManifest` and its existing 女声1 / ノーマル (10005) assets
+unchanged. Other chart tiles continue to use browser speech synthesis.

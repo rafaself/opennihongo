@@ -1,0 +1,17 @@
+{
+  "provider": "VOICEVOX",
+  "engine": "voicevox_nemo_engine",
+  "engine_version": "0.24.0",
+  "speaker_name": "男声2",
+  "style_name": "ノーマル",
+  "style_id": 10000,
+  "engine_url": "http://127.0.0.1:50121",
+  "timeout_seconds": 60,
+  "ffmpeg_path": "ffmpeg",
+  "opus_bitrate": "32k",
+  "attribution": {
+    "required": true,
+    "text": "VOICEVOX Nemo",
+    "terms_url": "https://voicevox.hiroshiba.jp/nemo/term/"
+  }
+}

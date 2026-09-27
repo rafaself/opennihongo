@@ -41,6 +41,13 @@ def build_parser() -> argparse.ArgumentParser:
         help="generated asset directory",
     )
     parser.add_argument(
+        "--docker-container",
+        help=(
+            "call curl inside this already-running Docker container; set engine_url "
+            "to the Engine's container-loopback address"
+        ),
+    )
+    parser.add_argument(
         "--force", action="store_true", help="replace existing audio and metadata files"
     )
     parser.add_argument(
@@ -70,7 +77,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     try:
         config = load_config(args.config)
         definitions = load_definitions(args.input)
-        client = VoicevoxClient(config)
+        client = VoicevoxClient(config, docker_container=args.docker_container)
         transcoder = FfmpegTranscoder(
             config.ffmpeg_path, config.opus_bitrate, config.timeout_seconds
         )

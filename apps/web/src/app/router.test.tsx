@@ -97,6 +97,21 @@ describe("web application routes", () => {
   it("shows every chart tile, plays pronunciation, and opens the lesson", async () => {
     const user = userEvent.setup();
     const speech = installSpeechMocks();
+    const audioElements: {
+      src: string;
+      play: ReturnType<typeof vi.fn>;
+      pause: ReturnType<typeof vi.fn>;
+    }[] = [];
+    class FakeAudio {
+      readonly play = vi.fn().mockResolvedValue(undefined);
+      readonly pause = vi.fn();
+      readonly addEventListener = vi.fn();
+
+      constructor(readonly src: string) {
+        audioElements.push(this);
+      }
+    }
+    vi.stubGlobal("Audio", FakeAudio);
     await renderHome();
 
     await user.click(screen.getByRole("link", { name: "Kana" }));
@@ -131,9 +146,20 @@ describe("web application routes", () => {
       screen.getByRole("button", { name: "Play pronunciation for あ, a" }),
     );
     expect(speech.cancel).toHaveBeenCalledOnce();
+    expect(speech.speak).not.toHaveBeenCalled();
+    expect(audioElements).toHaveLength(1);
+    expect(audioElements[0]?.src).toContain(
+      "kana.chart.hiragana.a.nemo-10000.opus",
+    );
+    expect(audioElements[0]?.play).toHaveBeenCalledOnce();
+
+    await user.click(
+      screen.getByRole("button", { name: "Play pronunciation for た, ta" }),
+    );
+    expect(audioElements[0]?.pause).toHaveBeenCalledOnce();
     expect(speech.speak).toHaveBeenCalledOnce();
     expect(speech.speak.mock.calls[0]?.[0]).toMatchObject({
-      text: "あ",
+      text: "た",
       lang: "ja-JP",
     });
     expect(storage.saveKanaAnswer).not.toHaveBeenCalled();
@@ -153,6 +179,15 @@ describe("web application routes", () => {
     expect(
       screen.getByRole("button", { name: "Play pronunciation for ア, a" }),
     ).toBeTruthy();
+    await user.click(
+      screen.getByRole("button", { name: "Play pronunciation for ア, a" }),
+    );
+    expect(audioElements).toHaveLength(1);
+    expect(speech.speak).toHaveBeenCalledTimes(2);
+    expect(speech.speak.mock.calls[1]?.[0]).toMatchObject({
+      text: "ア",
+      lang: "ja-JP",
+    });
 
     await user.click(screen.getByRole("link", { name: "Learn characters" }));
     await screen.findByRole("heading", { name: "Learn the five vowels" });
@@ -227,6 +262,7 @@ describe("web application routes", () => {
 
     await screen.findByRole("heading", { name: "Pronunciation audio" });
     screen.getByText(/VOICEVOX Nemo Engine using VOICEVOX Nemo/);
+    screen.getByText(/男声2 \/ ノーマル \(style ID 10000\)/);
     screen.getByText("VOICEVOX Nemo", { selector: "strong" });
     screen.getByText(/女声1 \/ ノーマル \(style ID 10005\)/);
     expect(

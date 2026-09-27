@@ -23,7 +23,41 @@ curl -fsS http://127.0.0.1:50021/version
 curl -fsS http://127.0.0.1:50021/speakers
 ```
 
-The helper can use another local loopback port via `VOICEVOX_URL` or `--engine-url`. It intentionally rejects non-loopback URLs. A different Docker image may listen on a different container port; check that image's current documentation rather than assuming the host and container ports match. For a different runtime or connection method, update `SKILL.md`, this README, and the helper as one deliberate change.
+The helper can use another local loopback port via `VOICEVOX_URL` or `--engine-url`. It intentionally rejects non-loopback URLs. A different Docker image may listen on a different container port; check that image's current documentation rather than assuming the host and container ports match. The helper supports both host-loopback requests and the explicit Docker-internal transport below; update `SKILL.md`, this README, and the helper together if adding another runtime or connection method.
+
+### Docker-internal transport
+
+If the published loopback port resets or times out while the existing VOICEVOX
+container is healthy, the helper can send requests through `docker exec` without
+starting, stopping, or reconfiguring the container. This requires Docker CLI
+access on the host and `curl` inside the target container. Use only the trusted
+VOICEVOX container; Docker access can control containers on the host.
+
+For this repository's pinned image, the Engine listens on container loopback
+port `50121`. Pass the running container name and that internal URL explicitly:
+
+```sh
+docker ps --format 'table {{.Names}}\t{{.Image}}\t{{.Ports}}'
+
+python3 .agents/skills/voicevox-japanese-speech/scripts/synthesize.py \
+  --docker-container audio-generator-voicevox-1 \
+  --engine-url http://127.0.0.1:50121 \
+  --list-speakers
+```
+
+Replace `audio-generator-voicevox-1` with the exact name shown by `docker ps`.
+Check that it is the already-running VOICEVOX Engine container and that its
+image's listening port matches the URL; the example port `50121` is specific to
+this repository's pinned image.
+
+Use the same two options with a synthesis command. The helper runs only `curl`
+inside the named container, reads the response back to the host process, and
+writes the requested WAV on the host. It follows no HTTP redirects, still
+rejects non-loopback Engine URLs, and does not require outbound network access
+inside the container. Confirm `/version` and `/speakers` before generating;
+style IDs are specific to the running engine. If the container is not running,
+or Docker cannot execute commands in it, stop and resolve that setup issue
+instead of starting or reconfiguring the Engine as part of this workflow.
 
 ## Style IDs and reproducibility
 

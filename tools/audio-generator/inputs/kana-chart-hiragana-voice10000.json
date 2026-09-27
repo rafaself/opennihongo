@@ -1,0 +1,77 @@
+[
+  {
+    "id": "kana.chart.hiragana.a.nemo-10000",
+    "text": "あ",
+    "reading": "あ"
+  },
+  {
+    "id": "kana.chart.hiragana.i.nemo-10000",
+    "text": "い",
+    "reading": "い"
+  },
+  {
+    "id": "kana.chart.hiragana.u.nemo-10000",
+    "text": "う",
+    "reading": "う"
+  },
+  {
+    "id": "kana.chart.hiragana.e.nemo-10000",
+    "text": "え",
+    "reading": "え"
+  },
+  {
+    "id": "kana.chart.hiragana.o.nemo-10000",
+    "text": "お",
+    "reading": "お"
+  },
+  {
+    "id": "kana.chart.hiragana.ka.nemo-10000",
+    "text": "か",
+    "reading": "か"
+  },
+  {
+    "id": "kana.chart.hiragana.ki.nemo-10000",
+    "text": "き",
+    "reading": "き"
+  },
+  {
+    "id": "kana.chart.hiragana.ku.nemo-10000",
+    "text": "く",
+    "reading": "く"
+  },
+  {
+    "id": "kana.chart.hiragana.ke.nemo-10000",
+    "text": "け",
+    "reading": "け"
+  },
+  {
+    "id": "kana.chart.hiragana.ko.nemo-10000",
+    "text": "こ",
+    "reading": "こ"
+  },
+  {
+    "id": "kana.chart.hiragana.sa.nemo-10000",
+    "text": "さ",
+    "reading": "さ"
+  },
+  {
+    "id": "kana.chart.hiragana.shi.nemo-10000",
+    "text": "し",
+    "reading": "し"
+  },
+  {
+    "id": "kana.chart.hiragana.su.nemo-10000",
+    "text": "す",
+    "reading": "す"
+  },
+  {
+    "id": "kana.chart.hiragana.se.nemo-10000",
+    "text": "せ",
+    "reading": "せ"
+  },
+  {
+    "id": "kana.chart.hiragana.so.nemo-10000",
+    "text": "そ",
+    "reading": "そ"
+  }
+]
