@@ -29,6 +29,26 @@ function renderControl(
   );
 }
 
+function setOptionLayout(
+  option: HTMLElement,
+  {
+    left,
+    width,
+    height = 32,
+  }: { left: number; width: number; height?: number },
+) {
+  Object.defineProperties(option, {
+    offsetHeight: { configurable: true, value: height },
+    offsetLeft: { configurable: true, value: left },
+    offsetTop: { configurable: true, value: 4 },
+    offsetWidth: { configurable: true, value: width },
+  });
+}
+
+function dispatchWindowResize() {
+  window.dispatchEvent(new Event("resize"));
+}
+
 function InteractiveControl({
   onValueChange,
 }: {
@@ -61,10 +81,26 @@ describe("SegmentedControl", () => {
     const group = screen.getByRole("radiogroup", { name: "Kana scripts" });
     const hiragana = screen.getByRole("radio", { name: "Hiragana" });
     const katakana = screen.getByRole("radio", { name: "Katakana" });
+    const indicator = group.querySelector(".ns-segmented-control__indicator");
 
     expect(group).toHaveAttribute("data-orientation", "horizontal");
+    expect(indicator).toHaveAttribute("aria-hidden", "true");
+    expect(indicator).not.toHaveAttribute("data-ready", "true");
     expect(hiragana).toBeChecked();
     expect(katakana).not.toBeChecked();
+
+    setOptionLayout(hiragana, { left: 8, width: 78 });
+    setOptionLayout(katakana, { left: 92, width: 82 });
+    dispatchWindowResize();
+    await waitFor(() => {
+      expect(indicator).toHaveAttribute("data-ready", "true");
+      expect(
+        group.style.getPropertyValue("--ns-segmented-control-indicator-x"),
+      ).toBe("8px");
+      expect(
+        group.style.getPropertyValue("--ns-segmented-control-indicator-width"),
+      ).toBe("78px");
+    });
 
     await user.click(katakana);
     expect(onValueChange).toHaveBeenLastCalledWith("katakana");
@@ -77,6 +113,11 @@ describe("SegmentedControl", () => {
       />,
     );
     expect(katakana).toBeChecked();
+    await waitFor(() => {
+      expect(
+        group.style.getPropertyValue("--ns-segmented-control-indicator-x"),
+      ).toBe("92px");
+    });
   });
 
   it("moves focus and selection with horizontal arrow keys", async () => {
@@ -87,6 +128,10 @@ describe("SegmentedControl", () => {
 
     const hiragana = screen.getByRole("radio", { name: "Hiragana" });
     const katakana = screen.getByRole("radio", { name: "Katakana" });
+    const group = screen.getByRole("radiogroup", { name: "Kana scripts" });
+    setOptionLayout(hiragana, { left: 8, width: 78 });
+    setOptionLayout(katakana, { left: 92, width: 82 });
+    dispatchWindowResize();
 
     await user.tab();
     expect(hiragana).toHaveFocus();
@@ -96,5 +141,10 @@ describe("SegmentedControl", () => {
     await user.keyboard("{/ArrowRight}");
     expect(onValueChange).toHaveBeenCalledWith("katakana");
     expect(katakana).toHaveFocus();
+    await waitFor(() => {
+      expect(
+        group.style.getPropertyValue("--ns-segmented-control-indicator-x"),
+      ).toBe("92px");
+    });
   });
 });

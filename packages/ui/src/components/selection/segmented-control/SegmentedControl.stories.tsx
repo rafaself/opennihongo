@@ -15,7 +15,7 @@ const meta = {
     docs: {
       description: {
         component:
-          "A compact, controlled radio group for choosing one of a few peer options. Tab into the group and use the arrow keys to move and select.",
+          "A compact, controlled radio group for choosing one of a few peer options. Its selected surface glides between options. Tab into the group and use the arrow keys to move and select.",
       },
     },
   },

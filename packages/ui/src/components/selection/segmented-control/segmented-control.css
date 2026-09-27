@@ -6,11 +6,44 @@
   border-radius: var(--ns-radius-lg);
   display: inline-flex;
   gap: var(--ns-space-1);
+  isolation: isolate;
   padding: var(--ns-space-1);
+  position: relative;
 }
 
 .ns-radio-group.ns-segmented-control[data-orientation="horizontal"] {
   flex-wrap: nowrap;
+}
+
+.ns-segmented-control__indicator {
+  background-color: var(--ns-color-surface-raised);
+  border-radius: var(--ns-radius-md);
+  height: var(--ns-segmented-control-indicator-height, 0px);
+  box-shadow: var(--ns-elevation-hover);
+  left: 0;
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  transform: translate3d(
+    var(--ns-segmented-control-indicator-x, 0px),
+    var(--ns-segmented-control-indicator-y, 0px),
+    0
+  );
+  width: var(--ns-segmented-control-indicator-width, 0px);
+  z-index: 0;
+}
+
+.ns-segmented-control__indicator[data-ready="true"] {
+  opacity: 1;
+}
+
+.ns-segmented-control__indicator[data-ready="true"][data-animated="true"] {
+  transition:
+    height var(--ns-motion-duration-fast) var(--ns-motion-easing-standard),
+    opacity var(--ns-motion-duration-fast) var(--ns-motion-easing-standard),
+    transform var(--ns-motion-duration-fast) var(--ns-motion-easing-standard),
+    width var(--ns-motion-duration-fast) var(--ns-motion-easing-standard);
 }
 
 .ns-segmented-control .ns-radio__control {
@@ -25,26 +58,22 @@
   justify-content: center;
   padding: var(--ns-space-2) var(--ns-space-4);
   text-align: center;
-  transition:
-    background-color var(--ns-motion-duration-fast)
-      var(--ns-motion-easing-standard),
-    color var(--ns-motion-duration-fast) var(--ns-motion-easing-standard),
-    box-shadow var(--ns-motion-duration-fast) var(--ns-motion-easing-standard);
+  transition: color var(--ns-motion-duration-fast)
+    var(--ns-motion-easing-standard);
   white-space: nowrap;
+  position: relative;
+  z-index: 1;
 }
 
 .ns-radio-group.ns-segmented-control
   .ns-radio.ns-segmented-control__option:hover:not([data-disabled]):not(
     [data-state="checked"]
   ) {
-  background-color: var(--ns-color-surface-raised);
   color: var(--ns-color-text-primary);
 }
 
 .ns-radio-group.ns-segmented-control
   .ns-radio.ns-segmented-control__option[data-state="checked"] {
-  background-color: var(--ns-color-surface-raised);
-  box-shadow: var(--ns-elevation-hover);
   color: var(--ns-color-text-primary);
   font-weight: 700;
 }
@@ -55,7 +84,8 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .ns-radio-group.ns-segmented-control .ns-radio.ns-segmented-control__option {
+  .ns-radio-group.ns-segmented-control .ns-radio.ns-segmented-control__option,
+  .ns-segmented-control__indicator {
     transition: none;
   }
 }
