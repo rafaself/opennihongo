@@ -11,9 +11,13 @@ const audioCacheMock = vi.hoisted(() => ({
   play: vi.fn(),
   dispose: vi.fn(),
 }));
+const pronunciationMock = vi.hoisted(() => ({ play: vi.fn() }));
 
 vi.mock("./audio/audioCache", () => ({
   createExerciseAudioCache: vi.fn(() => audioCacheMock),
+}));
+vi.mock("../../lib/pronunciation", () => ({
+  playJapanesePronunciation: pronunciationMock.play,
 }));
 
 async function openPractice() {
@@ -202,13 +206,15 @@ describe("PracticeView", () => {
     expect(audioCacheMock.play).toHaveBeenCalledWith("kana.word.soto");
   });
 
-  it("hides pronunciation controls when exercise audio is unavailable", async () => {
+  it("uses speech synthesis when recorded exercise audio is unavailable", async () => {
+    const user = userEvent.setup();
     audioCacheMock.preload.mockResolvedValueOnce(new Set());
 
     await renderPractice();
 
-    expect(
-      screen.queryByRole("button", { name: "Play pronunciation for そと" }),
-    ).toBeNull();
+    await user.click(
+      screen.getByRole("button", { name: "Play pronunciation for そと" }),
+    );
+    expect(pronunciationMock.play).toHaveBeenCalledWith("そと");
   });
 });

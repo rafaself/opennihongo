@@ -36,8 +36,9 @@ export function PracticeExerciseContent({
   onPairMatched,
 }: PracticeExerciseContentProps) {
   if (exercise.kind === "multiple-choice") {
+    const canPronouncePrompt = exercise.prompt.script === "hiragana";
     const promptAudioId =
-      exercise.prompt.script === "hiragana" &&
+      canPronouncePrompt &&
       loadedAudioIds.has(exercise.wordId)
         ? exercise.wordId
         : undefined;
@@ -60,7 +61,7 @@ export function PracticeExerciseContent({
             >
               {exercise.prompt.text}
             </Text>
-            {promptAudioId && (
+            {canPronouncePrompt && (
               <PronunciationButton
                 audioId={promptAudioId}
                 onPlay={onPlayAudio}
