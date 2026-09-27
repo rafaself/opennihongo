@@ -36,6 +36,37 @@ describe("audio manifest", () => {
     (section) =>
       section.rows.flatMap((row) => row.filter((tile) => tile !== null)),
   );
+  const katakanaChartTileSlots = kanaCharacterCharts.katakana.sections.flatMap(
+    (section) =>
+      section.rows.flatMap((row, rowIndex) =>
+        row.flatMap((tile, columnIndex) =>
+          tile
+            ? [
+                {
+                  slotKey: `${section.id}:${String(rowIndex)}:${String(columnIndex)}`,
+                  tile,
+                },
+              ]
+            : [],
+        ),
+      ),
+  );
+  const hiraganaChartTileIdsBySlot = new Map<string, string>(
+    kanaCharacterCharts.hiragana.sections.flatMap((section) =>
+      section.rows.flatMap((row, rowIndex) =>
+        row.flatMap((tile, columnIndex) =>
+          tile
+            ? [
+                [
+                  `${section.id}:${String(rowIndex)}:${String(columnIndex)}`,
+                  tile.id,
+                ] as const,
+              ]
+            : [],
+        ),
+      ),
+    ),
+  );
   const chartVoice10000Content = hiraganaChartTiles.map((tile) => {
     const path = kanaChartAudioManifest[tile.id];
     if (!path) {
@@ -86,11 +117,13 @@ describe("audio manifest", () => {
     }
   });
 
-  it("maps the complete Hiragana chart to separate Nemo voice assets", () => {
+  it("maps the Hiragana and Katakana charts to shared Nemo voice assets", () => {
     expect(chartVoice10000Content).toHaveLength(115);
-    expect(Object.keys(kanaChartAudioManifest)).toEqual(
-      hiraganaChartTiles.map(({ id }) => id),
-    );
+    expect(katakanaChartTileSlots).toHaveLength(113);
+    expect(Object.keys(kanaChartAudioManifest)).toEqual([
+      ...hiraganaChartTiles.map(({ id }) => id),
+      ...katakanaChartTileSlots.map(({ tile }) => tile.id),
+    ]);
 
     const collectionManifest = JSON.parse(
       readFileSync(
@@ -129,6 +162,17 @@ describe("audio manifest", () => {
         style_id: 10000,
         attribution: "VOICEVOX Nemo",
       });
+    }
+
+    for (const { slotKey, tile } of katakanaChartTileSlots) {
+      const hiraganaTileId = hiraganaChartTileIdsBySlot.get(slotKey);
+      expect(hiraganaTileId).toBeDefined();
+      expect(kanaChartAudioManifest[tile.id]).toBe(
+        kanaChartAudioManifest[hiraganaTileId ?? ""],
+      );
+      expect(getKanaChartAudioAsset(tile.id)).toBe(
+        getKanaChartAudioAsset(hiraganaTileId ?? ""),
+      );
     }
   });
 
@@ -192,6 +236,6 @@ describe("audio manifest", () => {
     expect(getAudioAsset("nihongo")).toBeUndefined();
     expect(getAudioAsset("toString")).toBeUndefined();
     expect(getKanaChartAudioAsset("kana.hiragana.ta")).toBeUndefined();
-    expect(getKanaChartAudioAsset("katakana.basic.ア")).toBeUndefined();
+    expect(getKanaChartAudioAsset("katakana.unknown.ア")).toBeUndefined();
   });
 });

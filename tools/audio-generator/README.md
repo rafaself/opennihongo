@@ -68,7 +68,9 @@ The generator has two canonical inputs and one separate chart voice collection:
 - [`inputs/kana-chart-hiragana-voice10000.json`](inputs/kana-chart-hiragana-voice10000.json)
   contains all 115 tiles from the Hiragana chart: basic characters, dakuten,
   combinations, small っ examples, and long vowels. It uses the chart's speech
-  text for each tile and a unique style-qualified asset ID.
+  text for each tile and a unique style-qualified asset ID. The Katakana chart
+  reuses the corresponding Hiragana clips, so no duplicate Katakana audio set
+  is generated.
 
 Keep IDs, display text, and Japanese readings aligned with the core content.
 With the VOICEVOX container running, generate both inputs from the repository

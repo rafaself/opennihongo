@@ -211,13 +211,24 @@ describe("web application routes", () => {
     await user.click(
       screen.getByRole("button", { name: "Play pronunciation for ア, a" }),
     );
-    expect(audioElements).toHaveLength(5);
+    expect(audioElements).toHaveLength(6);
     expect(audioElements[4]?.pause).toHaveBeenCalledOnce();
-    expect(speech.speak).toHaveBeenCalledOnce();
-    expect(speech.speak.mock.calls[0]?.[0]).toMatchObject({
-      text: "ア",
-      lang: "ja-JP",
-    });
+    expect(audioElements[5]?.src).toContain(
+      "kana.chart.hiragana.a.nemo-10000.opus",
+    );
+    expect(audioElements[5]?.play).toHaveBeenCalledOnce();
+    expect(speech.speak).not.toHaveBeenCalled();
+
+    await user.click(
+      screen.getByRole("button", { name: "Play pronunciation for アー, aa" }),
+    );
+    expect(audioElements).toHaveLength(7);
+    expect(audioElements[5]?.pause).toHaveBeenCalledOnce();
+    expect(audioElements[6]?.src).toContain(
+      "kana.chart.hiragana.long-vowels.aa.nemo-10000.opus",
+    );
+    expect(audioElements[6]?.play).toHaveBeenCalledOnce();
+    expect(speech.speak).not.toHaveBeenCalled();
 
     await user.click(screen.getByRole("link", { name: "Learn characters" }));
     await screen.findByRole("heading", { name: "Learn the five vowels" });

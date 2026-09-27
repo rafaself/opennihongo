@@ -1,4 +1,9 @@
-import { kanaCharacterCharts, type KanaAudioId } from "@opennihongo/core";
+import {
+  kanaCharacterCharts,
+  type KanaAudioId,
+  type KanaChartSectionId,
+  type KanaChartScript,
+} from "@opennihongo/core";
 
 export type AudioAssetId = KanaAudioId;
 
@@ -104,10 +109,20 @@ export const audioManifest = {
 
 const kanaChartAudioDirectory = "./generated/kana-chart-hiragana-nemo-10000";
 const hiraganaChartSections = kanaCharacterCharts.hiragana.sections;
-const hiraganaChartTiles = hiraganaChartSections.map((section) => ({
-  section,
-  tiles: section.rows.flatMap((row) => row.filter((tile) => tile !== null)),
-}));
+
+function getChartTiles(script: KanaChartScript) {
+  return kanaCharacterCharts[script].sections.flatMap((section) =>
+    section.rows.flatMap((row) =>
+      row.flatMap((tile) => (tile ? [{ sectionId: section.id, tile }] : [])),
+    ),
+  );
+}
+
+function toHiragana(glyph: string): string {
+  return glyph.replace(/[\u30a1-\u30f6]/g, (character) =>
+    String.fromCharCode(character.charCodeAt(0) - 0x60),
+  );
+}
 
 function getHiraganaChartAudioId(
   sectionId: string,
@@ -128,7 +143,21 @@ function getHiraganaChartAudioId(
   return `kana.chart.hiragana.${sectionId}.${romanization}${glyphSuffix}.nemo-10000`;
 }
 
-const chartAudioEntries = hiraganaChartTiles.flatMap(({ section, tiles }) => {
+const duplicateRomanizationsBySection: Record<
+  KanaChartSectionId,
+  Set<string>
+> = {
+  basic: new Set(),
+  dakuten: new Set(),
+  combinations: new Set(),
+  "small-tsu": new Set(),
+  "long-vowels": new Set(),
+};
+
+for (const section of hiraganaChartSections) {
+  const tiles = section.rows.flatMap((row) =>
+    row.filter((tile) => tile !== null),
+  );
   const romanizationCounts = new Map<string, number>();
   for (const tile of tiles) {
     romanizationCounts.set(
@@ -136,25 +165,53 @@ const chartAudioEntries = hiraganaChartTiles.flatMap(({ section, tiles }) => {
       (romanizationCounts.get(tile.romanization) ?? 0) + 1,
     );
   }
-  const duplicateRomanizations = new Set(
+  duplicateRomanizationsBySection[section.id] = new Set(
     Array.from(romanizationCounts)
       .filter(([, count]) => count > 1)
       .map(([romanization]) => romanization),
   );
+}
 
-  return tiles.map((tile) => {
+const hiraganaChartAudioEntries = getChartTiles("hiragana").map(
+  ({ sectionId, tile }) => {
+    const duplicateRomanizations = duplicateRomanizationsBySection[sectionId];
     const audioId = getHiraganaChartAudioId(
-      section.id,
+      sectionId,
       tile.romanization,
       tile.glyph,
       duplicateRomanizations.has(tile.romanization),
     );
+
+    return {
+      tileId: tile.id,
+      path: `${kanaChartAudioDirectory}/${audioId}.opus`,
+    };
+  },
+);
+
+const katakanaChartAudioEntries = getChartTiles("katakana").map(
+  ({ sectionId, tile }) => {
+    const duplicateRomanizations = duplicateRomanizationsBySection[sectionId];
+    const audioId = getHiraganaChartAudioId(
+      sectionId,
+      tile.romanization,
+      toHiragana(tile.glyph),
+      duplicateRomanizations.has(tile.romanization),
+    );
     return [tile.id, `${kanaChartAudioDirectory}/${audioId}.opus`] as const;
-  });
-});
+  },
+);
+
+const chartAudioManifest: Record<string, string> = {};
+for (const { path, tileId } of hiraganaChartAudioEntries) {
+  chartAudioManifest[tileId] = path;
+}
+for (const [tileId, path] of katakanaChartAudioEntries) {
+  chartAudioManifest[tileId] = path;
+}
 
 export const kanaChartAudioManifest: Readonly<Record<string, string>> =
-  Object.fromEntries(chartAudioEntries);
+  chartAudioManifest;
 
 const generatedAudioUrls = import.meta.glob<string>("./generated/*.opus", {
   eager: true,

@@ -34,13 +34,13 @@ Keep the credit with the audio wherever the application presents its audio and l
 
 The canonical pronunciation catalog and word audio continue to use 女声1 /
 ノーマル (10005), configured in [voice.json](../../tools/audio-generator/voice.json).
-Every tile in the Hiragana chart uses separate VOICEVOX Nemo 男声2 / ノーマル
-(10000) audio. The 115 clips cover basic characters, dakuten, combinations,
-small っ examples, and long vowels. They are organized under
+Every tile in the Hiragana chart uses VOICEVOX Nemo 男声2 / ノーマル (10000)
+audio. The Katakana chart reuses the corresponding clips, including matching
+long-vowel samples. The 115 clips cover basic characters, dakuten,
+combinations, small っ examples, and long vowels. They are organized under
 `packages/audio-assets/generated/kana-chart-hiragana-nemo-10000/`, with
 style-qualified IDs and a collection-specific manifest, so they do not replace
-canonical lesson or practice assets. Katakana chart tiles continue to use
-browser speech synthesis. The set's configuration and input are
+canonical lesson or practice assets. The set's configuration and input are
 [voice-nemo-male2.json](../../tools/audio-generator/voice-nemo-male2.json) and
 [kana-chart-hiragana-voice10000.json](../../tools/audio-generator/inputs/kana-chart-hiragana-voice10000.json).
 Always confirm a style ID in the running engine's `/speakers` response before

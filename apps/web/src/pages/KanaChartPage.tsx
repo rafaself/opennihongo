@@ -14,15 +14,8 @@ import {
 } from "../lib/pronunciation";
 import "./KanaChartPage.css";
 
-function KanaTile({
-  tile,
-  script,
-}: {
-  tile: KanaChartTile;
-  script: KanaChartScript;
-}) {
-  const audioAsset =
-    script === "hiragana" ? getKanaChartAudioAsset(tile.id) : undefined;
+function KanaTile({ tile }: { tile: KanaChartTile }) {
+  const audioAsset = getKanaChartAudioAsset(tile.id);
 
   return (
     <button
@@ -45,13 +38,7 @@ function KanaTile({
   );
 }
 
-function ChartSection({
-  section,
-  script,
-}: {
-  section: KanaChartSection;
-  script: KanaChartScript;
-}) {
+function ChartSection({ section }: { section: KanaChartSection }) {
   const titleId = `kana-chart-${section.id}-title`;
 
   return (
@@ -73,7 +60,7 @@ function ChartSection({
           >
             {row.map((tile, columnIndex) =>
               tile ? (
-                <KanaTile key={tile.id} script={script} tile={tile} />
+                <KanaTile key={tile.id} tile={tile} />
               ) : (
                 <span
                   aria-hidden="true"
@@ -109,7 +96,7 @@ function KanaChartPanel({ script }: { script: KanaChartScript }) {
         </Link>
       </header>
       {chart.sections.map((section) => (
-        <ChartSection key={section.id} script={script} section={section} />
+        <ChartSection key={section.id} section={section} />
       ))}
     </section>
   );

@@ -28,11 +28,12 @@ The initial pronunciation catalog covers the 46 basic Hiragana characters, 46
 basic Katakana characters, and the five seeded beginner words. Exercise audio
 references are checked against the same manifest.
 
-The full Hiragana chart uses a separate VOICEVOX Nemo 男声2 / ノーマル voice
-set (style ID `10000`) in
+The Hiragana chart uses a separate VOICEVOX Nemo 男声2 / ノーマル voice set
+(style ID `10000`) in
 `generated/kana-chart-hiragana-nemo-10000/`. It includes all 115 chart tiles:
 basic characters, dakuten, combinations, small っ examples, and long vowels.
-`kanaChartAudioManifest` maps stable chart tile IDs to these assets. The
-collection has its own `.manifest.json`; the canonical `audioManifest` and its
-女声1 / ノーマル (10005) assets remain unchanged. Katakana chart tiles still
-use browser speech synthesis.
+`kanaChartAudioManifest` maps both Hiragana and corresponding Katakana tile IDs
+to these shared assets by chart position. Katakana long-vowel tiles use the
+matching Hiragana long-vowel clips. The collection has its own `.manifest.json`;
+the canonical `audioManifest` and its 女声1 / ノーマル (10005) assets remain
+unchanged.
