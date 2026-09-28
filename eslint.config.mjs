@@ -13,6 +13,10 @@ const boundaryRule = [
         onlyDependOnLibsWithTags: ["type:domain"],
       },
       {
+        sourceTag: "type:content",
+        onlyDependOnLibsWithTags: ["type:domain"],
+      },
+      {
         sourceTag: "type:data-access",
         onlyDependOnLibsWithTags: ["type:data-access", "type:domain"],
       },
@@ -24,6 +28,7 @@ const boundaryRule = [
         sourceTag: "type:app",
         onlyDependOnLibsWithTags: [
           "type:domain",
+          "type:content",
           "type:data-access",
           "type:ui",
         ],

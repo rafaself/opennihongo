@@ -7,7 +7,7 @@ resolution, and workspace linking. Nx reads the package locations from
 `pnpm-workspace.yaml`; each package declares its architectural `type:*` tag in
 its `package.json`.
 
-The workspace has six explicit project boundaries:
+The workspace has seven explicit project boundaries:
 
 - `apps/web` owns the browser application and composes workspace packages.
 - `apps/ui-gallery` owns the standalone visual catalog for public Design System
@@ -17,6 +17,10 @@ The workspace has six explicit project boundaries:
 - `packages/core` owns framework-independent domain rules and types. It must
   remain independent from React, browser APIs, routing, styling, and concrete
   persistence implementations.
+- `packages/content` owns statically authored learning material and pedagogical
+  configuration. It may use public domain contracts from `core`; `core` must
+  not depend on authored content. Kana data remains in `core` until its
+  separately scoped migration.
 - `packages/persistence` owns persistence adapters, repositories, IndexedDB,
   backup, and migration behavior. Add contracts to `core` only when domain
   behavior needs to remain independent from those implementations.
@@ -27,12 +31,14 @@ The workspace has six explicit project boundaries:
   depend on its UI framework, but it must not depend on product features,
   `core`, or `persistence`.
 
-Nx enforces the dependency direction in ESLint: domain projects may depend only
-on domain projects; data-access projects may depend on domain and data-access
-projects; UI projects may depend only on UI projects; and app projects may
-compose domain, data-access, and UI projects. For packages with an `exports`
-map, it and TypeScript module resolution enforce the supported public import
-paths. Do not add package entry points until a real public API has been
+Nx enforces the dependency direction in ESLint: domain projects may depend
+only on domain projects; content projects may depend on domain projects;
+data-access projects may depend on domain and data-access projects; UI projects
+may depend only on UI projects; and app projects may compose domain, content,
+data-access, and UI projects. In particular, `core` cannot depend on `content`.
+For packages with an `exports` map, it and TypeScript
+module resolution enforce the supported public import paths. Keep package
+entry points minimal and add concrete exports only when a public API has been
 established.
 
 ## UI package public API
@@ -82,9 +88,11 @@ Prettier is the formatting authority for supported source, configuration, and
 Markdown files. Its options and ignore list are defined at the workspace root.
 
 `core` defines the first Kana lesson's stable item IDs, answer checking, and
-progress updates. `persistence` stores Kana progress in a versioned IndexedDB
-database. The web app consumes their public exports; it does not own storage
-schema or domain rules.
+progress updates. The new `content` package establishes the ownership boundary
+for authored learning material, but does not yet contain migrated Kana data.
+`persistence` stores Kana progress in a versioned IndexedDB database. The web
+app consumes the public exports of the packages needed by current features; it
+does not own storage schema or domain rules.
 
 ## Web application ownership
 
