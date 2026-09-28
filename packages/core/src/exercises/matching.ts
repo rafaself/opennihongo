@@ -1,8 +1,9 @@
-import type { MatchingPairId } from "../ids";
+import type { LearningItemId, MatchingPairId } from "../ids";
 import type { ExerciseBase } from "./base";
 
 export type MatchingPair = Readonly<{
   id: MatchingPairId;
+  sourceItemId: LearningItemId;
   left: string;
   right: string;
 }>;

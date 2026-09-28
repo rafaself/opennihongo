@@ -31,8 +31,18 @@ it("composes concrete exercises into an exhaustive union", () => {
     sourceItemIds: ["vocabulary.soto", "vocabulary.hato"],
     config: { pairCount: 2 },
     pairs: [
-      { id: "pair.soto", left: "そと", right: "outside" },
-      { id: "pair.hato", left: "はと", right: "pigeon" },
+      {
+        id: "pair.soto",
+        sourceItemId: "vocabulary.soto",
+        left: "そと",
+        right: "outside",
+      },
+      {
+        id: "pair.hato",
+        sourceItemId: "vocabulary.hato",
+        left: "はと",
+        right: "pigeon",
+      },
     ],
     leftOrder,
     rightOrder,
@@ -53,6 +63,9 @@ it("composes concrete exercises into an exhaustive union", () => {
 
   expect(exercises.map(readExerciseType)).toEqual(["typed-answer", "matching"]);
   expect(matchingExercise.config.pairCount).toBe(2);
+  expect(
+    matchingExercise.pairs.map(({ sourceItemId }) => sourceItemId),
+  ).toEqual(["vocabulary.soto", "vocabulary.hato"]);
   expect(matchingExercise.leftOrder).toEqual(["pair.hato", "pair.soto"]);
   expect(matchingExercise.rightOrder).toEqual(["pair.soto", "pair.hato"]);
 });
