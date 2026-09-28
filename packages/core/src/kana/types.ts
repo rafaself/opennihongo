@@ -1,3 +1,5 @@
+import type { ExerciseId } from "../ids";
+
 type KanaSyllable =
   | "a"
   | "i"
@@ -83,7 +85,7 @@ type KanaExerciseAudio = Readonly<{
 
 export type KanaChoiceExercise = Readonly<
   KanaExerciseAudio & {
-    id: string;
+    id: ExerciseId;
     kind: "multiple-choice";
     direction: "hiragana-to-romaji" | "romaji-to-hiragana";
     wordId: KanaWordId;
@@ -95,7 +97,7 @@ export type KanaChoiceExercise = Readonly<
 
 export type KanaTypedAnswerExercise = Readonly<
   KanaExerciseAudio & {
-    id: string;
+    id: ExerciseId;
     kind: "typed-answer";
     prompt: Readonly<{ script: "hiragana"; text: string }>;
     answer: string;
@@ -104,7 +106,7 @@ export type KanaTypedAnswerExercise = Readonly<
 
 export type KanaMatchingExercise = Readonly<
   KanaExerciseAudio & {
-    id: string;
+    id: ExerciseId;
     kind: "matching-pairs";
     pairs: readonly KanaWord[];
   }

@@ -38,3 +38,9 @@ export type {
   KanaWord,
   KanaWordId,
 } from "./kana/index";
+export type {
+  ExerciseId,
+  ExerciseSessionId,
+  LearningItemId,
+  SessionProfileId,
+} from "./ids";
