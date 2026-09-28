@@ -1,7 +1,7 @@
 import { expect, it } from "vitest";
-import type { ExerciseBase, ExerciseType } from "../src";
+import type { ExerciseBase, ExerciseType, TypedAnswerExercise } from "../src";
 
-type ExerciseUnion = ExerciseBase<"typed-answer"> | ExerciseBase<"matching">;
+type ExerciseUnion = TypedAnswerExercise | ExerciseBase<"matching">;
 
 function readExerciseType(exercise: ExerciseUnion): ExerciseType {
   switch (exercise.type) {
@@ -23,6 +23,8 @@ it("composes into an exhaustive exercise union with stable IDs", () => {
     {
       id: "exercise.hiragana-a",
       type: "typed-answer",
+      prompt: { text: "あ" },
+      acceptedAnswers: ["a"],
       sourceItemIds: ["kana.hiragana.a"],
     },
     {

@@ -44,4 +44,8 @@ export type {
   LearningItemId,
   SessionProfileId,
 } from "./ids";
-export type { ExerciseBase, ExerciseType } from "./exercises/index";
+export type {
+  ExerciseBase,
+  ExerciseType,
+  TypedAnswerExercise,
+} from "./exercises/index";
