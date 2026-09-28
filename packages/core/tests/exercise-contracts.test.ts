@@ -1,9 +1,13 @@
 import { expect, it } from "vitest";
-import type { ExerciseBase, ExerciseType, TypedAnswerExercise } from "../src";
+import type {
+  Exercise,
+  ExerciseType,
+  MatchingExercise,
+  MatchingPairId,
+  TypedAnswerExercise,
+} from "../src";
 
-type ExerciseUnion = TypedAnswerExercise | ExerciseBase<"matching">;
-
-function readExerciseType(exercise: ExerciseUnion): ExerciseType {
+function readExerciseType(exercise: Exercise): ExerciseType {
   switch (exercise.type) {
     case "typed-answer":
       return exercise.type;
@@ -18,21 +22,37 @@ function assertNever(value: never): never {
   throw new Error(`Unexpected exercise type: ${String(value)}`);
 }
 
-it("composes into an exhaustive exercise union with stable IDs", () => {
-  const exercises: readonly ExerciseUnion[] = [
-    {
-      id: "exercise.hiragana-a",
-      type: "typed-answer",
-      prompt: { text: "あ" },
-      acceptedAnswers: ["a"],
-      sourceItemIds: ["kana.hiragana.a"],
-    },
-    {
-      id: "exercise.kana-matching",
-      type: "matching",
-      sourceItemIds: ["kana.hiragana.a", "kana.hiragana.i"],
-    },
+it("composes concrete exercises into an exhaustive union", () => {
+  const leftOrder: readonly MatchingPairId[] = ["pair.hato", "pair.soto"];
+  const rightOrder: readonly MatchingPairId[] = ["pair.soto", "pair.hato"];
+  const matchingExercise = {
+    id: "exercise.vocabulary-matching",
+    type: "matching",
+    sourceItemIds: ["vocabulary.soto", "vocabulary.hato"],
+    config: { pairCount: 2 },
+    pairs: [
+      { id: "pair.soto", left: "そと", right: "outside" },
+      { id: "pair.hato", left: "はと", right: "pigeon" },
+    ],
+    leftOrder,
+    rightOrder,
+  } as const satisfies MatchingExercise;
+
+  const typedAnswerExercise = {
+    id: "exercise.hiragana-a",
+    type: "typed-answer",
+    prompt: { text: "あ" },
+    acceptedAnswers: ["a"],
+    sourceItemIds: ["kana.hiragana.a"],
+  } as const satisfies TypedAnswerExercise;
+
+  const exercises: readonly Exercise[] = [
+    typedAnswerExercise,
+    matchingExercise,
   ];
 
   expect(exercises.map(readExerciseType)).toEqual(["typed-answer", "matching"]);
+  expect(matchingExercise.config.pairCount).toBe(2);
+  expect(matchingExercise.leftOrder).toEqual(["pair.hato", "pair.soto"]);
+  expect(matchingExercise.rightOrder).toEqual(["pair.soto", "pair.hato"]);
 });

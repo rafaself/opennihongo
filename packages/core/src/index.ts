@@ -42,10 +42,15 @@ export type {
   ExerciseId,
   ExerciseSessionId,
   LearningItemId,
+  MatchingPairId,
   SessionProfileId,
 } from "./ids";
 export type {
   ExerciseBase,
+  Exercise,
   ExerciseType,
+  MatchingConfig,
+  MatchingExercise,
+  MatchingPair,
   TypedAnswerExercise,
 } from "./exercises/index";
