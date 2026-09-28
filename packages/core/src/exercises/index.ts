@@ -9,3 +9,9 @@ export type {
   MatchingPair,
 } from "./matching";
 export type { TypedAnswerExercise } from "./typed-answer";
+export type {
+  ExerciseOutcome,
+  ExerciseResult,
+  ItemExerciseOutcome,
+  ItemExerciseResult,
+} from "./result";

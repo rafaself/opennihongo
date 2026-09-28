@@ -53,4 +53,8 @@ export type {
   MatchingExercise,
   MatchingPair,
   TypedAnswerExercise,
+  ExerciseOutcome,
+  ExerciseResult,
+  ItemExerciseOutcome,
+  ItemExerciseResult,
 } from "./exercises/index";
