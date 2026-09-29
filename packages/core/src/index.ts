@@ -39,6 +39,8 @@ export type {
   ItemSelectionRequest,
   ItemSelectionStrategy,
   RandomizedItemSelectionRequest,
+  ExerciseMixEntry,
+  SessionProfile,
 } from "./learning/index";
 export {
   randomWithoutReplacementSelectionStrategy,
