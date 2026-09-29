@@ -258,7 +258,7 @@ describe("web application routes", () => {
     await user.click(screen.getByRole("button", { name: "Open menu" }));
     await user.click(screen.getByRole("link", { name: /Practice/ }));
     await screen.findByRole("heading", {
-      name: "Which reading matches this word?",
+      name: "What is the corresponding sound?",
     });
     expect(document.title).toBe("Practice · OpenNihongo");
     expect(

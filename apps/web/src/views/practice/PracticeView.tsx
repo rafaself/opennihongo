@@ -1,130 +1,84 @@
 import { Link } from "@tanstack/react-router";
 import {
-  kanaExercises,
-  scoreKanaChoiceAnswer,
-  scoreKanaMatchingAnswer,
-  scoreKanaTypedAnswer,
-  validateKanaChoiceAnswer,
-  validateKanaTypedAnswer,
-  type KanaPairAnswer,
-  type KanaMatchingExercise,
-  type KanaWord,
+  normalizeKanaAnswer,
+  type ExerciseResult,
+  type ExerciseSession,
+  type MatchingPairId,
 } from "@opennihongo/core";
-import { kanaBeginnerWords } from "@opennihongo/content";
 import { Button } from "@opennihongo/ui";
 import { Icon } from "@opennihongo/ui/icons";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { PracticeFeedback } from "./PracticeFeedback";
-import { PracticeExerciseContent } from "./PracticeExerciseContent";
+import { PracticeExerciseContent } from "./renderers/PracticeExerciseContent";
 import { PracticeResults } from "./PracticeResults";
+import {
+  countExerciseItems,
+  createMatchingResult,
+  createTypedAnswerResult,
+  scoreExerciseResults,
+} from "./session/exerciseResults";
+import {
+  createKanaPracticeSession,
+  initialKanaPracticeSession,
+} from "./session/createKanaPracticeSession";
+import { getPracticeAudioIds } from "./session/practiceAudio";
 import { useExerciseAudio } from "./audio/useExerciseAudio";
 import "./practice.css";
 
-type Feedback = { correct: boolean; message: string };
+type Practice = Readonly<{
+  revision: number;
+  session: ExerciseSession;
+}>;
 
-const totalPoints = kanaExercises.reduce(
-  (total, exercise) =>
-    total + (exercise.kind === "matching-pairs" ? exercise.pairIds.length : 1),
-  0,
-);
-
-const matchingWordsById = new Map(
-  kanaBeginnerWords.map((word) => [
-    word.id,
-    {
-      id: word.id,
-      hiragana: word.hiragana,
-      romaji: word.romanization,
-    },
-  ]),
-);
-
-function resolveMatchingPairs(
-  exercise: KanaMatchingExercise,
-): readonly KanaWord[] {
-  return exercise.pairIds.map((id) => {
-    const word = matchingWordsById.get(id);
-    if (!word) {
-      throw new Error(`Missing Kana word content for ${id}`);
-    }
-    return word;
-  });
-}
+type Feedback = Readonly<{
+  result: ExerciseResult;
+  message: string;
+}>;
 
 export function PracticeView() {
+  const [practice, setPractice] = useState<Practice>(() => ({
+    revision: 0,
+    session: initialKanaPracticeSession,
+  }));
   const [index, setIndex] = useState(0);
-  const [sessionId, setSessionId] = useState(0);
-  const [selectedChoice, setSelectedChoice] = useState("");
+  const [results, setResults] = useState<ExerciseResult[]>([]);
   const [typedAnswer, setTypedAnswer] = useState("");
-  const [matchedPairs, setMatchedPairs] = useState<KanaPairAnswer[]>([]);
+  const [matchedPairIds, setMatchedPairIds] = useState<MatchingPairId[]>([]);
+  const [matchingAttempts, setMatchingAttempts] = useState(0);
   const [feedback, setFeedback] = useState<Feedback | null>(null);
-  const [score, setScore] = useState(0);
 
-  const complete = index >= kanaExercises.length;
-  // The tuple is non-empty and the session index only moves forward.
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion -- modulo always produces a tuple index
-  const exercise = kanaExercises[index % kanaExercises.length]!;
-  const matchingPairs =
-    exercise.kind === "matching-pairs" ? resolveMatchingPairs(exercise) : [];
-  const choiceExercise =
-    exercise.kind === "multiple-choice" ? exercise : undefined;
+  const exercises = practice.session.exercises;
+  const complete = index >= exercises.length;
+  const exercise = complete ? undefined : exercises[index];
+  const exerciseAudioIds = useMemo(
+    () => getPracticeAudioIds(exercise),
+    [exercise],
+  );
   const exerciseAudio = useExerciseAudio(
-    exercise.audioIds,
-    `${String(sessionId)}:${exercise.id}`,
+    exerciseAudioIds,
+    `${practice.session.id}:${exercise?.id ?? "complete"}`,
     !complete,
   );
+  const readyToCheck =
+    exercise?.type === "typed-answer"
+      ? typedAnswer.trim() !== ""
+      : exercise?.type === "matching"
+        ? matchedPairIds.length === exercise.config.pairCount
+        : false;
+  const progress = Math.round(
+    ((index + Number(feedback !== null)) / exercises.length) * 100,
+  );
+
   useEffect(() => {
     if (complete) {
       document.getElementById("practice-complete-title")?.focus();
     }
   }, [complete]);
 
-  useEffect(() => {
-    if (!choiceExercise || feedback !== null) {
-      return;
-    }
-    const choices = choiceExercise.choices;
-
-    function handleKeyDown(event: KeyboardEvent) {
-      if (
-        event.repeat ||
-        event.altKey ||
-        event.ctrlKey ||
-        event.metaKey ||
-        event.defaultPrevented
-      ) {
-        return;
-      }
-
-      const target = event.target;
-      if (
-        target instanceof HTMLElement &&
-        (target.isContentEditable ||
-          target.closest("input, textarea, select, [contenteditable='true']"))
-      ) {
-        return;
-      }
-
-      const choiceIndex = Number(event.key) - 1;
-      const choice = choices[choiceIndex];
-      if (!choice) {
-        return;
-      }
-
-      event.preventDefault();
-      setSelectedChoice(choice);
-    }
-
-    window.addEventListener("keydown", handleKeyDown);
-    return () => {
-      window.removeEventListener("keydown", handleKeyDown);
-    };
-  }, [choiceExercise, feedback]);
-
   function resetExerciseState() {
-    setSelectedChoice("");
     setTypedAnswer("");
-    setMatchedPairs([]);
+    setMatchedPairIds([]);
+    setMatchingAttempts(0);
     setFeedback(null);
   }
 
@@ -133,68 +87,62 @@ export function PracticeView() {
     resetExerciseState();
   }
 
+  function checkAnswer() {
+    if (!exercise) {
+      return;
+    }
+
+    if (exercise.type === "typed-answer") {
+      const correct = exercise.acceptedAnswers.some(
+        (answer) =>
+          normalizeKanaAnswer(answer) === normalizeKanaAnswer(typedAnswer),
+      );
+      const result = createTypedAnswerResult(exercise, correct, 1);
+      setResults((current) => [...current, result]);
+      setFeedback({
+        result,
+        message: correct
+          ? "Your reading is correct."
+          : `The correct reading is ${exercise.acceptedAnswers[0] ?? ""}.`,
+      });
+      return;
+    }
+
+    const result = createMatchingResult(
+      exercise,
+      matchedPairIds,
+      matchingAttempts,
+    );
+    setResults((current) => [...current, result]);
+    setFeedback({ result, message: "All pairs matched." });
+  }
+
   function skipExercise() {
+    if (!exercise) {
+      return;
+    }
+
+    const result =
+      exercise.type === "typed-answer"
+        ? createTypedAnswerResult(exercise, false, 0)
+        : createMatchingResult(exercise, matchedPairIds, matchingAttempts);
+    setResults((current) => [...current, result]);
     continuePractice();
   }
 
-  function checkAnswer() {
-    if (exercise.kind === "multiple-choice") {
-      const correct = validateKanaChoiceAnswer(exercise, selectedChoice);
-      setScore(
-        (current) => current + scoreKanaChoiceAnswer(exercise, selectedChoice),
-      );
-      setFeedback({
-        correct,
-        message: correct
-          ? "You chose the right answer."
-          : `The correct answer is ${exercise.answer}.`,
-      });
-      return;
-    }
-
-    if (exercise.kind === "typed-answer") {
-      const correct = validateKanaTypedAnswer(exercise, typedAnswer);
-      setScore(
-        (current) => current + scoreKanaTypedAnswer(exercise, typedAnswer),
-      );
-      setFeedback({
-        correct,
-        message: correct
-          ? "Your reading is correct."
-          : `The correct reading is ${exercise.answer}.`,
-      });
-      return;
-    }
-
-    setScore(
-      (current) =>
-        current + scoreKanaMatchingAnswer(matchingPairs, matchedPairs),
-    );
-    setFeedback({
-      correct: true,
-      message: "All pairs matched.",
-    });
-  }
-
   function restartPractice() {
-    setScore(0);
+    const revision = practice.revision + 1;
+    setPractice({
+      revision,
+      session: createKanaPracticeSession(revision),
+    });
     setIndex(0);
-    setSessionId((current) => current + 1);
+    setResults([]);
     resetExerciseState();
   }
 
-  const readyToCheck =
-    exercise.kind === "multiple-choice"
-      ? selectedChoice !== ""
-      : exercise.kind === "typed-answer"
-        ? typedAnswer.trim() !== ""
-        : matchedPairs.length === matchingPairs.length;
-  const progress = Math.round(
-    ((index + Number(feedback !== null)) / kanaExercises.length) * 100,
-  );
-
   useEffect(() => {
-    if (complete) {
+    if (!exercise || feedback !== null) {
       return;
     }
 
@@ -227,17 +175,13 @@ export function PracticeView() {
 
       const focusedButton = target.closest("button");
       const isAnswerOption = focusedButton?.matches(
-        ".practice-session__choice, .practice-session__match-option",
+        ".practice-session__match-option",
       );
       if (focusedButton && !isAnswerOption) {
         return;
       }
 
-      if (isAnswerOption && !feedback && !readyToCheck) {
-        return;
-      }
-
-      if (!feedback && !readyToCheck) {
+      if ((!feedback && !readyToCheck) || (isAnswerOption && !readyToCheck)) {
         return;
       }
 
@@ -253,7 +197,7 @@ export function PracticeView() {
     return () => {
       window.removeEventListener("keydown", handlePrimaryActionKeyDown);
     };
-  }, [checkAnswer, complete, continuePractice, feedback, readyToCheck]);
+  }, [exercise, feedback, readyToCheck]);
 
   return (
     <section
@@ -292,14 +236,14 @@ export function PracticeView() {
           />
         </div>
         <span className="practice-session__step">
-          {complete ? kanaExercises.length : index + 1}/{kanaExercises.length}
+          {complete ? exercises.length : index + 1}/{exercises.length}
         </span>
       </header>
 
       {complete ? (
         <PracticeResults
-          score={score}
-          total={totalPoints}
+          score={scoreExerciseResults(results)}
+          total={countExerciseItems(exercises)}
           onRestart={restartPractice}
         />
       ) : !exerciseAudio.isReady ? (
@@ -308,18 +252,24 @@ export function PracticeView() {
             Preparing pronunciation audio…
           </div>
         </div>
-      ) : (
+      ) : exercise ? (
         <>
           <div className="practice-session__body">
             <PracticeExerciseContent
+              autoFocusTypedAnswer={index > 0 || practice.revision > 0}
               disabled={feedback !== null}
               exercise={exercise}
               loadedAudioIds={exerciseAudio.loadedAudioIds}
-              matchingPairs={matchingPairs}
-              matchedPairs={matchedPairs}
-              onChoiceSelected={setSelectedChoice}
-              onPairMatched={(pair) => {
-                setMatchedPairs((current) => [...current, pair]);
+              matchedPairIds={matchedPairIds}
+              onPairAttempt={(matchedPairId) => {
+                setMatchingAttempts((current) => current + 1);
+                if (matchedPairId !== null) {
+                  setMatchedPairIds((current) =>
+                    current.includes(matchedPairId)
+                      ? current
+                      : [...current, matchedPairId],
+                  );
+                }
               }}
               onPlayAudio={exerciseAudio.playAudio}
               onTypedAnswerChanged={setTypedAnswer}
@@ -328,15 +278,14 @@ export function PracticeView() {
                   checkAnswer();
                 }
               }}
-              selectedChoice={selectedChoice}
               typedAnswer={typedAnswer}
             />
           </div>
           <div className="practice-session__action-slot">
             {feedback ? (
               <PracticeFeedback
-                correct={feedback.correct}
-                finalExercise={index === kanaExercises.length - 1}
+                correct={feedback.result.outcome === "correct"}
+                finalExercise={index === exercises.length - 1}
                 message={feedback.message}
                 onContinue={continuePractice}
               />
@@ -354,7 +303,7 @@ export function PracticeView() {
             )}
           </div>
         </>
-      )}
+      ) : null}
     </section>
   );
 }
