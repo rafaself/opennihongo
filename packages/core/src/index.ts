@@ -41,10 +41,17 @@ export type {
   RandomizedItemSelectionRequest,
   ExerciseMixEntry,
   SessionProfile,
+  BuildExerciseSessionRequest,
+  ExerciseSession,
+  ExerciseSessionBuildErrorCode,
+  ExerciseSessionGenerators,
+  ExerciseSessionSourceAdapters,
 } from "./learning/index";
 export {
   randomWithoutReplacementSelectionStrategy,
   randomWithoutReplacementSelectionStrategyId,
+  ExerciseSessionBuildError,
+  buildExerciseSession,
 } from "./learning/index";
 export type {
   ExerciseBase,
