@@ -28,6 +28,18 @@ The initial pronunciation catalog covers the 46 basic Hiragana characters, 46
 basic Katakana characters, and the five seeded beginner words. Exercise audio
 references are checked against the same manifest.
 
+Cross-package checks for unique authored Kana IDs, supported initial practice
+profile references, matching-pair configuration, and practice-word audio run
+with the audio-assets test target:
+
+```sh
+pnpm nx test @opennihongo/audio-assets
+```
+
+These checks live beside the audio manifest because they join `@opennihongo`
+content and core contracts without adding an audio-assets dependency to the
+content package.
+
 The Hiragana chart uses a separate VOICEVOX Nemo 男声2 / ノーマル voice set
 (style ID `10000`) in
 `generated/kana-chart-hiragana-nemo-10000/`. It includes all 115 chart tiles:
