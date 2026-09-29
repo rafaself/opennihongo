@@ -37,6 +37,8 @@ export type {
 export type {
   ExerciseBase,
   Exercise,
+  ExerciseGenerationErrorCode,
+  ExerciseGenerator,
   ExerciseType,
   MatchingConfig,
   MatchingExercise,
@@ -47,5 +49,6 @@ export type {
   ItemExerciseOutcome,
   ItemExerciseResult,
 } from "./exercises/index";
+export { ExerciseGenerationError } from "./exercises/index";
 export type { RandomSource } from "./random/index";
 export { SeededRandomSource, shuffle } from "./random/index";
