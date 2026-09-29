@@ -41,8 +41,10 @@ export type {
   ExerciseGenerator,
   ExerciseType,
   MatchingConfig,
+  MatchingExerciseGenerationConfig,
   MatchingExercise,
   MatchingPair,
+  MatchingSourceItem,
   TypedAnswerExerciseGenerationConfig,
   TypedAnswerSourceItem,
   TypedAnswerExercise,
@@ -53,6 +55,7 @@ export type {
 } from "./exercises/index";
 export {
   ExerciseGenerationError,
+  generateMatchingExercise,
   generateTypedAnswerExercise,
 } from "./exercises/index";
 export type { RandomSource } from "./random/index";

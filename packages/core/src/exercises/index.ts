@@ -6,6 +6,11 @@ export type { ExerciseBase, ExerciseType } from "./base";
 export { ExerciseGenerationError } from "./generation-error";
 export type { ExerciseGenerationErrorCode } from "./generation-error";
 export type { ExerciseGenerator } from "./generator";
+export { generateMatchingExercise } from "./matching-generator";
+export type {
+  MatchingExerciseGenerationConfig,
+  MatchingSourceItem,
+} from "./matching-generator";
 export { generateTypedAnswerExercise } from "./typed-answer-generator";
 export type {
   TypedAnswerExerciseGenerationConfig,
