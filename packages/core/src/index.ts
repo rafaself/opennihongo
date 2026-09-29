@@ -31,9 +31,15 @@ export type {
   ExerciseId,
   ExerciseSessionId,
   LearningItemId,
+  ItemSelectionStrategyId,
   MatchingPairId,
   SessionProfileId,
 } from "./ids";
+export type {
+  ItemSelectionRequest,
+  ItemSelectionStrategy,
+  RandomizedItemSelectionRequest,
+} from "./learning/index";
 export type {
   ExerciseBase,
   Exercise,

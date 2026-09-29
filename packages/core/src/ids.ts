@@ -14,3 +14,5 @@ export type MatchingPairId = string;
 export type ExerciseSessionId = string;
 
 export type SessionProfileId = string;
+
+export type ItemSelectionStrategyId = string;
