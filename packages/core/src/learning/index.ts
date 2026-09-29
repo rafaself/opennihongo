@@ -3,3 +3,7 @@ export type {
   ItemSelectionStrategy,
   RandomizedItemSelectionRequest,
 } from "./item-selection-strategy";
+export {
+  randomWithoutReplacementSelectionStrategy,
+  randomWithoutReplacementSelectionStrategyId,
+} from "./randomized-selection-strategy";

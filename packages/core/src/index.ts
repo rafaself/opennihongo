@@ -40,6 +40,10 @@ export type {
   ItemSelectionStrategy,
   RandomizedItemSelectionRequest,
 } from "./learning/index";
+export {
+  randomWithoutReplacementSelectionStrategy,
+  randomWithoutReplacementSelectionStrategyId,
+} from "./learning/index";
 export type {
   ExerciseBase,
   Exercise,
