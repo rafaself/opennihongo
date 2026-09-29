@@ -1,14 +1,21 @@
 // @vitest-environment jsdom
 import { cleanup, render, screen } from "@testing-library/react";
+import { RouterProvider } from "@tanstack/react-router";
 import userEvent from "@testing-library/user-event";
 import { afterEach, describe, expect, it } from "vitest";
-import { WordsPage } from "./WordsPage";
+import { router } from "../app/router";
 
 afterEach(cleanup);
 
+async function renderWordsPage() {
+  render(<RouterProvider router={router} />);
+  await router.navigate({ to: "/words" });
+  await screen.findByRole("heading", { name: "Words" });
+}
+
 describe("Words library", () => {
-  it("shows the authored beginner words with readings and English meanings", () => {
-    render(<WordsPage />);
+  it("shows the authored beginner words with readings and English meanings", async () => {
+    await renderWordsPage();
 
     expect(screen.getByRole("heading", { name: "Words" })).toBeTruthy();
     expect(screen.getByText("5 words")).toBeTruthy();
@@ -31,7 +38,7 @@ describe("Words library", () => {
 
   it("sorts by Japanese alphabetical order and links to word practice", async () => {
     const user = userEvent.setup();
-    render(<WordsPage />);
+    await renderWordsPage();
 
     await user.selectOptions(
       screen.getByRole("combobox", { name: "Sort words" }),

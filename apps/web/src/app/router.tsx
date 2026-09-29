@@ -12,6 +12,7 @@ import { NotFoundPage } from "../pages/NotFoundPage";
 import { UpcomingSectionPage } from "../pages/UpcomingSectionPage";
 import { WordsPage } from "../pages/WordsPage";
 import { PracticeView } from "../views/practice/PracticeView";
+import { WordsPracticeView } from "../views/words/WordsPracticeView";
 import { appSections } from "./sections";
 
 const rootRoute = createRootRoute({
@@ -41,6 +42,12 @@ const wordsRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: appSections.words.path,
   component: WordsPage,
+});
+
+const wordsPracticeRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/words/practice",
+  component: WordsPracticeView,
 });
 
 const practiceRoute = createRoute({
@@ -78,6 +85,7 @@ const routeTree = rootRoute.addChildren([
   kanaRoute,
   kanaLessonRoute,
   wordsRoute,
+  wordsPracticeRoute,
   practiceRoute,
   progressRoute,
   questsRoute,

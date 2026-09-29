@@ -1,0 +1,294 @@
+.words-practice {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  height: 100dvh;
+  overflow: hidden;
+  width: 100%;
+}
+
+.words-practice__header {
+  align-items: center;
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: auto minmax(4rem, 1fr) auto;
+  margin-inline: auto;
+  max-width: 64rem;
+  padding: 1.5rem 2rem;
+  width: 100%;
+}
+
+.words-practice__exit {
+  align-items: center;
+  border-radius: var(--ns-radius-control);
+  color: var(--ns-color-text-secondary);
+  display: inline-flex;
+  gap: 0.5rem;
+  min-height: 2.75rem;
+  padding-inline: 0.5rem;
+  text-decoration: none;
+}
+
+.words-practice__exit > span:first-child {
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+.words-practice__exit:hover {
+  background: var(--ns-color-surface-subtle);
+  color: var(--ns-color-text-primary);
+}
+
+.words-practice__exit:focus-visible,
+.words-practice__option:focus-visible {
+  outline: var(--ns-border-width-focus) solid var(--ns-color-focus);
+  outline-offset: 3px;
+}
+
+.words-practice__progress {
+  background: var(--ns-color-surface-subtle);
+  border-radius: var(--ns-radius-pill);
+  height: 0.75rem;
+  overflow: hidden;
+}
+
+.words-practice__progress-fill {
+  background: var(--ns-color-action-primary);
+  border-radius: inherit;
+  display: block;
+  height: 100%;
+  transition: width var(--ns-motion-duration-normal)
+    var(--ns-motion-easing-standard);
+}
+
+.words-practice__progress-label {
+  color: var(--ns-color-text-secondary);
+  font-size: var(--ns-text-label-size);
+  font-weight: 800;
+  min-width: 2.75rem;
+  text-align: right;
+}
+
+.words-practice__body {
+  align-items: safe center;
+  display: grid;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 2rem 1.25rem;
+}
+
+.words-practice__content {
+  display: grid;
+  gap: 1.25rem;
+  justify-items: center;
+  margin-inline: auto;
+  max-width: 48rem;
+  text-align: center;
+  width: 100%;
+}
+
+.words-practice__content h1 {
+  color: var(--ns-color-text-primary);
+  font-size: clamp(1.8rem, 5vw, 2.5rem);
+  line-height: 1.15;
+  margin: 0;
+}
+
+.words-practice__content h1:focus {
+  outline: var(--ns-border-width-focus) solid var(--ns-color-focus);
+  outline-offset: 4px;
+}
+
+.words-practice__content > p {
+  color: var(--ns-color-text-secondary);
+  margin: 0;
+  max-width: 38rem;
+}
+
+.words-practice__content > button,
+.words-practice__result-actions > * {
+  min-width: min(100%, 13rem);
+}
+
+.words-practice__eyebrow {
+  color: var(--ns-color-text-secondary);
+  font-size: var(--ns-text-label-size);
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.words-practice__question {
+  gap: 1rem;
+  max-width: 46rem;
+}
+
+.words-practice__instruction {
+  margin-bottom: 0.5rem;
+}
+
+.words-practice__matching {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  max-width: 38rem;
+  width: 100%;
+}
+
+.words-practice__column {
+  align-content: start;
+  display: grid;
+  gap: 0.625rem;
+}
+
+.words-practice__option {
+  align-items: center;
+  cursor: pointer;
+  display: grid;
+  min-height: 3.5rem;
+  padding-inline: 0.75rem;
+  text-align: center;
+  text-transform: none;
+  user-select: none;
+  width: 100%;
+}
+
+.words-practice
+  .ns-button.words-practice__option:not([data-selected="true"]):not(
+    [data-matched="true"]
+  ) {
+  color: var(--ns-color-text-primary);
+}
+
+.words-practice__option[data-selected="true"] {
+  background: color-mix(
+    in srgb,
+    var(--ns-color-action-primary) 12%,
+    var(--ns-color-surface)
+  );
+  border-color: var(--ns-color-action-primary);
+  color: var(--ns-color-text-primary);
+}
+
+.words-practice__option[data-matched="true"] {
+  background: var(--ns-color-feedback-success-surface);
+  border-color: var(--ns-color-feedback-success);
+  color: var(--ns-color-feedback-success);
+  opacity: 0.8;
+}
+
+.words-practice .ns-button.words-practice__option[data-error="true"] {
+  background: var(--ns-color-feedback-danger-surface);
+  border-color: var(--ns-color-feedback-danger);
+  color: var(--ns-color-feedback-danger);
+}
+
+.words-practice__option--kana {
+  font-size: 1.25rem;
+}
+
+.words-practice__feedback {
+  color: var(--ns-color-text-secondary);
+  grid-column: 1 / -1;
+  margin: 0;
+  min-height: 1.5em;
+  text-align: center;
+}
+
+.words-practice__success-mark {
+  align-items: center;
+  background: var(--ns-color-feedback-success-surface);
+  border-radius: 50%;
+  color: var(--ns-color-feedback-success) !important;
+  display: flex;
+  font-size: 3rem;
+  font-weight: 800;
+  height: 5rem;
+  justify-content: center;
+  line-height: 1;
+  width: 5rem;
+}
+
+.words-practice__stats {
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin: 0.75rem 0;
+  max-width: 28rem;
+  width: 100%;
+}
+
+.words-practice__stats > div {
+  background: var(--ns-color-surface);
+  border: 1px solid var(--ns-color-border-subtle);
+  border-radius: var(--ns-radius-lg);
+  display: grid;
+  gap: 0.5rem;
+  padding: 1rem;
+}
+
+.words-practice__stats dt {
+  color: var(--ns-color-text-secondary);
+  font-size: var(--ns-text-label-size);
+}
+
+.words-practice__stats dd {
+  color: var(--ns-color-text-primary);
+  font-size: 1.75rem;
+  font-weight: 800;
+  margin: 0;
+}
+
+.words-practice__result-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: center;
+}
+
+.words-practice__result-actions > * {
+  text-align: center;
+  text-decoration: none;
+}
+
+.words-practice__footer {
+  border-top: 1px solid var(--ns-color-border-subtle);
+  color: var(--ns-color-text-secondary);
+  font-size: var(--ns-text-label-size);
+  padding: 1rem 1.5rem;
+  text-align: center;
+}
+
+@media (max-width: 40rem) {
+  .words-practice__header {
+    gap: 0.625rem;
+    padding: 1rem 1rem 0.75rem;
+  }
+
+  .words-practice__body {
+    padding: 1.25rem 1rem;
+  }
+
+  .words-practice__matching {
+    gap: 0.5rem;
+  }
+
+  .words-practice__option {
+    min-height: 3.25rem;
+    padding-inline: 0.5rem;
+  }
+
+  .words-practice__result-actions {
+    width: 100%;
+  }
+
+  .words-practice__result-actions > * {
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .words-practice__progress-fill {
+    transition: none;
+  }
+}

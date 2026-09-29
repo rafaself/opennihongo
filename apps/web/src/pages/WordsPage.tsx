@@ -1,4 +1,5 @@
 import { kanaBeginnerWords } from "@opennihongo/content";
+import { Link } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import "./WordsPage.css";
 
@@ -63,13 +64,13 @@ export function WordsPage() {
         ))}
       </ol>
 
-      <a
+      <Link
         className="ns-button words-page__start"
         data-variant="primary"
-        href="/words/practice"
+        to="/words/practice"
       >
         Start word practice
-      </a>
+      </Link>
     </section>
   );
 }
