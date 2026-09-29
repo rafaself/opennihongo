@@ -1,5 +1,12 @@
 export type AppNavIconName =
-  "learn" | "kana" | "words" | "practice" | "progress" | "quests" | "library";
+  | "learn"
+  | "kana"
+  | "words"
+  | "practice"
+  | "progress"
+  | "quests"
+  | "library"
+  | "settings";
 
 /** Product navigation artwork. Each icon is decorative beside its text label. */
 export function AppNavIcon({ name }: { name: AppNavIconName }) {
@@ -88,6 +95,15 @@ export function AppNavIcon({ name }: { name: AppNavIconName }) {
           <path d="M13 3h7v26h-7z" fill="#8cbef2" />
           <path d="M20 3h6a3 3 0 0 1 3 3v20a3 3 0 0 1-3 3h-6z" fill="#7bcf96" />
           <path d="M6 22h20" stroke="#fff" strokeWidth="2" />
+        </>
+      )}
+      {name === "settings" && (
+        <>
+          <path
+            d="m13.4 3-.7 3.2a10 10 0 0 0-2.1.9L7.8 5.5 5.1 8.2l1.6 2.8a10 10 0 0 0-.9 2.1L2.5 13.8v3.8l3.2.7a10 10 0 0 0 .9 2.1L5 23.2l2.7 2.7 2.8-1.6a10 10 0 0 0 2.1.9l.7 3.3h3.8l.7-3.3a10 10 0 0 0 2.1-.9l2.8 1.6 2.7-2.7-1.6-2.8a10 10 0 0 0 .9-2.1l3.2-.7v-3.8l-3.2-.7a10 10 0 0 0-.9-2.1l1.6-2.8-2.7-2.7-2.8 1.6a10 10 0 0 0-2.1-.9L17.2 3z"
+            fill="#b8a1ed"
+          />
+          <circle cx="15.3" cy="15.7" r="4.2" fill="#142126" />
         </>
       )}
     </svg>

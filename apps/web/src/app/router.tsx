@@ -9,6 +9,7 @@ import { KanaChartPage } from "../pages/KanaChartPage";
 import { HomePage } from "../pages/HomePage";
 import { KanaPage } from "../pages/KanaPage";
 import { NotFoundPage } from "../pages/NotFoundPage";
+import { SettingsPage } from "../pages/settings/SettingsPage";
 import { UpcomingSectionPage } from "../pages/UpcomingSectionPage";
 import { WordsPage } from "../pages/WordsPage";
 import { PracticeView } from "../views/practice/PracticeView";
@@ -74,6 +75,12 @@ const libraryRoute = createRoute({
   component: () => <UpcomingSectionPage {...appSections.library} />,
 });
 
+const settingsRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: appSections.settings.path,
+  component: SettingsPage,
+});
+
 const acknowledgementsRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/acknowledgements",
@@ -90,6 +97,7 @@ const routeTree = rootRoute.addChildren([
   progressRoute,
   questsRoute,
   libraryRoute,
+  settingsRoute,
   acknowledgementsRoute,
 ]);
 

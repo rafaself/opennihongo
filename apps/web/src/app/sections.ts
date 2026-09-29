@@ -55,6 +55,12 @@ export const appSections = {
     status: "upcoming",
     description: "Your study resources, all in one place.",
   },
+  settings: {
+    path: "/settings",
+    label: "Settings",
+    icon: "settings",
+    status: "available",
+  },
 } as const satisfies Record<string, AppSection>;
 
 export const navigationSections = Object.values(appSections);

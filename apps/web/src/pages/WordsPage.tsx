@@ -1,6 +1,7 @@
 import { kanaBeginnerWords } from "@opennihongo/content";
 import { Link } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
+import { readAppPreferences } from "../app/preferences";
 import "./WordsPage.css";
 
 type WordSortOrder = "study-order" | "japanese";
@@ -9,6 +10,7 @@ const japaneseCollator = new Intl.Collator("ja");
 
 export function WordsPage() {
   const [sortOrder, setSortOrder] = useState<WordSortOrder>("study-order");
+  const showRomaji = readAppPreferences().showRomaji;
   const words = useMemo(
     () =>
       sortOrder === "study-order"
@@ -53,7 +55,7 @@ export function WordsPage() {
             <article className="words-page__card">
               <div className="words-page__reading">
                 <h2 lang="ja">{hiragana}</h2>
-                <p>{romanization}</p>
+                {showRomaji && <p>{romanization}</p>}
               </div>
               <p className="words-page__meaning">
                 <span className="words-page__meaning-label">English</span>
