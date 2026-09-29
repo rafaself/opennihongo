@@ -279,6 +279,22 @@ describe("web application routes", () => {
     await screen.findByRole("heading", { name: "Library" });
   });
 
+  it("opens the Words library from primary navigation", async () => {
+    const user = userEvent.setup();
+    await renderHome();
+
+    await user.click(screen.getByRole("link", { name: "Words" }));
+
+    await screen.findByRole("heading", { name: "Words" });
+    expect(document.title).toBe("Words · OpenNihongo");
+    expect(screen.getByText("5 words")).toBeTruthy();
+    expect(
+      screen
+        .getByRole("link", { name: "Start word practice" })
+        .getAttribute("href"),
+    ).toBe("/words/practice");
+  });
+
   it("renders the not-found route and sets its document title", async () => {
     await renderHome();
 

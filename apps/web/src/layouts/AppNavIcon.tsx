@@ -1,5 +1,5 @@
 export type AppNavIconName =
-  "learn" | "kana" | "practice" | "progress" | "quests" | "library";
+  "learn" | "kana" | "words" | "practice" | "progress" | "quests" | "library";
 
 /** Product navigation artwork. Each icon is decorative beside its text label. */
 export function AppNavIcon({ name }: { name: AppNavIconName }) {
@@ -36,6 +36,20 @@ export function AppNavIcon({ name }: { name: AppNavIconName }) {
           >
             あ
           </text>
+        </>
+      )}
+      {name === "words" && (
+        <>
+          <rect x="4" y="4" width="24" height="24" rx="4" fill="#f2c46f" />
+          <path
+            d="M9 10h14M9 16h14M9 22h9"
+            stroke="#57330f"
+            strokeLinecap="round"
+            strokeWidth="2"
+          />
+          <circle cx="6" cy="10" r="1" fill="#bc002d" />
+          <circle cx="6" cy="16" r="1" fill="#bc002d" />
+          <circle cx="6" cy="22" r="1" fill="#bc002d" />
         </>
       )}
       {name === "practice" && (

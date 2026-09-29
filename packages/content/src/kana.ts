@@ -29,5 +29,6 @@ export type KanaWordContent = Readonly<{
   id: LearningItemId;
   hiragana: string;
   romanization: string;
+  englishMeaning: string;
   pronunciation: KanaPronunciation;
 }>;

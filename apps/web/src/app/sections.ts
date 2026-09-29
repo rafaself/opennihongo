@@ -21,6 +21,12 @@ export const appSections = {
     icon: "kana",
     status: "available",
   },
+  words: {
+    path: "/words",
+    label: "Words",
+    icon: "words",
+    status: "available",
+  },
   practice: {
     path: "/practice",
     label: "Practice",

@@ -1,0 +1,137 @@
+.words-page {
+  display: grid;
+  gap: 1.5rem;
+  margin: auto;
+  max-width: 54rem;
+  padding-block: 1rem 3rem;
+  width: 100%;
+}
+
+.words-page__header {
+  max-width: 40rem;
+}
+
+.words-page__eyebrow {
+  color: var(--ns-color-text-secondary);
+  font-size: var(--ns-text-label-size);
+  font-weight: 700;
+  margin: 0 0 0.5rem;
+}
+
+.words-page__title {
+  color: var(--ns-color-text-primary);
+  font-size: var(--ns-text-display-size);
+  font-weight: var(--ns-text-display-weight);
+  line-height: var(--ns-text-display-line-height);
+  margin: 0;
+}
+
+.words-page__intro {
+  color: var(--ns-color-text-secondary);
+  margin: 0.75rem 0 0;
+}
+
+.words-page__toolbar {
+  align-items: end;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.5rem;
+  justify-content: space-between;
+}
+
+.words-page__count {
+  color: var(--ns-color-text-secondary);
+  font-weight: 700;
+  margin: 0;
+}
+
+.words-page__sort {
+  color: var(--ns-color-text-secondary);
+  display: grid;
+  font-size: var(--ns-text-label-size);
+  font-weight: 700;
+  gap: 0.35rem;
+}
+
+.words-page__sort select {
+  background: var(--ns-color-surface);
+  border: 1px solid var(--ns-color-border-subtle);
+  border-radius: var(--ns-radius-md);
+  color: var(--ns-color-text-primary);
+  min-height: 2.75rem;
+  min-width: min(100%, 16rem);
+  padding: 0.45rem 0.75rem;
+}
+
+.words-page__sort select:focus-visible,
+.words-page__start:focus-visible {
+  outline: var(--ns-border-width-focus) solid var(--ns-color-focus);
+  outline-offset: 3px;
+}
+
+.words-page__list {
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.words-page__card {
+  align-items: center;
+  background: var(--ns-color-surface);
+  border: 1px solid var(--ns-color-border-subtle);
+  border-radius: var(--ns-radius-lg);
+  box-shadow: var(--ns-elevation-card);
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+  min-height: 6rem;
+  padding: 1rem 1.25rem;
+}
+
+.words-page__reading h2 {
+  color: var(--ns-color-text-primary);
+  font-size: 2rem;
+  line-height: 1.1;
+  margin: 0;
+}
+
+.words-page__reading p {
+  color: var(--ns-color-text-secondary);
+  margin: 0.25rem 0 0;
+}
+
+.words-page__meaning {
+  color: var(--ns-color-text-primary);
+  font-weight: 700;
+  margin: 0;
+  text-align: right;
+}
+
+.words-page__meaning-label {
+  color: var(--ns-color-text-secondary);
+  display: block;
+  font-size: var(--ns-text-caption-size);
+  font-weight: 600;
+  margin-bottom: 0.15rem;
+}
+
+.words-page__start {
+  justify-self: start;
+  min-width: min(100%, 16rem);
+  text-align: center;
+  text-decoration: none;
+}
+
+@media (max-width: 34rem) {
+  .words-page__toolbar {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .words-page__start {
+    width: 100%;
+  }
+}
