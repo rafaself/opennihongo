@@ -197,7 +197,7 @@ export function PracticeView() {
     return () => {
       window.removeEventListener("keydown", handlePrimaryActionKeyDown);
     };
-  }, [exercise, feedback, readyToCheck]);
+  }, [checkAnswer, continuePractice, exercise, feedback, readyToCheck]);
 
   return (
     <section

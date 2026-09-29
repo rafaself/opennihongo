@@ -160,6 +160,29 @@ describe("PracticeView", () => {
     expect(screen.getByText("100%")).toBeTruthy();
   }, 10_000);
 
+  it("submits the latest typed answer when Enter is pressed on the page", async () => {
+    const user = userEvent.setup();
+    const { typedAnswer } = getGeneratedExercises();
+    const createResult = vi.spyOn(exerciseResults, "createTypedAnswerResult");
+    const answer = typedAnswer.acceptedAnswers[0] ?? "";
+
+    await renderPractice();
+    const input = await screen.findByRole("textbox", {
+      name: `Type the romaji reading for ${typedAnswer.prompt.text}`,
+    });
+    expect(answer.length).toBeGreaterThan(1);
+    await user.type(input, answer);
+    input.blur();
+    expect(document.activeElement).not.toBe(input);
+
+    await user.keyboard("{Enter}");
+
+    expect(createResult).toHaveBeenCalledWith(typedAnswer, true, 1);
+    expect(screen.getByRole("status").textContent).toContain(
+      "Your reading is correct.",
+    );
+  });
+
   it("records typed and partially matched skips, then restarts", async () => {
     const user = userEvent.setup();
     const { session, typedAnswer, matching } = getGeneratedExercises();
