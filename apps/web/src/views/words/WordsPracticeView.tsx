@@ -2,7 +2,7 @@ import { Link } from "@tanstack/react-router";
 import type { MatchingPairId } from "@opennihongo/core";
 import { Button } from "@opennihongo/ui";
 import { useEffect, useRef, useState } from "react";
-import { WordMatchingRound } from "./WordMatchingRound";
+import { MatchingBoard } from "../../components/matching/MatchingBoard";
 import {
   createWordsPracticeSession,
   type WordsPracticeSession,
@@ -121,10 +121,13 @@ export function WordsPracticeView() {
             <p className="words-practice__instruction">
               Select one English meaning and one Japanese word.
             </p>
-            <WordMatchingRound
+            <MatchingBoard
+              announceFeedback
               exercise={round}
+              leftLabel="English meanings"
               matchedPairIds={matchedPairIds}
               onPairAttempt={recordPairAttempt}
+              rightLabel="Japanese words"
               rolling={roundIndex === 1}
             />
           </div>

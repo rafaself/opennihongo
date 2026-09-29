@@ -11,21 +11,23 @@ import type { MatchingExercise, MatchingPairId } from "@opennihongo/core";
 import { useState } from "react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { WordMatchingRound } from "./WordMatchingRound";
+import { MatchingBoard } from "../../components/matching/MatchingBoard";
 import { createWordsPracticeSession } from "./session/createWordsPracticeSession";
 
 function StatefulRollingRound({ exercise }: { exercise: MatchingExercise }) {
   const [matchedPairIds, setMatchedPairIds] = useState<MatchingPairId[]>([]);
 
   return (
-    <WordMatchingRound
+    <MatchingBoard
       exercise={exercise}
+      leftLabel="English meanings"
       matchedPairIds={matchedPairIds}
       onPairAttempt={(pairId) => {
         if (pairId !== null) {
           setMatchedPairIds((current) => [...current, pairId]);
         }
       }}
+      rightLabel="Japanese words"
       rolling
     />
   );
@@ -36,7 +38,7 @@ afterEach(() => {
   vi.useRealTimers();
 });
 
-describe("WordMatchingRound feedback", () => {
+describe("Words matching board", () => {
   it("clears wrong-pair feedback after a short delay and leaves the pair retryable", async () => {
     vi.useFakeTimers();
     const attempt = vi.fn();
@@ -48,10 +50,13 @@ describe("WordMatchingRound feedback", () => {
     }
 
     render(
-      <WordMatchingRound
+      <MatchingBoard
+        announceFeedback
         exercise={exercise}
+        leftLabel="English meanings"
         matchedPairIds={[]}
         onPairAttempt={attempt}
+        rightLabel="Japanese words"
         rolling={false}
       />,
     );

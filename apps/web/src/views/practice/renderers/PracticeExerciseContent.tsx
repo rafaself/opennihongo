@@ -1,7 +1,7 @@
 import type { Exercise, KanaAudioId, MatchingPairId } from "@opennihongo/core";
 import { Text } from "@opennihongo/ui";
+import { MatchingBoard } from "../../../components/matching/MatchingBoard";
 import { getPracticeAudioIds } from "../session/practiceAudio";
-import { MatchingExercise } from "./MatchingExercise";
 import { TypedAnswerExercise } from "./TypedAnswerExercise";
 
 type PracticeExerciseContentProps = Readonly<{
@@ -58,11 +58,13 @@ export function PracticeExerciseContent({
           <Text as="h1" id="practice-title" variant="display">
             Match the pairs:
           </Text>
-          <MatchingExercise
+          <MatchingBoard
             disabled={disabled}
             exercise={exercise}
+            leftLabel="Romaji readings"
             matchedPairIds={matchedPairIds}
             onPairAttempt={onPairAttempt}
+            rightLabel="Hiragana words"
           />
         </div>
       );

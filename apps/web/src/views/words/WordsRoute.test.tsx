@@ -30,8 +30,8 @@ async function matchNextVisibleWord(user: ReturnType<typeof userEvent.setup>) {
     .find((button) => !(button as HTMLButtonElement).disabled);
   if (!next)
     throw new Error("The current round should have an unmatched word.");
-  const word = kanaBeginnerWords.find(
-    ({ hiragana }) => hiragana === next.textContent,
+  const word = kanaBeginnerWords.find(({ hiragana }) =>
+    next.textContent.endsWith(hiragana),
   );
   if (!word) throw new Error("Every Japanese option should have word content.");
   await user.click(next);
@@ -69,6 +69,16 @@ describe("Words practice route", () => {
     expect(
       screen.getByRole("group", { name: "Japanese words" }).children,
     ).toHaveLength(5);
+    const firstMeaning = within(
+      screen.getByRole("group", { name: "English meanings" }),
+    ).getAllByRole("button")[0];
+    const firstJapaneseWord = within(
+      screen.getByRole("group", { name: "Japanese words" }),
+    ).getAllByRole("button")[0];
+    expect(firstMeaning?.getAttribute("aria-keyshortcuts")).toBe("1");
+    expect(firstJapaneseWord?.getAttribute("aria-keyshortcuts")).toBe("6");
+    await user.keyboard("1");
+    expect(firstMeaning?.getAttribute("aria-pressed")).toBe("true");
     expect(
       screen
         .getByRole("progressbar", { name: "Lesson progress" })

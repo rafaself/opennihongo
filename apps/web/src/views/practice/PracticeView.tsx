@@ -174,9 +174,7 @@ export function PracticeView() {
       }
 
       const focusedButton = target.closest("button");
-      const isAnswerOption = focusedButton?.matches(
-        ".practice-session__match-option",
-      );
+      const isAnswerOption = Boolean(focusedButton?.closest(".matching-board"));
       if (focusedButton && !isAnswerOption) {
         return;
       }
