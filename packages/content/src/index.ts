@@ -13,6 +13,7 @@ export {
 } from "./kanaSyllabary";
 export { kanaBeginnerWords } from "./kanaWords";
 export { kanaCharacterCharts } from "./kanaChart";
+export { initialKanaPracticeSessionProfile } from "./kanaPracticeProfile";
 export type {
   KanaChartRow,
   KanaChartScript,
