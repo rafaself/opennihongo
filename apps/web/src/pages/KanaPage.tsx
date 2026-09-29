@@ -1,4 +1,5 @@
-import { checkKanaAnswer, hiraganaVowels } from "@opennihongo/core";
+import { hiraganaVowels } from "@opennihongo/content";
+import { checkKanaAnswer } from "@opennihongo/core";
 import type { KanaProgress } from "@opennihongo/core";
 import { loadKanaProgress, saveKanaAnswer } from "@opennihongo/persistence";
 import {
@@ -78,7 +79,7 @@ export function KanaPage() {
       );
     } finally {
       setCorrectCount((count) => count + Number(correct));
-      setFeedback({ correct, expected: item.answer });
+      setFeedback({ correct, expected: item.romanization });
       setSaving(false);
     }
   }

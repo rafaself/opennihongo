@@ -3,7 +3,6 @@ import {
   beginnerWordMatchingExercise,
   hiraganaToRomajiExercise,
   hiraganaToRomajiTypedExercise,
-  kanaBeginnerWords,
   kanaExercises,
   romajiToHiraganaExercise,
   scoreKanaChoiceAnswer,
@@ -14,15 +13,14 @@ import {
   validateKanaTypedAnswer,
 } from "../src/index";
 
+const matchingPairContent = [
+  { hiragana: "かな甲", romaji: "kana-a" },
+  { hiragana: "かな乙", romaji: "kana-b" },
+  { hiragana: "かな丙", romaji: "kana-c" },
+] as const;
+
 describe("curated beginner Kana exercises", () => {
-  it("defines a truthful beginner word set and stable exercise prompts", () => {
-    expect(kanaBeginnerWords).toEqual([
-      { id: "kana.word.soto", hiragana: "そと", romaji: "soto" },
-      { id: "kana.word.hato", hiragana: "はと", romaji: "hato" },
-      { id: "kana.word.sato", hiragana: "さと", romaji: "sato" },
-      { id: "kana.word.mimi", hiragana: "みみ", romaji: "mimi" },
-      { id: "kana.word.neko", hiragana: "ねこ", romaji: "neko" },
-    ]);
+  it("defines stable exercise prompts and word references", () => {
     expect(hiraganaToRomajiExercise).toEqual({
       id: "kana.exercise.soto-to-romaji",
       kind: "multiple-choice",
@@ -54,7 +52,13 @@ describe("curated beginner Kana exercises", () => {
       id: "kana.exercise.beginner-word-matching",
       kind: "matching-pairs",
       audioIds: [],
-      pairs: kanaBeginnerWords,
+      pairIds: [
+        "kana.word.soto",
+        "kana.word.hato",
+        "kana.word.sato",
+        "kana.word.mimi",
+        "kana.word.neko",
+      ],
     });
     expect(kanaExercises).toEqual([
       hiraganaToRomajiExercise,
@@ -126,65 +130,59 @@ describe("Kana typed answer validation and scoring", () => {
 });
 
 describe("Kana pair-matching answer validation and scoring", () => {
-  const completeAnswers = [
-    { romaji: "soto", hiragana: "そと" },
-    { romaji: "hato", hiragana: "はと" },
-    { romaji: "sato", hiragana: "さと" },
-    { romaji: "mimi", hiragana: "みみ" },
-    { romaji: "neko", hiragana: "ねこ" },
-  ] as const;
+  const completeAnswers = matchingPairContent.map(({ romaji, hiragana }) => ({
+    romaji,
+    hiragana,
+  }));
 
   it("accepts all correct pairs in any order and scores each pair", () => {
     const reversedAnswers = [...completeAnswers].reverse();
 
     expect(
-      validateKanaMatchingAnswer(beginnerWordMatchingExercise, reversedAnswers),
+      validateKanaMatchingAnswer(matchingPairContent, reversedAnswers),
     ).toBe(true);
-    expect(
-      scoreKanaMatchingAnswer(beginnerWordMatchingExercise, reversedAnswers),
-    ).toBe(5);
+    expect(scoreKanaMatchingAnswer(matchingPairContent, reversedAnswers)).toBe(
+      3,
+    );
   });
 
   it("normalizes answer text and awards partial credit only once per word", () => {
     expect(
-      scoreKanaMatchingAnswer(beginnerWordMatchingExercise, [
-        { romaji: " SOTO ", hiragana: "そと" },
-        { romaji: "soto", hiragana: "そと" },
-        { romaji: "hato", hiragana: "さと" },
+      scoreKanaMatchingAnswer(matchingPairContent, [
+        { romaji: " KANA-A ", hiragana: "かな甲" },
+        { romaji: "kana-a", hiragana: "かな甲" },
+        { romaji: "kana-b", hiragana: "かな丙" },
       ]),
     ).toBe(1);
   });
 
   it("rejects wrong, unknown, duplicate, and incomplete pairings", () => {
     const wrongAnswers = [
-      { romaji: "soto", hiragana: "はと" },
-      { romaji: "hato", hiragana: "そと" },
-      { romaji: "sato", hiragana: "さと" },
+      { romaji: "kana-a", hiragana: "かな乙" },
+      { romaji: "kana-b", hiragana: "かな甲" },
+      { romaji: "kana-c", hiragana: "かな丙" },
     ] as const;
     const duplicateAnswers = [
-      { romaji: "soto", hiragana: "そと" },
-      { romaji: "soto", hiragana: "そと" },
-      { romaji: "sato", hiragana: "さと" },
+      { romaji: "kana-a", hiragana: "かな甲" },
+      { romaji: "kana-a", hiragana: "かな甲" },
+      { romaji: "kana-c", hiragana: "かな丙" },
     ] as const;
 
+    expect(validateKanaMatchingAnswer(matchingPairContent, wrongAnswers)).toBe(
+      false,
+    );
     expect(
-      validateKanaMatchingAnswer(beginnerWordMatchingExercise, wrongAnswers),
+      validateKanaMatchingAnswer(matchingPairContent, duplicateAnswers),
     ).toBe(false);
     expect(
       validateKanaMatchingAnswer(
-        beginnerWordMatchingExercise,
-        duplicateAnswers,
-      ),
-    ).toBe(false);
-    expect(
-      validateKanaMatchingAnswer(
-        beginnerWordMatchingExercise,
+        matchingPairContent,
         completeAnswers.slice(0, 2),
       ),
     ).toBe(false);
     expect(
-      scoreKanaMatchingAnswer(beginnerWordMatchingExercise, [
-        { romaji: "unknown", hiragana: "そと" },
+      scoreKanaMatchingAnswer(matchingPairContent, [
+        { romaji: "unknown", hiragana: "かな甲" },
       ]),
     ).toBe(0);
   });

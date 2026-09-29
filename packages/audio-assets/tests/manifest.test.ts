@@ -3,9 +3,9 @@ import {
   kanaCharacterCharts,
   hiraganaSyllabary,
   kanaBeginnerWords,
-  kanaExercises,
   katakanaSyllabary,
-} from "@opennihongo/core";
+} from "@opennihongo/content";
+import { kanaExercises } from "@opennihongo/core";
 import { describe, expect, it } from "vitest";
 import {
   audioManifest,

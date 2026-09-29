@@ -6,3 +6,18 @@ export type {
   KanaScript,
   KanaWordContent,
 } from "./kana";
+export {
+  hiraganaSyllabary,
+  hiraganaVowels,
+  katakanaSyllabary,
+} from "./kanaSyllabary";
+export { kanaBeginnerWords } from "./kanaWords";
+export { kanaCharacterCharts } from "./kanaChart";
+export type {
+  KanaChartRow,
+  KanaChartScript,
+  KanaChartSection,
+  KanaChartSectionId,
+  KanaChartTile,
+  KanaCharacterChart,
+} from "./kanaChart";

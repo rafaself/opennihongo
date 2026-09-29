@@ -4,7 +4,7 @@ import {
   type KanaChartSection,
   type KanaChartScript,
   type KanaChartTile,
-} from "@opennihongo/core";
+} from "@opennihongo/content";
 import { getKanaChartAudioAsset } from "@opennihongo/audio-assets";
 import { Link } from "@tanstack/react-router";
 import { SegmentedControl } from "@opennihongo/ui";

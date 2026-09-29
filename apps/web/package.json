@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@opennihongo/audio-assets": "workspace:*",
+    "@opennihongo/content": "workspace:*",
     "@opennihongo/core": "workspace:*",
     "@opennihongo/persistence": "workspace:*",
     "@opennihongo/ui": "workspace:*",

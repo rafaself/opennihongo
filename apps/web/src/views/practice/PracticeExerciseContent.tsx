@@ -1,6 +1,7 @@
 import type {
   KanaAudioId,
   KanaExercise,
+  KanaWord,
   KanaPairAnswer,
 } from "@opennihongo/core";
 import { Button, Surface, Text } from "@opennihongo/ui";
@@ -10,6 +11,7 @@ import { TypedAnswerExercise } from "./TypedAnswerExercise";
 
 type PracticeExerciseContentProps = Readonly<{
   exercise: KanaExercise;
+  matchingPairs: readonly KanaWord[];
   selectedChoice: string;
   typedAnswer: string;
   matchedPairs: readonly KanaPairAnswer[];
@@ -24,6 +26,7 @@ type PracticeExerciseContentProps = Readonly<{
 
 export function PracticeExerciseContent({
   exercise,
+  matchingPairs,
   selectedChoice,
   typedAnswer,
   matchedPairs,
@@ -38,8 +41,7 @@ export function PracticeExerciseContent({
   if (exercise.kind === "multiple-choice") {
     const canPronouncePrompt = exercise.prompt.script === "hiragana";
     const promptAudioId =
-      canPronouncePrompt &&
-      loadedAudioIds.has(exercise.wordId)
+      canPronouncePrompt && loadedAudioIds.has(exercise.wordId)
         ? exercise.wordId
         : undefined;
 
@@ -126,7 +128,7 @@ export function PracticeExerciseContent({
       </Text>
       <MatchingExercise
         disabled={disabled}
-        exercise={exercise}
+        pairs={matchingPairs}
         matchedPairs={matchedPairs}
         onPairMatched={onPairMatched}
       />

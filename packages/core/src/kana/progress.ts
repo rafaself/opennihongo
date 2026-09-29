@@ -2,7 +2,7 @@ import type { KanaItem, KanaProgress } from "./types";
 
 export function recordKanaAnswer(
   existing: KanaProgress | undefined,
-  item: KanaItem,
+  item: Pick<KanaItem, "id">,
   correct: boolean,
   answeredAt: string,
 ): KanaProgress {

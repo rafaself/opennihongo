@@ -5,5 +5,5 @@ export function normalizeKanaAnswer(input: string): string {
 }
 
 export function checkKanaAnswer(item: KanaItem, input: string): boolean {
-  return normalizeKanaAnswer(input) === normalizeKanaAnswer(item.answer);
+  return normalizeKanaAnswer(input) === normalizeKanaAnswer(item.romanization);
 }

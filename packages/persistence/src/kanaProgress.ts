@@ -1,10 +1,10 @@
 import {
-  hiraganaVowels,
   recordKanaAnswer,
   type KanaId,
   type KanaItem,
   type KanaProgress,
 } from "@opennihongo/core";
+import { hiraganaVowels } from "@opennihongo/content";
 import { KANA_PROGRESS_STORE, openDatabase } from "./database";
 
 function isKanaId(value: unknown): value is KanaId {

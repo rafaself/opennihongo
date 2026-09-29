@@ -7,7 +7,10 @@ import {
   validateKanaChoiceAnswer,
   validateKanaTypedAnswer,
   type KanaPairAnswer,
+  type KanaMatchingExercise,
+  type KanaWord,
 } from "@opennihongo/core";
+import { kanaBeginnerWords } from "@opennihongo/content";
 import { Button } from "@opennihongo/ui";
 import { Icon } from "@opennihongo/ui/icons";
 import { useEffect, useState } from "react";
@@ -21,9 +24,32 @@ type Feedback = { correct: boolean; message: string };
 
 const totalPoints = kanaExercises.reduce(
   (total, exercise) =>
-    total + (exercise.kind === "matching-pairs" ? exercise.pairs.length : 1),
+    total + (exercise.kind === "matching-pairs" ? exercise.pairIds.length : 1),
   0,
 );
+
+const matchingWordsById = new Map(
+  kanaBeginnerWords.map((word) => [
+    word.id,
+    {
+      id: word.id,
+      hiragana: word.hiragana,
+      romaji: word.romanization,
+    },
+  ]),
+);
+
+function resolveMatchingPairs(
+  exercise: KanaMatchingExercise,
+): readonly KanaWord[] {
+  return exercise.pairIds.map((id) => {
+    const word = matchingWordsById.get(id);
+    if (!word) {
+      throw new Error(`Missing Kana word content for ${id}`);
+    }
+    return word;
+  });
+}
 
 export function PracticeView() {
   const [index, setIndex] = useState(0);
@@ -38,6 +64,8 @@ export function PracticeView() {
   // The tuple is non-empty and the session index only moves forward.
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion -- modulo always produces a tuple index
   const exercise = kanaExercises[index % kanaExercises.length]!;
+  const matchingPairs =
+    exercise.kind === "matching-pairs" ? resolveMatchingPairs(exercise) : [];
   const choiceExercise =
     exercise.kind === "multiple-choice" ? exercise : undefined;
   const exerciseAudio = useExerciseAudio(
@@ -139,7 +167,8 @@ export function PracticeView() {
     }
 
     setScore(
-      (current) => current + scoreKanaMatchingAnswer(exercise, matchedPairs),
+      (current) =>
+        current + scoreKanaMatchingAnswer(matchingPairs, matchedPairs),
     );
     setFeedback({
       correct: true,
@@ -159,7 +188,7 @@ export function PracticeView() {
       ? selectedChoice !== ""
       : exercise.kind === "typed-answer"
         ? typedAnswer.trim() !== ""
-        : matchedPairs.length === exercise.pairs.length;
+        : matchedPairs.length === matchingPairs.length;
   const progress = Math.round(
     ((index + Number(feedback !== null)) / kanaExercises.length) * 100,
   );
@@ -286,6 +315,7 @@ export function PracticeView() {
               disabled={feedback !== null}
               exercise={exercise}
               loadedAudioIds={exerciseAudio.loadedAudioIds}
+              matchingPairs={matchingPairs}
               matchedPairs={matchedPairs}
               onChoiceSelected={setSelectedChoice}
               onPairMatched={(pair) => {

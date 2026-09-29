@@ -1,9 +1,9 @@
 import {
   kanaCharacterCharts,
-  type KanaAudioId,
   type KanaChartSectionId,
   type KanaChartScript,
-} from "@opennihongo/core";
+} from "@opennihongo/content";
+import type { KanaAudioId } from "@opennihongo/core";
 
 export type AudioAssetId = KanaAudioId;
 

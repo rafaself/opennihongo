@@ -1,9 +1,9 @@
 import { normalizeKanaAnswer } from "./answer";
 import type {
   KanaChoiceExercise,
-  KanaMatchingExercise,
   KanaPairAnswer,
   KanaTypedAnswerExercise,
+  KanaWord,
 } from "./types";
 
 export function validateKanaChoiceAnswer(
@@ -43,11 +43,11 @@ export function scoreKanaTypedAnswer(
 }
 
 export function scoreKanaMatchingAnswer(
-  exercise: KanaMatchingExercise,
+  pairs: readonly Pick<KanaWord, "hiragana" | "romaji">[],
   answers: readonly KanaPairAnswer[],
 ): number {
   const expectedByRomaji = new Map(
-    exercise.pairs.map((pair) => [
+    pairs.map((pair) => [
       normalizeKanaAnswer(pair.romaji),
       normalizeKanaAnswer(pair.hiragana),
     ]),
@@ -74,11 +74,11 @@ export function scoreKanaMatchingAnswer(
 }
 
 export function validateKanaMatchingAnswer(
-  exercise: KanaMatchingExercise,
+  pairs: readonly Pick<KanaWord, "hiragana" | "romaji">[],
   answers: readonly KanaPairAnswer[],
 ): boolean {
   return (
-    answers.length === exercise.pairs.length &&
-    scoreKanaMatchingAnswer(exercise, answers) === exercise.pairs.length
+    answers.length === pairs.length &&
+    scoreKanaMatchingAnswer(pairs, answers) === pairs.length
   );
 }

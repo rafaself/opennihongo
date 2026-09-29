@@ -1,7 +1,9 @@
-export type KanaChartScript = "hiragana" | "katakana";
+import type { KanaCharacterCategory, KanaScript } from "./kana";
+import { hiraganaSyllabary } from "./kanaSyllabary";
 
-export type KanaChartSectionId =
-  "basic" | "dakuten" | "combinations" | "small-tsu" | "long-vowels";
+export type KanaChartScript = KanaScript;
+
+export type KanaChartSectionId = KanaCharacterCategory;
 
 export type KanaChartTile = Readonly<{
   id: string;
@@ -42,67 +44,42 @@ function seed(
   return { glyph, romanization, speechText };
 }
 
-const basicRows: readonly KanaSeedRow[] = [
-  [
-    seed("あ", "a"),
-    seed("い", "i"),
-    seed("う", "u"),
-    seed("え", "e"),
-    seed("お", "o"),
-  ],
-  [
-    seed("か", "ka"),
-    seed("き", "ki"),
-    seed("く", "ku"),
-    seed("け", "ke"),
-    seed("こ", "ko"),
-  ],
-  [
-    seed("さ", "sa"),
-    seed("し", "shi"),
-    seed("す", "su"),
-    seed("せ", "se"),
-    seed("そ", "so"),
-  ],
-  [
-    seed("た", "ta"),
-    seed("ち", "chi"),
-    seed("つ", "tsu"),
-    seed("て", "te"),
-    seed("と", "to"),
-  ],
-  [
-    seed("な", "na"),
-    seed("に", "ni"),
-    seed("ぬ", "nu"),
-    seed("ね", "ne"),
-    seed("の", "no"),
-  ],
-  [
-    seed("は", "ha"),
-    seed("ひ", "hi"),
-    seed("ふ", "fu"),
-    seed("へ", "he"),
-    seed("ほ", "ho"),
-  ],
-  [
-    seed("ま", "ma"),
-    seed("み", "mi"),
-    seed("む", "mu"),
-    seed("め", "me"),
-    seed("も", "mo"),
-  ],
-  [seed("や", "ya"), null, seed("ゆ", "yu"), null, seed("よ", "yo")],
-  [
-    seed("ら", "ra"),
-    seed("り", "ri"),
-    seed("る", "ru"),
-    seed("れ", "re"),
-    seed("ろ", "ro"),
-  ],
-  [seed("わ", "wa"), null, null, null, seed("を", "o")],
-  [seed("ん", "n"), null, null, null, null],
+const basicReadingRows: readonly (readonly (string | null)[])[] = [
+  ["a", "i", "u", "e", "o"],
+  ["ka", "ki", "ku", "ke", "ko"],
+  ["sa", "shi", "su", "se", "so"],
+  ["ta", "chi", "tsu", "te", "to"],
+  ["na", "ni", "nu", "ne", "no"],
+  ["ha", "hi", "fu", "he", "ho"],
+  ["ma", "mi", "mu", "me", "mo"],
+  ["ya", null, "yu", null, "yo"],
+  ["ra", "ri", "ru", "re", "ro"],
+  ["wa", null, null, null, "wo"],
+  ["n", null, null, null, null],
 ];
+
+function basicRows(): readonly KanaSeedRow[] {
+  const charactersByReading = new Map(
+    hiraganaSyllabary.map((character) => [character.romanization, character]),
+  );
+
+  return basicReadingRows.map((row) =>
+    row.map((reading) => {
+      if (reading === null) {
+        return null;
+      }
+
+      const character = charactersByReading.get(reading);
+      if (!character) {
+        throw new Error(`Missing basic Hiragana reading: ${reading}`);
+      }
+
+      const romanization =
+        character.romanization === "wo" ? "o" : character.romanization;
+      return seed(character.glyph, romanization, character.pronunciation.text);
+    }),
+  );
+}
 
 const dakutenRows: readonly KanaSeedRow[] = [
   [
@@ -241,7 +218,7 @@ function makeSections(
       "basic",
       "Basic characters",
       "The main characters in this writing system.",
-      basicRows,
+      basicRows(),
     ),
     makeSection(
       script,

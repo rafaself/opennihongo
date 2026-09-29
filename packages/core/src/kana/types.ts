@@ -53,8 +53,7 @@ export type KanaId =
 
 export type KanaItem = Readonly<{
   id: KanaId;
-  glyph: string;
-  answer: string;
+  romanization: string;
 }>;
 
 export type KanaProgress = Readonly<{
@@ -108,7 +107,7 @@ export type KanaMatchingExercise = Readonly<
   KanaExerciseAudio & {
     id: ExerciseId;
     kind: "matching-pairs";
-    pairs: readonly KanaWord[];
+    pairIds: readonly KanaWordId[];
   }
 >;
 

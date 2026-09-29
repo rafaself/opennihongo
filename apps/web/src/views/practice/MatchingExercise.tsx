@@ -1,10 +1,10 @@
-import type { KanaMatchingExercise, KanaPairAnswer } from "@opennihongo/core";
+import type { KanaPairAnswer, KanaWord } from "@opennihongo/core";
 import { Button } from "@opennihongo/ui";
 import { useCallback, useEffect, useMemo, useState } from "react";
 
 type MatchingExerciseProps = {
   disabled: boolean;
-  exercise: KanaMatchingExercise;
+  pairs: readonly KanaWord[];
   matchedPairs: readonly KanaPairAnswer[];
   onPairMatched: (pair: KanaPairAnswer) => void;
 };
@@ -14,17 +14,14 @@ const rightShortcuts = ["6", "7", "8", "9", "0"] as const;
 
 export function MatchingExercise({
   disabled,
-  exercise,
+  pairs,
   matchedPairs,
   onPairMatched,
 }: MatchingExerciseProps) {
   const [selectedRomaji, setSelectedRomaji] = useState<string | null>(null);
   const [selectedHiragana, setSelectedHiragana] = useState<string | null>(null);
   const [errorPair, setErrorPair] = useState<KanaPairAnswer | null>(null);
-  const rightPairs = useMemo(
-    () => [...exercise.pairs].reverse(),
-    [exercise.pairs],
-  );
+  const rightPairs = useMemo(() => [...pairs].reverse(), [pairs]);
 
   useEffect(() => {
     if (!errorPair) {
@@ -51,7 +48,7 @@ export function MatchingExercise({
         return;
       }
 
-      const isCorrectPair = exercise.pairs.some(
+      const isCorrectPair = pairs.some(
         (pair) => pair.romaji === romaji && pair.hiragana === hiragana,
       );
       if (isCorrectPair) {
@@ -63,7 +60,7 @@ export function MatchingExercise({
       setSelectedRomaji(null);
       setSelectedHiragana(null);
     },
-    [exercise.pairs, matchedPairs, onPairMatched],
+    [pairs, matchedPairs, onPairMatched],
   );
 
   const selectRomaji = useCallback(
@@ -117,7 +114,7 @@ export function MatchingExercise({
         (shortcut) => shortcut === event.key,
       );
       if (leftIndex >= 0) {
-        const pair = exercise.pairs[leftIndex];
+        const pair = pairs[leftIndex];
         if (
           !pair ||
           matchedPairs.some((matched) => matched.romaji === pair.romaji)
@@ -149,14 +146,7 @@ export function MatchingExercise({
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [
-    disabled,
-    exercise.pairs,
-    matchedPairs,
-    rightPairs,
-    selectHiragana,
-    selectRomaji,
-  ]);
+  }, [disabled, matchedPairs, pairs, rightPairs, selectHiragana, selectRomaji]);
 
   return (
     <>
@@ -166,7 +156,7 @@ export function MatchingExercise({
           className="practice-session__match-column"
           role="group"
         >
-          {exercise.pairs.map(({ id, romaji }, index) => {
+          {pairs.map(({ id, romaji }, index) => {
             const matched = matchedPairs.some((pair) => pair.romaji === romaji);
             const shortcut = leftShortcuts[index];
             return (

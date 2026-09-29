@@ -18,7 +18,11 @@ const boundaryRule = [
       },
       {
         sourceTag: "type:data-access",
-        onlyDependOnLibsWithTags: ["type:data-access", "type:domain"],
+        onlyDependOnLibsWithTags: [
+          "type:data-access",
+          "type:domain",
+          "type:content",
+        ],
       },
       {
         sourceTag: "type:ui",

@@ -1,13 +1,4 @@
 export { checkKanaAnswer, normalizeKanaAnswer } from "./answer";
-export { kanaCharacterCharts } from "./chart";
-export type {
-  KanaCharacterChart,
-  KanaChartRow,
-  KanaChartScript,
-  KanaChartSection,
-  KanaChartSectionId,
-  KanaChartTile,
-} from "./chart";
 export {
   scoreKanaChoiceAnswer,
   scoreKanaMatchingAnswer,
@@ -23,11 +14,7 @@ export {
   kanaExercises,
   romajiToHiraganaExercise,
 } from "./exercises";
-export { hiraganaSyllabary } from "./hiragana";
-export { hiraganaVowels } from "./items";
-export { katakanaSyllabary } from "./katakana";
 export { recordKanaAnswer } from "./progress";
-export { kanaBeginnerWords } from "./words";
 export type {
   KanaAudioId,
   KanaChoiceExercise,

@@ -1,5 +1,5 @@
 import "fake-indexeddb/auto";
-import { hiraganaVowels } from "@opennihongo/core";
+import { hiraganaVowels } from "@opennihongo/content";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { loadKanaProgress, saveKanaAnswer } from "./kanaProgress";
 

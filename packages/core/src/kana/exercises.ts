@@ -1,4 +1,3 @@
-import { kanaBeginnerWords } from "./words";
 import type {
   KanaChoiceExercise,
   KanaExercise,
@@ -40,7 +39,13 @@ export const beginnerWordMatchingExercise = {
   id: "kana.exercise.beginner-word-matching",
   kind: "matching-pairs",
   audioIds: [],
-  pairs: kanaBeginnerWords,
+  pairIds: [
+    "kana.word.soto",
+    "kana.word.hato",
+    "kana.word.sato",
+    "kana.word.mimi",
+    "kana.word.neko",
+  ],
 } as const satisfies KanaMatchingExercise;
 
 export const kanaExercises = [

@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { hiraganaVowels } from "@opennihongo/core";
+import { hiraganaVowels } from "@opennihongo/content";
 import { loadKanaProgress, saveKanaAnswer } from "./kanaProgress";
 
 const { openDatabase } = vi.hoisted(() => ({
