@@ -1,6 +1,6 @@
 import type { MatchingExercise, MatchingPairId } from "@opennihongo/core";
 import { Button } from "@opennihongo/ui";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 type WordMatchingRoundProps = Readonly<{
   exercise: MatchingExercise;
@@ -28,6 +28,9 @@ export function WordMatchingRound({
   );
   const [errorPair, setErrorPair] = useState<ErrorPair | null>(null);
   const [message, setMessage] = useState("");
+  const [focusAfterMatchId, setFocusAfterMatchId] =
+    useState<MatchingPairId | null>(null);
+  const matchingRef = useRef<HTMLDivElement>(null);
   const pairById = useMemo(
     () => new Map(exercise.pairs.map((pair) => [pair.id, pair])),
     [exercise.pairs],
@@ -69,6 +72,21 @@ export function WordMatchingRound({
     };
   }, [errorPair]);
 
+  useEffect(() => {
+    if (focusAfterMatchId === null) {
+      return;
+    }
+    if (!matchedPairIds.includes(focusAfterMatchId)) {
+      setFocusAfterMatchId(null);
+      return;
+    }
+
+    setFocusAfterMatchId(null);
+    matchingRef.current
+      ?.querySelector<HTMLButtonElement>("button:not(:disabled)")
+      ?.focus();
+  }, [focusAfterMatchId, matchedPairIds]);
+
   function clearSelection() {
     setSelectedLeftId(null);
     setSelectedRightId(null);
@@ -83,6 +101,11 @@ export function WordMatchingRound({
     if (left === right) {
       const pair = pairById.get(left);
       setErrorPair(null);
+      setFocusAfterMatchId(
+        rolling && matchingRef.current?.contains(document.activeElement)
+          ? left
+          : null,
+      );
       setMessage(
         pair ? `Matched ${pair.left} with ${pair.right}.` : "Matched.",
       );
@@ -112,7 +135,7 @@ export function WordMatchingRound({
   }
 
   return (
-    <div className="words-practice__matching">
+    <div className="words-practice__matching" ref={matchingRef}>
       <div
         aria-label="English meanings"
         className="words-practice__column"

@@ -93,7 +93,7 @@
   margin: 0;
 }
 
-.words-practice__content h1:focus {
+.words-practice__content h1:focus-visible {
   outline: var(--ns-border-width-focus) solid var(--ns-color-focus);
   outline-offset: 4px;
 }
