@@ -43,12 +43,17 @@ export type {
   MatchingConfig,
   MatchingExercise,
   MatchingPair,
+  TypedAnswerExerciseGenerationConfig,
+  TypedAnswerSourceItem,
   TypedAnswerExercise,
   ExerciseOutcome,
   ExerciseResult,
   ItemExerciseOutcome,
   ItemExerciseResult,
 } from "./exercises/index";
-export { ExerciseGenerationError } from "./exercises/index";
+export {
+  ExerciseGenerationError,
+  generateTypedAnswerExercise,
+} from "./exercises/index";
 export type { RandomSource } from "./random/index";
 export { SeededRandomSource, shuffle } from "./random/index";
