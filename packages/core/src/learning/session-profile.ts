@@ -8,6 +8,10 @@ export type ExerciseMixEntry =
       count: number;
     }>
   | Readonly<{
+      type: "multiple-choice";
+      count: number;
+    }>
+  | Readonly<{
       type: "matching";
       count: number;
       config: MatchingConfig;

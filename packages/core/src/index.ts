@@ -59,6 +59,10 @@ export type {
   ExerciseGenerationErrorCode,
   ExerciseGenerator,
   ExerciseType,
+  MultipleChoiceExercise,
+  MultipleChoiceOption,
+  MultipleChoiceSourceItem,
+  MultipleChoiceExerciseGenerationConfig,
   MatchingConfig,
   MatchingExerciseGenerationConfig,
   MatchingExercise,
@@ -74,6 +78,7 @@ export type {
 } from "./exercises/index";
 export {
   ExerciseGenerationError,
+  generateMultipleChoiceExercise,
   generateMatchingExercise,
   generateTypedAnswerExercise,
 } from "./exercises/index";

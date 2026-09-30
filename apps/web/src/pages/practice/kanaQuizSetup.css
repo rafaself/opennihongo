@@ -1,0 +1,36 @@
+.kana-quiz-setup {
+  display: grid;
+  gap: 1.75rem;
+  margin-inline: auto;
+  max-width: 40rem;
+  width: 100%;
+}
+.kana-quiz-setup h1,
+.kana-quiz-setup h2,
+.kana-quiz-setup p {
+  margin: 0;
+}
+.kana-quiz-setup h2 {
+  font-size: 1.125rem;
+  margin-bottom: 1rem;
+}
+.kana-quiz-setup p {
+  color: var(--ns-color-text-secondary);
+}
+.kana-quiz-setup .ns-radio-group {
+  width: 100%;
+}
+.kana-quiz-setup__fast {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  border-top: 1px solid var(--ns-color-border-subtle);
+  padding-top: 1.5rem;
+}
+.kana-quiz-setup__fast label {
+  font-weight: 800;
+}
+.kana-quiz-setup__fast p {
+  margin-top: 0.5rem;
+}

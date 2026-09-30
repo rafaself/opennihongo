@@ -1,6 +1,6 @@
 import type { ExerciseId, LearningItemId } from "../ids";
 
-export type ExerciseType = "typed-answer" | "matching";
+export type ExerciseType = "typed-answer" | "matching" | "multiple-choice";
 
 export type ExerciseBase<TType extends ExerciseType> = Readonly<{
   id: ExerciseId;

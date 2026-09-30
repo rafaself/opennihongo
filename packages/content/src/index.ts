@@ -16,6 +16,7 @@ export { kanaCharacterCharts } from "./kanaChart";
 export {
   kanaPracticeSessionProfiles,
   type KanaPracticeMode,
+  type KanaQuizDirection,
 } from "./kanaPracticeProfile";
 export type {
   KanaChartRow,

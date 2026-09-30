@@ -1,5 +1,6 @@
 import type { LearningItemId } from "@opennihongo/core";
 import { Button } from "@opennihongo/ui";
+import { useEffect } from "react";
 import { playJapanesePronunciation } from "../../lib/pronunciation";
 
 function SpeakerIcon() {
@@ -41,6 +42,13 @@ export function PronunciationButton({
   speechText,
   onPlay,
 }: PronunciationButtonProps) {
+  useEffect(() => {
+    return () => {
+      if (typeof window.speechSynthesis !== "undefined") {
+        window.speechSynthesis.cancel();
+      }
+    };
+  }, [text]);
   return (
     <Button
       aria-label={`Play pronunciation for ${text}`}

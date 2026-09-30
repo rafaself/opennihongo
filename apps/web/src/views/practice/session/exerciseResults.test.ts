@@ -3,7 +3,7 @@ import { createKanaPracticeSession } from "./createKanaPracticeSession";
 import {
   countExerciseItems,
   createMatchingResult,
-  createTypedAnswerResult,
+  createSingleAnswerResult,
   scoreExerciseResults,
 } from "./exerciseResults";
 
@@ -24,7 +24,7 @@ describe("practice exercise results", () => {
       );
     }
 
-    expect(createTypedAnswerResult(exercise, false, 0)).toEqual({
+    expect(createSingleAnswerResult(exercise, false, 0)).toEqual({
       exerciseId: exercise.id,
       sourceItemResults: exercise.sourceItemIds.map((sourceItemId) => ({
         sourceItemId,

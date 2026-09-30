@@ -39,6 +39,7 @@ beforeEach(() => {
   chartAudioMock.mockReset().mockImplementation((id) => `/audio/${id}.opus`);
 });
 afterEach(async () => {
+  vi.useRealTimers();
   await router.navigate({ to: "/" });
   cleanup();
   vi.clearAllMocks();

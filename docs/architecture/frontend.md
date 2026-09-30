@@ -174,15 +174,23 @@ app/main.tsx -> app/router.tsx -> layouts/AppLayout.tsx
 
 The Learn route is `/`. The Kana character chart is at `/kana`, with the first
 five-vowel lesson at `/kana/lesson`. Practice offers a game hub at `/practice`,
-grouped into Kana and Words. Kana reading and matching games run at
-`/practice/kana/reading` and `/practice/kana/matching`; URL search parameters
+grouped into Kana and Words. Kana reading, matching, and quiz games run at
+`/practice/kana/reading`, `/practice/kana/matching`, and `/practice/kana/quiz`; URL search parameters
 retain the selected script and chart category. Feature-local session code
 selects up to five distinct chart entries before calling the core generators,
 with smaller categories using their available items. Matching selections have
 distinct normalized readings so each board is unambiguous. Authored profiles
 remain in `content`; generated sessions and their nested data stay immutable.
-Typed-answer and matching renderers report framework-independent results and
+The quiz setup stores direction and Fast mode in URL search parameters. Random
+questions balance both directions; each question has four options from its
+category with distinct normalized readings. Only the prompt source is scored.
+Normal mode uses Check answer and Continue; Fast mode checks immediately and
+advances after one second. Replay retains options, while Change options returns
+to setup. Timers and pronunciation playback are cleaned up on navigation.
+Typed-answer, matching, and multiple-choice renderers report framework-independent results and
 reuse chart audio with authored pronunciation text as the speech fallback.
+Matching and quiz answer tiles share the circular `KeyboardShortcut` display
+from `components/keyboard`; each game owns its keyboard interaction and layout.
 Word matching runs at `/practice/words/matching`, retaining its regular and
 rolling review rounds. `/words/practice` redirects to that game. Games use the
 fullscreen session layout and return to the hub; the chart and Words library

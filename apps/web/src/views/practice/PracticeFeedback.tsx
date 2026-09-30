@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import "./practiceFeedback.css";
 
 type PracticeFeedbackProps = {
+  automatic?: boolean;
   correct: boolean;
   message: string;
   finalExercise: boolean;
@@ -10,14 +11,19 @@ type PracticeFeedbackProps = {
 };
 
 export function PracticeFeedback({
+  automatic = false,
   correct,
   message,
   finalExercise,
   onContinue,
 }: PracticeFeedbackProps) {
   useEffect(() => {
-    document.getElementById("practice-feedback-action")?.focus();
-  }, []);
+    document
+      .getElementById(
+        automatic ? "practice-feedback-copy" : "practice-feedback-action",
+      )
+      ?.focus();
+  }, [automatic]);
 
   return (
     <footer className="practice-feedback" data-correct={correct}>
@@ -46,15 +52,21 @@ export function PracticeFeedback({
         </span>
         <div
           className="practice-feedback__copy"
+          id="practice-feedback-copy"
+          tabIndex={-1}
           role="status"
           aria-live="polite"
         >
           <strong>{correct ? "That’s right!" : "Not quite yet"}</strong>
           <span>{message}</span>
         </div>
-        <Button id="practice-feedback-action" onClick={onContinue}>
-          {finalExercise ? "See results" : "Continue"}
-        </Button>
+        {automatic ? (
+          <span>{finalExercise ? "Opening results…" : "Next question…"}</span>
+        ) : (
+          <Button id="practice-feedback-action" onClick={onContinue}>
+            {finalExercise ? "See results" : "Continue"}
+          </Button>
+        )}
       </div>
     </footer>
   );

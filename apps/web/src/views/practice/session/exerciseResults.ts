@@ -6,10 +6,11 @@ import type {
   MatchingExercise,
   MatchingPairId,
   TypedAnswerExercise,
+  MultipleChoiceExercise,
 } from "@opennihongo/core";
 
-export function createTypedAnswerResult(
-  exercise: TypedAnswerExercise,
+export function createSingleAnswerResult(
+  exercise: TypedAnswerExercise | MultipleChoiceExercise,
   correct: boolean,
   attempts: number,
 ): ExerciseResult {

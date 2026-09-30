@@ -3,8 +3,8 @@ import {
   ExerciseGenerationError,
   SeededRandomSource,
   generateMatchingExercise,
-} from "../src";
-import type { MatchingSourceItem } from "../src";
+} from "../../src";
+import type { MatchingSourceItem } from "../../src";
 
 const sourceItems = [
   { id: "word.soto", left: "そと", right: "outside" },

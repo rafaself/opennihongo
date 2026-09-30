@@ -5,10 +5,11 @@ import type {
   MatchingExercise,
   MatchingPairId,
   TypedAnswerExercise,
-} from "../src";
+} from "../../src";
 
 function readExerciseType(exercise: Exercise): ExerciseType {
   switch (exercise.type) {
+    case "multiple-choice":
     case "typed-answer":
       return exercise.type;
     case "matching":

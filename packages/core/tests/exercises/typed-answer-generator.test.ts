@@ -1,6 +1,9 @@
 import { describe, expect, it } from "vitest";
-import { ExerciseGenerationError, generateTypedAnswerExercise } from "../src";
-import type { TypedAnswerSourceItem } from "../src";
+import {
+  ExerciseGenerationError,
+  generateTypedAnswerExercise,
+} from "../../src";
+import type { TypedAnswerSourceItem } from "../../src";
 
 const kanaSourceItem: TypedAnswerSourceItem = {
   id: "kana.hiragana.a",

@@ -1,6 +1,9 @@
 import type { ExerciseSessionId } from "../ids";
 import type {
   Exercise,
+  MultipleChoiceExercise,
+  MultipleChoiceSourceItem,
+  MultipleChoiceExerciseGenerationConfig,
   MatchingExercise,
   MatchingExerciseGenerationConfig,
   MatchingSourceItem,
@@ -26,6 +29,7 @@ export type ExerciseSession = Readonly<{
 /** Maps authored caller data into the minimal source contract for a generator. */
 export type ExerciseSessionSourceAdapters<TItem> = Readonly<{
   "typed-answer"?: (item: TItem) => TypedAnswerSourceItem;
+  "multiple-choice"?: (item: TItem) => MultipleChoiceSourceItem;
   matching?: (item: TItem) => MatchingSourceItem;
 }>;
 
@@ -35,6 +39,11 @@ export type ExerciseSessionGenerators = Readonly<{
     TypedAnswerSourceItem,
     TypedAnswerExerciseGenerationConfig,
     TypedAnswerExercise
+  >;
+  "multiple-choice"?: ExerciseGenerator<
+    MultipleChoiceSourceItem,
+    MultipleChoiceExerciseGenerationConfig,
+    MultipleChoiceExercise
   >;
   matching?: ExerciseGenerator<
     MatchingSourceItem,

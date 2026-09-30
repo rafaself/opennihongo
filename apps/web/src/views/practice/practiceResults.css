@@ -86,6 +86,10 @@
 }
 
 @media (max-width: 40rem) {
+  .practice-results__action-slot--options {
+    height: calc(13.5rem + env(safe-area-inset-bottom));
+  }
+
   .practice-results__art {
     max-width: 16rem;
   }

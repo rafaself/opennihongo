@@ -7,7 +7,7 @@ import type {
 import { randomWithoutReplacementSelectionStrategyId } from "@opennihongo/core";
 import { kanaPracticeSessionProfiles } from "../src/index";
 
-it("defines separate Kana reading and matching game profiles", () => {
+it("defines separate Kana reading, matching, and quiz game profiles", () => {
   const profile = kanaPracticeSessionProfiles.reading;
 
   expect(profile).toEqual({
@@ -20,6 +20,12 @@ it("defines separate Kana reading and matching game profiles", () => {
     id: "kana.practice.matching",
     targetSessionSize: 1,
     exerciseMix: [{ type: "matching", count: 1, config: { pairCount: 5 } }],
+    selectionStrategyId: randomWithoutReplacementSelectionStrategyId,
+  });
+  expect(kanaPracticeSessionProfiles.quiz).toEqual({
+    id: "kana.practice.quiz",
+    targetSessionSize: 5,
+    exerciseMix: [{ type: "multiple-choice", count: 5 }],
     selectionStrategyId: randomWithoutReplacementSelectionStrategyId,
   });
   expect(

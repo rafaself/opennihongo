@@ -1,6 +1,7 @@
 import type { MatchingExercise, MatchingPairId } from "@opennihongo/core";
 import { Button } from "@opennihongo/ui";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { KeyboardShortcut } from "../keyboard/KeyboardShortcut";
 import "./MatchingBoard.css";
 
 type MatchingBoardProps = Readonly<{
@@ -217,9 +218,7 @@ export function MatchingBoard({
               }}
               variant="secondary"
             >
-              <span aria-hidden="true" className="matching-board__shortcut">
-                {shortcut}
-              </span>
+              <KeyboardShortcut>{shortcut}</KeyboardShortcut>
               <span>{pair.left}</span>
               <span aria-hidden="true" />
             </Button>
@@ -250,9 +249,7 @@ export function MatchingBoard({
               }}
               variant="secondary"
             >
-              <span aria-hidden="true" className="matching-board__shortcut">
-                {shortcut}
-              </span>
+              <KeyboardShortcut>{shortcut}</KeyboardShortcut>
               <span>{pair.right}</span>
               <span aria-hidden="true" />
             </Button>

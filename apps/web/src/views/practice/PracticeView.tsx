@@ -1,3 +1,4 @@
+import { usePracticeKeyboard } from "./interaction/usePracticeKeyboard";
 import { Link } from "@tanstack/react-router";
 import {
   normalizeKanaAnswer,
@@ -7,14 +8,14 @@ import {
 } from "@opennihongo/core";
 import { Button } from "@opennihongo/ui";
 import { Icon } from "@opennihongo/ui/icons";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { PracticeFeedback } from "./PracticeFeedback";
 import { PracticeExerciseContent } from "./renderers/PracticeExerciseContent";
 import { PracticeResults } from "./PracticeResults";
 import {
   countExerciseItems,
   createMatchingResult,
-  createTypedAnswerResult,
+  createSingleAnswerResult,
   scoreExerciseResults,
 } from "./session/exerciseResults";
 import {
@@ -39,13 +40,27 @@ export function PracticeView({
   mode,
   script,
   category,
-}: Omit<KanaPracticeOptions, "revision">) {
+  direction = "random",
+  fast = false,
+  onChangeOptions,
+}: Omit<KanaPracticeOptions, "revision"> & {
+  fast?: boolean;
+  onChangeOptions?: () => void;
+}) {
   const [practice, setPractice] = useState<Practice>(() => ({
     revision: 0,
-    session: createKanaPracticeSession({ mode, script, category, revision: 0 }),
+    session: createKanaPracticeSession({
+      mode,
+      script,
+      category,
+      direction,
+      revision: 0,
+    }),
   }));
   const [index, setIndex] = useState(0);
   const [results, setResults] = useState<ExerciseResult[]>([]);
+  const [selectedOptionId, setSelectedOptionId] = useState<string | null>(null);
+  const submitted = useRef(false);
   const [typedAnswer, setTypedAnswer] = useState("");
   const [matchedPairIds, setMatchedPairIds] = useState<MatchingPairId[]>([]);
   const [matchingAttempts, setMatchingAttempts] = useState(0);
@@ -68,7 +83,7 @@ export function PracticeView({
       ? typedAnswer.trim() !== ""
       : exercise?.type === "matching"
         ? matchedPairIds.length === exercise.config.pairCount
-        : false;
+        : exercise?.type === "multiple-choice" && selectedOptionId !== null;
   const progress = Math.round(
     ((index + Number(feedback !== null)) / exercises.length) * 100,
   );
@@ -80,6 +95,8 @@ export function PracticeView({
   }, [complete]);
 
   function resetExerciseState() {
+    submitted.current = false;
+    setSelectedOptionId(null);
     setTypedAnswer("");
     setMatchedPairIds([]);
     setMatchingAttempts(0);
@@ -91,17 +108,32 @@ export function PracticeView({
     resetExerciseState();
   }
 
-  function checkAnswer() {
-    if (!exercise) {
+  function checkAnswer(choiceId = selectedOptionId) {
+    if (!exercise || submitted.current || feedback) {
       return;
     }
 
+    if (exercise.type === "multiple-choice") {
+      if (!exercise.options.some(({ id }) => id === choiceId)) return;
+      submitted.current = true;
+      const correct = choiceId === exercise.correctOptionId;
+      const result = createSingleAnswerResult(exercise, correct, 1);
+      setResults((current) => [...current, result]);
+      setFeedback({
+        result,
+        message: correct
+          ? "Your answer is correct."
+          : `The correct answer is ${exercise.options.find(({ id }) => id === exercise.correctOptionId)?.text ?? ""}.`,
+      });
+      return;
+    }
+    submitted.current = true;
     if (exercise.type === "typed-answer") {
       const correct = exercise.acceptedAnswers.some(
         (answer) =>
           normalizeKanaAnswer(answer) === normalizeKanaAnswer(typedAnswer),
       );
-      const result = createTypedAnswerResult(exercise, correct, 1);
+      const result = createSingleAnswerResult(exercise, correct, 1);
       setResults((current) => [...current, result]);
       setFeedback({
         result,
@@ -122,13 +154,13 @@ export function PracticeView({
   }
 
   function skipExercise() {
-    if (!exercise) {
+    if (!exercise || submitted.current || feedback) {
       return;
     }
 
     const result =
-      exercise.type === "typed-answer"
-        ? createTypedAnswerResult(exercise, false, 0)
+      exercise.type !== "matching"
+        ? createSingleAnswerResult(exercise, false, 0)
         : createMatchingResult(exercise, matchedPairIds, matchingAttempts);
     setResults((current) => [...current, result]);
     continuePractice();
@@ -138,68 +170,32 @@ export function PracticeView({
     const revision = practice.revision + 1;
     setPractice({
       revision,
-      session: createKanaPracticeSession({ mode, script, category, revision }),
+      session: createKanaPracticeSession({
+        mode,
+        script,
+        category,
+        direction,
+        revision,
+      }),
     });
     setIndex(0);
     setResults([]);
     resetExerciseState();
   }
 
+  usePracticeKeyboard({
+    exercise,
+    hasFeedback: feedback !== null,
+    readyToCheck,
+    checkAnswer,
+  });
   useEffect(() => {
-    if (!exercise || feedback !== null) {
-      return;
-    }
-
-    function handlePrimaryActionKeyDown(event: KeyboardEvent) {
-      if (
-        event.key !== "Enter" ||
-        event.repeat ||
-        event.altKey ||
-        event.ctrlKey ||
-        event.metaKey ||
-        event.isComposing ||
-        event.defaultPrevented
-      ) {
-        return;
-      }
-
-      const target = event.target;
-      if (!(target instanceof HTMLElement)) {
-        return;
-      }
-
-      if (
-        target.isContentEditable ||
-        target.closest(
-          "input, textarea, select, a[href], [contenteditable='true']",
-        )
-      ) {
-        return;
-      }
-
-      const focusedButton = target.closest("button");
-      const isAnswerOption = Boolean(focusedButton?.closest(".matching-board"));
-      if (focusedButton && !isAnswerOption) {
-        return;
-      }
-
-      if ((!feedback && !readyToCheck) || (isAnswerOption && !readyToCheck)) {
-        return;
-      }
-
-      event.preventDefault();
-      if (feedback) {
-        continuePractice();
-      } else {
-        checkAnswer();
-      }
-    }
-
-    window.addEventListener("keydown", handlePrimaryActionKeyDown);
+    if (!fast || feedback === null) return;
+    const timer = window.setTimeout(continuePractice, 1000);
     return () => {
-      window.removeEventListener("keydown", handlePrimaryActionKeyDown);
+      window.clearTimeout(timer);
     };
-  }, [checkAnswer, continuePractice, exercise, feedback, readyToCheck]);
+  }, [fast, feedback, continuePractice]);
 
   return (
     <section
@@ -248,6 +244,7 @@ export function PracticeView({
           score={scoreExerciseResults(results)}
           total={countExerciseItems(exercises)}
           onRestart={restartPractice}
+          onChangeOptions={onChangeOptions}
           search={{ script, category }}
         />
       ) : !exerciseAudio.isReady ? (
@@ -260,6 +257,12 @@ export function PracticeView({
         <>
           <div className="practice-session__body">
             <PracticeExerciseContent
+              selectedOptionId={selectedOptionId}
+              onOptionSelected={(id) => {
+                if (submitted.current) return;
+                setSelectedOptionId(id);
+                if (fast) checkAnswer(id);
+              }}
               autoFocusTypedAnswer={index > 0 || practice.revision > 0}
               disabled={feedback !== null}
               exercise={exercise}
@@ -289,6 +292,7 @@ export function PracticeView({
           <div className="practice-session__action-slot">
             {feedback ? (
               <PracticeFeedback
+                automatic={fast}
                 correct={feedback.result.outcome === "correct"}
                 finalExercise={index === exercises.length - 1}
                 message={feedback.message}
@@ -300,9 +304,16 @@ export function PracticeView({
                   <Button onClick={skipExercise} variant="secondary">
                     Skip
                   </Button>
-                  <Button disabled={!readyToCheck} onClick={checkAnswer}>
-                    Check answer
-                  </Button>
+                  {!fast && (
+                    <Button
+                      disabled={!readyToCheck}
+                      onClick={() => {
+                        checkAnswer();
+                      }}
+                    >
+                      Check answer
+                    </Button>
+                  )}
                 </div>
               </footer>
             )}

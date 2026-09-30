@@ -1,0 +1,51 @@
+.kana-quiz {
+  gap: clamp(1rem, 3vh, 2rem);
+  max-width: 36rem;
+}
+.kana-quiz .kana-quiz__prompt {
+  min-height: 7rem;
+  max-width: 16rem;
+  padding: 1.5rem 3rem;
+}
+.kana-quiz__options {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  width: 100%;
+}
+.kana-quiz__option {
+  min-height: 6rem;
+  font-size: clamp(1.5rem, 4vw, 2rem);
+  position: relative;
+  padding: 1rem 2rem;
+  overflow-wrap: anywhere;
+  text-transform: none;
+}
+.kana-quiz__shortcut {
+  position: absolute;
+  top: 0.5rem;
+  left: 0.75rem;
+}
+.kana-quiz__option[aria-pressed="true"] {
+  border-color: var(--ns-color-action-primary);
+  background: var(--ns-color-surface-subtle);
+}
+.kana-quiz__option[data-result="correct"] {
+  border-color: var(--ns-color-feedback-success);
+  background: var(--ns-color-feedback-success-surface);
+  opacity: 1;
+}
+.kana-quiz__option[data-result="incorrect"] {
+  border-color: var(--ns-color-feedback-danger);
+  background: var(--ns-color-feedback-danger-surface);
+  opacity: 1;
+}
+@media (max-width: 40rem) {
+  .kana-quiz__options {
+    gap: 0.75rem;
+  }
+  .kana-quiz__option {
+    min-height: 5rem;
+    padding: 1rem 1.75rem;
+  }
+}

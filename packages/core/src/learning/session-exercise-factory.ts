@@ -2,8 +2,6 @@ import type { ExerciseId, LearningItemId } from "../ids";
 import type {
   Exercise,
   MatchingExerciseGenerationConfig,
-  MatchingSourceItem,
-  TypedAnswerSourceItem,
 } from "../exercises/index";
 import type { ExerciseType } from "../exercises/base";
 import {
@@ -21,6 +19,13 @@ type PreparedProfilePart<TItem> =
           ExerciseSessionSourceAdapters<TItem>["typed-answer"]
         >;
         generator: NonNullable<ExerciseSessionGenerators["typed-answer"]>;
+      }>)
+  | (Extract<ProfilePart, { type: "multiple-choice" }> &
+      Readonly<{
+        adapter: NonNullable<
+          ExerciseSessionSourceAdapters<TItem>["multiple-choice"]
+        >;
+        generator: NonNullable<ExerciseSessionGenerators["multiple-choice"]>;
       }>)
   | (Extract<ProfilePart, { type: "matching" }> &
       Readonly<{
@@ -44,6 +49,18 @@ export function prepareExerciseParts<TItem>(
           throw new ExerciseSessionBuildError(
             "missing-generator",
             "Typed-answer exercises require a typed-answer source adapter and generator.",
+          );
+        }
+        preparedParts.push({ ...part, adapter, generator });
+        break;
+      }
+      case "multiple-choice": {
+        const adapter = request.sourceAdapters["multiple-choice"];
+        const generator = request.generators["multiple-choice"];
+        if (adapter === undefined || generator === undefined) {
+          throw new ExerciseSessionBuildError(
+            "missing-generator",
+            "Multiple-choice exercises require a multiple-choice source adapter and generator.",
           );
         }
         preparedParts.push({ ...part, adapter, generator });
@@ -91,6 +108,23 @@ export function buildExercise<TItem>(
       assertGeneratedExercise(generated, exerciseId, part.type, sourceIds);
       return freezeExercise(generated);
     }
+    case "multiple-choice": {
+      const sourceItems = selectedItems.map(part.adapter);
+      const sourceIds = validateSourceIds(sourceItems);
+      const exerciseId = createExerciseId(
+        request.sessionId,
+        request.profile.id,
+        part.type,
+        sourceIds,
+      );
+      const generated = part.generator(
+        sourceItems,
+        { exerciseId },
+        request.random,
+      );
+      assertGeneratedExercise(generated, exerciseId, part.type, sourceIds);
+      return freezeExercise(generated);
+    }
     case "matching": {
       const sourceItems = selectedItems.map(part.adapter);
       const sourceIds = validateSourceIds(sourceItems);
@@ -112,7 +146,7 @@ export function buildExercise<TItem>(
 }
 
 function validateSourceIds(
-  sourceItems: readonly (TypedAnswerSourceItem | MatchingSourceItem)[],
+  sourceItems: readonly Readonly<{ id: LearningItemId }>[],
 ): LearningItemId[] {
   const sourceIds = sourceItems.map(({ id }) => id);
   const usedIds = new Set<LearningItemId>();
@@ -193,6 +227,17 @@ function freezeExercise(exercise: Exercise): Exercise {
         type: exercise.type,
         prompt: Object.freeze({ text: exercise.prompt.text }),
         acceptedAnswers: Object.freeze([...exercise.acceptedAnswers]),
+        sourceItemIds: Object.freeze([...exercise.sourceItemIds]),
+      });
+    case "multiple-choice":
+      return Object.freeze({
+        id: exercise.id,
+        type: exercise.type,
+        prompt: Object.freeze({ text: exercise.prompt.text }),
+        options: Object.freeze(
+          exercise.options.map((option) => Object.freeze({ ...option })),
+        ),
+        correctOptionId: exercise.correctOptionId,
         sourceItemIds: Object.freeze([...exercise.sourceItemIds]),
       });
     case "matching":

@@ -11,6 +11,12 @@ export const kanaPracticeSessionProfiles = {
     exerciseMix: [{ type: "typed-answer", count: 5 }],
     selectionStrategyId: randomWithoutReplacementSelectionStrategyId,
   },
+  quiz: {
+    id: "kana.practice.quiz",
+    targetSessionSize: 5,
+    exerciseMix: [{ type: "multiple-choice", count: 5 }],
+    selectionStrategyId: randomWithoutReplacementSelectionStrategyId,
+  },
   matching: {
     id: "kana.practice.matching",
     targetSessionSize: 1,
@@ -20,3 +26,5 @@ export const kanaPracticeSessionProfiles = {
 } as const satisfies Record<string, SessionProfile>;
 
 export type KanaPracticeMode = keyof typeof kanaPracticeSessionProfiles;
+
+export type KanaQuizDirection = "random" | "character" | "romaji";

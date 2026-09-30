@@ -1,3 +1,4 @@
+import { createKanaQuizExercises } from "./createKanaQuizExercises";
 import {
   generateMatchingExercise,
   generateTypedAnswerExercise,
@@ -12,6 +13,7 @@ import {
   type KanaChartScript,
   type KanaChartSectionId,
   type KanaPracticeMode,
+  type KanaQuizDirection,
 } from "@opennihongo/content";
 import {
   getKanaPracticeItemCount,
@@ -23,6 +25,7 @@ export type KanaPracticeOptions = Readonly<{
   script: KanaChartScript;
   category: KanaChartSectionId;
   revision: number;
+  direction?: KanaQuizDirection;
 }>;
 
 /** Selects one distinct batch before generating the chosen game. */
@@ -31,8 +34,9 @@ export function createKanaPracticeSession({
   script,
   category,
   revision,
+  direction = "random",
 }: KanaPracticeOptions): ExerciseSession {
-  const sessionId = `kana-practice:${mode}:${script}:${category}:${String(revision)}`;
+  const sessionId = `kana-practice:${mode}:${script}:${category}:${String(revision)}${mode === "quiz" ? `:${direction}` : ""}`;
   const random = new SeededRandomSource(sessionId);
   const candidates = shuffle(getKanaPracticeTiles(script, category), random);
   const readings = new Set<string>();
@@ -72,6 +76,16 @@ export function createKanaPracticeSession({
         }),
       );
     }
+  } else if (mode === "quiz") {
+    exercises.push(
+      ...createKanaQuizExercises(
+        selected,
+        eligible,
+        direction,
+        sessionId,
+        random,
+      ),
+    );
   } else {
     const exercise = generateMatchingExercise(
       selected.map((tile) => ({

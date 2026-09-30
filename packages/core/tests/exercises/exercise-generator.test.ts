@@ -1,10 +1,10 @@
 import { describe, expect, it } from "vitest";
-import { ExerciseGenerationError } from "../src";
+import { ExerciseGenerationError } from "../../src";
 import type {
   ExerciseGenerator,
   MatchingExercise,
   TypedAnswerExercise,
-} from "../src";
+} from "../../src";
 
 const typedAnswerExercise: TypedAnswerExercise = {
   id: "exercise.kana-a",

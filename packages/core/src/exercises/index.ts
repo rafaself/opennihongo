@@ -1,7 +1,9 @@
+import type { MultipleChoiceExercise } from "./multiple-choice";
 import type { MatchingExercise } from "./matching";
 import type { TypedAnswerExercise } from "./typed-answer";
 
-export type Exercise = MatchingExercise | TypedAnswerExercise;
+export type Exercise =
+  MatchingExercise | TypedAnswerExercise | MultipleChoiceExercise;
 export type { ExerciseBase, ExerciseType } from "./base";
 export { ExerciseGenerationError } from "./generation-error";
 export type { ExerciseGenerationErrorCode } from "./generation-error";
@@ -28,3 +30,13 @@ export type {
   ItemExerciseOutcome,
   ItemExerciseResult,
 } from "./result";
+
+export type {
+  MultipleChoiceExercise,
+  MultipleChoiceOption,
+} from "./multiple-choice";
+export { generateMultipleChoiceExercise } from "./multiple-choice-generator";
+export type {
+  MultipleChoiceSourceItem,
+  MultipleChoiceExerciseGenerationConfig,
+} from "./multiple-choice-generator";

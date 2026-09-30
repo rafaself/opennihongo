@@ -7,6 +7,7 @@ type PracticeResultsProps = {
   score: number;
   total: number;
   onRestart: () => void;
+  onChangeOptions?: (() => void) | undefined;
   search: PracticeSearch;
 };
 
@@ -78,6 +79,7 @@ export function PracticeResults({
   score,
   total,
   onRestart,
+  onChangeOptions,
   search,
 }: PracticeResultsProps) {
   const accuracy = Math.round((score / total) * 100);
@@ -113,7 +115,9 @@ export function PracticeResults({
           </div>
         </div>
       </div>
-      <div className="practice-session__action-slot">
+      <div
+        className={`practice-session__action-slot${onChangeOptions ? " practice-results__action-slot--options" : ""}`}
+      >
         <footer className="practice-results__actions">
           <div>
             <Link
@@ -124,6 +128,11 @@ export function PracticeResults({
             >
               Back to Practice
             </Link>
+            {onChangeOptions && (
+              <Button onClick={onChangeOptions} variant="secondary">
+                Change options
+              </Button>
+            )}
             <Button onClick={onRestart}>Practice again</Button>
           </div>
         </footer>

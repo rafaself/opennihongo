@@ -1,3 +1,4 @@
+import { KanaQuizPage } from "../pages/practice/KanaQuizPage";
 import {
   createRootRoute,
   createRoute,
@@ -17,7 +18,10 @@ import { PracticePage } from "../pages/practice/PracticePage";
 import { KanaPracticePage } from "../pages/practice/KanaPracticePage";
 import { WordsPracticeView } from "../views/words/WordsPracticeView";
 import { appSections } from "./sections";
-import { validatePracticeSearch } from "./practiceSearch";
+import {
+  validatePracticeSearch,
+  validateKanaQuizSearch,
+} from "./practiceSearch";
 
 const rootRoute = createRootRoute({
   component: AppLayout,
@@ -77,6 +81,13 @@ const kanaMatchingRoute = createRoute({
   component: () => <KanaPracticePage mode="matching" />,
 });
 
+const kanaQuizRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/practice/kana/quiz",
+  validateSearch: validateKanaQuizSearch,
+  component: KanaQuizPage,
+});
+
 const wordMatchingRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/practice/words/matching",
@@ -122,6 +133,7 @@ const routeTree = rootRoute.addChildren([
   practiceRoute,
   kanaReadingRoute,
   kanaMatchingRoute,
+  kanaQuizRoute,
   wordMatchingRoute,
   progressRoute,
   questsRoute,

@@ -1,5 +1,5 @@
 import { expect, it } from "vitest";
-import type { ExerciseResult } from "../src";
+import type { ExerciseResult } from "../../src";
 
 it("represents typed-answer outcomes against their stable source item IDs", () => {
   const result = {

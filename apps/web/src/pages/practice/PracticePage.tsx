@@ -100,6 +100,32 @@ export function PracticePage() {
               </Link>
             </Card>
           ))}
+          <Card as="article" className="practice-hub__game">
+            <span
+              aria-hidden="true"
+              className="practice-hub__art practice-hub__art--reading"
+            >
+              <span>{search.script === "hiragana" ? "あ" : "ア"} → a</span>
+            </span>
+            <p className="practice-hub__eyebrow">
+              {scriptLabel} ·{" "}
+              {getKanaPracticeItemCount("quiz", search.script, search.category)}{" "}
+              questions
+            </p>
+            <h3>Kana quiz</h3>
+            <p>
+              Choose the correct reading or character from four options. Pick
+              your direction and try Fast mode.
+            </p>
+            <Link
+              className="ns-button practice-hub__play"
+              data-variant="primary"
+              to="/practice/kana/quiz"
+              search={search}
+            >
+              Play Kana quiz
+            </Link>
+          </Card>
         </div>
       </section>
 

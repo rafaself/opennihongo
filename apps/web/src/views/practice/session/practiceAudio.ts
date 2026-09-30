@@ -7,6 +7,7 @@ import type {
   Exercise,
   LearningItemId,
   TypedAnswerExercise,
+  MultipleChoiceExercise,
 } from "@opennihongo/core";
 
 const pronunciationById = new Map(
@@ -26,7 +27,7 @@ export function getPracticeAudioAsset(id: LearningItemId): string | undefined {
 }
 
 export function getPracticePronunciationText(
-  exercise: TypedAnswerExercise,
+  exercise: TypedAnswerExercise | MultipleChoiceExercise,
 ): string {
   return (
     pronunciationById.get(exercise.sourceItemIds[0] ?? "") ??
@@ -34,11 +35,14 @@ export function getPracticePronunciationText(
   );
 }
 
-/** Resolves only typed-answer source IDs that have a generated pronunciation asset. */
+/** Resolves prompt source IDs that have a generated pronunciation asset. */
 export function getPracticeAudioIds(
   exercise: Exercise | undefined,
 ): readonly LearningItemId[] {
-  if (exercise?.type !== "typed-answer") {
+  if (
+    exercise?.type !== "typed-answer" &&
+    exercise?.type !== "multiple-choice"
+  ) {
     return [];
   }
 

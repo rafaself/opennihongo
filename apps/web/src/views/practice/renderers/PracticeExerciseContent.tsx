@@ -1,3 +1,4 @@
+import { MultipleChoiceExercise } from "./MultipleChoiceExercise";
 import type {
   Exercise,
   LearningItemId,
@@ -13,6 +14,8 @@ import { TypedAnswerExercise } from "./TypedAnswerExercise";
 
 type PracticeExerciseContentProps = Readonly<{
   exercise: Exercise;
+  selectedOptionId: string | null;
+  onOptionSelected: (id: string) => void;
   scriptLabel: string;
   typedAnswer: string;
   matchedPairIds: readonly MatchingPairId[];
@@ -27,6 +30,8 @@ type PracticeExerciseContentProps = Readonly<{
 
 export function PracticeExerciseContent({
   exercise,
+  selectedOptionId,
+  onOptionSelected,
   scriptLabel,
   typedAnswer,
   matchedPairIds,
@@ -62,6 +67,20 @@ export function PracticeExerciseContent({
         </div>
       );
     }
+    case "multiple-choice":
+      return (
+        <MultipleChoiceExercise
+          exercise={exercise}
+          selectedOptionId={selectedOptionId}
+          disabled={disabled}
+          onSelect={onOptionSelected}
+          onPlayAudio={onPlayAudio}
+          audioId={getPracticeAudioIds(exercise).find((id) =>
+            loadedAudioIds.has(id),
+          )}
+          speechText={getPracticePronunciationText(exercise)}
+        />
+      );
     case "matching":
       return (
         <div className="practice-session__question">

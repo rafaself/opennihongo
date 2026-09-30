@@ -8,6 +8,11 @@ export type ProfilePart =
       sourceItemCount: 1;
     }>
   | Readonly<{
+      type: "multiple-choice";
+      count: number;
+      sourceItemCount: 1;
+    }>
+  | Readonly<{
       type: "matching";
       count: number;
       sourceItemCount: number;
@@ -78,8 +83,11 @@ export function validateSessionProfile(profile: unknown): ValidatedProfile {
     }
 
     let part: ProfilePart;
-    if (entry["type"] === "typed-answer") {
-      part = { type: "typed-answer", count: rawCount, sourceItemCount: 1 };
+    if (
+      entry["type"] === "typed-answer" ||
+      entry["type"] === "multiple-choice"
+    ) {
+      part = { type: entry["type"], count: rawCount, sourceItemCount: 1 };
     } else if (entry["type"] === "matching") {
       part = validateMatchingPart(entry, rawCount);
     } else {

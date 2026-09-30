@@ -35,6 +35,7 @@ export function AppLayout() {
     activePath === "/kana/lesson" ||
     activePath === "/practice/kana/reading" ||
     activePath === "/practice/kana/matching" ||
+    activePath === "/practice/kana/quiz" ||
     activePath === "/practice/words/matching";
   const previousPath = useRef(pathname);
 
@@ -49,9 +50,11 @@ export function AppLayout() {
             ? "Kana reading"
             : activePath === "/practice/kana/matching"
               ? "Kana matching"
-              : activePath === "/practice/words/matching"
-                ? "Word matching"
-                : (section?.label ?? "Page not found");
+              : activePath === "/practice/kana/quiz"
+                ? "Kana quiz"
+                : activePath === "/practice/words/matching"
+                  ? "Word matching"
+                  : (section?.label ?? "Page not found");
     document.title = `${pageTitle} · OpenNihongo`;
 
     if (previousPath.current !== pathname) {

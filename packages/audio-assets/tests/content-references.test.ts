@@ -7,6 +7,7 @@ import {
 } from "@opennihongo/content";
 import {
   generateMatchingExercise,
+  generateMultipleChoiceExercise,
   generateTypedAnswerExercise,
   randomWithoutReplacementSelectionStrategyId,
   type SessionProfile,
@@ -17,6 +18,7 @@ import { getAudioAsset, getKanaChartAudioAsset } from "../manifest";
 const supportedExerciseGenerators = {
   "typed-answer": generateTypedAnswerExercise,
   matching: generateMatchingExercise,
+  "multiple-choice": generateMultipleChoiceExercise,
 } as const;
 
 const supportedSelectionStrategyIds = new Set([
@@ -107,7 +109,7 @@ describe("cross-package Kana content references", () => {
     ).toEqual([]);
   });
 
-  it("supports both Kana game profiles and every chart pronunciation", () => {
+  it("supports all Kana game profiles and every chart pronunciation", () => {
     for (const profile of Object.values(kanaPracticeSessionProfiles)) {
       for (const chart of Object.values(kanaCharacterCharts)) {
         for (const section of chart.sections) {

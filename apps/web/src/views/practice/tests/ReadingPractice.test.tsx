@@ -58,7 +58,7 @@ it("submits the latest typed answer when Enter is pressed on the page", async ()
   const exercise = session.exercises[0];
   if (exercise?.type !== "typed-answer")
     throw new Error("Expected a reading exercise");
-  const record = vi.spyOn(exerciseResults, "createTypedAnswerResult");
+  const record = vi.spyOn(exerciseResults, "createSingleAnswerResult");
   const input = screen.getByRole("textbox");
   await user.type(input, exercise.acceptedAnswers[0] ?? "");
   input.blur();
@@ -71,7 +71,7 @@ it("submits the latest typed answer when Enter is pressed on the page", async ()
 
 it("reports an incorrect reading, records skipped prompts, and restarts cleanly", async () => {
   const user = userEvent.setup();
-  const record = vi.spyOn(exerciseResults, "createTypedAnswerResult");
+  const record = vi.spyOn(exerciseResults, "createSingleAnswerResult");
   await renderPractice();
   await user.type(screen.getByRole("textbox"), "wrong");
   await user.click(screen.getByRole("button", { name: "Check answer" }));

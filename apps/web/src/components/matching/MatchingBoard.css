@@ -32,24 +32,6 @@
   width: 100%;
 }
 
-.matching-board__shortcut {
-  align-items: center;
-  border: 2px solid currentColor;
-  border-radius: var(--ns-radius-pill);
-  box-sizing: border-box;
-  display: inline-flex;
-  flex: 0 0 1.5rem;
-  font-size: 0.75rem;
-  font-weight: 700;
-  height: 1.5rem;
-  justify-content: center;
-  line-height: 1;
-  opacity: 0.65;
-  padding: 0;
-  text-align: center;
-  width: 1.5rem;
-}
-
 .matching-board
   .ns-button.matching-board__option:not([data-selected="true"]):not(
     [data-matched="true"]

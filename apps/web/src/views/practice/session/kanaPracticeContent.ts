@@ -31,8 +31,8 @@ export function getKanaPracticeItemCount(
           tiles.map(({ romanization }) => normalizeKanaAnswer(romanization)),
         ).size;
   const maximum =
-    mode === "reading"
-      ? kanaPracticeSessionProfiles.reading.targetSessionSize
+    mode !== "matching"
+      ? kanaPracticeSessionProfiles[mode].targetSessionSize
       : kanaPracticeSessionProfiles.matching.exerciseMix[0].config.pairCount;
   return Math.min(maximum, available);
 }
