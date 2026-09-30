@@ -19,7 +19,7 @@ import {
 } from "./session/exerciseResults";
 import {
   createKanaPracticeSession,
-  initialKanaPracticeSession,
+  type KanaPracticeOptions,
 } from "./session/createKanaPracticeSession";
 import { getPracticeAudioIds } from "./session/practiceAudio";
 import { useExerciseAudio } from "./audio/useExerciseAudio";
@@ -35,10 +35,14 @@ type Feedback = Readonly<{
   message: string;
 }>;
 
-export function PracticeView() {
+export function PracticeView({
+  mode,
+  script,
+  category,
+}: Omit<KanaPracticeOptions, "revision">) {
   const [practice, setPractice] = useState<Practice>(() => ({
     revision: 0,
-    session: initialKanaPracticeSession,
+    session: createKanaPracticeSession({ mode, script, category, revision: 0 }),
   }));
   const [index, setIndex] = useState(0);
   const [results, setResults] = useState<ExerciseResult[]>([]);
@@ -134,7 +138,7 @@ export function PracticeView() {
     const revision = practice.revision + 1;
     setPractice({
       revision,
-      session: createKanaPracticeSession(revision),
+      session: createKanaPracticeSession({ mode, script, category, revision }),
     });
     setIndex(0);
     setResults([]);
@@ -216,7 +220,8 @@ export function PracticeView() {
           aria-label="Leave practice"
           className="practice-session__exit"
           title="Leave practice"
-          to="/"
+          to="/practice"
+          search={{ script, category }}
         >
           <Icon name="close" />
         </Link>
@@ -243,6 +248,7 @@ export function PracticeView() {
           score={scoreExerciseResults(results)}
           total={countExerciseItems(exercises)}
           onRestart={restartPractice}
+          search={{ script, category }}
         />
       ) : !exerciseAudio.isReady ? (
         <div className="practice-session__body">
@@ -257,6 +263,7 @@ export function PracticeView() {
               autoFocusTypedAnswer={index > 0 || practice.revision > 0}
               disabled={feedback !== null}
               exercise={exercise}
+              scriptLabel={script === "hiragana" ? "Hiragana" : "Katakana"}
               loadedAudioIds={exerciseAudio.loadedAudioIds}
               matchedPairIds={matchedPairIds}
               onPairAttempt={(matchedPairId) => {

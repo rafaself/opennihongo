@@ -173,11 +173,20 @@ app/main.tsx -> app/router.tsx -> layouts/AppLayout.tsx
 ```
 
 The Learn route is `/`. The Kana character chart is at `/kana`, with the first
-five-vowel lesson at `/kana/lesson`. Practice has beginner word exercises at
-`/practice`; feature-local session code adapts the authored profile and words
-through the core session builder before React renders the generated exercises.
-Typed-answer and matching renderers dispatch on the domain exercise type and
-report framework-independent results. Progress, Quests, and Library have
+five-vowel lesson at `/kana/lesson`. Practice offers a game hub at `/practice`,
+grouped into Kana and Words. Kana reading and matching games run at
+`/practice/kana/reading` and `/practice/kana/matching`; URL search parameters
+retain the selected script and chart category. Feature-local session code
+selects up to five distinct chart entries before calling the core generators,
+with smaller categories using their available items. Matching selections have
+distinct normalized readings so each board is unambiguous. Authored profiles
+remain in `content`; generated sessions and their nested data stay immutable.
+Typed-answer and matching renderers report framework-independent results and
+reuse chart audio with authored pronunciation text as the speech fallback.
+Word matching runs at `/practice/words/matching`, retaining its regular and
+rolling review rounds. `/words/practice` redirects to that game. Games use the
+fullscreen session layout and return to the hub; the chart and Words library
+remain reference pages. Progress, Quests, and Library have
 dedicated URLs and show an explicit coming-soon state until their features are
 implemented. The Gallery owns its own router and navigation independently.
 

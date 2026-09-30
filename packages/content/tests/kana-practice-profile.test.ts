@@ -5,24 +5,23 @@ import type {
   SessionProfile,
 } from "@opennihongo/core";
 import { randomWithoutReplacementSelectionStrategyId } from "@opennihongo/core";
-import { initialKanaPracticeSessionProfile } from "../src/index";
+import { kanaPracticeSessionProfiles } from "../src/index";
 
-it("defines the initial Kana practice exercise mix", () => {
-  const profile = initialKanaPracticeSessionProfile;
+it("defines separate Kana reading and matching game profiles", () => {
+  const profile = kanaPracticeSessionProfiles.reading;
 
   expect(profile).toEqual({
-    id: "kana.practice.initial",
-    targetSessionSize: 2,
-    exerciseMix: [
-      { type: "typed-answer", count: 1 },
-      { type: "matching", count: 1, config: { pairCount: 5 } },
-    ],
+    id: "kana.practice.reading",
+    targetSessionSize: 5,
+    exerciseMix: [{ type: "typed-answer", count: 5 }],
     selectionStrategyId: randomWithoutReplacementSelectionStrategyId,
   });
-  expect(profile.exerciseMix.map(({ type }) => type)).toEqual([
-    "typed-answer",
-    "matching",
-  ]);
+  expect(kanaPracticeSessionProfiles.matching).toEqual({
+    id: "kana.practice.matching",
+    targetSessionSize: 1,
+    exerciseMix: [{ type: "matching", count: 1, config: { pairCount: 5 } }],
+    selectionStrategyId: randomWithoutReplacementSelectionStrategyId,
+  });
   expect(
     profile.exerciseMix.reduce((total, entry) => total + entry.count, 0),
   ).toBe(profile.targetSessionSize);

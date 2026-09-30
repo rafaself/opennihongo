@@ -1,4 +1,4 @@
-import type { KanaAudioId } from "@opennihongo/core";
+import type { LearningItemId } from "@opennihongo/core";
 import { Button } from "@opennihongo/ui";
 import { playJapanesePronunciation } from "../../lib/pronunciation";
 
@@ -29,14 +29,16 @@ function SpeakerIcon() {
 }
 
 type PronunciationButtonProps = Readonly<{
-  audioId?: KanaAudioId | undefined;
+  audioId?: LearningItemId | undefined;
   text: string;
-  onPlay: (audioId: KanaAudioId) => void;
+  speechText: string;
+  onPlay: (audioId: LearningItemId) => void;
 }>;
 
 export function PronunciationButton({
   audioId,
   text,
+  speechText,
   onPlay,
 }: PronunciationButtonProps) {
   return (
@@ -47,7 +49,7 @@ export function PronunciationButton({
         if (audioId) {
           onPlay(audioId);
         } else {
-          playJapanesePronunciation(text);
+          playJapanesePronunciation(speechText);
         }
       }}
       variant="secondary"

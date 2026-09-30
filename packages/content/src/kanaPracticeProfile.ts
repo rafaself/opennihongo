@@ -3,13 +3,20 @@ import {
   type SessionProfile,
 } from "@opennihongo/core";
 
-/** Initial product configuration based on the current Kana practice cards. */
-export const initialKanaPracticeSessionProfile = {
-  id: "kana.practice.initial",
-  targetSessionSize: 2,
-  exerciseMix: [
-    { type: "typed-answer", count: 1 },
-    { type: "matching", count: 1, config: { pairCount: 5 } },
-  ],
-  selectionStrategyId: randomWithoutReplacementSelectionStrategyId,
-} as const satisfies SessionProfile;
+/** Maximum game sizes; smaller authored categories use their available items. */
+export const kanaPracticeSessionProfiles = {
+  reading: {
+    id: "kana.practice.reading",
+    targetSessionSize: 5,
+    exerciseMix: [{ type: "typed-answer", count: 5 }],
+    selectionStrategyId: randomWithoutReplacementSelectionStrategyId,
+  },
+  matching: {
+    id: "kana.practice.matching",
+    targetSessionSize: 1,
+    exerciseMix: [{ type: "matching", count: 1, config: { pairCount: 5 } }],
+    selectionStrategyId: randomWithoutReplacementSelectionStrategyId,
+  },
+} as const satisfies Record<string, SessionProfile>;
+
+export type KanaPracticeMode = keyof typeof kanaPracticeSessionProfiles;

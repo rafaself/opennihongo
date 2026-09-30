@@ -71,10 +71,10 @@ export function WordsPracticeView() {
         <Link
           aria-label="Leave word practice"
           className="words-practice__exit"
-          to="/words"
+          to="/practice"
         >
           <span aria-hidden="true">×</span>
-          <span>Words</span>
+          <span>Practice</span>
         </Link>
         <div
           aria-label="Lesson progress"
@@ -187,8 +187,12 @@ export function WordsPracticeView() {
             </dl>
             <div className="words-practice__result-actions">
               <Button onClick={replay}>Replay</Button>
-              <Link className="ns-button" data-variant="secondary" to="/words">
-                Return to Words
+              <Link
+                className="ns-button"
+                data-variant="secondary"
+                to="/practice"
+              >
+                Back to Practice
               </Link>
             </div>
           </div>

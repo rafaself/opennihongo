@@ -9,7 +9,7 @@ export function AppNavigation({ onNavigate }: { onNavigate: () => void }) {
         {navigationSections.map(({ icon, label, path, status }) => (
           <li key={path}>
             <Link
-              activeOptions={{ exact: true }}
+              activeOptions={{ exact: true, includeSearch: false }}
               activeProps={{ "aria-current": "page" }}
               className="app-navigation__item"
               onClick={onNavigate}

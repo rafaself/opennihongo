@@ -1,17 +1,25 @@
-import type { Exercise, KanaAudioId, MatchingPairId } from "@opennihongo/core";
+import type {
+  Exercise,
+  LearningItemId,
+  MatchingPairId,
+} from "@opennihongo/core";
 import { Text } from "@opennihongo/ui";
 import { MatchingBoard } from "../../../components/matching/MatchingBoard";
-import { getPracticeAudioIds } from "../session/practiceAudio";
+import {
+  getPracticeAudioIds,
+  getPracticePronunciationText,
+} from "../session/practiceAudio";
 import { TypedAnswerExercise } from "./TypedAnswerExercise";
 
 type PracticeExerciseContentProps = Readonly<{
   exercise: Exercise;
+  scriptLabel: string;
   typedAnswer: string;
   matchedPairIds: readonly MatchingPairId[];
   disabled: boolean;
   autoFocusTypedAnswer: boolean;
-  loadedAudioIds: ReadonlySet<KanaAudioId>;
-  onPlayAudio: (audioId: KanaAudioId) => void;
+  loadedAudioIds: ReadonlySet<LearningItemId>;
+  onPlayAudio: (audioId: LearningItemId) => void;
   onTypedAnswerChanged: (value: string) => void;
   onTypedAnswerSubmit: () => void;
   onPairAttempt: (matchedPairId: MatchingPairId | null) => void;
@@ -19,6 +27,7 @@ type PracticeExerciseContentProps = Readonly<{
 
 export function PracticeExerciseContent({
   exercise,
+  scriptLabel,
   typedAnswer,
   matchedPairIds,
   disabled,
@@ -44,6 +53,7 @@ export function PracticeExerciseContent({
             autoFocus={autoFocusTypedAnswer}
             disabled={disabled}
             exercise={exercise}
+            speechText={getPracticePronunciationText(exercise)}
             onChange={onTypedAnswerChanged}
             onPlayAudio={onPlayAudio}
             onSubmit={onTypedAnswerSubmit}
@@ -64,7 +74,7 @@ export function PracticeExerciseContent({
             leftLabel="Romaji readings"
             matchedPairIds={matchedPairIds}
             onPairAttempt={onPairAttempt}
-            rightLabel="Hiragana words"
+            rightLabel={`${scriptLabel} characters and patterns`}
           />
         </div>
       );

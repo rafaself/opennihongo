@@ -9,6 +9,7 @@ const getAudioAssetMock = vi.hoisted(() =>
 
 vi.mock("@opennihongo/audio-assets", () => ({
   getAudioAsset: getAudioAssetMock,
+  getKanaChartAudioAsset: () => undefined,
 }));
 
 class FakeAudio extends EventTarget {

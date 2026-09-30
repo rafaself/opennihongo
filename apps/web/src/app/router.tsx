@@ -2,6 +2,7 @@ import {
   createRootRoute,
   createRoute,
   createRouter,
+  redirect,
 } from "@tanstack/react-router";
 import { AppLayout } from "../layouts/AppLayout";
 import { AcknowledgementsPage } from "../pages/AcknowledgementsPage";
@@ -11,10 +12,12 @@ import { KanaPage } from "../pages/KanaPage";
 import { NotFoundPage } from "../pages/NotFoundPage";
 import { SettingsPage } from "../pages/settings/SettingsPage";
 import { UpcomingSectionPage } from "../pages/UpcomingSectionPage";
-import { WordsPage } from "../pages/WordsPage";
-import { PracticeView } from "../views/practice/PracticeView";
+import { WordsPage } from "../pages/words/WordsPage";
+import { PracticePage } from "../pages/practice/PracticePage";
+import { KanaPracticePage } from "../pages/practice/KanaPracticePage";
 import { WordsPracticeView } from "../views/words/WordsPracticeView";
 import { appSections } from "./sections";
+import { validatePracticeSearch } from "./practiceSearch";
 
 const rootRoute = createRootRoute({
   component: AppLayout,
@@ -48,13 +51,36 @@ const wordsRoute = createRoute({
 const wordsPracticeRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/words/practice",
-  component: WordsPracticeView,
+  beforeLoad: (): void => {
+    redirect({ to: "/practice/words/matching", replace: true, throw: true });
+  },
 });
 
 const practiceRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: appSections.practice.path,
-  component: PracticeView,
+  component: PracticePage,
+  validateSearch: validatePracticeSearch,
+});
+
+const kanaReadingRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/practice/kana/reading",
+  validateSearch: validatePracticeSearch,
+  component: () => <KanaPracticePage mode="reading" />,
+});
+
+const kanaMatchingRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/practice/kana/matching",
+  validateSearch: validatePracticeSearch,
+  component: () => <KanaPracticePage mode="matching" />,
+});
+
+const wordMatchingRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/practice/words/matching",
+  component: WordsPracticeView,
 });
 
 const progressRoute = createRoute({
@@ -94,6 +120,9 @@ const routeTree = rootRoute.addChildren([
   wordsRoute,
   wordsPracticeRoute,
   practiceRoute,
+  kanaReadingRoute,
+  kanaMatchingRoute,
+  wordMatchingRoute,
   progressRoute,
   questsRoute,
   libraryRoute,

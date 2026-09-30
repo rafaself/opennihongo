@@ -3,7 +3,7 @@ import { cleanup, render, screen } from "@testing-library/react";
 import { RouterProvider } from "@tanstack/react-router";
 import userEvent from "@testing-library/user-event";
 import { afterEach, describe, expect, it } from "vitest";
-import { router } from "../app/router";
+import { router } from "../../app/router";
 
 afterEach(cleanup);
 
@@ -54,6 +54,6 @@ describe("Words library", () => {
       screen
         .getByRole("link", { name: "Start word practice" })
         .getAttribute("href"),
-    ).toBe("/words/practice");
+    ).toBe("/practice/words/matching");
   });
 });

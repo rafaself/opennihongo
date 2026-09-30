@@ -9,7 +9,12 @@ import {
 
 describe("practice exercise results", () => {
   it("records a typed-answer skip with no attempts or correct source items", () => {
-    const session = createKanaPracticeSession(0);
+    const session = createKanaPracticeSession({
+      mode: "reading",
+      script: "hiragana",
+      category: "basic",
+      revision: 0,
+    });
     const exercise = session.exercises.find(
       (candidate) => candidate.type === "typed-answer",
     );
@@ -31,7 +36,12 @@ describe("practice exercise results", () => {
   });
 
   it("preserves partial matching outcomes per source item and attempt count", () => {
-    const session = createKanaPracticeSession(0);
+    const session = createKanaPracticeSession({
+      mode: "matching",
+      script: "hiragana",
+      category: "basic",
+      revision: 0,
+    });
     const exercise = session.exercises.find(
       (candidate) => candidate.type === "matching",
     );
@@ -54,6 +64,6 @@ describe("practice exercise results", () => {
       attempts: 3,
     });
     expect(scoreExerciseResults([partialResult])).toBe(1);
-    expect(countExerciseItems(session.exercises)).toBe(6);
+    expect(countExerciseItems(session.exercises)).toBe(5);
   });
 });

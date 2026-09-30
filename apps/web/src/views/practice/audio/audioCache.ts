@@ -1,5 +1,5 @@
-import type { KanaAudioId } from "@opennihongo/core";
-import { getAudioAsset } from "@opennihongo/audio-assets";
+import type { LearningItemId } from "@opennihongo/core";
+import { getPracticeAudioAsset } from "../session/practiceAudio";
 
 type AudioResource = Readonly<{
   audio: HTMLAudioElement;
@@ -8,9 +8,9 @@ type AudioResource = Readonly<{
 
 export type ExerciseAudioCache = Readonly<{
   preload: (
-    audioIds: readonly KanaAudioId[],
-  ) => Promise<ReadonlySet<KanaAudioId>>;
-  play: (audioId: KanaAudioId) => void;
+    audioIds: readonly LearningItemId[],
+  ) => Promise<ReadonlySet<LearningItemId>>;
+  play: (audioId: LearningItemId) => void;
   dispose: () => void;
 }>;
 
@@ -23,7 +23,7 @@ type AudioCacheRuntime = Readonly<{
 }>;
 
 const browserRuntime: AudioCacheRuntime = {
-  getAudioAsset,
+  getAudioAsset: getPracticeAudioAsset,
   fetchAudio: (url, signal) => globalThis.fetch(url, { signal }),
   createAudioElement: () => new Audio(),
   createObjectUrl: (blob) => URL.createObjectURL(blob),
@@ -88,12 +88,12 @@ export function createExerciseAudioCache(
   runtime: AudioCacheRuntime = browserRuntime,
 ): ExerciseAudioCache {
   const controller = new AbortController();
-  const resources = new Map<KanaAudioId, AudioResource>();
+  const resources = new Map<LearningItemId, AudioResource>();
   const pendingResources = new Set<AudioResource>();
   const lifecycle = { disposed: false };
-  let preloadPromise: Promise<ReadonlySet<KanaAudioId>> | undefined;
+  let preloadPromise: Promise<ReadonlySet<LearningItemId>> | undefined;
 
-  async function preloadAudio(audioId: KanaAudioId): Promise<void> {
+  async function preloadAudio(audioId: LearningItemId): Promise<void> {
     const url = runtime.getAudioAsset(audioId);
     if (!url) {
       return;
@@ -131,8 +131,8 @@ export function createExerciseAudioCache(
   }
 
   function preload(
-    audioIds: readonly KanaAudioId[],
-  ): Promise<ReadonlySet<KanaAudioId>> {
+    audioIds: readonly LearningItemId[],
+  ): Promise<ReadonlySet<LearningItemId>> {
     if (lifecycle.disposed) {
       return Promise.resolve(new Set());
     }
@@ -146,7 +146,7 @@ export function createExerciseAudioCache(
     return preloadPromise;
   }
 
-  function play(audioId: KanaAudioId): void {
+  function play(audioId: LearningItemId): void {
     const resource = resources.get(audioId);
     if (lifecycle.disposed || !resource) {
       return;

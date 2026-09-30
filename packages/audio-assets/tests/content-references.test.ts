@@ -1,6 +1,7 @@
 import {
   hiraganaSyllabary,
-  initialKanaPracticeSessionProfile,
+  kanaPracticeSessionProfiles,
+  kanaCharacterCharts,
   kanaBeginnerWords,
   katakanaSyllabary,
 } from "@opennihongo/content";
@@ -11,7 +12,7 @@ import {
   type SessionProfile,
 } from "@opennihongo/core";
 import { describe, expect, it } from "vitest";
-import { getAudioAsset } from "../manifest";
+import { getAudioAsset, getKanaChartAudioAsset } from "../manifest";
 
 const supportedExerciseGenerators = {
   "typed-answer": generateTypedAnswerExercise,
@@ -99,16 +100,54 @@ describe("cross-package Kana content references", () => {
     expect(
       findReferenceProblems({
         authoredLearningIds: authoredKanaIds,
-        profile: initialKanaPracticeSessionProfile,
+        profile: kanaPracticeSessionProfiles.matching,
         requiredAudioIds: kanaBeginnerWords.map(({ id }) => id),
         availablePracticeItemCount: kanaBeginnerWords.length,
       }),
     ).toEqual([]);
   });
 
+  it("supports both Kana game profiles and every chart pronunciation", () => {
+    for (const profile of Object.values(kanaPracticeSessionProfiles)) {
+      for (const chart of Object.values(kanaCharacterCharts)) {
+        for (const section of chart.sections) {
+          const tiles = section.rows.flatMap((row) =>
+            row.filter((tile) => tile !== null),
+          );
+          expect(new Set(tiles.map(({ id }) => id)).size).toBe(tiles.length);
+          expect(
+            findReferenceProblems({
+              authoredLearningIds: tiles.map(({ id }) => id),
+              profile: {
+                ...profile,
+                exerciseMix: profile.exerciseMix.map((entry) =>
+                  entry.type === "matching"
+                    ? {
+                        ...entry,
+                        config: {
+                          pairCount: Math.min(
+                            entry.config.pairCount,
+                            tiles.length,
+                          ),
+                        },
+                      }
+                    : entry,
+                ),
+              },
+              requiredAudioIds: [],
+              availablePracticeItemCount: tiles.length,
+            }),
+          ).toEqual([]);
+          for (const tile of tiles)
+            expect(getKanaChartAudioAsset(tile.id)).toEqual(expect.any(String));
+        }
+      }
+    }
+  });
+
   it("reports duplicate IDs, unsupported profile references, and missing audio", () => {
     const invalidProfile = {
-      ...initialKanaPracticeSessionProfile,
+      ...kanaPracticeSessionProfiles.matching,
       exerciseMix: [
         { type: "unsupported-exercise", count: 1 },
         {

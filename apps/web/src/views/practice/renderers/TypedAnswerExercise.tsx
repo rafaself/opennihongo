@@ -1,5 +1,5 @@
 import type {
-  KanaAudioId,
+  LearningItemId,
   TypedAnswerExercise as TypedAnswerExerciseModel,
 } from "@opennihongo/core";
 import { Input, Surface, Text } from "@opennihongo/ui";
@@ -7,17 +7,19 @@ import { PronunciationButton } from "../PronunciationButton";
 
 type TypedAnswerExerciseProps = Readonly<{
   exercise: TypedAnswerExerciseModel;
+  speechText: string;
   value: string;
   disabled: boolean;
   autoFocus: boolean;
-  audioId: KanaAudioId | undefined;
+  audioId: LearningItemId | undefined;
   onChange: (value: string) => void;
   onSubmit: () => void;
-  onPlayAudio: (audioId: KanaAudioId) => void;
+  onPlayAudio: (audioId: LearningItemId) => void;
 }>;
 
 export function TypedAnswerExercise({
   exercise,
+  speechText,
   value,
   disabled,
   autoFocus,
@@ -39,6 +41,7 @@ export function TypedAnswerExercise({
         <PronunciationButton
           audioId={audioId}
           onPlay={onPlayAudio}
+          speechText={speechText}
           text={exercise.prompt.text}
         />
       </Surface>

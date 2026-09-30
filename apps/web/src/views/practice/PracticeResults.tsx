@@ -1,11 +1,13 @@
 import { Link } from "@tanstack/react-router";
 import { Button, Text } from "@opennihongo/ui";
 import "./practiceResults.css";
+import type { PracticeSearch } from "../../app/practiceSearch";
 
 type PracticeResultsProps = {
   score: number;
   total: number;
   onRestart: () => void;
+  search: PracticeSearch;
 };
 
 function CelebrationArt() {
@@ -76,6 +78,7 @@ export function PracticeResults({
   score,
   total,
   onRestart,
+  search,
 }: PracticeResultsProps) {
   const accuracy = Math.round((score / total) * 100);
   const perfect = score === total;
@@ -113,8 +116,13 @@ export function PracticeResults({
       <div className="practice-session__action-slot">
         <footer className="practice-results__actions">
           <div>
-            <Link className="ns-button" data-variant="secondary" to="/kana">
-              Learn more kana
+            <Link
+              className="ns-button"
+              data-variant="secondary"
+              search={search}
+              to="/practice"
+            >
+              Back to Practice
             </Link>
             <Button onClick={onRestart}>Practice again</Button>
           </div>

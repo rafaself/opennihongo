@@ -1,4 +1,4 @@
-import type { KanaAudioId } from "@opennihongo/core";
+import type { LearningItemId } from "@opennihongo/core";
 import { useCallback, useEffect, useRef, useState } from "react";
 import {
   createExerciseAudioCache,
@@ -7,13 +7,13 @@ import {
 
 type LoadedAudio = Readonly<{
   key: string;
-  audioIds: ReadonlySet<KanaAudioId>;
+  audioIds: ReadonlySet<LearningItemId>;
 }>;
 
-const emptyAudioIds: ReadonlySet<KanaAudioId> = new Set();
+const emptyAudioIds: ReadonlySet<LearningItemId> = new Set();
 
 export function useExerciseAudio(
-  audioIds: readonly KanaAudioId[],
+  audioIds: readonly LearningItemId[],
   exerciseKey: string,
   active: boolean,
 ) {
@@ -46,7 +46,7 @@ export function useExerciseAudio(
     };
   }, [active, audioIds, audioKey]);
 
-  const playAudio = useCallback((audioId: KanaAudioId) => {
+  const playAudio = useCallback((audioId: LearningItemId) => {
     cacheRef.current?.play(audioId);
   }, []);
 

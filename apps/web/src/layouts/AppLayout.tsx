@@ -33,8 +33,9 @@ export function AppLayout() {
   const activePath = pathname === "/" ? pathname : pathname.replace(/\/+$/, "");
   const lesson =
     activePath === "/kana/lesson" ||
-    activePath === "/practice" ||
-    activePath === "/words/practice";
+    activePath === "/practice/kana/reading" ||
+    activePath === "/practice/kana/matching" ||
+    activePath === "/practice/words/matching";
   const previousPath = useRef(pathname);
 
   useEffect(() => {
@@ -44,9 +45,13 @@ export function AppLayout() {
         ? "Acknowledgements & licenses"
         : activePath === "/kana/lesson"
           ? appSections.kana.label
-          : activePath === "/words/practice"
-            ? "Word practice"
-            : (section?.label ?? "Page not found");
+          : activePath === "/practice/kana/reading"
+            ? "Kana reading"
+            : activePath === "/practice/kana/matching"
+              ? "Kana matching"
+              : activePath === "/practice/words/matching"
+                ? "Word matching"
+                : (section?.label ?? "Page not found");
     document.title = `${pageTitle} · OpenNihongo`;
 
     if (previousPath.current !== pathname) {

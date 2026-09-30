@@ -1,7 +1,7 @@
 import { kanaBeginnerWords } from "@opennihongo/content";
 import { Link } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
-import { readAppPreferences } from "../app/preferences";
+import { readAppPreferences } from "../../app/preferences";
 import "./WordsPage.css";
 
 type WordSortOrder = "study-order" | "japanese";
@@ -69,7 +69,7 @@ export function WordsPage() {
       <Link
         className="ns-button words-page__start"
         data-variant="primary"
-        to="/words/practice"
+        to="/practice/words/matching"
       >
         Start word practice
       </Link>

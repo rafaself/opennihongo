@@ -11,7 +11,12 @@ export default mergeConfig(
         enabled: true,
         provider: "v8",
         include: ["src/**/*.{ts,tsx}"],
-        exclude: ["src/**/*.test.{ts,tsx}", "src/**/*.stories.{ts,tsx}"],
+        exclude: [
+          "src/**/*.test.{ts,tsx}",
+          "src/**/*.stories.{ts,tsx}",
+          // Shared test setup and fixtures are not application source.
+          "src/**/tests/**",
+        ],
         thresholds: {
           statements: 95,
           branches: 95,

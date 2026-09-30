@@ -55,7 +55,7 @@ describe("Words practice route", () => {
 
     await user.click(screen.getByRole("link", { name: "Start word practice" }));
     await screen.findByRole("heading", { name: "Review five beginner words" });
-    expect(document.title).toBe("Word practice · OpenNihongo");
+    expect(document.title).toBe("Word matching · OpenNihongo");
     expect(document.querySelector(".app-shell--lesson")).not.toBeNull();
     expect(
       screen.queryByRole("navigation", { name: "Primary navigation" }),
@@ -140,9 +140,9 @@ describe("Words practice route", () => {
     expect(screen.getByText("91%")).toBeTruthy();
     expect(
       screen
-        .getByRole("link", { name: "Return to Words" })
+        .getByRole("link", { name: "Back to Practice" })
         .getAttribute("href"),
-    ).toBe("/words");
+    ).toBe("/practice");
 
     await user.click(screen.getByRole("button", { name: "Replay" }));
     await screen.findByRole("heading", { name: "Review five beginner words" });
@@ -152,7 +152,7 @@ describe("Words practice route", () => {
         .getAttribute("aria-valuenow"),
     ).toBe("0");
     await user.click(screen.getByRole("link", { name: "Leave word practice" }));
-    await screen.findByRole("heading", { name: "Words" });
+    await screen.findByRole("heading", { name: "Practice", level: 1 });
   }, 10_000);
 
   it("discards session progress when leaving before completion", async () => {
@@ -168,8 +168,8 @@ describe("Words practice route", () => {
     ).toBe("10");
 
     await user.click(screen.getByRole("link", { name: "Leave word practice" }));
-    await screen.findByRole("heading", { name: "Words" });
-    await user.click(screen.getByRole("link", { name: "Start word practice" }));
+    await screen.findByRole("heading", { name: "Practice", level: 1 });
+    await user.click(screen.getByRole("link", { name: "Play word matching" }));
     await screen.findByRole("heading", { name: "Review five beginner words" });
     expect(
       screen
@@ -180,5 +180,15 @@ describe("Words practice route", () => {
     expect(
       screen.getByRole("button", { name: "そと" }).getAttribute("disabled"),
     ).toBeNull();
+  });
+
+  it("redirects the previous word practice address to the matching game", async () => {
+    render(<RouterProvider router={router} />);
+    await router.navigate({ to: "/words/practice" });
+    await screen.findByRole("heading", { name: "Review five beginner words" });
+    expect(router.state.location.pathname).toBe("/practice/words/matching");
+    const user = userEvent.setup();
+    await user.click(screen.getByRole("link", { name: "Leave word practice" }));
+    await screen.findByRole("heading", { name: "Practice", level: 1 });
   });
 });

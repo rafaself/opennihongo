@@ -258,16 +258,21 @@ describe("web application routes", () => {
     await user.click(screen.getByRole("button", { name: "Open menu" }));
     await user.click(screen.getByRole("link", { name: /Practice/ }));
     await screen.findByRole("heading", {
-      name: "What is the corresponding sound?",
+      name: "Practice",
+      level: 1,
     });
     expect(document.title).toBe("Practice · OpenNihongo");
     expect(
       screen.queryByRole("navigation", { name: "Primary navigation" }),
-    ).toBeNull();
-    expect(screen.queryByRole("button", { name: "Open menu" })).toBeNull();
+    ).not.toBeNull();
+    expect(
+      screen
+        .getByRole("button", { name: "Open menu" })
+        .getAttribute("aria-expanded"),
+    ).toBe("false");
     expect(document.activeElement).toBe(screen.getByRole("main"));
 
-    await user.click(screen.getByRole("link", { name: "Leave practice" }));
+    await user.click(screen.getByRole("link", { name: "Learn" }));
     await screen.findByRole("heading", {
       name: "Make steady progress, one step at a time.",
     });
@@ -292,7 +297,7 @@ describe("web application routes", () => {
       screen
         .getByRole("link", { name: "Start word practice" })
         .getAttribute("href"),
-    ).toBe("/words/practice");
+    ).toBe("/practice/words/matching");
   });
 
   it("renders the not-found route and sets its document title", async () => {
