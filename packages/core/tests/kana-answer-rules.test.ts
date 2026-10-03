@@ -1,73 +1,48 @@
 import { describe, expect, it } from "vitest";
 import {
-  beginnerWordMatchingExercise,
-  hiraganaToRomajiExercise,
-  hiraganaToRomajiTypedExercise,
-  kanaExercises,
-  romajiToHiraganaExercise,
   scoreKanaChoiceAnswer,
   scoreKanaMatchingAnswer,
   scoreKanaTypedAnswer,
   validateKanaChoiceAnswer,
   validateKanaMatchingAnswer,
   validateKanaTypedAnswer,
+  type KanaChoiceExercise,
+  type KanaTypedAnswerExercise,
 } from "../src/index";
+
+const hiraganaToRomajiExercise: KanaChoiceExercise = {
+  id: "test.hiragana-to-romaji",
+  kind: "multiple-choice",
+  direction: "hiragana-to-romaji",
+  wordId: "kana.word.soto",
+  audioIds: ["kana.word.soto"],
+  prompt: { script: "hiragana", text: "そと" },
+  choices: ["soto", "hato", "sato"],
+  answer: "soto",
+};
+const romajiToHiraganaExercise: KanaChoiceExercise = {
+  id: "test.romaji-to-hiragana",
+  kind: "multiple-choice",
+  direction: "romaji-to-hiragana",
+  wordId: "kana.word.soto",
+  audioIds: [],
+  prompt: { script: "romaji", text: "soto" },
+  choices: ["そと", "はと", "さと"],
+  answer: "そと",
+};
+const hiraganaToRomajiTypedExercise: KanaTypedAnswerExercise = {
+  id: "test.hiragana-typed-answer",
+  kind: "typed-answer",
+  audioIds: [],
+  prompt: { script: "hiragana", text: "しびゅら" },
+  answer: "shibyura",
+};
 
 const matchingPairContent = [
   { hiragana: "かな甲", romaji: "kana-a" },
   { hiragana: "かな乙", romaji: "kana-b" },
   { hiragana: "かな丙", romaji: "kana-c" },
 ] as const;
-
-describe("curated beginner Kana exercises", () => {
-  it("defines stable exercise prompts and word references", () => {
-    expect(hiraganaToRomajiExercise).toEqual({
-      id: "kana.exercise.soto-to-romaji",
-      kind: "multiple-choice",
-      direction: "hiragana-to-romaji",
-      wordId: "kana.word.soto",
-      audioIds: ["kana.word.soto"],
-      prompt: { script: "hiragana", text: "そと" },
-      choices: ["soto", "hato", "sato"],
-      answer: "soto",
-    });
-    expect(romajiToHiraganaExercise).toEqual({
-      id: "kana.exercise.soto-to-hiragana",
-      kind: "multiple-choice",
-      direction: "romaji-to-hiragana",
-      wordId: "kana.word.soto",
-      audioIds: [],
-      prompt: { script: "romaji", text: "soto" },
-      choices: ["そと", "はと", "さと"],
-      answer: "そと",
-    });
-    expect(hiraganaToRomajiTypedExercise).toEqual({
-      id: "kana.exercise.shibyura-to-romaji-typed",
-      kind: "typed-answer",
-      audioIds: [],
-      prompt: { script: "hiragana", text: "しびゅら" },
-      answer: "shibyura",
-    });
-    expect(beginnerWordMatchingExercise).toEqual({
-      id: "kana.exercise.beginner-word-matching",
-      kind: "matching-pairs",
-      audioIds: [],
-      pairIds: [
-        "kana.word.soto",
-        "kana.word.hato",
-        "kana.word.sato",
-        "kana.word.mimi",
-        "kana.word.neko",
-      ],
-    });
-    expect(kanaExercises).toEqual([
-      hiraganaToRomajiExercise,
-      romajiToHiraganaExercise,
-      hiraganaToRomajiTypedExercise,
-      beginnerWordMatchingExercise,
-    ]);
-  });
-});
 
 describe("Kana typed-answer validation and scoring", () => {
   it("accepts normalized readings and awards no points for incorrect answers", () => {

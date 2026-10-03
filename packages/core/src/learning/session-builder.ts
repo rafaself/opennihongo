@@ -1,4 +1,5 @@
 import type { Exercise } from "../exercises/index";
+import type { ExerciseType } from "../exercises/base";
 import {
   ExerciseSessionBuildError,
   type BuildExerciseSessionRequest,
@@ -20,8 +21,8 @@ export {
 } from "./session-builder-contracts";
 
 /**
- * Builds a concrete session before presentation. Each exercise selects only
- * its own demand, so source items may appear in more than one exercise.
+ * Builds a concrete session before presentation. Source items may be reused
+ * across different exercise types, but each type selects distinct items.
  */
 export function buildExerciseSession<TItem>(
   request: BuildExerciseSessionRequest<TItem>,
@@ -43,7 +44,10 @@ export function buildExerciseSession<TItem>(
     );
   }
 
-  const preparedParts = prepareExerciseParts(validatedProfile.parts, request);
+  const preparedParts = prepareExerciseParts<TItem>(
+    validatedProfile.parts,
+    request,
+  );
 
   if (!Array.isArray(eligibleItems)) {
     throw new ExerciseSessionBuildError(
@@ -60,12 +64,24 @@ export function buildExerciseSession<TItem>(
   }
 
   const exercises: Exercise[] = [];
-  const exerciseIds = new Set<Exercise["id"]>();
+  const selectedSourceIdsByType = new Map<ExerciseType, Set<string>>();
 
   for (const part of preparedParts) {
+    const selectedSourceIds =
+      selectedSourceIdsByType.get(part.type) ?? new Set<string>();
     for (let count = 0; count < part.count; count += 1) {
+      const availableItems = eligibleItems.filter(
+        (item: TItem) => !selectedSourceIds.has(part.adapter(item).id),
+      );
+      if (availableItems.length < part.sourceItemCount) {
+        throw new ExerciseSessionBuildError(
+          "insufficient-source-items",
+          `Profile ${profile.id} needs ${String(part.sourceItemCount)} unused source items for another ${part.type} exercise, but only ${String(availableItems.length)} are available.`,
+        );
+      }
+
       const selection: unknown = selectionStrategy.select({
-        eligibleItems,
+        eligibleItems: availableItems,
         count: part.sourceItemCount,
         random: request.random,
       });
@@ -79,13 +95,18 @@ export function buildExerciseSession<TItem>(
 
       const selectedItems = selection as readonly TItem[];
       const exercise = buildExercise(part, selectedItems, request);
-      if (exerciseIds.has(exercise.id)) {
-        throw new ExerciseSessionBuildError(
-          "duplicate-exercise-id",
-          `The profile produced duplicate exercise identity ${exercise.id}; each exercise needs a distinct stable source identity.`,
-        );
+      for (const sourceItemId of exercise.sourceItemIds) {
+        if (selectedSourceIds.has(sourceItemId)) {
+          throw new ExerciseSessionBuildError(
+            "duplicate-source-item-id",
+            `Selected source item ID ${sourceItemId} was already used by another ${part.type} exercise.`,
+          );
+        }
       }
-      exerciseIds.add(exercise.id);
+      for (const sourceItemId of exercise.sourceItemIds) {
+        selectedSourceIds.add(sourceItemId);
+      }
+      selectedSourceIdsByType.set(part.type, selectedSourceIds);
       exercises.push(exercise);
     }
   }

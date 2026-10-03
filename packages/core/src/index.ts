@@ -1,10 +1,5 @@
 export {
-  beginnerWordMatchingExercise,
   checkKanaAnswer,
-  hiraganaToRomajiExercise,
-  hiraganaToRomajiTypedExercise,
-  kanaExercises,
-  romajiToHiraganaExercise,
   normalizeKanaAnswer,
   recordKanaAnswer,
   scoreKanaChoiceAnswer,
@@ -17,10 +12,8 @@ export {
 export type {
   KanaAudioId,
   KanaChoiceExercise,
-  KanaExercise,
   KanaId,
   KanaItem,
-  KanaMatchingExercise,
   KanaPairAnswer,
   KanaProgress,
   KanaTypedAnswerExercise,

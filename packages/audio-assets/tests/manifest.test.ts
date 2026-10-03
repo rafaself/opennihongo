@@ -5,7 +5,6 @@ import {
   kanaBeginnerWords,
   katakanaSyllabary,
 } from "@opennihongo/content";
-import { kanaExercises } from "@opennihongo/core";
 import { describe, expect, it } from "vitest";
 import {
   audioManifest,
@@ -208,15 +207,6 @@ describe("audio manifest", () => {
         reading: tile.speechText,
       })),
     );
-  });
-
-  it("resolves every audio identifier used by the practice exercises", () => {
-    const audioIds = kanaExercises.flatMap(({ audioIds: ids }) => ids);
-
-    expect(audioIds.length).toBeGreaterThan(0);
-    for (const id of audioIds) {
-      expect(audioManifest[id]).toBe(`./generated/${id}.opus`);
-    }
   });
 
   it("bundles a generated URL for every supported audio identifier", () => {

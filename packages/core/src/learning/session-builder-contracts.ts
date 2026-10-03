@@ -76,7 +76,6 @@ export type ExerciseSessionBuildErrorCode =
   | "incomplete-selection"
   | "invalid-source-item"
   | "duplicate-source-item-id"
-  | "duplicate-exercise-id"
   | "invalid-generated-exercise";
 
 /** A domain error raised when a session cannot honor its declared profile. */

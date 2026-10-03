@@ -103,17 +103,6 @@ export type KanaTypedAnswerExercise = Readonly<
   }
 >;
 
-export type KanaMatchingExercise = Readonly<
-  KanaExerciseAudio & {
-    id: ExerciseId;
-    kind: "matching-pairs";
-    pairIds: readonly KanaWordId[];
-  }
->;
-
-export type KanaExercise =
-  KanaChoiceExercise | KanaTypedAnswerExercise | KanaMatchingExercise;
-
 export type KanaPairAnswer = Readonly<{
   romaji: string;
   hiragana: string;

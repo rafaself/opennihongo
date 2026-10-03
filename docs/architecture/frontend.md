@@ -176,11 +176,13 @@ The Learn route is `/`. The Kana character chart is at `/kana`, with the first
 five-vowel lesson at `/kana/lesson`. Practice offers a game hub at `/practice`,
 grouped into Kana and Words. Kana reading, matching, and quiz games run at
 `/practice/kana/reading`, `/practice/kana/matching`, and `/practice/kana/quiz`; URL search parameters
-retain the selected script and chart category. Feature-local session code
-selects up to five distinct chart entries before calling the core generators,
-with smaller categories using their available items. Matching selections have
-distinct normalized readings so each board is unambiguous. Authored profiles
-remain in `content`; generated sessions and their nested data stay immutable.
+retain the selected script and chart category. Reading and matching session
+code delegates selection and generation to the core session builder, with
+smaller categories using their available items. Matching selections have
+distinct normalized readings so each board is unambiguous. Quiz keeps
+feature-local selection because distractors and balanced directions depend on
+the full category pool. Authored profiles remain in `content`; generated
+sessions and their nested data stay immutable.
 The quiz setup stores direction and Fast mode in URL search parameters. Random
 questions balance both directions; each question has four options from its
 category with distinct normalized readings. Only the prompt source is scored.

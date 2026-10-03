@@ -46,6 +46,7 @@ describe("deterministic exercise session builder", () => {
   it("selects per exercise and routes exact adapted inputs in profile order", () => {
     const selected = eligibleItems.slice(0, 3);
     let selectionCall = 0;
+    const selectionStartByCall = [0, 0, 2];
     const strategy: ItemSelectionStrategy<
       EligibleItem,
       RandomizedItemSelectionRequest<EligibleItem>
@@ -56,8 +57,9 @@ describe("deterministic exercise session builder", () => {
           eligibleItems: items,
           count,
         }: RandomizedItemSelectionRequest<EligibleItem>) => {
-          const result = items.slice(selectionCall, selectionCall + count);
-          selectionCall += count;
+          const start = selectionStartByCall[selectionCall] ?? 0;
+          selectionCall += 1;
+          const result = items.slice(start, start + count);
           return result;
         },
       ),
@@ -104,7 +106,7 @@ describe("deterministic exercise session builder", () => {
       random,
     });
     expect(strategy.select).toHaveBeenNthCalledWith(2, {
-      eligibleItems,
+      eligibleItems: eligibleItems.slice(1),
       count: 1,
       random,
     });

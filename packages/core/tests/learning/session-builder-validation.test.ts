@@ -251,7 +251,7 @@ describe("exercise session request validation", () => {
     );
   });
 
-  it("rejects duplicate exercise identity instead of producing unstable IDs", () => {
+  it("selects distinct source items for repeated matching exercises", () => {
     const repeatedMatchingProfile: SessionProfile = {
       id: "practice.repeated-matching",
       targetSessionSize: 2,
@@ -266,14 +266,16 @@ describe("exercise session request validation", () => {
       select: ({ eligibleItems }) => eligibleItems.slice(0, 1),
     };
 
-    expectCode(
-      () =>
-        build({
-          profile: repeatedMatchingProfile,
-          selectionStrategy: strategy,
-        }),
-      "duplicate-exercise-id",
-    );
+    const session = build({
+      profile: repeatedMatchingProfile,
+      selectionStrategy: strategy,
+    });
+    expect(session.exercises).toHaveLength(2);
+    expect(new Set(session.exercises.map(({ id }) => id)).size).toBe(2);
+    expect(
+      new Set(session.exercises.map(({ sourceItemIds }) => sourceItemIds[0]))
+        .size,
+    ).toBe(2);
   });
 
   it("rejects selected source items without stable IDs", () => {
