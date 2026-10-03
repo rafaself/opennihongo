@@ -21,7 +21,7 @@ type SourceItem = Readonly<{
   correctOptionId: string;
 }>;
 
-const eligibleItems: readonly SourceItem[] = [1, 2, 3].map((number) => ({
+const eligibleItems: readonly SourceItem[] = [1, 2, 3, 4].map((number) => ({
   id: `kana.${String(number)}`,
   prompt: { text: `かな${String(number)}` },
   acceptedAnswers: [`kana-${String(number)}`],
@@ -177,6 +177,58 @@ describe("exercise session source selection", () => {
 
     expect(() =>
       build({ profile: typedProfile, selectionStrategy: strategy }),
+    ).toThrow(
+      expect.objectContaining({
+        code: "duplicate-exercise-id",
+      }),
+    );
+  });
+
+  it("rejects partial source overlap across same-type exercises", () => {
+    const matchingProfile: SessionProfile = {
+      id: "kana.practice.overlapping-matching",
+      targetSessionSize: 2,
+      selectionStrategyId: "overlapping-pairs.v1",
+      exerciseMix: [{ type: "matching", count: 2, config: { pairCount: 2 } }],
+    };
+    const firstItem = eligibleItems[0];
+    const secondItem = eligibleItems[1];
+    const thirdItem = eligibleItems[2];
+    if (
+      firstItem === undefined ||
+      secondItem === undefined ||
+      thirdItem === undefined
+    ) {
+      throw new Error("The test needs three eligible items.");
+    }
+    const first = [firstItem, secondItem];
+    const second = [firstItem, thirdItem];
+    let selectionCall = 0;
+    const strategy: ItemSelectionStrategy<
+      SourceItem,
+      RandomizedItemSelectionRequest<SourceItem>
+    > = {
+      id: matchingProfile.selectionStrategyId,
+      select: () => {
+        const selection = selectionCall === 0 ? first : second;
+        selectionCall += 1;
+        return selection;
+      },
+    };
+
+    expect(() =>
+      build({
+        profile: matchingProfile,
+        selectionStrategy: strategy,
+        sourceAdapters: {
+          matching: (item) => ({
+            id: item.id,
+            left: item.prompt.text,
+            right: item.acceptedAnswers[0] ?? "",
+          }),
+        },
+        generators: { matching: generateMatchingExercise },
+      }),
     ).toThrow(
       expect.objectContaining({
         code: "duplicate-source-item-id",

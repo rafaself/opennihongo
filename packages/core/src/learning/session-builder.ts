@@ -64,6 +64,7 @@ export function buildExerciseSession<TItem>(
   }
 
   const exercises: Exercise[] = [];
+  const exerciseIds = new Set<Exercise["id"]>();
   const selectedSourceIdsByType = new Map<ExerciseType, Set<string>>();
 
   for (const part of preparedParts) {
@@ -95,6 +96,12 @@ export function buildExerciseSession<TItem>(
 
       const selectedItems = selection as readonly TItem[];
       const exercise = buildExercise(part, selectedItems, request);
+      if (exerciseIds.has(exercise.id)) {
+        throw new ExerciseSessionBuildError(
+          "duplicate-exercise-id",
+          `The profile produced duplicate exercise identity ${exercise.id}; each exercise needs a distinct stable source identity.`,
+        );
+      }
       for (const sourceItemId of exercise.sourceItemIds) {
         if (selectedSourceIds.has(sourceItemId)) {
           throw new ExerciseSessionBuildError(
@@ -106,6 +113,7 @@ export function buildExerciseSession<TItem>(
       for (const sourceItemId of exercise.sourceItemIds) {
         selectedSourceIds.add(sourceItemId);
       }
+      exerciseIds.add(exercise.id);
       selectedSourceIdsByType.set(part.type, selectedSourceIds);
       exercises.push(exercise);
     }
