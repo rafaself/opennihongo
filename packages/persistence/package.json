@@ -12,7 +12,6 @@
     "typecheck": "tsc -p tsconfig.json"
   },
   "dependencies": {
-    "@opennihongo/content": "workspace:*",
     "@opennihongo/core": "workspace:*"
   },
   "devDependencies": {

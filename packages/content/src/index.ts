@@ -29,6 +29,7 @@ export type {
 
 export { cardStackSessionProfile } from "./cardStackProfile";
 export { kanaVowelLessonProfile } from "./kanaVowelLessonProfile";
+export { beginnerWordReviewProfileId } from "./wordReviewProfile";
 export {
   kanaPracticeLengths,
   kanaPracticeDifficulties,

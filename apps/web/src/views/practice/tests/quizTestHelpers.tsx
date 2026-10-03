@@ -30,11 +30,14 @@ export function questions(
   direction: "character" | "romaji" | "random" = "character",
   revision = 0,
 ) {
-  return createKanaPracticeSession({
-    ...quizOptions,
-    direction,
-    revision,
-  }).exercises.map((exercise) => {
+  return createKanaPracticeSession(
+    {
+      ...quizOptions,
+      direction,
+      revision,
+    },
+    "test-session",
+  ).exercises.map((exercise) => {
     if (exercise.type !== "multiple-choice")
       throw new Error("Expected quiz question");
     return exercise;

@@ -7,26 +7,26 @@ import {
   screen,
 } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import type { KanaProgress } from "@opennihongo/core";
-import type { updateKanaProgress } from "@opennihongo/persistence";
+import type {
+  appendLearningRecord,
+  LearningHistory,
+} from "@opennihongo/persistence";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { RouterProvider } from "@tanstack/react-router";
 import { router } from "../../app/router";
 
 const storage = vi.hoisted(() => ({
-  loadKanaProgress: vi.fn<() => Promise<KanaProgress[]>>(),
-  updateKanaProgress: vi.fn<typeof updateKanaProgress>(),
+  loadLearningHistory: vi.fn<() => Promise<LearningHistory>>(),
+  appendLearningRecord: vi.fn<typeof appendLearningRecord>(),
 }));
 
 vi.mock("@opennihongo/persistence", () => storage);
 
 beforeEach(() => {
-  storage.loadKanaProgress.mockReset().mockResolvedValue([]);
-  storage.updateKanaProgress
+  storage.loadLearningHistory
     .mockReset()
-    .mockImplementation((_itemId, update) =>
-      Promise.resolve(update(undefined)),
-    );
+    .mockResolvedValue({ records: [], baselines: [] });
+  storage.appendLearningRecord.mockReset().mockResolvedValue(undefined);
 });
 
 afterEach(async () => {
@@ -51,7 +51,7 @@ describe("first hiragana session", () => {
     fireEvent.submit(form);
     await user.type(input, "   ");
     fireEvent.submit(form);
-    expect(storage.updateKanaProgress).not.toHaveBeenCalled();
+    expect(storage.appendLearningRecord).not.toHaveBeenCalled();
     expect(
       screen
         .getByRole("button", { name: /check answer/i })
@@ -64,11 +64,11 @@ describe("first hiragana session", () => {
     "ignores a pending save %s after leaving and returning to the lesson",
     async (outcome) => {
       let finishSave!: () => void;
-      storage.updateKanaProgress.mockImplementationOnce(
-        (_id, update) =>
+      storage.appendLearningRecord.mockImplementationOnce(
+        () =>
           new Promise((resolve, reject) => {
             finishSave = () => {
-              if (outcome === "success") resolve(update(undefined));
+              if (outcome === "success") resolve();
               else reject(new Error("storage unavailable"));
             };
           }),
@@ -112,16 +112,16 @@ describe("first hiragana session", () => {
         screen.getByRole("textbox", { name: /romaji/i }),
       );
     });
-    expect(storage.updateKanaProgress).toHaveBeenCalledOnce();
+    expect(storage.appendLearningRecord).toHaveBeenCalledOnce();
   });
 
   it("records one answer while storage is pending and ignores repeated submissions", async () => {
     let finishSave!: () => void;
-    storage.updateKanaProgress.mockImplementationOnce(
-      (_id, update) =>
+    storage.appendLearningRecord.mockImplementationOnce(
+      () =>
         new Promise((resolve) => {
           finishSave = () => {
-            resolve(update(undefined));
+            resolve();
           };
         }),
     );
@@ -133,7 +133,7 @@ describe("first hiragana session", () => {
     if (!form) throw new Error("Expected the answer form");
     fireEvent.submit(form);
     fireEvent.submit(form);
-    expect(storage.updateKanaProgress).toHaveBeenCalledOnce();
+    expect(storage.appendLearningRecord).toHaveBeenCalledOnce();
     expect(screen.getByRole("textbox").hasAttribute("disabled")).toBe(true);
     expect(screen.queryByText("That’s right!")).toBeNull();
     await act(async () => {
@@ -144,14 +144,17 @@ describe("first hiragana session", () => {
     screen.getByText(/1 practiced on this device/i);
   });
   it("shows previously practiced vowels from local progress", async () => {
-    storage.loadKanaProgress.mockResolvedValue([
-      {
-        itemId: "kana.hiragana.a",
-        correctCount: 1,
-        incorrectCount: 0,
-        lastAnsweredAt: "2026-09-26T00:00:00.000Z",
-      },
-    ]);
+    storage.loadLearningHistory.mockResolvedValue({
+      records: [],
+      baselines: [
+        {
+          itemId: "kana.hiragana.a",
+          correctCount: 1,
+          incorrectCount: 0,
+          lastPracticedAt: "2026-09-26T00:00:00.000Z",
+        },
+      ],
+    });
     await renderSession();
 
     await screen.findByText(/1 practiced on this device/i);
@@ -177,13 +180,15 @@ describe("first hiragana session", () => {
     expect(document.activeElement).toBe(heading);
     screen.getByText("5 / 5");
     screen.getByText("100%");
-    expect(storage.updateKanaProgress).toHaveBeenCalledTimes(5);
-    expect(storage.updateKanaProgress.mock.calls[0]?.[0]).toBe(
-      "kana.hiragana.a",
-    );
-    await expect(
-      storage.updateKanaProgress.mock.results[0]?.value,
-    ).resolves.toMatchObject({ correctCount: 1, incorrectCount: 0 });
+    expect(storage.appendLearningRecord).toHaveBeenCalledTimes(5);
+    expect(
+      storage.appendLearningRecord.mock.calls[0]?.[0]?.result,
+    ).toMatchObject({
+      outcome: "correct",
+      sourceItemResults: [
+        { sourceItemId: "kana.hiragana.a", outcome: "correct" },
+      ],
+    });
   });
 
   it("can start another session without discarding saved progress", async () => {
@@ -208,6 +213,12 @@ describe("first hiragana session", () => {
     expect(document.activeElement).toBe(
       screen.getByRole("textbox", { name: /romaji/i }),
     );
+    await user.type(screen.getByRole("textbox"), "a");
+    await user.keyboard("{Enter}");
+    await screen.findByText("That’s right!");
+    expect(storage.appendLearningRecord.mock.calls[5]?.[0]?.sessionId).not.toBe(
+      storage.appendLearningRecord.mock.calls[0]?.[0]?.sessionId,
+    );
   });
 
   it("shows the expected answer and records an incorrect response", async () => {
@@ -219,13 +230,18 @@ describe("first hiragana session", () => {
     await user.click(screen.getByRole("button", { name: /check answer/i }));
 
     await screen.findByText(/the answer is a/i);
-    await expect(
-      storage.updateKanaProgress.mock.results[0]?.value,
-    ).resolves.toMatchObject({ correctCount: 0, incorrectCount: 1 });
+    expect(
+      storage.appendLearningRecord.mock.calls[0]?.[0]?.result,
+    ).toMatchObject({
+      outcome: "incorrect",
+      sourceItemResults: [
+        { sourceItemId: "kana.hiragana.a", outcome: "incorrect" },
+      ],
+    });
   });
 
   it("keeps the session usable when progress cannot load", async () => {
-    storage.loadKanaProgress.mockRejectedValue(
+    storage.loadLearningHistory.mockRejectedValue(
       new Error("storage unavailable"),
     );
     await renderSession();
@@ -233,17 +249,51 @@ describe("first hiragana session", () => {
     expect((await screen.findByRole("alert")).textContent).toMatch(
       /progress could not be loaded/i,
     );
+    screen.getByText(/Progress unavailable on this device/);
     screen.getByText("あ");
     expect(
       screen.getByRole("textbox", { name: /romaji/i }).hasAttribute("disabled"),
     ).toBe(false);
   });
 
+  it("keeps feedback usable when historical totals cannot be safely projected", async () => {
+    storage.loadLearningHistory.mockResolvedValue({
+      records: [],
+      baselines: [
+        {
+          itemId: "kana.hiragana.a",
+          correctCount: Number.MAX_SAFE_INTEGER,
+          incorrectCount: 0,
+          lastPracticedAt: "2026-09-26T00:00:00.000Z",
+        },
+      ],
+    });
+    const user = userEvent.setup();
+    await renderSession();
+    await user.type(await screen.findByRole("textbox"), "a");
+    await user.keyboard("{Enter}");
+    await screen.findByText("That’s right!");
+    await screen.findByText(/Progress could not be calculated/);
+    await user.click(screen.getByRole("button", { name: "Continue" }));
+    screen.getByText("い");
+    for (const [index, answer] of ["i", "u", "e", "o"].entries()) {
+      await user.type(screen.getByRole("textbox"), answer);
+      await user.keyboard("{Enter}");
+      await screen.findByText("That’s right!");
+      await user.click(
+        screen.getByRole("button", {
+          name: index === 3 ? "See results" : "Continue",
+        }),
+      );
+    }
+    screen.getByText("Local progress is unavailable.");
+  });
+
   it("ignores a stale progress read after leaving the lesson", async () => {
-    let resolveFirst!: (value: KanaProgress[]) => void;
-    storage.loadKanaProgress.mockImplementationOnce(
+    let resolveFirst!: (value: LearningHistory) => void;
+    storage.loadLearningHistory.mockImplementationOnce(
       () =>
-        new Promise<KanaProgress[]>((resolve) => {
+        new Promise<LearningHistory>((resolve) => {
           resolveFirst = resolve;
         }),
     );
@@ -253,14 +303,17 @@ describe("first hiragana session", () => {
     await renderSession();
     await screen.findByText(/0 practiced on this device/i);
     await act(async () => {
-      resolveFirst([
-        {
-          itemId: "kana.hiragana.a",
-          correctCount: 1,
-          incorrectCount: 0,
-          lastAnsweredAt: "2026-09-26T00:00:00.000Z",
-        },
-      ]);
+      resolveFirst({
+        records: [],
+        baselines: [
+          {
+            itemId: "kana.hiragana.a",
+            correctCount: 1,
+            incorrectCount: 0,
+            lastPracticedAt: "2026-09-26T00:00:00.000Z",
+          },
+        ],
+      });
       await Promise.resolve();
     });
 
@@ -269,9 +322,9 @@ describe("first hiragana session", () => {
 
   it("ignores a stale storage error after leaving the lesson", async () => {
     let rejectFirst!: (reason: Error) => void;
-    storage.loadKanaProgress.mockImplementationOnce(
+    storage.loadLearningHistory.mockImplementationOnce(
       () =>
-        new Promise<KanaProgress[]>((_resolve, reject) => {
+        new Promise<LearningHistory>((_resolve, reject) => {
           rejectFirst = reject;
         }),
     );
@@ -288,9 +341,25 @@ describe("first hiragana session", () => {
     expect(screen.queryByRole("alert")).toBeNull();
   });
 
+  it("retries a failed answer after continuing without counting it before commit", async () => {
+    storage.appendLearningRecord.mockRejectedValueOnce(new Error("quota"));
+    const user = userEvent.setup();
+    await renderSession();
+    await user.type(await screen.findByRole("textbox"), "a");
+    await user.keyboard("{Enter}");
+    await screen.findByRole("alert");
+    screen.getByText(/0 practiced on this device/);
+    const failed = storage.appendLearningRecord.mock.calls[0]?.[0];
+    await user.click(screen.getByRole("button", { name: "Continue" }));
+    await user.click(screen.getByRole("button", { name: "Retry saving" }));
+    await screen.findByText(/1 practiced on this device/);
+    expect(storage.appendLearningRecord.mock.calls[1]?.[0]).toBe(failed);
+    expect(screen.queryByRole("alert")).toBeNull();
+  });
+
   it("reports a failed save and still lets the learner continue", async () => {
     const user = userEvent.setup();
-    storage.updateKanaProgress.mockRejectedValue(
+    storage.appendLearningRecord.mockRejectedValue(
       new Error("storage unavailable"),
     );
     await renderSession();

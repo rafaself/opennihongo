@@ -16,3 +16,6 @@ export type ExerciseSessionId = string;
 export type SessionProfileId = string;
 
 export type ItemSelectionStrategyId = string;
+
+/** Identifies one completed exercise occurrence; reuse it when retrying a save. */
+export type LearningRecordId = string;

@@ -1,5 +1,3 @@
-import type { LearningItemId } from "../ids";
-
 type KanaSyllable =
   | "a"
   | "i"
@@ -50,13 +48,6 @@ type KanaSyllable =
 
 export type KanaId =
   `kana.hiragana.${KanaSyllable}` | `kana.katakana.${KanaSyllable}`;
-
-export type KanaProgress = Readonly<{
-  itemId: LearningItemId;
-  correctCount: number;
-  incorrectCount: number;
-  lastAnsweredAt: string;
-}>;
 
 export type KanaWordId =
   | "kana.word.soto"

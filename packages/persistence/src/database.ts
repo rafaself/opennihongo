@@ -1,7 +1,6 @@
+import { upgradeHistory } from "./history/upgrade";
 const DATABASE_NAME = "opennihongo";
-const DATABASE_VERSION = 1;
-
-export const KANA_PROGRESS_STORE = "kanaProgress";
+const DATABASE_VERSION = 2;
 
 export function openDatabase(): Promise<IDBDatabase> {
   if (typeof indexedDB === "undefined") {
@@ -11,13 +10,18 @@ export function openDatabase(): Promise<IDBDatabase> {
   return new Promise((resolve, reject) => {
     const request = indexedDB.open(DATABASE_NAME, DATABASE_VERSION);
     let blocked = false;
+    let upgradeError: unknown;
 
     request.onupgradeneeded = () => {
-      if (!request.result.objectStoreNames.contains(KANA_PROGRESS_STORE)) {
-        request.result.createObjectStore(KANA_PROGRESS_STORE, {
-          keyPath: "itemId",
-        });
+      const transaction = request.transaction;
+      if (transaction === null) {
+        reject(new Error("Local storage upgrade transaction is unavailable."));
+        return;
       }
+      upgradeHistory(request.result, transaction, (error) => {
+        upgradeError = error;
+        transaction.abort();
+      });
     };
     request.onsuccess = () => {
       const database = request.result;
@@ -33,7 +37,10 @@ export function openDatabase(): Promise<IDBDatabase> {
     };
     request.onerror = () => {
       reject(
-        request.error ?? new Error("Could not open local progress storage."),
+        upgradeError instanceof Error
+          ? upgradeError
+          : (request.error ??
+              new Error("Could not open local progress storage.")),
       );
     };
     request.onblocked = () => {

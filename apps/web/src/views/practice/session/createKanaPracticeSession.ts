@@ -44,12 +44,13 @@ export function kanaPracticeConfigurationId(options: PracticeSearch) {
 /** One seeded batch, with unique readings for answer-option games. */
 export function createKanaPracticeSession(
   options: KanaPracticeOptions,
+  sessionId: string,
 ): KanaPracticeSession {
   const { mode, revision, direction } = options;
   const summary = getKanaPracticeSummary(mode, options);
   if (!summary.canStart) throw new Error(summary.error);
-  const sessionId = `kana-practice:${mode}:${kanaPracticeConfigurationId(options)}:${String(revision)}`;
-  const random = new SeededRandomSource(sessionId);
+  const seed = `kana-practice:${mode}:${kanaPracticeConfigurationId(options)}:${String(revision)}`;
+  const random = new SeededRandomSource(seed);
   const candidates = shuffle(getKanaPracticeTiles(options), random);
   const eligible =
     mode === "reading" ? candidates : selectDistinctReadings(candidates);

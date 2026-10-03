@@ -42,7 +42,7 @@ describe("Words matching board", () => {
   it("clears wrong-pair feedback after a short delay and leaves the pair retryable", async () => {
     vi.useFakeTimers();
     const attempt = vi.fn();
-    const [exercise] = createWordsPracticeSession(12).rounds;
+    const [exercise] = createWordsPracticeSession(12, "test-session").rounds;
     const firstPair = exercise.pairs[0];
     const secondPair = exercise.pairs[1];
     if (!firstPair || !secondPair) {
@@ -82,7 +82,7 @@ describe("Words matching board", () => {
 
   it("moves keyboard focus to a visible match after a rolling match", async () => {
     const user = userEvent.setup();
-    const exercise = createWordsPracticeSession(12).rounds[1];
+    const exercise = createWordsPracticeSession(12, "test-session").rounds[1];
     const firstVisiblePairId = exercise.leftOrder[0];
     const newlyVisiblePairId = exercise.leftOrder[3];
     if (firstVisiblePairId === undefined || newlyVisiblePairId === undefined) {

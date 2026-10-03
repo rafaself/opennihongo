@@ -18,8 +18,10 @@ for (const script of ["hiragana", "katakana"] as const) {
           direction,
           revision: 0,
         } as const;
-        const session = createKanaPracticeSession(options);
-        expect(session).toEqual(createKanaPracticeSession(options));
+        const session = createKanaPracticeSession(options, "test-session");
+        expect(session).toEqual(
+          createKanaPracticeSession(options, "test-session"),
+        );
         expect(session.profileId).toBe("kana.practice.quiz");
         expect(session.exercises).toHaveLength(
           category === "small-tsu" ? 4 : 5,
@@ -79,7 +81,10 @@ for (const script of ["hiragana", "katakana"] as const) {
         expect(Object.isFrozen(session)).toBe(true);
         expect(Object.isFrozen(session.exercises)).toBe(true);
         expect(
-          createKanaPracticeSession({ ...options, revision: 1 }),
+          createKanaPracticeSession(
+            { ...options, revision: 1 },
+            "test-session",
+          ),
         ).not.toEqual(session);
       });
     }
@@ -88,14 +93,17 @@ for (const script of ["hiragana", "katakana"] as const) {
 
 it("keeps duplicate readings out of every marked-Kana option set across replays", () => {
   for (let revision = 0; revision < 20; revision++) {
-    const session = createKanaPracticeSession({
-      mode: "quiz",
-      ...normalizePracticeSearch({}),
-      scripts: ["hiragana"],
-      categories: ["dakuten"],
-      direction: "romaji",
-      revision,
-    });
+    const session = createKanaPracticeSession(
+      {
+        mode: "quiz",
+        ...normalizePracticeSearch({}),
+        scripts: ["hiragana"],
+        categories: ["dakuten"],
+        direction: "romaji",
+        revision,
+      },
+      "test-session",
+    );
     expect(
       new Set(
         session.exercises.map((exercise) =>

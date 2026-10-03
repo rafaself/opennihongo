@@ -20,9 +20,9 @@ it.each(["easy", "standard", "hard"] as const)(
       mode: "quiz",
       revision: 0,
     } as const;
-    const session = createKanaPracticeSession(options);
+    const session = createKanaPracticeSession(options, "test-session");
     expect(session.exercises).toHaveLength(20);
-    expect(session).toEqual(createKanaPracticeSession(options));
+    expect(session).toEqual(createKanaPracticeSession(options, "test-session"));
     const tiles = getKanaPracticeTiles(selection);
     expect(
       new Set(session.exercises.flatMap(({ sourceItemIds }) => sourceItemIds))
@@ -46,12 +46,15 @@ it.each(["easy", "standard", "hard"] as const)(
 it.each(["easy", "standard", "hard"] as const)(
   "splits %s matching into small boards with distinct readings",
   (difficulty) => {
-    const session = createKanaPracticeSession({
-      ...selection,
-      mode: "matching",
-      difficulty,
-      revision: 0,
-    });
+    const session = createKanaPracticeSession(
+      {
+        ...selection,
+        mode: "matching",
+        difficulty,
+        revision: 0,
+      },
+      "test-session",
+    );
     expect(session.exercises.length).toBeGreaterThan(1);
     const ids = session.exercises.flatMap(({ sourceItemIds }) => sourceItemIds);
     expect(ids).toHaveLength(20);
@@ -95,15 +98,21 @@ it("rebalances trailing pairs, clamps tiny pools, and rejects unusable selection
   for (const mode of ["quiz", "matching"] as const) {
     expect(getKanaPracticeSummary(mode, oneSound).canStart).toBe(false);
     expect(() =>
-      createKanaPracticeSession({ ...oneSound, mode, revision: 0 }),
+      createKanaPracticeSession(
+        { ...oneSound, mode, revision: 0 },
+        "test-session",
+      ),
     ).toThrow(/distinct readings/);
   }
   expect(() =>
-    createKanaPracticeSession({
-      ...selection,
-      characterIds: [],
-      mode: "reading",
-      revision: 0,
-    }),
+    createKanaPracticeSession(
+      {
+        ...selection,
+        characterIds: [],
+        mode: "reading",
+        revision: 0,
+      },
+      "test-session",
+    ),
   ).toThrow(/Select/);
 });

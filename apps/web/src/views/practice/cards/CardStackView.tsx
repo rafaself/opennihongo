@@ -15,6 +15,8 @@ import {
   scoreExerciseResults,
 } from "@opennihongo/core";
 import type { CardStackItem } from "./cardStackContent";
+import { useLearningRecorder } from "../interaction/history/useLearningRecorder";
+import { LearningSaveStatus } from "../interaction/history/LearningSaveStatus";
 import { createCardStackSession } from "./createCardStackSession";
 import { useCardStackKeyboard } from "./useCardStackKeyboard";
 import { CardStackFace } from "./CardStackFace";
@@ -41,9 +43,16 @@ export function CardStackView({
 }) {
   const [practice, setPractice] = useState(() => ({
     revision: 0,
-    session: createCardStackSession(items, collectionId, 0, length),
+    session: createCardStackSession(
+      items,
+      collectionId,
+      0,
+      crypto.randomUUID(),
+      length,
+    ),
   }));
   const [hintsUsed, setHintsUsed] = useState(0);
+  const recorder = useLearningRecorder();
   const [index, setIndex] = useState(0);
   const [revealed, setRevealed] = useState(false);
   const [results, setResults] = useState<ExerciseResult[]>([]);
@@ -85,10 +94,9 @@ export function CardStackView({
       revealed,
       attempts === 0 ? "down" : remembered ? "right" : "left",
     );
-    setResults((current) => [
-      ...current,
-      createSingleAnswerResult(card, remembered, attempts),
-    ]);
+    const result = createSingleAnswerResult(card, remembered, attempts);
+    void recorder.recordResult(practice.session, result);
+    setResults((current) => [...current, result]);
     setRevealed(false);
     setIndex((current) => current + 1);
   }
@@ -100,7 +108,13 @@ export function CardStackView({
     const revision = practice.revision + 1;
     setPractice({
       revision,
-      session: createCardStackSession(items, collectionId, revision, length),
+      session: createCardStackSession(
+        items,
+        collectionId,
+        revision,
+        crypto.randomUUID(),
+        length,
+      ),
     });
     ratedId.current = null;
     setIndex(0);
@@ -131,6 +145,7 @@ export function CardStackView({
         step={`${String(complete ? cards.length : index + 1)}/${String(cards.length)}`}
         search={search}
       />
+      <LearningSaveStatus recorder={recorder} />
       {showResults ? (
         <PracticeResults
           score={scoreExerciseResults(results)}

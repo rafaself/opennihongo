@@ -22,6 +22,7 @@ it("reveals before self-rating, records recall and skips, and replays with a fre
     getKanaCards({ scripts: ["katakana"], categories: ["small-tsu"] }),
     kanaCardCollectionId,
     0,
+    "test-session",
   );
   expect(screen.getByText("1/4")).toBeTruthy();
   expect(screen.queryByRole("button", { name: /Got it/ })).toBeNull();
@@ -59,6 +60,7 @@ it("reveals before self-rating, records recall and skips, and replays with a fre
     getKanaCards({ scripts: ["katakana"], categories: ["small-tsu"] }),
     kanaCardCollectionId,
     1,
+    "test-session",
   );
   expect(screen.getByText(replay.exercises[0]?.front.text ?? "")).toBeTruthy();
   expect(screen.queryByText(replay.exercises[0]?.back.text ?? "")).toBeNull();
@@ -67,7 +69,12 @@ it("reveals before self-rating, records recall and skips, and replays with a fre
 it("completes the word collection using the same card interaction and preserves hub selections", async () => {
   const user = userEvent.setup();
   await openCards("words");
-  const session = createCardStackSession(getWordCards(), "words:beginner", 0);
+  const session = createCardStackSession(
+    getWordCards(),
+    "words:beginner",
+    0,
+    "test-session",
+  );
   for (const card of session.exercises) {
     await screen.findByRole("button", { name: "Reveal answer" });
     expect(screen.getByText(card.front.text)).toBeTruthy();
@@ -136,6 +143,7 @@ it("cancels playback on exit and uses authored speech when a recording cannot lo
       getKanaCards({ scripts: ["katakana"], categories: ["small-tsu"] }),
       kanaCardCollectionId,
       0,
+      "test-session",
     ).exercises[0];
     const source = getKanaCards({
       scripts: ["katakana"],
@@ -187,8 +195,12 @@ it("respects the romaji preference on the revealed word face", async () => {
   saveAppPreferences({ ...defaultAppPreferences, showRomaji: false });
   try {
     await openCards("words");
-    const first = createCardStackSession(getWordCards(), "words:beginner", 0)
-      .exercises[0];
+    const first = createCardStackSession(
+      getWordCards(),
+      "words:beginner",
+      0,
+      "test-session",
+    ).exercises[0];
     await userEvent
       .setup()
       .click(screen.getByRole("button", { name: "Reveal answer" }));

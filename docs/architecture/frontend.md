@@ -88,14 +88,15 @@ exact optional property types.
 Prettier is the formatting authority for supported source, configuration, and
 Markdown files. Its options and ignore list are defined at the workspace root.
 
-`core` owns exercise evaluation, result scoring, session transitions, and
-result-based Kana progress updates. `content` owns the
+`core` owns exercise evaluation, result scoring, session transitions, immutable
+learning records, and deterministic item-progress derivation. `content` owns the
 authored Kana syllabaries, first lesson selection, chart content, and beginner
 words; audio assets resolve their stable semantic identifiers.
-`persistence` stores Kana progress in a versioned IndexedDB database. Its atomic
-update API receives a synchronous domain updater from the caller and validates
-the stored record and item identity; it does not evaluate answers or calculate
-learning progress. The web
+`persistence` stores completed learning results and imported progress baselines
+in a versioned IndexedDB database. Its append API validates records and atomically
+deduplicates retries; it does not evaluate answers or calculate learning progress.
+The [learning progress guide](learning-progress.md) describes the schema, legacy
+Kana migration, and derived read model. The web
 app consumes the public exports of the packages needed by current features; it
 does not own storage schema or domain rules.
 
@@ -251,11 +252,12 @@ and the generic typed-answer generator. Its sequence remains あ, い, う, え,
 domain APIs. Core's `ExerciseSessionState` records each `ExerciseResult` once and
 advances only after a result exists. Reading, matching, and quiz also use those
 transitions, while result construction and scoring are shared core functions.
-Typed-answer evaluation receives Kana normalization explicitly. Item outcomes
-feed `recordKanaItemResult` through persistence's atomic `updateKanaProgress`
-callback, preserving concurrent tab updates and the existing IndexedDB schema.
-Storage failures still allow completion and scoring; replay resets transient
-results while keeping saved progress. The vowel lesson retains its existing
+Typed-answer evaluation receives Kana normalization explicitly. Completed
+results feed one generic immutable learning history, with idempotent IndexedDB
+writes and core-derived item progress. The v1 vowel totals are imported as a
+baseline in an atomic schema upgrade. Storage failures still allow completion
+and scoring, with an explicit retry action; replay resets transient results
+while keeping saved progress and assigning a fresh session ID. The vowel lesson retains its existing
 form, Enter submission, feedback focus, and results focus. Existing game audio
 and device preferences remain owned by their current UI adapters.
 

@@ -19,6 +19,7 @@ it.each(["hiragana", "katakana"] as const)(
         items,
         `${script}:${section.id}`,
         0,
+        "test-session",
       );
       expect(session.exercises).toHaveLength(Math.min(10, items.length));
       expect(
@@ -41,7 +42,12 @@ it("keeps characters with equivalent readings as distinct cards", () => {
   });
   const duplicates = items.filter(({ back }) => back.text === "ji");
   expect(duplicates).toHaveLength(2);
-  const session = createCardStackSession(duplicates, "duplicates", 0);
+  const session = createCardStackSession(
+    duplicates,
+    "duplicates",
+    0,
+    "test-session",
+  );
   expect(session.exercises).toHaveLength(2);
   expect(
     new Set(session.exercises.flatMap(({ sourceItemIds }) => sourceItemIds))
@@ -51,7 +57,7 @@ it("keeps characters with equivalent readings as distinct cards", () => {
 
 it("uses the authored word meanings and pronunciations without repeating small collections", () => {
   const items = getWordCards();
-  const session = createCardStackSession(items, "words", 0);
+  const session = createCardStackSession(items, "words", 0, "test-session");
   expect(session.exercises).toHaveLength(kanaBeginnerWords.length);
   for (const card of session.exercises) {
     const word = kanaBeginnerWords.find(
@@ -72,12 +78,14 @@ it("accepts future subjects, reproduces a seed, and reshuffles a replay without 
     front: { text: `Prompt ${String(index)}` },
     back: { text: `Answer ${String(index)}` },
   }));
-  const session = createCardStackSession(items, "future", 0);
-  expect(session).toEqual(createCardStackSession(items, "future", 0));
+  const session = createCardStackSession(items, "future", 0, "test-session");
+  expect(session).toEqual(
+    createCardStackSession(items, "future", 0, "test-session"),
+  );
   expect(
     session.exercises.map(({ sourceItemIds }) => sourceItemIds),
   ).not.toEqual(
-    createCardStackSession(items, "future", 1).exercises.map(
+    createCardStackSession(items, "future", 1, "test-session").exercises.map(
       ({ sourceItemIds }) => sourceItemIds,
     ),
   );
@@ -97,20 +105,26 @@ it("accepts future subjects, reproduces a seed, and reshuffles a replay without 
 });
 
 it("rejects empty collections and repeated identities before starting a session", () => {
-  expect(() => createCardStackSession([], "empty", 0)).toThrow(/empty/i);
-  const item = { id: "a", front: { text: "A" }, back: { text: "a" } };
-  expect(() => createCardStackSession([item, item], "duplicates", 0)).toThrow(
-    /distinct/i,
+  expect(() => createCardStackSession([], "empty", 0, "test-session")).toThrow(
+    /empty/i,
   );
+  const item = { id: "a", front: { text: "A" }, back: { text: "a" } };
+  expect(() =>
+    createCardStackSession([item, item], "duplicates", 0, "test-session"),
+  ).toThrow(/distinct/i);
 });
 
 it("supports configured Kana stack lengths while preserving the ten-card default", () => {
   const items = getKanaCards({ scripts: ["hiragana"], categories: ["basic"] });
-  expect(createCardStackSession(items, "kana", 0, 20).exercises).toHaveLength(
-    20,
-  );
-  expect(createCardStackSession(items, "kana", 0, 5).exercises).toHaveLength(5);
-  expect(createCardStackSession(items, "kana", 0).exercises).toHaveLength(10);
+  expect(
+    createCardStackSession(items, "kana", 0, "test-session", 20).exercises,
+  ).toHaveLength(20);
+  expect(
+    createCardStackSession(items, "kana", 0, "test-session", 5).exercises,
+  ).toHaveLength(5);
+  expect(
+    createCardStackSession(items, "kana", 0, "test-session").exercises,
+  ).toHaveLength(10);
 });
 
 it.each([0, -1, 1.5, Number.NaN])(
@@ -120,8 +134,8 @@ it.each([0, -1, 1.5, Number.NaN])(
       scripts: ["hiragana"],
       categories: ["basic"],
     });
-    expect(() => createCardStackSession(items, "kana", 0, length)).toThrow(
-      /length/,
-    );
+    expect(() =>
+      createCardStackSession(items, "kana", 0, "test-session", length),
+    ).toThrow(/length/);
   },
 );

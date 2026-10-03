@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { KANA_PROGRESS_STORE, openDatabase } from "./database";
+import { openDatabase } from "./database";
 
 type EventHandler = ((this: IDBOpenDBRequest, event: Event) => unknown) | null;
 
@@ -51,38 +51,26 @@ afterEach(() => {
 });
 
 describe("openDatabase", () => {
-  it("creates the progress store during the first upgrade and closes on version change", async () => {
-    const { database, createObjectStore, close } = createDatabase();
+  it("closes its connection when another tab upgrades the database", async () => {
+    const { database, close } = createDatabase();
     const request = createOpenRequest(database);
     vi.stubGlobal("indexedDB", { open: vi.fn(() => request) });
-
     const opening = openDatabase();
-    dispatch(request.onupgradeneeded, request, "upgradeneeded");
     dispatch(request.onsuccess, request, "success");
-
-    await expect(opening).resolves.toBe(database);
-    expect(createObjectStore).toHaveBeenCalledWith(KANA_PROGRESS_STORE, {
-      keyPath: "itemId",
-    });
+    await opening;
     database.onversionchange?.(
       new Event("versionchange") as IDBVersionChangeEvent,
     );
-    expect(close).toHaveBeenCalledTimes(1);
+    expect(close).toHaveBeenCalledOnce();
   });
-
-  it("keeps an existing progress store during an upgrade", async () => {
-    const { database, createObjectStore } = createDatabase(true);
-    const request = createOpenRequest(database);
+  it("reports an unavailable upgrade transaction", async () => {
+    const { database } = createDatabase();
+    const request = { ...createOpenRequest(database), transaction: null };
     vi.stubGlobal("indexedDB", { open: vi.fn(() => request) });
-
     const opening = openDatabase();
     dispatch(request.onupgradeneeded, request, "upgradeneeded");
-    dispatch(request.onsuccess, request, "success");
-
-    await expect(opening).resolves.toBe(database);
-    expect(createObjectStore).not.toHaveBeenCalled();
+    await expect(opening).rejects.toThrow("upgrade transaction is unavailable");
   });
-
   it("rejects a blocked upgrade and closes a late successful connection", async () => {
     const { database, close } = createDatabase();
     const request = createOpenRequest(database);

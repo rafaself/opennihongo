@@ -1,13 +1,11 @@
-import { cleanup, render, screen } from "@testing-library/react";
+import { cleanup, render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { RouterProvider } from "@tanstack/react-router";
 import { afterEach, beforeEach, vi } from "vitest";
 import type { MatchingExercise } from "@opennihongo/core";
 import { router } from "../../../app/router";
-import {
-  createKanaPracticeSession,
-  type KanaPracticeOptions,
-} from "../session/createKanaPracticeSession";
+import type { KanaPracticeOptions } from "../session/createKanaPracticeSession";
+import * as sessions from "../session/createKanaPracticeSession";
 
 const audioCacheMock = vi.hoisted(() => ({
   preload:
@@ -77,6 +75,7 @@ export async function openPractice(
 export async function renderPractice(
   options: KanaPracticeOptions = readingOptions,
 ) {
+  const generation = vi.spyOn(sessions, "createKanaPracticeSession");
   await openPractice(options);
   await screen.findByRole("heading", {
     name:
@@ -84,15 +83,22 @@ export async function renderPractice(
         ? "What is the corresponding sound?"
         : "Match the pairs:",
   });
-  return createKanaPracticeSession(options);
+  const generated = generation.mock.results.at(-1);
+  if (generated?.type !== "return")
+    throw new Error("Expected a generated practice session");
+  return generated.value;
 }
 
 export async function matchEveryPair(
   user: ReturnType<typeof userEvent.setup>,
   exercise: MatchingExercise,
 ) {
+  const left = within(screen.getByRole("group", { name: "Romaji readings" }));
+  const right = within(
+    screen.getByRole("group", { name: /characters and patterns/ }),
+  );
   for (const pair of exercise.pairs) {
-    await user.click(screen.getByRole("button", { name: pair.left }));
-    await user.click(screen.getByRole("button", { name: pair.right }));
+    await user.click(left.getByRole("button", { name: pair.left }));
+    await user.click(right.getByRole("button", { name: pair.right }));
   }
 }

@@ -3,40 +3,62 @@ import {
   advanceExerciseSession,
   countExerciseItems,
   createExerciseSessionState,
+  deriveItemProgress,
   evaluateTypedAnswer,
   getCurrentExercise,
   normalizeKanaAnswer,
   recordExerciseSessionResult,
-  recordKanaItemResult,
   scoreExerciseResults,
-  type KanaProgress,
 } from "@opennihongo/core";
-import { loadKanaProgress, updateKanaProgress } from "@opennihongo/persistence";
-import { useEffect, useRef, useState } from "react";
+import {
+  loadLearningHistory,
+  type LearningHistory,
+} from "@opennihongo/persistence";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { createKanaVowelSession } from "../session/createKanaVowelSession";
+import { useLearningRecorder } from "./history/useLearningRecorder";
 
-/** Connects transient domain state to React and the device storage boundary. */
+/** Connects generic domain state, device history, and the lesson presentation. */
 export function useKanaVowelLesson() {
   const [state, setState] = useState(() =>
-    createExerciseSessionState(createKanaVowelSession()),
+    createExerciseSessionState(createKanaVowelSession(crypto.randomUUID())),
   );
+  const [history, setHistory] = useState<LearningHistory>({
+    records: [],
+    baselines: [],
+  });
   const [loading, setLoading] = useState(true);
-  const [progress, setProgress] = useState<KanaProgress[]>([]);
   const [answer, setAnswer] = useState("");
-  const [saving, setSaving] = useState(false);
   const [storageError, setStorageError] = useState("");
   const submitted = useRef(false);
   const active = useRef(true);
+  const recorder = useLearningRecorder();
   const exercise = getCurrentExercise(state);
   const feedback = state.results[state.index];
   const complete = exercise === undefined;
+  const progress = useMemo(() => {
+    try {
+      return {
+        items: deriveItemProgress(
+          [...history.records, ...recorder.savedRecords],
+          history.baselines,
+        ),
+        error: "",
+      };
+    } catch {
+      return {
+        items: [],
+        error: "Progress could not be calculated. You can still practice.",
+      };
+    }
+  }, [history, recorder.savedRecords]);
 
   useEffect(() => {
     let current = true;
     active.current = true;
-    void loadKanaProgress()
+    void loadLearningHistory()
       .then((saved) => {
-        if (current) setProgress(saved);
+        if (current) setHistory(saved);
       })
       .catch(() => {
         if (current)
@@ -52,7 +74,6 @@ export function useKanaVowelLesson() {
       active.current = false;
     };
   }, []);
-
   useEffect(() => {
     if (complete) document.getElementById("practice-complete-title")?.focus();
   }, [complete]);
@@ -67,41 +88,14 @@ export function useKanaVowelLesson() {
     submitted.current = true;
     const result = evaluateTypedAnswer(exercise, answer, normalizeKanaAnswer);
     const answeredState = recordExerciseSessionResult(state, result);
-    const answeredAt = new Date().toISOString();
-    setSaving(true);
-    try {
-      for (const itemResult of result.sourceItemResults) {
-        const saved = await updateKanaProgress(
-          itemResult.sourceItemId,
-          (existing) => recordKanaItemResult(existing, itemResult, answeredAt),
-        );
-        if (active.current) {
-          setProgress((previous) => [
-            ...previous.filter((entry) => entry.itemId !== saved.itemId),
-            saved,
-          ]);
-        }
-      }
-      if (active.current) setStorageError("");
-    } catch {
-      if (active.current)
-        setStorageError(
-          "Your answer could not be saved. You can still finish this session.",
-        );
-    } finally {
-      if (active.current) {
-        setState(answeredState);
-        setSaving(false);
-      }
-    }
+    await recorder.recordResult(state.session, result);
+    if (active.current) setState(answeredState);
   }
-
   function focusAnswer() {
     window.requestAnimationFrame(() =>
       document.getElementById("kana-answer")?.focus(),
     );
   }
-
   function continueSession() {
     const next = advanceExerciseSession(state);
     setState(next);
@@ -109,29 +103,33 @@ export function useKanaVowelLesson() {
     submitted.current = false;
     if (getCurrentExercise(next)) focusAnswer();
   }
-
   function restartSession() {
-    setState(createExerciseSessionState(state.session));
+    setState(
+      createExerciseSessionState(createKanaVowelSession(crypto.randomUUID())),
+    );
     setAnswer("");
     submitted.current = false;
     focusAnswer();
   }
-
   return {
     loading,
     answer,
     setAnswer,
-    saving,
-    storageError,
+    saving: recorder.saving,
+    storageError: storageError || progress.error,
+    recorder,
     exercise,
     feedback,
     complete,
     index: state.index,
     total: countExerciseItems(state.session.exercises),
     score: scoreExerciseResults(state.results),
-    practicedCount: progress.filter((entry) =>
-      hiraganaVowels.some((vowel) => vowel.id === entry.itemId),
-    ).length,
+    practicedCount:
+      storageError || progress.error
+        ? undefined
+        : progress.items.filter((entry) =>
+            hiraganaVowels.some((vowel) => vowel.id === entry.itemId),
+          ).length,
     submitAnswer,
     continueSession,
     restartSession,

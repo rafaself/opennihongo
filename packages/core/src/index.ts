@@ -1,14 +1,10 @@
-export { normalizeKanaAnswer, recordKanaItemResult } from "./kana/index";
-export type {
-  KanaAudioId,
-  KanaId,
-  KanaProgress,
-  KanaWordId,
-} from "./kana/index";
+export { normalizeKanaAnswer } from "./kana/index";
+export type { KanaAudioId, KanaId, KanaWordId } from "./kana/index";
 export type {
   ExerciseId,
   ExerciseSessionId,
   LearningItemId,
+  LearningRecordId,
   ItemSelectionStrategyId,
   MatchingPairId,
   SessionProfileId,
@@ -79,3 +75,14 @@ export {
 } from "./exercises/index";
 export type { RandomSource } from "./random/index";
 export { SeededRandomSource, shuffle } from "./random/index";
+export {
+  createLearningRecord,
+  deriveItemProgress,
+  assertLearningRecord,
+  assertItemProgressBaseline,
+} from "./progress/index";
+export type {
+  LearningRecord,
+  ItemProgressBaseline,
+  ItemProgress,
+} from "./progress/index";

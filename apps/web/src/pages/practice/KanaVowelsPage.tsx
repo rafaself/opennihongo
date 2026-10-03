@@ -1,6 +1,7 @@
 import { normalizePracticeSearch } from "../../app/practiceSearch";
 import { Button, FormField, Input, Surface, Text } from "@opennihongo/ui";
 import { useKanaVowelLesson } from "../../views/practice/interaction/useKanaVowelLesson";
+import { LearningSaveStatus } from "../../views/practice/interaction/history/LearningSaveStatus";
 import { PracticeFeedback } from "../../views/practice/feedback/PracticeFeedback";
 import { PracticeHeader } from "../../views/practice/layout/PracticeHeader";
 import { PracticeResults } from "../../views/practice/results/PracticeResults";
@@ -13,6 +14,7 @@ export function KanaVowelsPage() {
     setAnswer,
     saving,
     storageError,
+    recorder,
     exercise,
     feedback,
     complete,
@@ -47,6 +49,8 @@ export function KanaVowelsPage() {
         step={`${String(complete ? total : index + 1)}/${String(total)}`}
         search={search}
       />
+      <LearningSaveStatus recorder={recorder} />
+      {storageError && <p role="alert">{storageError}</p>}
       {loading ? (
         <div className="practice-session__body">
           <p role="status">Loading your progress…</p>
@@ -57,7 +61,11 @@ export function KanaVowelsPage() {
           total={total}
           onRestart={restartSession}
           search={search}
-          summary={`Progress saved for ${String(practicedCount)} of ${String(total)} vowels.`}
+          summary={
+            practicedCount === undefined
+              ? "Local progress is unavailable."
+              : `Progress saved for ${String(practicedCount)} of ${String(total)} vowels.`
+          }
         />
       ) : exercise?.type === "typed-answer" ? (
         <>
@@ -70,7 +78,6 @@ export function KanaVowelsPage() {
                 Read each character and type its romaji. Your answers are saved
                 on this device.
               </Text>
-              {storageError && <p role="alert">{storageError}</p>}
               <div className="practice-session__exercise">
                 <Surface className="practice-session__prompt" elevation="card">
                   <span className="practice-session__prompt-kana" lang="ja">
@@ -101,8 +108,10 @@ export function KanaVowelsPage() {
                 </form>
               </div>
               <Text color="secondary" variant="label">
-                Character {index + 1} of {total} · {practicedCount} practiced on
-                this device
+                Character {index + 1} of {total} ·{" "}
+                {practicedCount === undefined
+                  ? "Progress unavailable on this device"
+                  : `${String(practicedCount)} practiced on this device`}
               </Text>
             </div>
           </div>

@@ -4,17 +4,20 @@ import {
   render,
   screen,
   waitFor,
+  within,
 } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import type { KanaProgress } from "@opennihongo/core";
-import type { updateKanaProgress } from "@opennihongo/persistence";
+import type {
+  appendLearningRecord,
+  LearningHistory,
+} from "@opennihongo/persistence";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { RouterProvider } from "@tanstack/react-router";
 import { router } from "./router";
 
 const storage = vi.hoisted(() => ({
-  loadKanaProgress: vi.fn<() => Promise<KanaProgress[]>>(),
-  updateKanaProgress: vi.fn<typeof updateKanaProgress>(),
+  loadLearningHistory: vi.fn<() => Promise<LearningHistory>>(),
+  appendLearningRecord: vi.fn<typeof appendLearningRecord>(),
 }));
 
 vi.mock("@opennihongo/persistence", () => storage);
@@ -43,12 +46,10 @@ function installSpeechMocks() {
 }
 
 beforeEach(() => {
-  storage.loadKanaProgress.mockReset().mockResolvedValue([]);
-  storage.updateKanaProgress
+  storage.loadLearningHistory
     .mockReset()
-    .mockImplementation((_itemId, update) =>
-      Promise.resolve(update(undefined)),
-    );
+    .mockResolvedValue({ records: [], baselines: [] });
+  storage.appendLearningRecord.mockReset().mockResolvedValue(undefined);
 });
 
 afterEach(() => {
@@ -109,6 +110,16 @@ describe("web application routes", () => {
 
     await user.click(screen.getByRole("link", { name: "Kana" }));
     await screen.findByRole("heading", { name: "Let's learn Hiragana!" });
+    const basic = within(
+      screen.getByRole("region", { name: "Basic characters" }),
+    );
+    const combinations = within(
+      screen.getByRole("region", { name: "Combinations" }),
+    );
+    const smallTsu = within(screen.getByRole("region", { name: "Small っ" }));
+    const longVowels = within(
+      screen.getByRole("region", { name: "Long vowels" }),
+    );
     expect(
       screen
         .getByRole("radio", { name: "Hiragana" })
@@ -120,10 +131,14 @@ describe("web application routes", () => {
     expect(screen.getByRole("heading", { name: "Combinations" })).toBeTruthy();
     expect(screen.getByRole("heading", { name: "Small っ" })).toBeTruthy();
     expect(
-      screen.getByRole("button", { name: "Play pronunciation for きゃ, kya" }),
+      combinations.getByRole("button", {
+        name: "Play pronunciation for きゃ, kya",
+      }),
     ).toBeTruthy();
     expect(
-      screen.getByRole("button", { name: "Play pronunciation for ああ, aa" }),
+      longVowels.getByRole("button", {
+        name: "Play pronunciation for ああ, aa",
+      }),
     ).toBeTruthy();
     expect(
       screen.getAllByRole("button", { name: /Play pronunciation for/ }),
@@ -136,7 +151,7 @@ describe("web application routes", () => {
     }
 
     await user.click(
-      screen.getByRole("button", { name: "Play pronunciation for あ, a" }),
+      basic.getByRole("button", { name: "Play pronunciation for あ, a" }),
     );
     expect(speech.cancel).toHaveBeenCalledOnce();
     expect(speech.speak).not.toHaveBeenCalled();
@@ -147,7 +162,7 @@ describe("web application routes", () => {
     expect(audioElements[0]?.play).toHaveBeenCalledOnce();
 
     await user.click(
-      screen.getByRole("button", { name: "Play pronunciation for た, ta" }),
+      basic.getByRole("button", { name: "Play pronunciation for た, ta" }),
     );
     expect(audioElements[0]?.pause).toHaveBeenCalledOnce();
     expect(audioElements).toHaveLength(2);
@@ -157,7 +172,9 @@ describe("web application routes", () => {
     expect(audioElements[1]?.play).toHaveBeenCalledOnce();
 
     await user.click(
-      screen.getByRole("button", { name: "Play pronunciation for きゃ, kya" }),
+      combinations.getByRole("button", {
+        name: "Play pronunciation for きゃ, kya",
+      }),
     );
     expect(audioElements[1]?.pause).toHaveBeenCalledOnce();
     expect(audioElements).toHaveLength(3);
@@ -167,7 +184,7 @@ describe("web application routes", () => {
     expect(audioElements[2]?.play).toHaveBeenCalledOnce();
 
     await user.click(
-      screen.getByRole("button", { name: "Play pronunciation for っ+k, kk" }),
+      smallTsu.getByRole("button", { name: "Play pronunciation for っ+k, kk" }),
     );
     expect(audioElements[2]?.pause).toHaveBeenCalledOnce();
     expect(audioElements).toHaveLength(4);
@@ -176,7 +193,9 @@ describe("web application routes", () => {
     );
 
     await user.click(
-      screen.getByRole("button", { name: "Play pronunciation for ああ, aa" }),
+      longVowels.getByRole("button", {
+        name: "Play pronunciation for ああ, aa",
+      }),
     );
     expect(audioElements[3]?.pause).toHaveBeenCalledOnce();
     expect(audioElements).toHaveLength(5);
@@ -184,12 +203,18 @@ describe("web application routes", () => {
       "kana.chart.hiragana.long-vowels.aa.nemo-10000.opus",
     );
     expect(speech.speak).not.toHaveBeenCalled();
-    expect(storage.updateKanaProgress).not.toHaveBeenCalled();
+    expect(storage.appendLearningRecord).not.toHaveBeenCalled();
 
     await user.click(screen.getByRole("radio", { name: "Hiragana" }));
     await user.keyboard("{ArrowRight>}");
     await screen.findByRole("heading", { name: "Let's learn Katakana!" });
     await user.keyboard("{/ArrowRight}");
+    const katakanaBasic = within(
+      screen.getByRole("region", { name: "Basic characters" }),
+    );
+    const katakanaLongVowels = within(
+      screen.getByRole("region", { name: "Long vowels" }),
+    );
     expect(
       screen
         .getByRole("radio", { name: "Katakana" })
@@ -199,10 +224,14 @@ describe("web application routes", () => {
       screen.getAllByRole("button", { name: /Play pronunciation for/ }),
     ).toHaveLength(113);
     expect(
-      screen.getByRole("button", { name: "Play pronunciation for ア, a" }),
+      katakanaBasic.getByRole("button", {
+        name: "Play pronunciation for ア, a",
+      }),
     ).toBeTruthy();
     await user.click(
-      screen.getByRole("button", { name: "Play pronunciation for ア, a" }),
+      katakanaBasic.getByRole("button", {
+        name: "Play pronunciation for ア, a",
+      }),
     );
     expect(audioElements).toHaveLength(6);
     expect(audioElements[4]?.pause).toHaveBeenCalledOnce();
@@ -213,7 +242,9 @@ describe("web application routes", () => {
     expect(speech.speak).not.toHaveBeenCalled();
 
     await user.click(
-      screen.getByRole("button", { name: "Play pronunciation for アー, aa" }),
+      katakanaLongVowels.getByRole("button", {
+        name: "Play pronunciation for アー, aa",
+      }),
     );
     expect(audioElements).toHaveLength(7);
     expect(audioElements[5]?.pause).toHaveBeenCalledOnce();

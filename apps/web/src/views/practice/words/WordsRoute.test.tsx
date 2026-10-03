@@ -3,10 +3,14 @@ import { cleanup, render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { kanaBeginnerWords } from "@opennihongo/content";
 import { RouterProvider } from "@tanstack/react-router";
-import { afterEach, describe, expect, it } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { appendLearningRecord } from "@opennihongo/persistence";
 import { router } from "../../../app/router";
 
 afterEach(cleanup);
+beforeEach(() => {
+  vi.mocked(appendLearningRecord).mockClear();
+});
 
 async function renderWordsRoute() {
   render(<RouterProvider router={router} />);
@@ -138,6 +142,19 @@ describe("Words practice route", () => {
     await user.click(screen.getByRole("button", { name: "See results" }));
     expect(screen.getByText("10 / 10")).toBeTruthy();
     expect(screen.getByText("91%")).toBeTruthy();
+    const recorded = vi
+      .mocked(appendLearningRecord)
+      .mock.calls.map(([record]) => record);
+    expect(recorded).toHaveLength(2);
+    expect(recorded.map(({ result }) => result.attempts)).toEqual([6, 5]);
+    expect(
+      recorded.every(
+        ({ profileId, result }) =>
+          profileId === "vocabulary.review.beginner" &&
+          result.sourceItemResults.length === 5,
+      ),
+    ).toBe(true);
+    expect(new Set(recorded.map(({ sessionId }) => sessionId)).size).toBe(1);
     const results = screen.getByRole("heading", { name: "Practice complete!" });
     expect(document.activeElement).toBe(results);
     expect(

@@ -3,8 +3,8 @@ import { createWordsPracticeSession } from "./createWordsPracticeSession";
 
 describe("createWordsPracticeSession", () => {
   it("creates two distinct deterministic matching rounds from the five words", () => {
-    const first = createWordsPracticeSession(4);
-    const repeated = createWordsPracticeSession(4);
+    const first = createWordsPracticeSession(4, "test-session");
+    const repeated = createWordsPracticeSession(4, "test-session");
     const [staticRound, rollingRound] = first.rounds;
 
     expect(first).toEqual(repeated);

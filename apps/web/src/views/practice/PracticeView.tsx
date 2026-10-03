@@ -1,4 +1,6 @@
 import { usePracticeKeyboard } from "./interaction/usePracticeKeyboard";
+import { useLearningRecorder } from "./interaction/history/useLearningRecorder";
+import { LearningSaveStatus } from "./interaction/history/LearningSaveStatus";
 import {
   normalizeKanaAnswer,
   evaluateTypedAnswer,
@@ -9,7 +11,7 @@ import {
   type MatchingPairId,
 } from "@opennihongo/core";
 import { Button } from "@opennihongo/ui";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { PracticeHeader } from "./layout/PracticeHeader";
 import { PracticeFeedback } from "./feedback/PracticeFeedback";
 import { PracticeExerciseContent } from "./renderers/PracticeExerciseContent";
@@ -62,13 +64,17 @@ export function PracticeView({
     fast,
   };
   const [hintsUsed, setHintsUsed] = useState(0);
+  const recorder = useLearningRecorder();
   const [practice, setPractice] = useState<Practice>(() => ({
     revision: 0,
-    session: createKanaPracticeSession({
-      mode,
-      ...configuration,
-      revision: 0,
-    }),
+    session: createKanaPracticeSession(
+      {
+        mode,
+        ...configuration,
+        revision: 0,
+      },
+      crypto.randomUUID(),
+    ),
   }));
   const [state, setState] = useState(() =>
     createExerciseSessionState(practice.session),
@@ -112,19 +118,19 @@ export function PracticeView({
     }
   }, [complete]);
 
-  function resetExerciseState() {
+  const resetExerciseState = useCallback(() => {
     submitted.current = false;
     setSelectedOptionId(null);
     setTypedAnswer("");
     setMatchedPairIds([]);
     setMatchingAttempts(0);
     setFeedback(null);
-  }
+  }, []);
 
-  function continuePractice() {
+  const continuePractice = useCallback(() => {
     setState(advanceExerciseSession);
     resetExerciseState();
-  }
+  }, [resetExerciseState]);
 
   function checkAnswer(choiceId = selectedOptionId) {
     if (!exercise || submitted.current || feedback) {
@@ -136,6 +142,7 @@ export function PracticeView({
       submitted.current = true;
       const correct = choiceId === exercise.correctOptionId;
       const result = createSingleAnswerResult(exercise, correct, 1);
+      void recorder.recordResult(practice.session, result);
       setState((current) => recordExerciseSessionResult(current, result));
       setFeedback({
         result,
@@ -153,6 +160,7 @@ export function PracticeView({
         normalizeKanaAnswer,
       );
       const correct = result.outcome === "correct";
+      void recorder.recordResult(practice.session, result);
       setState((current) => recordExerciseSessionResult(current, result));
       setFeedback({
         result,
@@ -168,6 +176,7 @@ export function PracticeView({
       matchedPairIds,
       matchingAttempts,
     );
+    void recorder.recordResult(practice.session, result);
     setState((current) => recordExerciseSessionResult(current, result));
     setFeedback({ result, message: "All pairs matched." });
   }
@@ -181,6 +190,7 @@ export function PracticeView({
       exercise.type !== "matching"
         ? createSingleAnswerResult(exercise, false, 0)
         : createMatchingResult(exercise, matchedPairIds, matchingAttempts);
+    void recorder.recordResult(practice.session, result);
     setState((current) =>
       advanceExerciseSession(recordExerciseSessionResult(current, result)),
     );
@@ -189,11 +199,14 @@ export function PracticeView({
 
   function restartPractice() {
     const revision = practice.revision + 1;
-    const session = createKanaPracticeSession({
-      mode,
-      ...configuration,
-      revision,
-    });
+    const session = createKanaPracticeSession(
+      {
+        mode,
+        ...configuration,
+        revision,
+      },
+      crypto.randomUUID(),
+    );
     setPractice({ revision, session });
     setState(createExerciseSessionState(session));
     setHintsUsed(0);
@@ -233,6 +246,7 @@ export function PracticeView({
         search={configuration}
         step={`${String(complete ? exercises.length : index + 1)}/${String(exercises.length)}`}
       />
+      <LearningSaveStatus recorder={recorder} />
 
       {complete ? (
         <PracticeResults

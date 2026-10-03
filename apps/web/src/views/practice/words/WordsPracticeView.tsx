@@ -1,4 +1,6 @@
-import type { MatchingPairId } from "@opennihongo/core";
+import { createMatchingResult, type MatchingPairId } from "@opennihongo/core";
+import { useLearningRecorder } from "../interaction/history/useLearningRecorder";
+import { LearningSaveStatus } from "../interaction/history/LearningSaveStatus";
 import { Button, Text } from "@opennihongo/ui";
 import { useEffect, useState } from "react";
 import { MatchingBoard } from "../../../components/matching/MatchingBoard";
@@ -16,13 +18,15 @@ type Phase = "intro" | "matching" | "round-feedback" | "results";
 
 export function WordsPracticeView() {
   const [session, setSession] = useState<WordsPracticeSession>(() =>
-    createWordsPracticeSession(0),
+    createWordsPracticeSession(0, crypto.randomUUID()),
   );
   const [revision, setRevision] = useState(0);
   const [phase, setPhase] = useState<Phase>("intro");
   const [roundIndex, setRoundIndex] = useState<0 | 1>(0);
   const [matchedPairIds, setMatchedPairIds] = useState<MatchingPairId[]>([]);
   const [wrongAttempts, setWrongAttempts] = useState(0);
+  const [roundAttempts, setRoundAttempts] = useState(0);
+  const recorder = useLearningRecorder();
   const round = session.rounds[roundIndex];
   const completedPairs =
     roundIndex * round.config.pairCount + matchedPairIds.length;
@@ -37,6 +41,12 @@ export function WordsPracticeView() {
   }, [phase, roundIndex]);
 
   function recordPairAttempt(pairId: MatchingPairId | null) {
+    if (
+      phase !== "matching" ||
+      (pairId !== null && matchedPairIds.includes(pairId))
+    )
+      return;
+    setRoundAttempts((count) => count + 1);
     if (pairId === null) {
       setWrongAttempts((count) => count + 1);
       return;
@@ -45,6 +55,10 @@ export function WordsPracticeView() {
     const nextMatches = [...matchedPairIds, pairId];
     setMatchedPairIds(nextMatches);
     if (nextMatches.length === round.config.pairCount) {
+      void recorder.recordResult(
+        session,
+        createMatchingResult(round, nextMatches, roundAttempts + 1),
+      );
       setPhase("round-feedback");
     }
   }
@@ -52,10 +66,11 @@ export function WordsPracticeView() {
   function replay() {
     const nextRevision = revision + 1;
     setRevision(nextRevision);
-    setSession(createWordsPracticeSession(nextRevision));
+    setSession(createWordsPracticeSession(nextRevision, crypto.randomUUID()));
     setRoundIndex(0);
     setMatchedPairIds([]);
     setWrongAttempts(0);
+    setRoundAttempts(0);
     setPhase("intro");
   }
 
@@ -70,6 +85,7 @@ export function WordsPracticeView() {
         progress={progress}
         step={`${String(completedPairs)}/10`}
       />
+      <LearningSaveStatus recorder={recorder} />
       {phase === "results" ? (
         <PracticeResults
           score={10}
@@ -132,6 +148,7 @@ export function WordsPracticeView() {
                   if (roundIndex === 0) {
                     setRoundIndex(1);
                     setMatchedPairIds([]);
+                    setRoundAttempts(0);
                     setPhase("matching");
                   } else {
                     setPhase("results");

@@ -19,10 +19,13 @@ for (const script of ["hiragana", "katakana"] as const) {
 
     describe(`${script} ${section.id} practice`, () => {
       it("creates distinct reading prompts with authored answers and stable identities", () => {
-        const session = createKanaPracticeSession({
-          ...options,
-          mode: "reading",
-        });
+        const session = createKanaPracticeSession(
+          {
+            ...options,
+            mode: "reading",
+          },
+          "test-session",
+        );
         expect(session.exercises).toHaveLength(Math.min(5, tiles.length));
         const sourceIds = session.exercises.flatMap(
           ({ sourceItemIds }) => sourceItemIds,
@@ -46,13 +49,19 @@ for (const script of ["hiragana", "katakana"] as const) {
         expect(Object.isFrozen(session)).toBe(true);
         expect(Object.isFrozen(session.exercises)).toBe(true);
         expect(
-          createKanaPracticeSession({ ...options, mode: "reading" }),
+          createKanaPracticeSession(
+            { ...options, mode: "reading" },
+            "test-session",
+          ),
         ).toEqual(session);
-        const replay = createKanaPracticeSession({
-          ...options,
-          mode: "reading",
-          revision: 1,
-        });
+        const replay = createKanaPracticeSession(
+          {
+            ...options,
+            mode: "reading",
+            revision: 1,
+          },
+          "replay-session",
+        );
         expect(replay.id).not.toBe(session.id);
         expect(replay.exercises.map(({ id }) => id)).not.toEqual(
           session.exercises.map(({ id }) => id),
@@ -60,10 +69,13 @@ for (const script of ["hiragana", "katakana"] as const) {
       });
 
       it("creates an unambiguous matching board from the selected category", () => {
-        const session = createKanaPracticeSession({
-          ...options,
-          mode: "matching",
-        });
+        const session = createKanaPracticeSession(
+          {
+            ...options,
+            mode: "matching",
+          },
+          "test-session",
+        );
         const readings = new Set(
           tiles.map(({ romanization }) => normalizeKanaAnswer(romanization)),
         );
@@ -90,7 +102,10 @@ for (const script of ["hiragana", "katakana"] as const) {
           expect(Object.isFrozen(exercise.config)).toBe(true);
         }
         expect(
-          createKanaPracticeSession({ ...options, mode: "matching" }),
+          createKanaPracticeSession(
+            { ...options, mode: "matching" },
+            "test-session",
+          ),
         ).toEqual(session);
       });
     });
@@ -99,13 +114,16 @@ for (const script of ["hiragana", "katakana"] as const) {
 
 it("keeps shared readings unambiguous across replayed marked Kana boards", () => {
   for (let revision = 0; revision < 40; revision += 1) {
-    const session = createKanaPracticeSession({
-      mode: "matching",
-      ...normalizePracticeSearch({}),
-      scripts: ["hiragana"],
-      categories: ["dakuten"],
-      revision,
-    });
+    const session = createKanaPracticeSession(
+      {
+        mode: "matching",
+        ...normalizePracticeSearch({}),
+        scripts: ["hiragana"],
+        categories: ["dakuten"],
+        revision,
+      },
+      "test-session",
+    );
     const readings = session.exercises.flatMap((exercise) => {
       if (exercise.type !== "matching")
         throw new Error("Expected a matching exercise");

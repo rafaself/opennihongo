@@ -16,6 +16,7 @@ export function createCardStackSession(
   items: readonly FlashcardSourceItem[],
   collectionId: string,
   revision: number,
+  sessionId: string,
   length: number = cardStackSessionProfile.targetSessionSize,
 ): CardStackSession {
   if (!Number.isInteger(length) || length < 1)
@@ -24,8 +25,10 @@ export function createCardStackSession(
     throw new Error("Cannot start an empty card collection.");
   if (new Set(items.map(({ id }) => id)).size !== items.length)
     throw new Error("Card collections require distinct source identities.");
-  const id = `cards:${collectionId}:${String(revision)}`;
-  const random = new SeededRandomSource(id);
+  const id = sessionId;
+  const random = new SeededRandomSource(
+    `cards:${collectionId}:${String(revision)}`,
+  );
   const selected = shuffle(items, random).slice(0, length);
   const exercises = selected.map((item) => {
     const card = generateFlashcardExercise(

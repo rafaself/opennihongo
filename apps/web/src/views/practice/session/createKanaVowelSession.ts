@@ -7,9 +7,9 @@ import {
 } from "@opennihongo/core";
 
 /** Composition only: the content profile and core builder own the lesson sequence. */
-export function createKanaVowelSession() {
+export function createKanaVowelSession(sessionId: string) {
   return buildExerciseSession<(typeof hiraganaVowels)[number]>({
-    sessionId: "kana-lesson:vowels",
+    sessionId,
     profile: kanaVowelLessonProfile,
     eligibleItems: hiraganaVowels,
     selectionStrategy: orderedSelectionStrategy,

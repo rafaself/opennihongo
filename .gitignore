@@ -4,6 +4,8 @@ dist/
 coverage/
 storybook-static/
 /packages/ui/test-results/
+/apps/web/test-results/
+/apps/web/playwright-report/
 *.tsbuildinfo
 
 .env
