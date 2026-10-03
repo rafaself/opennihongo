@@ -1,35 +1,32 @@
 // @vitest-environment jsdom
-import { act, cleanup, render, screen } from "@testing-library/react";
+import {
+  act,
+  cleanup,
+  fireEvent,
+  render,
+  screen,
+} from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import type { KanaItem, KanaProgress } from "@opennihongo/core";
+import type { KanaProgress } from "@opennihongo/core";
+import type { updateKanaProgress } from "@opennihongo/persistence";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { RouterProvider } from "@tanstack/react-router";
 import { router } from "../../app/router";
 
 const storage = vi.hoisted(() => ({
   loadKanaProgress: vi.fn<() => Promise<KanaProgress[]>>(),
-  saveKanaAnswer:
-    vi.fn<
-      (
-        item: KanaItem,
-        correct: boolean,
-        answeredAt: string,
-      ) => Promise<KanaProgress>
-    >(),
+  updateKanaProgress: vi.fn<typeof updateKanaProgress>(),
 }));
 
 vi.mock("@opennihongo/persistence", () => storage);
 
 beforeEach(() => {
   storage.loadKanaProgress.mockReset().mockResolvedValue([]);
-  storage.saveKanaAnswer.mockReset().mockImplementation((item, correct) =>
-    Promise.resolve({
-      itemId: item.id,
-      correctCount: Number(correct),
-      incorrectCount: Number(!correct),
-      lastAnsweredAt: "2026-09-26T00:00:00.000Z",
-    }),
-  );
+  storage.updateKanaProgress
+    .mockReset()
+    .mockImplementation((_itemId, update) =>
+      Promise.resolve(update(undefined)),
+    );
 });
 
 afterEach(async () => {
@@ -44,6 +41,108 @@ async function renderSession() {
 }
 
 describe("first hiragana session", () => {
+  it("keeps blank and whitespace answers unsubmitted", async () => {
+    const user = userEvent.setup();
+    await renderSession();
+    await screen.findByText("あ");
+    const input = screen.getByRole("textbox");
+    const form = input.closest("form");
+    if (!form) throw new Error("Expected the answer form");
+    fireEvent.submit(form);
+    await user.type(input, "   ");
+    fireEvent.submit(form);
+    expect(storage.updateKanaProgress).not.toHaveBeenCalled();
+    expect(
+      screen
+        .getByRole("button", { name: /check answer/i })
+        .hasAttribute("disabled"),
+    ).toBe(true);
+    expect(screen.queryByText("That’s right!")).toBeNull();
+  });
+
+  it.each(["success", "failure"])(
+    "ignores a pending save %s after leaving and returning to the lesson",
+    async (outcome) => {
+      let finishSave!: () => void;
+      storage.updateKanaProgress.mockImplementationOnce(
+        (_id, update) =>
+          new Promise((resolve, reject) => {
+            finishSave = () => {
+              if (outcome === "success") resolve(update(undefined));
+              else reject(new Error("storage unavailable"));
+            };
+          }),
+      );
+      const user = userEvent.setup();
+      await renderSession();
+      await screen.findByText("あ");
+      await user.type(screen.getByRole("textbox"), "a");
+      await user.click(screen.getByRole("button", { name: /check answer/i }));
+      await router.navigate({ to: "/" });
+      await router.navigate({ to: "/practice/kana/vowels" });
+      await screen.findByText(/0 practiced on this device/i);
+      await act(async () => {
+        finishSave();
+        await Promise.resolve();
+      });
+      expect(screen.getByRole<HTMLInputElement>("textbox").value).toBe("");
+      expect(screen.getByRole("textbox").hasAttribute("disabled")).toBe(false);
+      expect(screen.queryByRole("alert")).toBeNull();
+      expect(screen.queryByText("That’s right!")).toBeNull();
+      screen.getByText(/0 practiced on this device/i);
+    },
+  );
+
+  it("submits and continues with Enter, preserving input and feedback focus", async () => {
+    const user = userEvent.setup();
+    await renderSession();
+    await screen.findByText("あ");
+    const input = screen.getByRole("textbox", { name: /romaji/i });
+    expect(document.activeElement).toBe(input);
+    await user.type(input, "Ａ");
+    await user.keyboard("{Enter}");
+    await screen.findByText("That’s right!");
+    expect(document.activeElement).toBe(
+      screen.getByRole("button", { name: /^continue$/i }),
+    );
+    await user.keyboard("{Enter}");
+    await screen.findByText("い");
+    await vi.waitFor(() => {
+      expect(document.activeElement).toBe(
+        screen.getByRole("textbox", { name: /romaji/i }),
+      );
+    });
+    expect(storage.updateKanaProgress).toHaveBeenCalledOnce();
+  });
+
+  it("records one answer while storage is pending and ignores repeated submissions", async () => {
+    let finishSave!: () => void;
+    storage.updateKanaProgress.mockImplementationOnce(
+      (_id, update) =>
+        new Promise((resolve) => {
+          finishSave = () => {
+            resolve(update(undefined));
+          };
+        }),
+    );
+    const user = userEvent.setup();
+    await renderSession();
+    await screen.findByText("あ");
+    await user.type(screen.getByRole("textbox"), "a");
+    const form = screen.getByRole("textbox").closest("form");
+    if (!form) throw new Error("Expected the answer form");
+    fireEvent.submit(form);
+    fireEvent.submit(form);
+    expect(storage.updateKanaProgress).toHaveBeenCalledOnce();
+    expect(screen.getByRole("textbox").hasAttribute("disabled")).toBe(true);
+    expect(screen.queryByText("That’s right!")).toBeNull();
+    await act(async () => {
+      finishSave();
+      await Promise.resolve();
+    });
+    await screen.findByText("That’s right!");
+    screen.getByText(/1 practiced on this device/i);
+  });
   it("shows previously practiced vowels from local progress", async () => {
     storage.loadKanaProgress.mockResolvedValue([
       {
@@ -78,8 +177,13 @@ describe("first hiragana session", () => {
     expect(document.activeElement).toBe(heading);
     screen.getByText("5 / 5");
     screen.getByText("100%");
-    expect(storage.saveKanaAnswer).toHaveBeenCalledTimes(5);
-    expect(storage.saveKanaAnswer.mock.calls[0]?.[1]).toBe(true);
+    expect(storage.updateKanaProgress).toHaveBeenCalledTimes(5);
+    expect(storage.updateKanaProgress.mock.calls[0]?.[0]).toBe(
+      "kana.hiragana.a",
+    );
+    await expect(
+      storage.updateKanaProgress.mock.results[0]?.value,
+    ).resolves.toMatchObject({ correctCount: 1, incorrectCount: 0 });
   });
 
   it("can start another session without discarding saved progress", async () => {
@@ -115,7 +219,9 @@ describe("first hiragana session", () => {
     await user.click(screen.getByRole("button", { name: /check answer/i }));
 
     await screen.findByText(/the answer is a/i);
-    expect(storage.saveKanaAnswer.mock.calls[0]?.[1]).toBe(false);
+    await expect(
+      storage.updateKanaProgress.mock.results[0]?.value,
+    ).resolves.toMatchObject({ correctCount: 0, incorrectCount: 1 });
   });
 
   it("keeps the session usable when progress cannot load", async () => {
@@ -184,7 +290,9 @@ describe("first hiragana session", () => {
 
   it("reports a failed save and still lets the learner continue", async () => {
     const user = userEvent.setup();
-    storage.saveKanaAnswer.mockRejectedValue(new Error("storage unavailable"));
+    storage.updateKanaProgress.mockRejectedValue(
+      new Error("storage unavailable"),
+    );
     await renderSession();
 
     await screen.findByText("あ");

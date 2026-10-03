@@ -1,6 +1,10 @@
 import { usePracticeKeyboard } from "./interaction/usePracticeKeyboard";
 import {
   normalizeKanaAnswer,
+  evaluateTypedAnswer,
+  advanceExerciseSession,
+  createExerciseSessionState,
+  recordExerciseSessionResult,
   type ExerciseResult,
   type MatchingPairId,
 } from "@opennihongo/core";
@@ -15,7 +19,7 @@ import {
   createMatchingResult,
   createSingleAnswerResult,
   scoreExerciseResults,
-} from "./session/exerciseResults";
+} from "@opennihongo/core";
 import {
   createKanaPracticeSession,
   type KanaPracticeOptions,
@@ -66,8 +70,10 @@ export function PracticeView({
       revision: 0,
     }),
   }));
-  const [index, setIndex] = useState(0);
-  const [results, setResults] = useState<ExerciseResult[]>([]);
+  const [state, setState] = useState(() =>
+    createExerciseSessionState(practice.session),
+  );
+  const { index, results } = state;
   const [selectedOptionId, setSelectedOptionId] = useState<string | null>(null);
   const submitted = useRef(false);
   const [typedAnswer, setTypedAnswer] = useState("");
@@ -116,7 +122,7 @@ export function PracticeView({
   }
 
   function continuePractice() {
-    setIndex((current) => current + 1);
+    setState(advanceExerciseSession);
     resetExerciseState();
   }
 
@@ -130,7 +136,7 @@ export function PracticeView({
       submitted.current = true;
       const correct = choiceId === exercise.correctOptionId;
       const result = createSingleAnswerResult(exercise, correct, 1);
-      setResults((current) => [...current, result]);
+      setState((current) => recordExerciseSessionResult(current, result));
       setFeedback({
         result,
         message: correct
@@ -141,12 +147,13 @@ export function PracticeView({
     }
     submitted.current = true;
     if (exercise.type === "typed-answer") {
-      const correct = exercise.acceptedAnswers.some(
-        (answer) =>
-          normalizeKanaAnswer(answer) === normalizeKanaAnswer(typedAnswer),
+      const result = evaluateTypedAnswer(
+        exercise,
+        typedAnswer,
+        normalizeKanaAnswer,
       );
-      const result = createSingleAnswerResult(exercise, correct, 1);
-      setResults((current) => [...current, result]);
+      const correct = result.outcome === "correct";
+      setState((current) => recordExerciseSessionResult(current, result));
       setFeedback({
         result,
         message: correct
@@ -161,7 +168,7 @@ export function PracticeView({
       matchedPairIds,
       matchingAttempts,
     );
-    setResults((current) => [...current, result]);
+    setState((current) => recordExerciseSessionResult(current, result));
     setFeedback({ result, message: "All pairs matched." });
   }
 
@@ -174,22 +181,21 @@ export function PracticeView({
       exercise.type !== "matching"
         ? createSingleAnswerResult(exercise, false, 0)
         : createMatchingResult(exercise, matchedPairIds, matchingAttempts);
-    setResults((current) => [...current, result]);
-    continuePractice();
+    setState((current) =>
+      advanceExerciseSession(recordExerciseSessionResult(current, result)),
+    );
+    resetExerciseState();
   }
 
   function restartPractice() {
     const revision = practice.revision + 1;
-    setPractice({
+    const session = createKanaPracticeSession({
+      mode,
+      ...configuration,
       revision,
-      session: createKanaPracticeSession({
-        mode,
-        ...configuration,
-        revision,
-      }),
     });
-    setIndex(0);
-    setResults([]);
+    setPractice({ revision, session });
+    setState(createExerciseSessionState(session));
     setHintsUsed(0);
     resetExerciseState();
   }

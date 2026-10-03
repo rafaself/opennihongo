@@ -2,7 +2,7 @@ import { act, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { expect, it, vi } from "vitest";
 import { kanaCharacterCharts } from "@opennihongo/content";
-import * as exerciseResults from "../session/exerciseResults";
+import * as exerciseResults from "@opennihongo/core";
 import {
   audioCacheMock,
   chartAudioMock,
@@ -58,12 +58,20 @@ it("submits the latest typed answer when Enter is pressed on the page", async ()
   const exercise = session.exercises[0];
   if (exercise?.type !== "typed-answer")
     throw new Error("Expected a reading exercise");
-  const record = vi.spyOn(exerciseResults, "createSingleAnswerResult");
+  const record = vi.spyOn(exerciseResults, "recordExerciseSessionResult");
   const input = screen.getByRole("textbox");
   await user.type(input, exercise.acceptedAnswers[0] ?? "");
   input.blur();
   await user.keyboard("{Enter}");
-  expect(record).toHaveBeenCalledWith(exercise, true, 1);
+  expect(record).toHaveBeenCalledWith(expect.anything(), {
+    exerciseId: exercise.id,
+    sourceItemResults: exercise.sourceItemIds.map((sourceItemId) => ({
+      sourceItemId,
+      outcome: "correct",
+    })),
+    outcome: "correct",
+    attempts: 1,
+  });
   expect(screen.getByRole("status").textContent).toContain(
     "Your reading is correct.",
   );
@@ -100,7 +108,7 @@ it("keeps Enter continuation without navigation highlighting and restores it for
 
 it("reports an incorrect reading, records skipped prompts, and restarts cleanly", async () => {
   const user = userEvent.setup();
-  const record = vi.spyOn(exerciseResults, "createSingleAnswerResult");
+  const record = vi.spyOn(exerciseResults, "recordExerciseSessionResult");
   await renderPractice();
   await user.type(screen.getByRole("textbox"), "wrong");
   await user.click(screen.getByRole("button", { name: "Check answer" }));
@@ -116,7 +124,10 @@ it("reports an incorrect reading, records skipped prompts, and restarts cleanly"
   expect(screen.getByText("0 / 5")).toBeTruthy();
   expect(screen.getByText("0%")).toBeTruthy();
   expect(
-    record.mock.calls.map(([, correct, attempts]) => [correct, attempts]),
+    record.mock.calls.map(([, result]) => [
+      result.outcome === "correct",
+      result.attempts,
+    ]),
   ).toEqual([
     [false, 1],
     [false, 0],

@@ -1,5 +1,7 @@
 import {
   hiraganaSyllabary,
+  hiraganaVowels,
+  kanaVowelLessonProfile,
   kanaPracticeSessionProfiles,
   kanaCharacterCharts,
   kanaBeginnerWords,
@@ -10,6 +12,7 @@ import {
   generateMultipleChoiceExercise,
   generateTypedAnswerExercise,
   randomWithoutReplacementSelectionStrategyId,
+  orderedSelectionStrategyId,
   type SessionProfile,
 } from "@opennihongo/core";
 import { describe, expect, it } from "vitest";
@@ -23,6 +26,7 @@ const supportedExerciseGenerators = {
 
 const supportedSelectionStrategyIds = new Set([
   randomWithoutReplacementSelectionStrategyId,
+  orderedSelectionStrategyId,
 ]);
 
 const supportedMatchingConfigKeys = new Set(["pairCount"]);
@@ -98,6 +102,16 @@ function findReferenceProblems({
 }
 
 describe("cross-package Kana content references", () => {
+  it("resolves the saved vowel lesson profile and its semantic pronunciation references", () => {
+    expect(
+      findReferenceProblems({
+        authoredLearningIds: hiraganaVowels.map(({ id }) => id),
+        profile: kanaVowelLessonProfile,
+        requiredAudioIds: hiraganaVowels.map(({ id }) => id),
+        availablePracticeItemCount: hiraganaVowels.length,
+      }),
+    ).toEqual([]);
+  });
   it("keeps authored learning IDs unique and current practice references supported", () => {
     expect(
       findReferenceProblems({

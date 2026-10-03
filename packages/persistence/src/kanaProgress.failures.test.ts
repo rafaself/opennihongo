@@ -1,6 +1,7 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { hiraganaVowels } from "@opennihongo/content";
-import { loadKanaProgress, saveKanaAnswer } from "./kanaProgress";
+import { recordKanaItemResult } from "@opennihongo/core";
+import { loadKanaProgress, updateKanaProgress } from "./kanaProgress";
 
 const { openDatabase } = vi.hoisted(() => ({
   openDatabase: vi.fn(),
@@ -72,7 +73,13 @@ describe("kana repository transaction failures", () => {
     const { close } = createDatabase("abort", error);
 
     await expect(
-      saveKanaAnswer(hiraganaVowels[0], true, "2026-09-26T00:00:00.000Z"),
+      updateKanaProgress(hiraganaVowels[0].id, (existing) =>
+        recordKanaItemResult(
+          existing,
+          { sourceItemId: hiraganaVowels[0].id, outcome: "correct" },
+          "2026-09-26T00:00:00.000Z",
+        ),
+      ),
     ).rejects.toThrow(error);
     expect(close).toHaveBeenCalledOnce();
   });
@@ -81,8 +88,14 @@ describe("kana repository transaction failures", () => {
     const { close } = createDatabase("abort", null);
 
     await expect(
-      saveKanaAnswer(hiraganaVowels[0], true, "2026-09-26T00:00:00.000Z"),
-    ).rejects.toThrow("Could not save the kana answer.");
+      updateKanaProgress(hiraganaVowels[0].id, (existing) =>
+        recordKanaItemResult(
+          existing,
+          { sourceItemId: hiraganaVowels[0].id, outcome: "correct" },
+          "2026-09-26T00:00:00.000Z",
+        ),
+      ),
+    ).rejects.toThrow("Could not save local kana progress.");
     expect(close).toHaveBeenCalledOnce();
   });
 
@@ -90,8 +103,14 @@ describe("kana repository transaction failures", () => {
     const { close } = createDatabase("complete", null);
 
     await expect(
-      saveKanaAnswer(hiraganaVowels[0], true, "2026-09-26T00:00:00.000Z"),
-    ).rejects.toThrow("The kana answer was not saved.");
+      updateKanaProgress(hiraganaVowels[0].id, (existing) =>
+        recordKanaItemResult(
+          existing,
+          { sourceItemId: hiraganaVowels[0].id, outcome: "correct" },
+          "2026-09-26T00:00:00.000Z",
+        ),
+      ),
+    ).rejects.toThrow("The kana progress was not saved.");
     expect(close).toHaveBeenCalledOnce();
   });
 });

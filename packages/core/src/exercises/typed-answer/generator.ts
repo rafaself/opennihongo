@@ -1,7 +1,7 @@
-import type { ExerciseId, LearningItemId } from "../ids";
-import { ExerciseGenerationError } from "./generation-error";
-import type { ExerciseGenerator } from "./generator";
-import type { TypedAnswerExercise } from "./typed-answer";
+import type { ExerciseId, LearningItemId } from "../../ids";
+import { ExerciseGenerationError } from "../generation-error";
+import type { ExerciseGenerator } from "../generator";
+import type { TypedAnswerExercise } from "./exercise";
 
 /**
  * Minimal caller-adapted content needed to generate one typed-answer exercise.

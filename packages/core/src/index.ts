@@ -1,23 +1,8 @@
-export {
-  checkKanaAnswer,
-  normalizeKanaAnswer,
-  recordKanaAnswer,
-  scoreKanaChoiceAnswer,
-  scoreKanaMatchingAnswer,
-  scoreKanaTypedAnswer,
-  validateKanaChoiceAnswer,
-  validateKanaMatchingAnswer,
-  validateKanaTypedAnswer,
-} from "./kana/index";
+export { normalizeKanaAnswer, recordKanaItemResult } from "./kana/index";
 export type {
   KanaAudioId,
-  KanaChoiceExercise,
   KanaId,
-  KanaItem,
-  KanaPairAnswer,
   KanaProgress,
-  KanaTypedAnswerExercise,
-  KanaWord,
   KanaWordId,
 } from "./kana/index";
 export type {
@@ -42,6 +27,13 @@ export type {
 } from "./learning/index";
 export {
   randomWithoutReplacementSelectionStrategy,
+  orderedSelectionStrategy,
+  orderedSelectionStrategyId,
+  createExerciseSessionState,
+  getCurrentExercise,
+  recordExerciseSessionResult,
+  advanceExerciseSession,
+  type ExerciseSessionState,
   randomWithoutReplacementSelectionStrategyId,
   ExerciseSessionBuildError,
   buildExerciseSession,
@@ -75,6 +67,11 @@ export type {
 } from "./exercises/index";
 export {
   ExerciseGenerationError,
+  evaluateTypedAnswer,
+  createSingleAnswerResult,
+  createMatchingResult,
+  scoreExerciseResults,
+  countExerciseItems,
   generateFlashcardExercise,
   generateMultipleChoiceExercise,
   generateMatchingExercise,

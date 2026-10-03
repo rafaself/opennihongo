@@ -6,21 +6,15 @@ import {
   waitFor,
 } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import type { KanaItem, KanaProgress } from "@opennihongo/core";
+import type { KanaProgress } from "@opennihongo/core";
+import type { updateKanaProgress } from "@opennihongo/persistence";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { RouterProvider } from "@tanstack/react-router";
 import { router } from "./router";
 
 const storage = vi.hoisted(() => ({
   loadKanaProgress: vi.fn<() => Promise<KanaProgress[]>>(),
-  saveKanaAnswer:
-    vi.fn<
-      (
-        item: KanaItem,
-        correct: boolean,
-        answeredAt: string,
-      ) => Promise<KanaProgress>
-    >(),
+  updateKanaProgress: vi.fn<typeof updateKanaProgress>(),
 }));
 
 vi.mock("@opennihongo/persistence", () => storage);
@@ -50,14 +44,11 @@ function installSpeechMocks() {
 
 beforeEach(() => {
   storage.loadKanaProgress.mockReset().mockResolvedValue([]);
-  storage.saveKanaAnswer.mockReset().mockImplementation((item, correct) =>
-    Promise.resolve({
-      itemId: item.id,
-      correctCount: Number(correct),
-      incorrectCount: Number(!correct),
-      lastAnsweredAt: "2026-09-26T00:00:00.000Z",
-    }),
-  );
+  storage.updateKanaProgress
+    .mockReset()
+    .mockImplementation((_itemId, update) =>
+      Promise.resolve(update(undefined)),
+    );
 });
 
 afterEach(() => {
@@ -193,7 +184,7 @@ describe("web application routes", () => {
       "kana.chart.hiragana.long-vowels.aa.nemo-10000.opus",
     );
     expect(speech.speak).not.toHaveBeenCalled();
-    expect(storage.saveKanaAnswer).not.toHaveBeenCalled();
+    expect(storage.updateKanaProgress).not.toHaveBeenCalled();
 
     await user.click(screen.getByRole("radio", { name: "Hiragana" }));
     await user.keyboard("{ArrowRight>}");

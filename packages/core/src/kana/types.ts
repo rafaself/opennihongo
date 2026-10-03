@@ -1,4 +1,4 @@
-import type { ExerciseId } from "../ids";
+import type { LearningItemId } from "../ids";
 
 type KanaSyllable =
   | "a"
@@ -51,13 +51,8 @@ type KanaSyllable =
 export type KanaId =
   `kana.hiragana.${KanaSyllable}` | `kana.katakana.${KanaSyllable}`;
 
-export type KanaItem = Readonly<{
-  id: KanaId;
-  romanization: string;
-}>;
-
 export type KanaProgress = Readonly<{
-  itemId: KanaId;
+  itemId: LearningItemId;
   correctCount: number;
   incorrectCount: number;
   lastAnsweredAt: string;
@@ -70,40 +65,4 @@ export type KanaWordId =
   | "kana.word.mimi"
   | "kana.word.neko";
 
-export type KanaWord = Readonly<{
-  id: KanaWordId;
-  hiragana: string;
-  romaji: string;
-}>;
-
 export type KanaAudioId = KanaId | KanaWordId;
-
-type KanaExerciseAudio = Readonly<{
-  audioIds: readonly KanaAudioId[];
-}>;
-
-export type KanaChoiceExercise = Readonly<
-  KanaExerciseAudio & {
-    id: ExerciseId;
-    kind: "multiple-choice";
-    direction: "hiragana-to-romaji" | "romaji-to-hiragana";
-    wordId: KanaWordId;
-    prompt: Readonly<{ script: "hiragana" | "romaji"; text: string }>;
-    choices: readonly string[];
-    answer: string;
-  }
->;
-
-export type KanaTypedAnswerExercise = Readonly<
-  KanaExerciseAudio & {
-    id: ExerciseId;
-    kind: "typed-answer";
-    prompt: Readonly<{ script: "hiragana"; text: string }>;
-    answer: string;
-  }
->;
-
-export type KanaPairAnswer = Readonly<{
-  romaji: string;
-  hiragana: string;
-}>;

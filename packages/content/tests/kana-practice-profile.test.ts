@@ -5,7 +5,21 @@ import type {
   SessionProfile,
 } from "@opennihongo/core";
 import { randomWithoutReplacementSelectionStrategyId } from "@opennihongo/core";
-import { kanaPracticeSessionProfiles } from "../src/index";
+import {
+  kanaPracticeSessionProfiles,
+  kanaVowelLessonProfile,
+  hiraganaVowels,
+} from "../src/index";
+import { orderedSelectionStrategyId } from "@opennihongo/core";
+
+it("authors the first vowel lesson as one typed answer per vowel in fixed order", () => {
+  expect(kanaVowelLessonProfile).toEqual({
+    id: "kana.lesson.vowels",
+    targetSessionSize: hiraganaVowels.length,
+    exerciseMix: [{ type: "typed-answer", count: hiraganaVowels.length }],
+    selectionStrategyId: orderedSelectionStrategyId,
+  });
+});
 
 it("defines separate Kana reading, matching, and quiz game profiles", () => {
   const profile = kanaPracticeSessionProfiles.reading;

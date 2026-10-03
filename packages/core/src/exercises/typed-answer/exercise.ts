@@ -1,4 +1,4 @@
-import type { ExerciseBase } from "./base";
+import type { ExerciseBase } from "../base";
 
 export type TypedAnswerExercise = Readonly<
   ExerciseBase<"typed-answer"> & {

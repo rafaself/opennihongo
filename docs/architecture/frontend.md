@@ -88,10 +88,14 @@ exact optional property types.
 Prettier is the formatting authority for supported source, configuration, and
 Markdown files. Its options and ignore list are defined at the workspace root.
 
-`core` owns Kana answer checking and progress updates. `content` owns the
+`core` owns exercise evaluation, result scoring, session transitions, and
+result-based Kana progress updates. `content` owns the
 authored Kana syllabaries, first lesson selection, chart content, and beginner
 words; audio assets resolve their stable semantic identifiers.
-`persistence` stores Kana progress in a versioned IndexedDB database. The web
+`persistence` stores Kana progress in a versioned IndexedDB database. Its atomic
+update API receives a synchronous domain updater from the caller and validates
+the stored record and item identity; it does not evaluate answers or calculate
+learning progress. The web
 app consumes the public exports of the packages needed by current features; it
 does not own storage schema or domain rules.
 
@@ -238,6 +242,22 @@ retains attempt-based accuracy, and replay resets session state. The chart
 and vocabulary browser remain references. Progress, Quests, and Library have
 dedicated URLs and show an explicit coming-soon state until their features are
 implemented; Quests and Library are not shown in primary navigation. The Gallery owns its own router and navigation independently.
+
+The saved vowel lesson uses the authored `content/kanaVowelLessonProfile` and
+`hiraganaVowels` through `buildExerciseSession`, the ordered selection strategy,
+and the generic typed-answer generator. Its sequence remains あ, い, う, え, お.
+`KanaVowelsPage` presents generated prompts and captures interaction;
+`useKanaVowelLesson` connects React state, focus, and asynchronous storage to the
+domain APIs. Core's `ExerciseSessionState` records each `ExerciseResult` once and
+advances only after a result exists. Reading, matching, and quiz also use those
+transitions, while result construction and scoring are shared core functions.
+Typed-answer evaluation receives Kana normalization explicitly. Item outcomes
+feed `recordKanaItemResult` through persistence's atomic `updateKanaProgress`
+callback, preserving concurrent tab updates and the existing IndexedDB schema.
+Storage failures still allow completion and scoring; replay resets transient
+results while keeping saved progress. The vowel lesson retains its existing
+form, Enter submission, feedback focus, and results focus. Existing game audio
+and device preferences remain owned by their current UI adapters.
 
 Card stacks run at `/practice/kana/cards` and `/practice/words/cards`, preserving
 hub script/category selections on exit and results. `core/exercises/flashcards`

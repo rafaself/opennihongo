@@ -1,13 +1,20 @@
 import { describe, expect, it } from "vitest";
 import {
-  checkKanaAnswer,
   normalizeKanaAnswer,
-  recordKanaAnswer,
-  type KanaItem,
+  recordKanaItemResult,
+  evaluateTypedAnswer,
+  type TypedAnswerExercise,
 } from "../src/index";
 
-const vowelA: KanaItem = { id: "kana.hiragana.a", romanization: "a" };
-const vowelI: KanaItem = { id: "kana.hiragana.i", romanization: "i" };
+const vowelA = { id: "kana.hiragana.a" } as const;
+const vowelI = { id: "kana.hiragana.i" } as const;
+const exercise: TypedAnswerExercise = {
+  id: "exercise.a",
+  type: "typed-answer",
+  prompt: { text: "あ" },
+  acceptedAnswers: ["a"],
+  sourceItemIds: [vowelA.id],
+};
 
 describe("kana answer normalization and checking", () => {
   it("trims, compatibility-normalizes, and lowercases input", () => {
@@ -16,20 +23,27 @@ describe("kana answer normalization and checking", () => {
   });
 
   it("accepts normalized matching answers and rejects other answers", () => {
-    expect(checkKanaAnswer(vowelA, " A ")).toBe(true);
-    expect(checkKanaAnswer(vowelA, "Ａ")).toBe(true);
-    expect(checkKanaAnswer(vowelA, "i")).toBe(false);
-    expect(checkKanaAnswer(vowelA, " ")).toBe(false);
+    expect(
+      evaluateTypedAnswer(exercise, " A ", normalizeKanaAnswer).outcome,
+    ).toBe("correct");
+    expect(
+      evaluateTypedAnswer(exercise, "Ａ", normalizeKanaAnswer).outcome,
+    ).toBe("correct");
+    expect(
+      evaluateTypedAnswer(exercise, "i", normalizeKanaAnswer).outcome,
+    ).toBe("incorrect");
+    expect(
+      evaluateTypedAnswer(exercise, " ", normalizeKanaAnswer).outcome,
+    ).toBe("incorrect");
   });
 });
 
-describe("recordKanaAnswer", () => {
+describe("recordKanaItemResult", () => {
   it("starts immutable per-item progress with the explicit timestamp", () => {
     const item = vowelA;
-    const result = recordKanaAnswer(
+    const result = recordKanaItemResult(
       undefined,
-      item,
-      true,
+      { sourceItemId: item.id, outcome: "correct" },
       "2026-09-26T12:00:00.000Z",
     );
 
@@ -49,10 +63,9 @@ describe("recordKanaAnswer", () => {
       incorrectCount: 1,
       lastAnsweredAt: "2026-09-25T12:00:00.000Z",
     } as const;
-    const result = recordKanaAnswer(
+    const result = recordKanaItemResult(
       existing,
-      item,
-      false,
+      { sourceItemId: item.id, outcome: "incorrect" },
       "2026-09-26T12:00:00.000Z",
     );
 
@@ -76,7 +89,11 @@ describe("recordKanaAnswer", () => {
     } as const;
 
     expect(() =>
-      recordKanaAnswer(existing, vowelA, true, "2026-09-26T12:00:00.000Z"),
+      recordKanaItemResult(
+        existing,
+        { sourceItemId: vowelA.id, outcome: "correct" },
+        "2026-09-26T12:00:00.000Z",
+      ),
     ).toThrow(
       "Cannot update progress for kana.hiragana.a with progress for kana.hiragana.i",
     );

@@ -5,6 +5,17 @@ export type {
 } from "./item-selection-strategy";
 export type { ExerciseMixEntry, SessionProfile } from "./session-profile";
 export {
+  orderedSelectionStrategy,
+  orderedSelectionStrategyId,
+} from "./ordered-selection-strategy";
+export {
+  createExerciseSessionState,
+  getCurrentExercise,
+  recordExerciseSessionResult,
+  advanceExerciseSession,
+  type ExerciseSessionState,
+} from "./session-state";
+export {
   ExerciseSessionBuildError,
   buildExerciseSession,
 } from "./session-builder";

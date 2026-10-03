@@ -1,7 +1,8 @@
 import "fake-indexeddb/auto";
 import { hiraganaVowels } from "@opennihongo/content";
+import { recordKanaItemResult, type KanaProgress } from "@opennihongo/core";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { loadKanaProgress, saveKanaAnswer } from "./kanaProgress";
+import { loadKanaProgress, updateKanaProgress } from "./kanaProgress";
 
 function clearDatabase(): Promise<void> {
   return new Promise((resolve, reject) => {
@@ -48,13 +49,39 @@ beforeEach(async () => {
 });
 
 describe("kana progress repository", () => {
+  it("rejects a mismatched updater identity without changing stored progress", async () => {
+    const record: KanaProgress = {
+      itemId: "kana.hiragana.i",
+      correctCount: 1,
+      incorrectCount: 0,
+      lastAnsweredAt: "2026-10-03T00:00:00.000Z",
+    };
+    await expect(
+      updateKanaProgress("kana.hiragana.a", () => record),
+    ).rejects.toThrow(/identity/i);
+    expect(await loadKanaProgress()).toEqual([]);
+  });
+
+  it("rejects an invalid updater record before committing it", async () => {
+    await expect(
+      updateKanaProgress("kana.hiragana.a", () => ({
+        itemId: "kana.hiragana.a",
+        correctCount: -1,
+        incorrectCount: 0,
+        lastAnsweredAt: "2026-10-03T00:00:00.000Z",
+      })),
+    ).rejects.toThrow("Saved kana progress is invalid.");
+    expect(await loadKanaProgress()).toEqual([]);
+  });
   it("starts empty and persists an answered item", async () => {
     expect(await loadKanaProgress()).toEqual([]);
 
-    const saved = await saveKanaAnswer(
-      hiraganaVowels[0],
-      true,
-      "2026-09-26T00:00:00.000Z",
+    const saved = await updateKanaProgress(hiraganaVowels[0].id, (existing) =>
+      recordKanaItemResult(
+        existing,
+        { sourceItemId: hiraganaVowels[0].id, outcome: "correct" },
+        "2026-09-26T00:00:00.000Z",
+      ),
     );
 
     expect(saved).toEqual({
@@ -67,12 +94,26 @@ describe("kana progress repository", () => {
   });
 
   it("updates counts without losing another item's progress", async () => {
-    await saveKanaAnswer(hiraganaVowels[0], false, "2026-09-26T00:00:00.000Z");
-    await saveKanaAnswer(hiraganaVowels[1], true, "2026-09-26T00:00:01.000Z");
-    const updated = await saveKanaAnswer(
-      hiraganaVowels[0],
-      true,
-      "2026-09-26T00:00:02.000Z",
+    await updateKanaProgress(hiraganaVowels[0].id, (existing) =>
+      recordKanaItemResult(
+        existing,
+        { sourceItemId: hiraganaVowels[0].id, outcome: "incorrect" },
+        "2026-09-26T00:00:00.000Z",
+      ),
+    );
+    await updateKanaProgress(hiraganaVowels[1].id, (existing) =>
+      recordKanaItemResult(
+        existing,
+        { sourceItemId: hiraganaVowels[1].id, outcome: "correct" },
+        "2026-09-26T00:00:01.000Z",
+      ),
+    );
+    const updated = await updateKanaProgress(hiraganaVowels[0].id, (existing) =>
+      recordKanaItemResult(
+        existing,
+        { sourceItemId: hiraganaVowels[0].id, outcome: "correct" },
+        "2026-09-26T00:00:02.000Z",
+      ),
     );
 
     expect(updated).toMatchObject({
@@ -93,8 +134,20 @@ describe("kana progress repository", () => {
 
   it("keeps both outcomes when the same item is answered concurrently", async () => {
     await Promise.all([
-      saveKanaAnswer(hiraganaVowels[0], true, "2026-09-26T00:00:00.000Z"),
-      saveKanaAnswer(hiraganaVowels[0], false, "2026-09-26T00:00:01.000Z"),
+      updateKanaProgress(hiraganaVowels[0].id, (existing) =>
+        recordKanaItemResult(
+          existing,
+          { sourceItemId: hiraganaVowels[0].id, outcome: "correct" },
+          "2026-09-26T00:00:00.000Z",
+        ),
+      ),
+      updateKanaProgress(hiraganaVowels[0].id, (existing) =>
+        recordKanaItemResult(
+          existing,
+          { sourceItemId: hiraganaVowels[0].id, outcome: "incorrect" },
+          "2026-09-26T00:00:01.000Z",
+        ),
+      ),
     ]);
 
     expect(await loadKanaProgress()).toEqual([
@@ -139,7 +192,13 @@ describe("kana progress repository", () => {
     });
 
     await expect(
-      saveKanaAnswer(hiraganaVowels[0], true, "2026-09-26T00:00:01.000Z"),
+      updateKanaProgress(hiraganaVowels[0].id, (existing) =>
+        recordKanaItemResult(
+          existing,
+          { sourceItemId: hiraganaVowels[0].id, outcome: "correct" },
+          "2026-09-26T00:00:01.000Z",
+        ),
+      ),
     ).rejects.toThrow("Saved kana progress is invalid.");
   });
 });

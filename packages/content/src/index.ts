@@ -28,6 +28,7 @@ export type {
 } from "./kanaChart";
 
 export { cardStackSessionProfile } from "./cardStackProfile";
+export { kanaVowelLessonProfile } from "./kanaVowelLessonProfile";
 export {
   kanaPracticeLengths,
   kanaPracticeDifficulties,

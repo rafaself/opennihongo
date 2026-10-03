@@ -1,19 +1,21 @@
-import type { KanaItem, KanaProgress } from "./types";
+import type { KanaProgress } from "./types";
+import type { ItemExerciseResult } from "../exercises/result";
 
-export function recordKanaAnswer(
+export function recordKanaItemResult(
   existing: KanaProgress | undefined,
-  item: Pick<KanaItem, "id">,
-  correct: boolean,
+  result: ItemExerciseResult,
   answeredAt: string,
 ): KanaProgress {
-  if (existing !== undefined && existing.itemId !== item.id) {
+  const correct = result.outcome === "correct";
+  const itemId = result.sourceItemId;
+  if (existing !== undefined && existing.itemId !== itemId) {
     throw new Error(
-      `Cannot update progress for ${item.id} with progress for ${existing.itemId}`,
+      `Cannot update progress for ${itemId} with progress for ${existing.itemId}`,
     );
   }
 
   return {
-    itemId: item.id,
+    itemId: itemId,
     correctCount: (existing?.correctCount ?? 0) + (correct ? 1 : 0),
     incorrectCount: (existing?.incorrectCount ?? 0) + (correct ? 0 : 1),
     lastAnsweredAt: answeredAt,

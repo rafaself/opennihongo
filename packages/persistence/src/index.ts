@@ -1,1 +1,1 @@
-export { loadKanaProgress, saveKanaAnswer } from "./kanaProgress";
+export { loadKanaProgress, updateKanaProgress } from "./kanaProgress";

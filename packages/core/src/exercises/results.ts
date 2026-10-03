@@ -4,11 +4,11 @@ import type {
   ExerciseResult,
   ItemExerciseOutcome,
   MatchingExercise,
-  MatchingPairId,
   TypedAnswerExercise,
   MultipleChoiceExercise,
   FlashcardExercise,
-} from "@opennihongo/core";
+} from "./index";
+import type { MatchingPairId } from "../ids";
 
 export function createSingleAnswerResult(
   exercise: TypedAnswerExercise | MultipleChoiceExercise | FlashcardExercise,

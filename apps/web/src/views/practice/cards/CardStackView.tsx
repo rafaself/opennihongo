@@ -13,7 +13,7 @@ import { getPracticeAudioAsset } from "../session/practiceAudio";
 import {
   createSingleAnswerResult,
   scoreExerciseResults,
-} from "../session/exerciseResults";
+} from "@opennihongo/core";
 import type { CardStackItem } from "./cardStackContent";
 import { createCardStackSession } from "./createCardStackSession";
 import { useCardStackKeyboard } from "./useCardStackKeyboard";

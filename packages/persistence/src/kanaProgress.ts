@@ -1,7 +1,6 @@
 import {
-  recordKanaAnswer,
   type KanaId,
-  type KanaItem,
+  type LearningItemId,
   type KanaProgress,
 } from "@opennihongo/core";
 import { hiraganaVowels } from "@opennihongo/content";
@@ -73,11 +72,10 @@ export async function loadKanaProgress(): Promise<KanaProgress[]> {
   }
 }
 
-/** Records one outcome atomically, preserving updates from other open tabs. */
-export async function saveKanaAnswer(
-  item: KanaItem,
-  correct: boolean,
-  answeredAt: string,
+/** Applies a synchronous caller-owned update atomically across open tabs. */
+export async function updateKanaProgress(
+  itemId: LearningItemId,
+  update: (existing: KanaProgress | undefined) => KanaProgress,
 ): Promise<KanaProgress> {
   const database = await openDatabase();
 
@@ -88,7 +86,7 @@ export async function saveKanaAnswer(
         "readwrite",
       );
       const store = transaction.objectStore(KANA_PROGRESS_STORE);
-      const request = store.get(item.id);
+      const request = store.get(itemId);
       let saved: KanaProgress | undefined;
       let failure: unknown;
 
@@ -98,7 +96,12 @@ export async function saveKanaAnswer(
             request.result === undefined
               ? undefined
               : readProgress(request.result);
-          saved = recordKanaAnswer(existing, item, correct, answeredAt);
+          saved = readProgress(update(existing));
+          if (saved.itemId !== itemId) {
+            throw new Error(
+              "Updated kana progress must preserve the requested item identity.",
+            );
+          }
           store.put(saved);
         } catch (error) {
           failure = error;
@@ -109,7 +112,7 @@ export async function saveKanaAnswer(
         if (saved) {
           resolve(saved);
         } else {
-          reject(new Error("The kana answer was not saved."));
+          reject(new Error("The kana progress was not saved."));
         }
       };
       transaction.onabort = () => {
@@ -117,7 +120,7 @@ export async function saveKanaAnswer(
           failure instanceof Error
             ? failure
             : (transaction.error ??
-              new Error("Could not save the kana answer."));
+              new Error("Could not save local kana progress."));
         reject(reason);
       };
     });

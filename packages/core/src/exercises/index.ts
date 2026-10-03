@@ -1,7 +1,7 @@
 import type { FlashcardExercise } from "./flashcards/flashcard";
 import type { MultipleChoiceExercise } from "./multiple-choice";
 import type { MatchingExercise } from "./matching";
-import type { TypedAnswerExercise } from "./typed-answer";
+import type { TypedAnswerExercise } from "./typed-answer/exercise";
 
 export type Exercise =
   | MatchingExercise
@@ -17,17 +17,24 @@ export type {
   MatchingExerciseGenerationConfig,
   MatchingSourceItem,
 } from "./matching-generator";
-export { generateTypedAnswerExercise } from "./typed-answer-generator";
+export { generateTypedAnswerExercise } from "./typed-answer/generator";
 export type {
   TypedAnswerExerciseGenerationConfig,
   TypedAnswerSourceItem,
-} from "./typed-answer-generator";
+} from "./typed-answer/generator";
 export type {
   MatchingConfig,
   MatchingExercise,
   MatchingPair,
 } from "./matching";
-export type { TypedAnswerExercise } from "./typed-answer";
+export type { TypedAnswerExercise } from "./typed-answer/exercise";
+export { evaluateTypedAnswer } from "./typed-answer/evaluate";
+export {
+  createSingleAnswerResult,
+  createMatchingResult,
+  scoreExerciseResults,
+  countExerciseItems,
+} from "./results";
 export type {
   ExerciseOutcome,
   ExerciseResult,

@@ -1,7 +1,7 @@
 import { fireEvent, render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { expect, it, vi } from "vitest";
-import * as exerciseResults from "../session/exerciseResults";
+import * as exerciseResults from "@opennihongo/core";
 import {
   matchingOptions,
   matchEveryPair,

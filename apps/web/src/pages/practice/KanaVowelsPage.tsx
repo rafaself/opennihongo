@@ -1,111 +1,33 @@
 import { normalizePracticeSearch } from "../../app/practiceSearch";
-import { hiraganaVowels } from "@opennihongo/content";
-import { checkKanaAnswer } from "@opennihongo/core";
-import type { KanaProgress } from "@opennihongo/core";
-import { loadKanaProgress, saveKanaAnswer } from "@opennihongo/persistence";
 import { Button, FormField, Input, Surface, Text } from "@opennihongo/ui";
-import { useEffect, useState, type SyntheticEvent } from "react";
+import { useKanaVowelLesson } from "../../views/practice/interaction/useKanaVowelLesson";
 import { PracticeFeedback } from "../../views/practice/feedback/PracticeFeedback";
 import { PracticeHeader } from "../../views/practice/layout/PracticeHeader";
 import { PracticeResults } from "../../views/practice/results/PracticeResults";
 import "../../views/practice/practice.css";
 
-type Feedback = { correct: boolean; expected: string };
-
 export function KanaVowelsPage() {
-  const [loading, setLoading] = useState(true);
-  const [progress, setProgress] = useState<KanaProgress[]>([]);
-  const [index, setIndex] = useState(0);
-  const [answer, setAnswer] = useState("");
-  const [feedback, setFeedback] = useState<Feedback | null>(null);
-  const [correctCount, setCorrectCount] = useState(0);
-  const [saving, setSaving] = useState(false);
-  const [storageError, setStorageError] = useState("");
-
-  useEffect(() => {
-    let active = true;
-    void loadKanaProgress()
-      .then((saved) => {
-        if (active) setProgress(saved);
-      })
-      .catch(() => {
-        if (active)
-          setStorageError(
-            "Progress could not be loaded. You can still practice.",
-          );
-      })
-      .finally(() => {
-        if (active) setLoading(false);
-      });
-    return () => {
-      active = false;
-    };
-  }, []);
-
-  const item = hiraganaVowels[index];
-  const complete = index >= hiraganaVowels.length;
-  const practicedCount = progress.filter((entry) =>
-    hiraganaVowels.some((vowel) => vowel.id === entry.itemId),
-  ).length;
-
-  useEffect(() => {
-    if (complete) {
-      document.getElementById("practice-complete-title")?.focus();
-    }
-  }, [complete]);
-
-  async function submitAnswer(event: SyntheticEvent<HTMLFormElement>) {
-    event.preventDefault();
-    if (!item || !answer.trim() || feedback || saving) return;
-
-    const correct = checkKanaAnswer(item, answer);
-    setSaving(true);
-    try {
-      const saved = await saveKanaAnswer(
-        item,
-        correct,
-        new Date().toISOString(),
-      );
-      setProgress((previous) => [
-        ...previous.filter((entry) => entry.itemId !== saved.itemId),
-        saved,
-      ]);
-      setStorageError("");
-    } catch {
-      setStorageError(
-        "Your answer could not be saved. You can still finish this session.",
-      );
-    } finally {
-      setCorrectCount((count) => count + Number(correct));
-      setFeedback({ correct, expected: item.romanization });
-      setSaving(false);
-    }
-  }
-
-  function continueSession() {
-    setIndex((current) => current + 1);
-    setAnswer("");
-    setFeedback(null);
-    if (index < hiraganaVowels.length - 1) {
-      window.requestAnimationFrame(() =>
-        document.getElementById("kana-answer")?.focus(),
-      );
-    }
-  }
-
-  function restartSession() {
-    setIndex(0);
-    setAnswer("");
-    setFeedback(null);
-    setCorrectCount(0);
-    window.requestAnimationFrame(() =>
-      document.getElementById("kana-answer")?.focus(),
-    );
-  }
+  const {
+    loading,
+    answer,
+    setAnswer,
+    saving,
+    storageError,
+    exercise,
+    feedback,
+    complete,
+    index,
+    total,
+    score,
+    practicedCount,
+    submitAnswer,
+    continueSession,
+    restartSession,
+  } = useKanaVowelLesson();
 
   const search = normalizePracticeSearch({});
   const sessionProgress = Math.round(
-    ((index + Number(feedback !== null)) / hiraganaVowels.length) * 100,
+    ((index + Number(feedback !== undefined)) / total) * 100,
   );
 
   return (
@@ -122,7 +44,7 @@ export function KanaVowelsPage() {
     >
       <PracticeHeader
         progress={sessionProgress}
-        step={`${String(complete ? hiraganaVowels.length : index + 1)}/${String(hiraganaVowels.length)}`}
+        step={`${String(complete ? total : index + 1)}/${String(total)}`}
         search={search}
       />
       {loading ? (
@@ -131,13 +53,13 @@ export function KanaVowelsPage() {
         </div>
       ) : complete ? (
         <PracticeResults
-          score={correctCount}
-          total={hiraganaVowels.length}
+          score={score}
+          total={total}
           onRestart={restartSession}
           search={search}
-          summary={`Progress saved for ${String(practicedCount)} of ${String(hiraganaVowels.length)} vowels.`}
+          summary={`Progress saved for ${String(practicedCount)} of ${String(total)} vowels.`}
         />
-      ) : item ? (
+      ) : exercise?.type === "typed-answer" ? (
         <>
           <div className="practice-session__body">
             <div className="practice-session__question">
@@ -152,19 +74,22 @@ export function KanaVowelsPage() {
               <div className="practice-session__exercise">
                 <Surface className="practice-session__prompt" elevation="card">
                   <span className="practice-session__prompt-kana" lang="ja">
-                    {item.glyph}
+                    {exercise.prompt.text}
                   </span>
                 </Surface>
                 <form
                   id="kana-vowels-answer"
                   className="practice-session__typed-answer w-full"
-                  onSubmit={(event) => void submitAnswer(event)}
+                  onSubmit={(event) => {
+                    event.preventDefault();
+                    void submitAnswer();
+                  }}
                 >
                   <FormField id="kana-answer" label="Romaji answer">
                     <Input
                       autoComplete="off"
                       autoFocus
-                      disabled={feedback !== null || saving}
+                      disabled={feedback !== undefined || saving}
                       inputMode="text"
                       onChange={(event) => {
                         setAnswer(event.target.value);
@@ -176,21 +101,21 @@ export function KanaVowelsPage() {
                 </form>
               </div>
               <Text color="secondary" variant="label">
-                Character {index + 1} of {hiraganaVowels.length} ·{" "}
-                {practicedCount} practiced on this device
+                Character {index + 1} of {total} · {practicedCount} practiced on
+                this device
               </Text>
             </div>
           </div>
           <div className="practice-session__action-slot">
             {feedback ? (
               <PracticeFeedback
-                correct={feedback.correct}
+                correct={feedback.outcome === "correct"}
                 message={
-                  feedback.correct
+                  feedback.outcome === "correct"
                     ? "Your reading is correct."
-                    : `The answer is ${feedback.expected}.`
+                    : `The answer is ${exercise.acceptedAnswers[0] ?? ""}.`
                 }
-                finalExercise={index === hiraganaVowels.length - 1}
+                finalExercise={index === total - 1}
                 onContinue={continueSession}
               />
             ) : (
