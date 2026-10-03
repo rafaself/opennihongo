@@ -1,7 +1,7 @@
 import type { LearningItemId } from "@opennihongo/core";
 import { Button } from "@opennihongo/ui";
 import { useEffect } from "react";
-import { playJapanesePronunciation } from "../../lib/pronunciation";
+import { playJapanesePronunciation } from "../../../lib/pronunciation";
 
 function SpeakerIcon() {
   return (

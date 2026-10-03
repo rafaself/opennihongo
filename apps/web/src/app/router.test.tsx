@@ -74,21 +74,23 @@ describe("web application routes", () => {
       screen.getByRole("navigation", { name: "Primary navigation" }),
     ).toBeTruthy();
     expect(
-      screen.getByRole("link", { name: "Learn hiragana" }).getAttribute("href"),
-    ).toBe("/kana/lesson");
+      screen
+        .getByRole("link", { name: "Start practicing" })
+        .getAttribute("href"),
+    ).toBe("/practice");
 
-    await user.click(screen.getByRole("link", { name: "Learn hiragana" }));
+    await user.click(screen.getByRole("link", { name: "Start practicing" }));
+    await screen.findByRole("heading", { name: "Practice", level: 1 });
+    await user.click(screen.getByRole("link", { name: "Start first vowels" }));
 
     await screen.findByRole("heading", { name: "Learn the five vowels" });
-    expect(document.title).toBe("Kana · OpenNihongo");
+    expect(document.title).toBe("First vowels · OpenNihongo");
     expect(
       screen.queryByRole("navigation", { name: "Primary navigation" }),
     ).toBeNull();
     expect(screen.queryByRole("button", { name: "Open menu" })).toBeNull();
-    await user.click(screen.getByRole("link", { name: "Leave lesson" }));
-    await screen.findByRole("heading", {
-      name: "Make steady progress, one step at a time.",
-    });
+    await user.click(screen.getByRole("link", { name: "Leave practice" }));
+    await screen.findByRole("heading", { name: "Practice", level: 1 });
     expect(
       screen.getByRole("navigation", { name: "Primary navigation" }),
     ).toBeTruthy();
@@ -230,9 +232,12 @@ describe("web application routes", () => {
     expect(audioElements[6]?.play).toHaveBeenCalledOnce();
     expect(speech.speak).not.toHaveBeenCalled();
 
-    await user.click(screen.getByRole("link", { name: "Learn characters" }));
-    await screen.findByRole("heading", { name: "Learn the five vowels" });
-    expect(document.title).toBe("Kana · OpenNihongo");
+    await user.click(screen.getByRole("link", { name: "Practice Kana" }));
+    await screen.findByRole("heading", { name: "Practice", level: 1 });
+    expect(router.state.location.search).toMatchObject({
+      scripts: ["katakana"],
+      categories: ["basic"],
+    });
   });
 
   it("opens Practice and upcoming sections, with mobile menu dismissal", async () => {
@@ -272,26 +277,28 @@ describe("web application routes", () => {
     ).toBe("false");
     expect(document.activeElement).toBe(screen.getByRole("main"));
 
-    await user.click(screen.getByRole("link", { name: "Learn" }));
+    await user.click(screen.getByRole("link", { name: "Home" }));
     await screen.findByRole("heading", {
       name: "Make steady progress, one step at a time.",
     });
     await user.click(screen.getByRole("link", { name: /Progress/ }));
     await screen.findByRole("heading", { name: "Progress" });
-    await user.click(screen.getByRole("link", { name: /Quests/ }));
+    await router.navigate({ to: "/quests" });
     await screen.findByRole("heading", { name: "Quests" });
-    await user.click(screen.getByRole("link", { name: /Library/ }));
+    await router.navigate({ to: "/library" });
     await screen.findByRole("heading", { name: "Library" });
   });
 
-  it("opens the Words library from primary navigation", async () => {
+  it("opens vocabulary from Practice", async () => {
     const user = userEvent.setup();
     await renderHome();
 
-    await user.click(screen.getByRole("link", { name: "Words" }));
+    await user.click(screen.getByRole("link", { name: "Start practicing" }));
+    await screen.findByRole("heading", { name: "Practice", level: 1 });
+    await user.click(screen.getByRole("link", { name: "View vocabulary" }));
 
-    await screen.findByRole("heading", { name: "Words" });
-    expect(document.title).toBe("Words · OpenNihongo");
+    await screen.findByRole("heading", { name: "Vocabulary" });
+    expect(document.title).toBe("Vocabulary · OpenNihongo");
     expect(screen.getByText("5 words")).toBeTruthy();
     expect(
       screen
@@ -310,7 +317,7 @@ describe("web application routes", () => {
       expect(document.title).toBe("Page not found · OpenNihongo");
     });
     expect(
-      screen.getByRole("link", { name: "Back to Learn" }).getAttribute("href"),
+      screen.getByRole("link", { name: "Back to Home" }).getAttribute("href"),
     ).toBe("/");
   });
 

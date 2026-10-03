@@ -1,3 +1,4 @@
+import { normalizePracticeSearch } from "../../../app/practiceSearch";
 import { describe, expect, it } from "vitest";
 import { createKanaPracticeSession } from "./createKanaPracticeSession";
 import {
@@ -11,8 +12,9 @@ describe("practice exercise results", () => {
   it("records a typed-answer skip with no attempts or correct source items", () => {
     const session = createKanaPracticeSession({
       mode: "reading",
-      script: "hiragana",
-      category: "basic",
+      ...normalizePracticeSearch({}),
+      scripts: ["hiragana"],
+      categories: ["basic"],
       revision: 0,
     });
     const exercise = session.exercises.find(
@@ -38,8 +40,9 @@ describe("practice exercise results", () => {
   it("preserves partial matching outcomes per source item and attempt count", () => {
     const session = createKanaPracticeSession({
       mode: "matching",
-      script: "hiragana",
-      category: "basic",
+      ...normalizePracticeSearch({}),
+      scripts: ["hiragana"],
+      categories: ["basic"],
       revision: 0,
     });
     const exercise = session.exercises.find(

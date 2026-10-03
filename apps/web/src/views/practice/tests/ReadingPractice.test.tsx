@@ -69,6 +69,35 @@ it("submits the latest typed answer when Enter is pressed on the page", async ()
   );
 });
 
+it("keeps Enter continuation without navigation highlighting and restores it for Tab", async () => {
+  const user = userEvent.setup();
+  const session = await renderPractice();
+  const exercise = session.exercises[0];
+  if (exercise?.type !== "typed-answer")
+    throw new Error("Expected a reading exercise");
+  await user.type(
+    screen.getByRole("textbox"),
+    exercise.acceptedAnswers[0] ?? "",
+  );
+  await user.keyboard("{Enter}");
+  expect(document.activeElement).toBe(
+    screen.getByRole("button", { name: "Continue" }),
+  );
+  expect(document.documentElement.getAttribute("data-focus-navigation")).toBe(
+    "false",
+  );
+  await user.keyboard("{Enter}");
+  await screen.findByRole("textbox");
+  expect(document.activeElement).toBe(screen.getByRole("textbox"));
+  expect(document.documentElement.getAttribute("data-focus-navigation")).toBe(
+    "false",
+  );
+  await user.tab();
+  expect(document.documentElement.getAttribute("data-focus-navigation")).toBe(
+    "true",
+  );
+});
+
 it("reports an incorrect reading, records skipped prompts, and restarts cleanly", async () => {
   const user = userEvent.setup();
   const record = vi.spyOn(exerciseResults, "createSingleAnswerResult");
@@ -132,8 +161,8 @@ it("speaks the authored pronunciation of a pattern when recorded audio is unavai
   chartAudioMock.mockReturnValue(undefined);
   const options = {
     ...readingOptions,
-    script: "katakana",
-    category: "small-tsu",
+    scripts: ["katakana"],
+    categories: ["small-tsu"],
   } as const;
   const session = await renderPractice(options);
   const exercise = session.exercises[0];
@@ -176,7 +205,10 @@ it("disposes pending pronunciation loading when leaving and starts a fresh sessi
   expect(
     screen.getByRole("heading", { name: "Practice", level: 1 }),
   ).toBeTruthy();
-  await user.click(screen.getByRole("link", { name: "Play Kana reading" }));
+  await user.click(screen.getByRole("link", { name: "Set up Kana reading" }));
+  await user.click(
+    await screen.findByRole("button", { name: "Start Kana reading" }),
+  );
   await screen.findByRole("textbox");
   expect(screen.getByRole("progressbar").getAttribute("aria-valuenow")).toBe(
     "0",

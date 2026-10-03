@@ -6,22 +6,25 @@ import { createKanaPracticeSession } from "../session/createKanaPracticeSession"
 
 export const quizOptions = {
   mode: "quiz",
-  script: "katakana",
-  category: "small-tsu",
+  scripts: ["katakana"],
+  categories: ["small-tsu"],
   direction: "character",
+  difficulty: "standard",
+  fast: false,
   revision: 0,
 } as const;
 export async function openQuiz(search = {}) {
   render(<RouterProvider router={router} />);
   await router.navigate({
-    to: "/practice/kana/quiz",
+    to: "/practice/kana/$game/setup",
+    params: { game: "quiz" },
     search: {
-      script: quizOptions.script,
-      category: quizOptions.category,
+      scripts: quizOptions.scripts,
+      categories: quizOptions.categories,
       ...search,
     },
   });
-  await screen.findByRole("heading", { name: "Set up your Kana quiz" });
+  await screen.findByRole("heading", { name: "Set up Kana quiz" });
 }
 export function questions(
   direction: "character" | "romaji" | "random" = "character",

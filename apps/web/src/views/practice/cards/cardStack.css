@@ -1,0 +1,207 @@
+.card-stack__content {
+  display: grid;
+  gap: 2rem;
+  justify-items: center;
+  margin-inline: auto;
+  max-width: 42rem;
+  width: 100%;
+}
+
+.card-stack__heading {
+  display: grid;
+  gap: 0.5rem;
+  text-align: center;
+}
+.card-stack__heading h1,
+.card-stack__heading p {
+  margin: 0;
+}
+
+.card-stack__heap {
+  isolation: isolate;
+  margin: 0.75rem 1rem 2rem;
+  max-width: 26rem;
+  min-height: var(--card-stack-card-height);
+  position: relative;
+  width: calc(100% - 2rem);
+}
+
+.card-stack__layer,
+.card-stack__card {
+  background: var(--ns-color-surface);
+  border: 2px solid var(--ns-color-border-subtle);
+  border-radius: var(--ns-radius-lg);
+}
+
+.card-stack__layer {
+  inset: 0;
+  position: absolute;
+  z-index: -1;
+}
+.card-stack__layer--back {
+  background: var(--ns-color-surface-subtle);
+  transform: translateY(1.25rem) rotate(-4deg);
+}
+.card-stack__layer--middle {
+  transform: translateY(0.625rem) rotate(3deg);
+}
+.card-stack__card {
+  align-items: center;
+  display: grid;
+  min-height: var(--card-stack-card-height);
+  padding: 3.5rem 1.5rem 2rem;
+  position: relative;
+  text-align: center;
+}
+.card-stack__card[data-revealed="true"] {
+  border-color: var(--ns-color-feedback-success);
+}
+.card-stack__card[data-entering="true"] {
+  animation: card-stack-settle var(--ns-motion-duration-normal)
+    var(--ns-motion-easing-enter) both;
+}
+.card-stack__discard {
+  --discard-x: 110%;
+  --discard-y: 1rem;
+  --discard-rotation: 16deg;
+  animation: card-stack-discard var(--ns-motion-easing-exit) both;
+  inset: 0;
+  pointer-events: none;
+  position: absolute;
+  z-index: 2;
+}
+.card-stack__discard[data-direction="left"] {
+  --discard-x: -110%;
+  --discard-rotation: -16deg;
+}
+.card-stack__discard[data-direction="down"] {
+  --discard-x: 15%;
+  --discard-y: 90%;
+  --discard-rotation: 8deg;
+}
+.card-stack__discard .card-stack__front,
+.card-stack__discard .card-stack__answer {
+  animation: card-stack-content-fade linear both;
+  animation-duration: inherit;
+  mask-image: linear-gradient(to right, #000 45%, transparent 55%);
+  mask-repeat: no-repeat;
+  mask-size: 300% 100%;
+}
+
+@keyframes card-stack-discard {
+  from {
+    opacity: 1;
+    transform: translate(0, 0) rotate(0);
+  }
+  65% {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+    transform: translate(var(--discard-x), var(--discard-y))
+      rotate(var(--discard-rotation));
+  }
+}
+@keyframes card-stack-content-fade {
+  from {
+    mask-position: 0% 0;
+  }
+  to {
+    mask-position: 100% 0;
+  }
+}
+@keyframes card-stack-settle {
+  from {
+    opacity: 0.65;
+    transform: translateY(0.625rem) rotate(3deg) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) rotate(0) scale(1);
+  }
+}
+
+:root[data-motion="reduced"] .card-stack__card {
+  animation: none;
+}
+:root[data-motion="reduced"] .card-stack__discard {
+  display: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .card-stack__card[data-entering="true"] {
+    animation: none;
+  }
+  .card-stack__discard {
+    display: none;
+  }
+}
+.card-stack__front,
+.card-stack__answer {
+  display: grid;
+  gap: 1rem;
+}
+.card-stack__face {
+  font-size: clamp(2.25rem, 6vw, 3.5rem);
+  font-weight: 800;
+  line-height: 1.35;
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+.card-stack__context {
+  color: var(--ns-color-text-secondary);
+  font-size: 1.5rem;
+  margin: 0;
+}
+.card-stack__hint,
+.card-stack__supporting {
+  color: var(--ns-color-text-secondary);
+  margin: 0;
+}
+.card-stack__supporting {
+  font-size: 1.25rem;
+}
+.card-stack__ratings {
+  display: flex;
+  gap: 1rem;
+}
+.card-stack__ratings button {
+  align-items: center;
+  display: flex;
+  gap: 0.75rem;
+}
+
+@media (max-width: 40rem) {
+  .card-stack {
+    --card-stack-card-height: 16rem;
+  }
+  .card-stack__content {
+    gap: 1.25rem;
+  }
+  .card-stack__heading h1 {
+    font-size: 2rem;
+  }
+  .card-stack__actions {
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+  .card-stack__ratings {
+    display: grid;
+    gap: 0.5rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    width: 100%;
+  }
+  .card-stack__ratings button {
+    gap: 0.5rem;
+    justify-content: center;
+    padding-inline: 0.5rem;
+  }
+  .card-stack__actions:has(.card-stack__ratings) {
+    align-content: center;
+  }
+}
+.card-stack {
+  --card-stack-card-height: clamp(14rem, 34dvh, 20rem);
+}
+.card-stack .practice-session__body {
+  overflow-x: hidden;
+}

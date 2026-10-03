@@ -3,7 +3,8 @@ import { act, cleanup, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import type { KanaItem, KanaProgress } from "@opennihongo/core";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { KanaPage } from "./KanaPage";
+import { RouterProvider } from "@tanstack/react-router";
+import { router } from "../../app/router";
 
 const storage = vi.hoisted(() => ({
   loadKanaProgress: vi.fn<() => Promise<KanaProgress[]>>(),
@@ -31,7 +32,16 @@ beforeEach(() => {
   );
 });
 
-afterEach(cleanup);
+afterEach(async () => {
+  await router.navigate({ to: "/" });
+  cleanup();
+});
+
+async function renderSession() {
+  const view = render(<RouterProvider router={router} />);
+  await router.navigate({ to: "/practice/kana/vowels" });
+  return view;
+}
 
 describe("first hiragana session", () => {
   it("shows previously practiced vowels from local progress", async () => {
@@ -43,46 +53,47 @@ describe("first hiragana session", () => {
         lastAnsweredAt: "2026-09-26T00:00:00.000Z",
       },
     ]);
-    render(<KanaPage />);
+    await renderSession();
 
     await screen.findByText(/1 practiced on this device/i);
   });
 
   it("checks all five vowels, saves answers, and summarizes the session", async () => {
     const user = userEvent.setup();
-    render(<KanaPage />);
+    await renderSession();
 
     await screen.findByText("あ");
     for (const [index, answer] of [" A ", "i", "u", "e", "o"].entries()) {
       await user.type(screen.getByRole("textbox", { name: /romaji/i }), answer);
       await user.click(screen.getByRole("button", { name: /check answer/i }));
-      await screen.findByText("Correct!");
+      await screen.findByText("That’s right!");
       if (index < 4) {
-        await user.click(screen.getByRole("button", { name: /next kana/i }));
+        await user.click(screen.getByRole("button", { name: /^continue$/i }));
       } else {
         await user.click(screen.getByRole("button", { name: /see results/i }));
       }
     }
 
-    const heading = screen.getByRole("heading", { name: /session complete/i });
+    const heading = screen.getByRole("heading", { name: /perfect practice/i });
     expect(document.activeElement).toBe(heading);
-    screen.getByText(/5 of 5 correct/i);
+    screen.getByText("5 / 5");
+    screen.getByText("100%");
     expect(storage.saveKanaAnswer).toHaveBeenCalledTimes(5);
     expect(storage.saveKanaAnswer.mock.calls[0]?.[1]).toBe(true);
   });
 
   it("can start another session without discarding saved progress", async () => {
     const user = userEvent.setup();
-    render(<KanaPage />);
+    await renderSession();
 
     await screen.findByText("あ");
     for (const [index, answer] of ["a", "i", "u", "e", "o"].entries()) {
       await user.type(screen.getByRole("textbox", { name: /romaji/i }), answer);
       await user.click(screen.getByRole("button", { name: /check answer/i }));
-      await screen.findByText("Correct!");
+      await screen.findByText("That’s right!");
       await user.click(
         screen.getByRole("button", {
-          name: index === 4 ? /see results/i : /next kana/i,
+          name: index === 4 ? /see results/i : /^continue$/i,
         }),
       );
     }
@@ -97,7 +108,7 @@ describe("first hiragana session", () => {
 
   it("shows the expected answer and records an incorrect response", async () => {
     const user = userEvent.setup();
-    render(<KanaPage />);
+    await renderSession();
 
     await screen.findByText("あ");
     await user.type(screen.getByRole("textbox", { name: /romaji/i }), "o");
@@ -111,7 +122,7 @@ describe("first hiragana session", () => {
     storage.loadKanaProgress.mockRejectedValue(
       new Error("storage unavailable"),
     );
-    render(<KanaPage />);
+    await renderSession();
 
     expect((await screen.findByRole("alert")).textContent).toMatch(
       /progress could not be loaded/i,
@@ -130,10 +141,10 @@ describe("first hiragana session", () => {
           resolveFirst = resolve;
         }),
     );
-    const first = render(<KanaPage />);
+    const first = await renderSession();
     first.unmount();
 
-    render(<KanaPage />);
+    await renderSession();
     await screen.findByText(/0 practiced on this device/i);
     await act(async () => {
       resolveFirst([
@@ -158,10 +169,10 @@ describe("first hiragana session", () => {
           rejectFirst = reject;
         }),
     );
-    const first = render(<KanaPage />);
+    const first = await renderSession();
     first.unmount();
 
-    render(<KanaPage />);
+    await renderSession();
     await screen.findByText(/0 practiced on this device/i);
     await act(async () => {
       rejectFirst(new Error("storage unavailable"));
@@ -174,7 +185,7 @@ describe("first hiragana session", () => {
   it("reports a failed save and still lets the learner continue", async () => {
     const user = userEvent.setup();
     storage.saveKanaAnswer.mockRejectedValue(new Error("storage unavailable"));
-    render(<KanaPage />);
+    await renderSession();
 
     await screen.findByText("あ");
     await user.type(screen.getByRole("textbox", { name: /romaji/i }), "a");
@@ -183,7 +194,7 @@ describe("first hiragana session", () => {
     expect((await screen.findByRole("alert")).textContent).toMatch(
       /answer could not be saved/i,
     );
-    await user.click(screen.getByRole("button", { name: /next kana/i }));
+    await user.click(screen.getByRole("button", { name: /^continue$/i }));
     screen.getByText("い");
   });
 });

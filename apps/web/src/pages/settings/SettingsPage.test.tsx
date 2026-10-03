@@ -15,7 +15,7 @@ afterEach(() => {
   applyAppPreferences(defaultAppPreferences);
 });
 
-it("persists theme, motion, and romaji choices and applies them to the Words library", async () => {
+it("persists theme, motion, and romaji choices and applies them to vocabulary", async () => {
   const user = userEvent.setup();
   render(<RouterProvider router={router} />);
   await router.navigate({ to: "/settings" });
@@ -33,8 +33,10 @@ it("persists theme, motion, and romaji choices and applies them to the Words lib
   });
   expect(document.documentElement.dataset["theme"]).toBe("dark");
   expect(document.documentElement.dataset["motion"]).toBe("reduced");
-  await user.click(screen.getByRole("link", { name: "Words" }));
-  await screen.findByRole("heading", { name: "Words" });
+  await user.click(screen.getByRole("link", { name: "Practice" }));
+  await screen.findByRole("heading", { name: "Practice", level: 1 });
+  await user.click(screen.getByRole("link", { name: "View vocabulary" }));
+  await screen.findByRole("heading", { name: "Vocabulary" });
   expect(screen.queryByText("soto")).toBeNull();
   expect(screen.getByRole("heading", { name: "そと" })).toBeTruthy();
   await user.click(screen.getByRole("link", { name: "Settings" }));
@@ -54,7 +56,9 @@ it("persists theme, motion, and romaji choices and applies them to the Words lib
       .value,
   ).toBe("dark");
   await user.click(screen.getByRole("switch", { name: "Show romaji" }));
-  await user.click(screen.getByRole("link", { name: "Words" }));
-  await screen.findByRole("heading", { name: "Words" });
+  await user.click(screen.getByRole("link", { name: "Practice" }));
+  await screen.findByRole("heading", { name: "Practice", level: 1 });
+  await user.click(screen.getByRole("link", { name: "View vocabulary" }));
+  await screen.findByRole("heading", { name: "Vocabulary" });
   expect(screen.getByText("soto")).toBeTruthy();
 });

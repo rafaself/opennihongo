@@ -1,14 +1,19 @@
 import { Link } from "@tanstack/react-router";
 import { Button, Text } from "@opennihongo/ui";
 import "./practiceResults.css";
-import type { PracticeSearch } from "../../app/practiceSearch";
+import type { PracticeSearch } from "../../../app/practiceSearch";
 
 type PracticeResultsProps = {
   score: number;
   total: number;
   onRestart: () => void;
   onChangeOptions?: (() => void) | undefined;
-  search: PracticeSearch;
+  search?: PracticeSearch;
+  hintsUsed?: number | undefined;
+  accuracy?: number;
+  summary?: string;
+  scoreLabel?: string;
+  accuracyLabel?: string;
 };
 
 function CelebrationArt() {
@@ -81,9 +86,14 @@ export function PracticeResults({
   onRestart,
   onChangeOptions,
   search,
+  accuracy: providedAccuracy,
+  hintsUsed,
+  summary,
+  scoreLabel = "Correct items",
+  accuracyLabel = "Accuracy",
 }: PracticeResultsProps) {
-  const accuracy = Math.round((score / total) * 100);
-  const perfect = score === total;
+  const accuracy = providedAccuracy ?? Math.round((score / total) * 100);
+  const perfect = score === total && accuracy === 100;
 
   return (
     <>
@@ -98,19 +108,23 @@ export function PracticeResults({
           {perfect ? "Perfect practice!" : "Practice complete!"}
         </Text>
         <Text color="secondary">
-          {perfect
-            ? "Every answer landed. Beautiful work!"
-            : "Every session moves you forward."}
+          {summary ??
+            (perfect
+              ? "Every answer landed. Beautiful work!"
+              : "Every session moves you forward.")}
         </Text>
+        {hintsUsed !== undefined && (
+          <Text color="secondary">Hints used: {hintsUsed}</Text>
+        )}
         <div className="practice-results__stats" aria-label="Session results">
           <div className="practice-results__stat practice-results__stat--score">
-            <span>Correct items</span>
+            <span>{scoreLabel}</span>
             <strong>
               {score} / {total}
             </strong>
           </div>
           <div className="practice-results__stat practice-results__stat--accuracy">
-            <span>Accuracy</span>
+            <span>{accuracyLabel}</span>
             <strong>{accuracy}%</strong>
           </div>
         </div>
@@ -123,7 +137,7 @@ export function PracticeResults({
             <Link
               className="ns-button"
               data-variant="secondary"
-              search={search}
+              search={search ?? {}}
               to="/practice"
             >
               Back to Practice

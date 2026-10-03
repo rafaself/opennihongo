@@ -17,7 +17,7 @@ export type MultipleChoiceExerciseGenerationConfig = Readonly<{
   exerciseId: ExerciseId;
 }>;
 
-/** Shuffles four caller-authored options while scoring only the prompt's source. */
+/** Shuffles two to six caller-authored options while scoring only the prompt's source. */
 export const generateMultipleChoiceExercise: ExerciseGenerator<
   MultipleChoiceSourceItem,
   MultipleChoiceExerciseGenerationConfig,
@@ -44,9 +44,10 @@ export const generateMultipleChoiceExercise: ExerciseGenerator<
   const ids = new Set(item.options.map(({ id }) => id));
   const texts = new Set(item.options.map(({ text }) => text.trim()));
   if (
-    item.options.length !== 4 ||
-    ids.size !== 4 ||
-    texts.size !== 4 ||
+    item.options.length < 2 ||
+    item.options.length > 6 ||
+    ids.size !== item.options.length ||
+    texts.size !== item.options.length ||
     item.options.some(
       ({ id, text }) => id.trim() === "" || text.trim() === "",
     ) ||
@@ -54,7 +55,7 @@ export const generateMultipleChoiceExercise: ExerciseGenerator<
   ) {
     throw new ExerciseGenerationError(
       "invalid-configuration",
-      "A quiz requires four distinct non-empty options and one available correct option.",
+      "A quiz requires two to six distinct non-empty options and one available correct option.",
     );
   }
   return {

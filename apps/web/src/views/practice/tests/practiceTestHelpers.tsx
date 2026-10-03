@@ -48,11 +48,18 @@ afterEach(async () => {
 
 export const readingOptions = {
   mode: "reading",
-  script: "hiragana",
-  category: "basic",
+  scripts: ["hiragana"],
+  categories: ["basic"],
+  difficulty: "standard",
+  direction: "random",
+  fast: false,
   revision: 0,
 } as const;
-export const matchingOptions = { ...readingOptions, mode: "matching" } as const;
+export const matchingOptions = {
+  ...readingOptions,
+  mode: "matching",
+  difficulty: "hard",
+} as const;
 
 export async function openPractice(
   options: KanaPracticeOptions = readingOptions,
@@ -63,7 +70,7 @@ export async function openPractice(
       options.mode === "reading"
         ? "/practice/kana/reading"
         : "/practice/kana/matching",
-    search: { script: options.script, category: options.category },
+    search: options,
   });
 }
 

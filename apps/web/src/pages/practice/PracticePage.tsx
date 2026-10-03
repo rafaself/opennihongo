@@ -1,134 +1,78 @@
-import { kanaCharacterCharts } from "@opennihongo/content";
-import { Card, SegmentedControl } from "@opennihongo/ui";
-import { Link, useNavigate, useSearch } from "@tanstack/react-router";
-import { getKanaPracticeItemCount } from "../../views/practice/session/kanaPracticeContent";
+import { kanaPracticeGames } from "@opennihongo/content";
+import { Card } from "@opennihongo/ui";
+import { Link, useSearch } from "@tanstack/react-router";
+import { CardStackGameCard } from "../../views/practice/cards/CardStackGameCard";
+import { getWordCards } from "../../views/practice/cards/cardStackContent";
 import "./PracticePage.css";
 
 export function PracticePage() {
   const search = useSearch({ from: "/practice" });
-  const navigate = useNavigate({ from: "/practice" });
-  const chart = kanaCharacterCharts[search.script];
-  const scriptLabel = search.script === "hiragana" ? "Hiragana" : "Katakana";
-
   return (
     <section aria-labelledby="practice-hub-title" className="practice-hub">
       <header className="practice-hub__header">
         <p className="practice-hub__eyebrow">A little practice, every day</p>
         <h1 id="practice-hub-title">Practice</h1>
-        <p>Choose a game and build confidence, one short session at a time.</p>
+        <p>
+          Choose a game, make it yours, and build confidence one session at a
+          time.
+        </p>
       </header>
-
       <section
         aria-labelledby="practice-kana-title"
         className="practice-hub__section"
       >
         <header className="practice-hub__section-header">
           <h2 id="practice-kana-title">Kana</h2>
-          <p>Get familiar with characters, sounds, and reading patterns.</p>
+          <p>
+            Choose your characters, difficulty, and session length before you
+            play.
+          </p>
         </header>
-        <div className="practice-hub__selectors">
-          <SegmentedControl
-            aria-label="Practice Kana script"
-            options={[
-              { value: "hiragana", label: "Hiragana" },
-              { value: "katakana", label: "Katakana" },
-            ]}
-            value={search.script}
-            onValueChange={(script) => {
-              void navigate({ search: { ...search, script }, replace: true });
-            }}
-          />
-          <label className="practice-hub__category">
-            <span>Kana category</span>
-            <select
-              value={search.category}
-              onChange={(event) => {
-                void navigate({
-                  search: { ...search, category: event.target.value },
-                  replace: true,
-                });
-              }}
-            >
-              {chart.sections.map(({ id, title }) => (
-                <option key={id} value={id}>
-                  {title}
-                </option>
-              ))}
-            </select>
-          </label>
-        </div>
-
+        <Card className="practice-hub__starter">
+          <div>
+            <p className="practice-hub__eyebrow">New to Hiragana?</p>
+            <h3>First vowels</h3>
+            <p>
+              Start with five Hiragana vowels. Your progress is saved on this
+              device.
+            </p>
+          </div>
+          <Link
+            className="ns-button"
+            data-variant="secondary"
+            to="/practice/kana/vowels"
+          >
+            Start first vowels
+          </Link>
+        </Card>
         <div className="practice-hub__games">
-          {(["reading", "matching"] as const).map((mode) => (
-            <Card as="article" className="practice-hub__game" key={mode}>
+          {Object.entries(kanaPracticeGames).map(([game, details]) => (
+            <Card as="article" className="practice-hub__game" key={game}>
               <span
                 aria-hidden="true"
-                className={`practice-hub__art practice-hub__art--${mode}`}
+                className={`practice-hub__art practice-hub__art--${game}`}
+                lang="ja"
               >
-                {mode === "reading" ? (
-                  <span lang="ja">
-                    {search.script === "hiragana" ? "あ" : "ア"}
-                  </span>
-                ) : (
-                  <span>{search.script === "hiragana" ? "あ" : "ア"} ↔ a</span>
-                )}
+                {details.illustration}
               </span>
+              <h3>{details.title}</h3>
+              <p>{details.description}</p>
               <p className="practice-hub__eyebrow">
-                {scriptLabel} ·{" "}
-                {getKanaPracticeItemCount(mode, search.script, search.category)}{" "}
-                {mode === "reading" ? "answers" : "pairs"}
-              </p>
-              <h3>{mode === "reading" ? "Kana reading" : "Kana matching"}</h3>
-              <p>
-                {mode === "reading"
-                  ? "See a character or pattern and type its romaji reading."
-                  : "Find each character or pattern’s matching romaji reading."}
+                Hiragana · Katakana · Mixed
               </p>
               <Link
                 className="ns-button practice-hub__play"
                 data-variant="primary"
+                to="/practice/kana/$game/setup"
+                params={{ game }}
                 search={search}
-                to={
-                  mode === "reading"
-                    ? "/practice/kana/reading"
-                    : "/practice/kana/matching"
-                }
               >
-                {mode === "reading"
-                  ? "Play Kana reading"
-                  : "Play Kana matching"}
+                Set up {details.title}
               </Link>
             </Card>
           ))}
-          <Card as="article" className="practice-hub__game">
-            <span
-              aria-hidden="true"
-              className="practice-hub__art practice-hub__art--reading"
-            >
-              <span>{search.script === "hiragana" ? "あ" : "ア"} → a</span>
-            </span>
-            <p className="practice-hub__eyebrow">
-              {scriptLabel} ·{" "}
-              {getKanaPracticeItemCount("quiz", search.script, search.category)}{" "}
-              questions
-            </p>
-            <h3>Kana quiz</h3>
-            <p>
-              Choose the correct reading or character from four options. Pick
-              your direction and try Fast mode.
-            </p>
-            <Link
-              className="ns-button practice-hub__play"
-              data-variant="primary"
-              to="/practice/kana/quiz"
-              search={search}
-            >
-              Play Kana quiz
-            </Link>
-          </Card>
         </div>
       </section>
-
       <section
         aria-labelledby="practice-words-title"
         className="practice-hub__section"
@@ -136,6 +80,13 @@ export function PracticePage() {
         <header className="practice-hub__section-header">
           <h2 id="practice-words-title">Words</h2>
           <p>Make beginner vocabulary feel familiar.</p>
+          <Link
+            className="practice-hub__reference"
+            to="/practice/words/vocabulary"
+            search={search}
+          >
+            View vocabulary
+          </Link>
         </header>
         <div className="practice-hub__games">
           <Card as="article" className="practice-hub__game">
@@ -146,13 +97,13 @@ export function PracticePage() {
               <span lang="ja">ねこ</span>
               <span>cat</span>
             </span>
-            <p className="practice-hub__eyebrow">
-              Beginner vocabulary · 10 matches
-            </p>
             <h3>Word matching</h3>
             <p>
               Match five Japanese words to their meanings, then try a rolling
               review.
+            </p>
+            <p className="practice-hub__eyebrow">
+              Beginner vocabulary · 10 matches
             </p>
             <Link
               className="ns-button practice-hub__play"
@@ -162,6 +113,7 @@ export function PracticePage() {
               Play word matching
             </Link>
           </Card>
+          <CardStackGameCard count={getWordCards().length} search={search} />
         </div>
       </section>
     </section>

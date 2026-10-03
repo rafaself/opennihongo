@@ -1,6 +1,6 @@
 .practice-hub {
   display: grid;
-  gap: 2.5rem;
+  gap: 2rem;
   margin-inline: auto;
   max-width: 60rem;
   padding-block: 1rem 3rem;
@@ -43,36 +43,6 @@
   margin: 0;
 }
 
-.practice-hub__selectors {
-  align-items: end;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem 1.5rem;
-}
-
-.practice-hub__category {
-  color: var(--ns-color-text-secondary);
-  display: grid;
-  font-size: var(--ns-text-label-size);
-  font-weight: 700;
-  gap: 0.35rem;
-}
-
-.practice-hub__category select {
-  background: var(--ns-color-surface);
-  border: 1px solid var(--ns-color-border-subtle);
-  border-radius: var(--ns-radius-md);
-  color: var(--ns-color-text-primary);
-  font: inherit;
-  min-height: 2.75rem;
-  padding: 0.5rem 0.75rem;
-}
-
-.practice-hub__category select:focus-visible {
-  outline: var(--ns-border-width-focus) solid var(--ns-color-focus);
-  outline-offset: 3px;
-}
-
 .practice-hub__games {
   display: grid;
   gap: 1rem;
@@ -84,7 +54,7 @@
   flex-direction: column;
   gap: 0.75rem;
   height: 100%;
-  padding: 1.5rem;
+  padding: 1.25rem;
 }
 
 .practice-hub__game h3 {
@@ -102,7 +72,7 @@
   font-size: 2.25rem;
   font-weight: 800;
   gap: 0.75rem;
-  height: 6rem;
+  height: 4.5rem;
   justify-content: center;
   margin-bottom: 0.5rem;
 }
@@ -128,9 +98,44 @@
   .practice-hub__games {
     grid-template-columns: minmax(0, 1fr);
   }
+}
+.practice-hub__starter .ns-card__surface {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: space-between;
+}
 
-  .practice-hub__category,
-  .practice-hub__category select {
-    width: 100%;
-  }
+.practice-hub__starter h3 {
+  font-size: 1.25rem;
+  font-weight: 800;
+  margin: 0;
+}
+
+.practice-hub__starter p {
+  color: var(--ns-color-text-secondary);
+  margin: 0.5rem 0 0;
+  max-width: 32rem;
+}
+
+.practice-hub__reference {
+  color: var(--ns-color-brand-text);
+  font-weight: 700;
+  text-underline-offset: 0.2em;
+}
+
+.practice-hub__reference:focus-visible {
+  outline: var(--ns-border-width-focus) solid var(--ns-color-focus);
+  outline-offset: 3px;
+}
+
+.practice-hub__art--quiz {
+  background: var(
+    --ns-color-action-primary-subtle,
+    var(--ns-color-surface-subtle)
+  );
+}
+.practice-hub__art--cards {
+  color: var(--ns-color-brand-text);
 }

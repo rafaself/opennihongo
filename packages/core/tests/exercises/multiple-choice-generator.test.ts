@@ -53,8 +53,21 @@ it.each([
   { label: "empty source identity", items: [{ ...item, id: " " }] },
   { label: "empty prompt", items: [{ ...item, prompt: { text: " " } }] },
   {
-    label: "three options",
-    items: [{ ...item, options: item.options.slice(0, 3) }],
+    label: "one option",
+    items: [{ ...item, options: item.options.slice(0, 1) }],
+  },
+  {
+    label: "seven options",
+    items: [
+      {
+        ...item,
+        options: Array.from({ length: 7 }, (_, i) => ({
+          id: String(i),
+          text: String(i),
+        })),
+        correctOptionId: "0",
+      },
+    ],
   },
   {
     label: "duplicate option identity",
@@ -100,3 +113,20 @@ it("rejects an empty exercise identity", () => {
     ExerciseGenerationError,
   );
 });
+
+it.each([2, 3, 4, 5, 6])(
+  "supports %i distinct options while scoring only the target",
+  (count) => {
+    const options = Array.from({ length: count }, (_, index) => ({
+      id: String(index),
+      text: `Choice ${String(index)}`,
+    }));
+    const exercise = generate([{ ...item, options, correctOptionId: "0" }]);
+    expect(exercise.options).toHaveLength(count);
+    expect(new Set(exercise.options.map(({ id }) => id))).toEqual(
+      new Set(options.map(({ id }) => id)),
+    );
+    expect(exercise.sourceItemIds).toEqual([item.id]);
+    expect(exercise.correctOptionId).toBe("0");
+  },
+);

@@ -6,6 +6,7 @@ export default mergeConfig(
   defineConfig({
     test: {
       environment: "jsdom",
+      maxWorkers: 4,
       include: ["src/**/*.test.{ts,tsx}"],
       coverage: {
         enabled: true,

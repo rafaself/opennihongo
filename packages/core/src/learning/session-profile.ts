@@ -3,6 +3,7 @@ import type { MatchingConfig } from "../exercises/matching";
 
 /** Number of generated exercises of one supported type in a profile. */
 export type ExerciseMixEntry =
+  | Readonly<{ type: "flashcard"; count: number }>
   | Readonly<{
       type: "typed-answer";
       count: number;

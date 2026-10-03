@@ -146,7 +146,7 @@ export function AcknowledgementsPage() {
         </Surface>
 
         <Link className="font-bold text-brand-text underline" to="/">
-          Back to Learn
+          Back to Home
         </Link>
       </Stack>
     </section>

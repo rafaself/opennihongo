@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { navigationSections } from "../app/sections";
+import { appSections, navigationSections } from "../app/sections";
 import { AppNavIcon } from "./AppNavIcon";
 
 export function AppNavigation({ onNavigate }: { onNavigate: () => void }) {
@@ -9,7 +9,10 @@ export function AppNavigation({ onNavigate }: { onNavigate: () => void }) {
         {navigationSections.map(({ icon, label, path, status }) => (
           <li key={path}>
             <Link
-              activeOptions={{ exact: true, includeSearch: false }}
+              activeOptions={{
+                exact: path !== appSections.practice.path,
+                includeSearch: false,
+              }}
               activeProps={{ "aria-current": "page" }}
               className="app-navigation__item"
               onClick={onNavigate}

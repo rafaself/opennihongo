@@ -1,3 +1,4 @@
+import { normalizePracticeSearch } from "../../../app/practiceSearch";
 import { kanaCharacterCharts } from "@opennihongo/content";
 import { normalizeKanaAnswer } from "@opennihongo/core";
 import { expect, it } from "vitest";
@@ -10,8 +11,10 @@ for (const script of ["hiragana", "katakana"] as const) {
       it(`generates unambiguous ${script} ${category} ${direction} questions`, () => {
         const options = {
           mode: "quiz",
-          script,
-          category,
+          ...normalizePracticeSearch({
+            scripts: [script],
+            categories: [category],
+          }),
           direction,
           revision: 0,
         } as const;
@@ -26,7 +29,10 @@ for (const script of ["hiragana", "katakana"] as const) {
             session.exercises.flatMap(({ sourceItemIds }) => sourceItemIds),
           ).size,
         ).toBe(session.exercises.length);
-        const tiles = getKanaPracticeTiles(script, category);
+        const tiles = getKanaPracticeTiles({
+          scripts: [script],
+          categories: [category],
+        });
         let characterPrompts = 0;
         for (const exercise of session.exercises) {
           expect(exercise.type).toBe("multiple-choice");
@@ -84,8 +90,9 @@ it("keeps duplicate readings out of every marked-Kana option set across replays"
   for (let revision = 0; revision < 20; revision++) {
     const session = createKanaPracticeSession({
       mode: "quiz",
-      script: "hiragana",
-      category: "dakuten",
+      ...normalizePracticeSearch({}),
+      scripts: ["hiragana"],
+      categories: ["dakuten"],
       direction: "romaji",
       revision,
     });

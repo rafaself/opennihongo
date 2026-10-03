@@ -1,5 +1,10 @@
 @import "tailwindcss";
 
+:root[data-focus-navigation="false"]
+  :focus-visible:not(input, textarea, [contenteditable]) {
+  outline: none;
+}
+
 @theme inline {
   --spacing: var(--ns-space-1);
   --color-canvas: var(--ns-color-canvas);

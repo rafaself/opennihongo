@@ -5,7 +5,7 @@ import type {
 import { Button, Text } from "@opennihongo/ui";
 import { useEffect, useRef } from "react";
 import { KeyboardShortcut } from "../../../components/keyboard/KeyboardShortcut";
-import { PronunciationButton } from "../PronunciationButton";
+import { PronunciationButton } from "../audio/PronunciationButton";
 import "./multipleChoice.css";
 
 type Props = {
@@ -16,6 +16,7 @@ type Props = {
   onPlayAudio: (id: LearningItemId) => void;
   audioId?: LearningItemId | undefined;
   speechText: string;
+  audioAvailable: boolean;
 };
 
 export function MultipleChoiceExercise({
@@ -26,6 +27,7 @@ export function MultipleChoiceExercise({
   audioId,
   speechText,
   onPlayAudio,
+  audioAvailable,
 }: Props) {
   const optionsRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
@@ -54,7 +56,7 @@ export function MultipleChoiceExercise({
         return;
       if (target.closest("button") && !optionsRef.current?.contains(target))
         return;
-      const index = ["1", "2", "3", "4"].indexOf(event.key);
+      const index = ["1", "2", "3", "4", "5", "6"].indexOf(event.key);
       const option = exercise.options[index];
       if (option) {
         event.preventDefault();
@@ -77,12 +79,14 @@ export function MultipleChoiceExercise({
         <span className="practice-session__prompt-kana">
           {exercise.prompt.text}
         </span>
-        <PronunciationButton
-          audioId={audioId}
-          text={exercise.prompt.text}
-          speechText={speechText}
-          onPlay={onPlayAudio}
-        />
+        {audioAvailable && (
+          <PronunciationButton
+            audioId={audioId}
+            text={exercise.prompt.text}
+            speechText={speechText}
+            onPlay={onPlayAudio}
+          />
+        )}
       </div>
       <div
         aria-label="Answer options"
@@ -123,6 +127,7 @@ export function MultipleChoiceExercise({
         {exercise.options.map((option, index) => (
           <Button
             key={option.id}
+            aria-keyshortcuts={String(index + 1)}
             aria-label={option.text}
             aria-pressed={selectedOptionId === option.id}
             className="kana-quiz__option"

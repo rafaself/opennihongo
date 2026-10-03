@@ -115,6 +115,11 @@ Only create a directory when it has real code to own. For example, `features/`,
 `hooks/`, and `lib/` do not exist in the starter because no current behavior
 needs them.
 
+`AppLayout` uses `app/useFocusNavigation` to distinguish Tab and arrow-key
+navigation from action shortcuts and pointer input. `styles/app.css` retains
+navigation focus outlines without highlighting controls after Enter or number
+shortcuts. Logical focus and editable-field focus remain available.
+
 ## Source directory and file size
 
 Keep hand-written source under `apps/` and `packages/` organized by feature,
@@ -167,38 +172,103 @@ outlet:
 ```text
 app/main.tsx -> app/router.tsx -> layouts/AppLayout.tsx
                                   -> pages/HomePage.tsx -> views/home/WelcomeView.tsx
-                                  -> pages/KanaPage.tsx
+                                  -> pages/KanaChartPage.tsx
+                                  -> pages/practice/PracticePage.tsx
+                                  -> pages/practice/KanaVowelsPage.tsx
+                                  -> pages/practice/CardStackPage.tsx -> views/practice/cards/CardStackView.tsx
+                                  -> pages/practice/words/VocabularyPage.tsx
                                   -> pages/UpcomingSectionPage.tsx
                                   -> pages/NotFoundPage.tsx
 ```
 
-The Learn route is `/`. The Kana character chart is at `/kana`, with the first
-five-vowel lesson at `/kana/lesson`. Practice offers a game hub at `/practice`,
-grouped into Kana and Words. Kana reading, matching, and quiz games run at
-`/practice/kana/reading`, `/practice/kana/matching`, and `/practice/kana/quiz`; URL search parameters
-retain the selected script and chart category. Reading and matching session
-code delegates selection and generation to the core session builder, with
-smaller categories using their available items. Matching selections have
-distinct normalized readings so each board is unambiguous. Quiz keeps
-feature-local selection because distractors and balanced directions depend on
-the full category pool. Authored profiles remain in `content`; generated
-sessions and their nested data stay immutable.
-The quiz setup stores direction and Fast mode in URL search parameters. Random
-questions balance both directions; each question has four options from its
-category with distinct normalized readings. Only the prompt source is scored.
-Normal mode uses Check answer and Continue; Fast mode checks immediately and
-advances after one second. Replay retains options, while Change options returns
-to setup. Timers and pronunciation playback are cleaned up on navigation.
-Typed-answer, matching, and multiple-choice renderers report framework-independent results and
-reuse chart audio with authored pronunciation text as the speech fallback.
-Matching and quiz answer tiles share the circular `KeyboardShortcut` display
-from `components/keyboard`; each game owns its keyboard interaction and layout.
+The Home route is `/` and points learners to Practice. The primary navigation
+contains Home, Kana, Practice, Progress, and Settings. Kana at `/kana` is the
+character and pronunciation reference; its section shortcuts open Practice
+with the selected script and category. Practice at `/practice` is the single
+home for exercises, grouped into Kana and Words. The first five-vowel lesson
+is at `/practice/kana/vowels`, retaining device-local Kana progress. Vocabulary
+browsing lives at `/practice/words/vocabulary`, accessible from the Words
+group with hub selections preserved. Its route and word review components
+are owned by `pages/practice/words` and `views/practice/words`. Each Kana game opens a shared setup page at
+`/practice/kana/$game/setup`, where `$game` is reading, matching, quiz, or cards.
+Setup keeps normal application navigation; active games use the fullscreen layout.
+URL search stores `scripts` and `categories` arrays, optional `characterIds`,
+`difficulty`, optional `length`, quiz `direction`, and `fast`. The defaults are
+Hiragana, basic characters, Standard, five items (ten for cards), random quiz
+direction, and Fast mode off. Setup choices are URL-local, with no saved device
+defaults. Adding groups or scripts selects their new characters while preserving
+individual selections; removing groups prunes their characters. Row checkboxes
+show mixed selection, and an explicitly empty selection stays empty.
+
+Reading, matching, and quiz run at `/practice/kana/reading`,
+`/practice/kana/matching`, and `/practice/kana/quiz`. Session URLs start directly;
+unusable selections return to setup. Reading and matching session code delegates
+selection and generation to the core session builder, with smaller categories
+using their available items. Matching selects distinct normalized readings so
+each board remains unambiguous. Quiz keeps feature-local selection because its
+distractors and balanced directions depend on the full category pool. Authored
+base profiles remain in `content`. Sessions and nested exercise data remain
+immutable. Reading and cards retain
+characters with equivalent readings. Quiz and matching select one representative
+per normalized reading, so mixed scripts and duplicate readings remain
+unambiguous. Sessions offer 5, 10, or 20 items, clamped to available content.
+Matching divides its batch into boards of up to 3/4/5 pairs for Easy/Standard/Hard,
+rebalancing a trailing single pair; progress and results count all pairs.
+
+Quiz Easy/Standard/Hard uses up to 2/4/6 distinct choices from the selected pool;
+short pools reduce the choice count visibly. The core multiple-choice generator
+supports two to six choices and scores only the prompt source. Random questions
+balance directions. Normal mode uses Check answer and Continue; Fast mode checks
+immediately and advances after one second. Replay retains configuration with a
+new revision seed, and Change options returns to setup. Timers and pronunciation
+playback are cleaned up on navigation. Reading and cards offer optional first-letter
+and answer-length hints on Easy and report their use alongside existing results.
+Hard reading/quiz allows audio only after checking, and Hard cards only after
+revealing. Standard retains audio assistance. The renderers report framework-independent
+results and reuse chart audio with authored pronunciation text as speech fallback.
+Matching and quiz tiles share the circular `KeyboardShortcut` display from
+`components/keyboard`; quizzes support keys 1 through 6. Each game owns its
+interaction and layout.
 Word matching runs at `/practice/words/matching`, retaining its regular and
 rolling review rounds. `/words/practice` redirects to that game. Games use the
-fullscreen session layout and return to the hub; the chart and Words library
-remain reference pages. Progress, Quests, and Library have
+fullscreen session layout and return to the hub. Kana games, the saved vowel
+lesson, and word matching share `views/practice/layout/PracticeHeader`,
+`feedback/PracticeFeedback`, and `results/PracticeResults`. Word matching
+retains attempt-based accuracy, and replay resets session state. The chart
+and vocabulary browser remain references. Progress, Quests, and Library have
 dedicated URLs and show an explicit coming-soon state until their features are
-implemented. The Gallery owns its own router and navigation independently.
+implemented; Quests and Library are not shown in primary navigation. The Gallery owns its own router and navigation independently.
+
+Card stacks run at `/practice/kana/cards` and `/practice/words/cards`, preserving
+hub script/category selections on exit and results. `core/exercises/flashcards`
+owns the content-neutral `flashcard` contract and generator: one stable source
+identity, a front face, and a back face. Core session profiles, adapters, validation,
+and immutable session construction support this exercise type. The authored
+`content/cardStackProfile` defaults to ten cards; Kana setup can request 5, 10, or 20. `views/practice/cards`
+adapts Kana chart tiles and beginner words, selects one seeded batch without
+replacement, and owns the shared renderer and keyboard controls. Smaller
+collections use all available items; equivalent Kana readings remain separate
+cards because recall has no ambiguous answer options. Additional subjects need
+a source adapter and route composition, rather than another game renderer.
+
+Cards reveal before the learner can self-rate with Need practice (1) or Got it
+(2). Enter or Space reveals; focused controls retain native keyboard activation.
+Skip advances without a rating. Results label these self-reports Remembered and
+Recall and report practice/skip counts. Replay reshuffles a fresh session. The
+word adapter respects the romaji display preference. Shared pronunciation UI
+belongs to `views/practice/audio`, alongside the recording cache and preload
+hook. Card pronunciations reuse chart/word assets and authored speech fallback;
+changing cards, restarting, completing, and leaving dispose playback resources.
+Stacks use the fullscreen header and existing results component, with circular
+shortcut badges and responsive controls. Session ratings remain transient.
+Rating or skipping retains an inert, unannounced snapshot of the departing card
+for a 320 ms discard animation while the next card settles into the stack.
+The departing content fades from right to left with a soft gradient mask before
+the card itself fades away.
+Results appear after the final discard. The feature-owned discard hook cancels
+its timer when replaced, restarted, or unmounted and respects both the app and
+system reduced-motion preferences without delaying results. Audio cleanup and
+scoring continue as soon as the learner advances.
 
 Run `pnpm dev` for the app, `pnpm lint` for ESLint and dependency-boundary
 checks, `pnpm format:check` to verify formatting, `pnpm typecheck` for

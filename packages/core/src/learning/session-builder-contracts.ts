@@ -1,6 +1,9 @@
 import type { ExerciseSessionId } from "../ids";
 import type {
   Exercise,
+  FlashcardExercise,
+  FlashcardSourceItem,
+  FlashcardExerciseGenerationConfig,
   MultipleChoiceExercise,
   MultipleChoiceSourceItem,
   MultipleChoiceExerciseGenerationConfig,
@@ -28,6 +31,7 @@ export type ExerciseSession = Readonly<{
 
 /** Maps authored caller data into the minimal source contract for a generator. */
 export type ExerciseSessionSourceAdapters<TItem> = Readonly<{
+  flashcard?: (item: TItem) => FlashcardSourceItem;
   "typed-answer"?: (item: TItem) => TypedAnswerSourceItem;
   "multiple-choice"?: (item: TItem) => MultipleChoiceSourceItem;
   matching?: (item: TItem) => MatchingSourceItem;
@@ -35,6 +39,11 @@ export type ExerciseSessionSourceAdapters<TItem> = Readonly<{
 
 /** Statically available generators for each supported exercise type. */
 export type ExerciseSessionGenerators = Readonly<{
+  flashcard?: ExerciseGenerator<
+    FlashcardSourceItem,
+    FlashcardExerciseGenerationConfig,
+    FlashcardExercise
+  >;
   "typed-answer"?: ExerciseGenerator<
     TypedAnswerSourceItem,
     TypedAnswerExerciseGenerationConfig,

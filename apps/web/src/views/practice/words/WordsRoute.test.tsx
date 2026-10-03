@@ -4,14 +4,14 @@ import userEvent from "@testing-library/user-event";
 import { kanaBeginnerWords } from "@opennihongo/content";
 import { RouterProvider } from "@tanstack/react-router";
 import { afterEach, describe, expect, it } from "vitest";
-import { router } from "../../app/router";
+import { router } from "../../../app/router";
 
 afterEach(cleanup);
 
 async function renderWordsRoute() {
   render(<RouterProvider router={router} />);
-  await router.navigate({ to: "/words" });
-  await screen.findByRole("heading", { name: "Words" });
+  await router.navigate({ to: "/practice/words/vocabulary" });
+  await screen.findByRole("heading", { name: "Vocabulary" });
 }
 
 async function matchWord(
@@ -81,7 +81,7 @@ describe("Words practice route", () => {
     expect(firstMeaning?.getAttribute("aria-pressed")).toBe("true");
     expect(
       screen
-        .getByRole("progressbar", { name: "Lesson progress" })
+        .getByRole("progressbar", { name: "Practice progress" })
         .getAttribute("aria-valuenow"),
     ).toBe("0");
 
@@ -94,7 +94,7 @@ describe("Words practice route", () => {
     await user.click(screen.getByRole("button", { name: "そと" }));
     expect(
       screen
-        .getByRole("progressbar", { name: "Lesson progress" })
+        .getByRole("progressbar", { name: "Practice progress" })
         .getAttribute("aria-valuenow"),
     ).toBe("10");
     await finishVisibleRound(user);
@@ -104,7 +104,7 @@ describe("Words practice route", () => {
     ).toBeTruthy();
     expect(
       screen
-        .getByRole("progressbar", { name: "Lesson progress" })
+        .getByRole("progressbar", { name: "Practice progress" })
         .getAttribute("aria-valuenow"),
     ).toBe("50");
     await user.click(screen.getByRole("button", { name: "Continue" }));
@@ -132,26 +132,28 @@ describe("Words practice route", () => {
 
     expect(
       screen
-        .getByRole("progressbar", { name: "Lesson progress" })
+        .getByRole("progressbar", { name: "Practice progress" })
         .getAttribute("aria-valuenow"),
     ).toBe("100");
     await user.click(screen.getByRole("button", { name: "See results" }));
     expect(screen.getByText("10 / 10")).toBeTruthy();
     expect(screen.getByText("91%")).toBeTruthy();
+    const results = screen.getByRole("heading", { name: "Practice complete!" });
+    expect(document.activeElement).toBe(results);
     expect(
       screen
         .getByRole("link", { name: "Back to Practice" })
         .getAttribute("href"),
     ).toBe("/practice");
 
-    await user.click(screen.getByRole("button", { name: "Replay" }));
+    await user.click(screen.getByRole("button", { name: "Practice again" }));
     await screen.findByRole("heading", { name: "Review five beginner words" });
     expect(
       screen
-        .getByRole("progressbar", { name: "Lesson progress" })
+        .getByRole("progressbar", { name: "Practice progress" })
         .getAttribute("aria-valuenow"),
     ).toBe("0");
-    await user.click(screen.getByRole("link", { name: "Leave word practice" }));
+    await user.click(screen.getByRole("link", { name: "Leave practice" }));
     await screen.findByRole("heading", { name: "Practice", level: 1 });
   }, 10_000);
 
@@ -163,17 +165,17 @@ describe("Words practice route", () => {
     await matchWord(user, "そと", "outside");
     expect(
       screen
-        .getByRole("progressbar", { name: "Lesson progress" })
+        .getByRole("progressbar", { name: "Practice progress" })
         .getAttribute("aria-valuenow"),
     ).toBe("10");
 
-    await user.click(screen.getByRole("link", { name: "Leave word practice" }));
+    await user.click(screen.getByRole("link", { name: "Leave practice" }));
     await screen.findByRole("heading", { name: "Practice", level: 1 });
     await user.click(screen.getByRole("link", { name: "Play word matching" }));
     await screen.findByRole("heading", { name: "Review five beginner words" });
     expect(
       screen
-        .getByRole("progressbar", { name: "Lesson progress" })
+        .getByRole("progressbar", { name: "Practice progress" })
         .getAttribute("aria-valuenow"),
     ).toBe("0");
     await user.click(screen.getByRole("button", { name: "Continue" }));
@@ -188,7 +190,7 @@ describe("Words practice route", () => {
     await screen.findByRole("heading", { name: "Review five beginner words" });
     expect(router.state.location.pathname).toBe("/practice/words/matching");
     const user = userEvent.setup();
-    await user.click(screen.getByRole("link", { name: "Leave word practice" }));
+    await user.click(screen.getByRole("link", { name: "Leave practice" }));
     await screen.findByRole("heading", { name: "Practice", level: 1 });
   });
 });

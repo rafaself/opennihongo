@@ -38,7 +38,13 @@ function KanaTile({ tile }: { tile: KanaChartTile }) {
   );
 }
 
-function ChartSection({ section }: { section: KanaChartSection }) {
+function ChartSection({
+  section,
+  script,
+}: {
+  section: KanaChartSection;
+  script: KanaChartScript;
+}) {
   const titleId = `kana-chart-${section.id}-title`;
 
   return (
@@ -48,6 +54,13 @@ function ChartSection({ section }: { section: KanaChartSection }) {
           {section.title}
         </h3>
         <p className="kana-chart__section-description">{section.description}</p>
+        <Link
+          className="kana-chart__practice-link"
+          to="/practice"
+          search={{ scripts: [script], categories: [section.id] }}
+        >
+          Practice this section
+        </Link>
       </header>
       <div className="kana-chart__rows">
         {section.rows.map((row, rowIndex) => (
@@ -90,13 +103,14 @@ function KanaChartPanel({ script }: { script: KanaChartScript }) {
         <Link
           className="ns-button kana-chart__learn-button"
           data-variant="primary"
-          to="/kana/lesson"
+          to="/practice"
+          search={{ scripts: [script], categories: ["basic"] }}
         >
-          Learn characters
+          Practice Kana
         </Link>
       </header>
       {chart.sections.map((section) => (
-        <ChartSection key={section.id} section={section} />
+        <ChartSection key={section.id} section={section} script={script} />
       ))}
     </section>
   );

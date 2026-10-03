@@ -1,14 +1,15 @@
 import { kanaBeginnerWords } from "@opennihongo/content";
-import { Link } from "@tanstack/react-router";
+import { Link, useSearch } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
-import { readAppPreferences } from "../../app/preferences";
-import "./WordsPage.css";
+import { readAppPreferences } from "../../../app/preferences";
+import "./VocabularyPage.css";
 
 type WordSortOrder = "study-order" | "japanese";
 
 const japaneseCollator = new Intl.Collator("ja");
 
-export function WordsPage() {
+export function VocabularyPage() {
+  const search = useSearch({ from: "/practice/words/vocabulary" });
   const [sortOrder, setSortOrder] = useState<WordSortOrder>("study-order");
   const showRomaji = readAppPreferences().showRomaji;
   const words = useMemo(
@@ -24,9 +25,12 @@ export function WordsPage() {
   return (
     <section aria-labelledby="words-title" className="words-page">
       <header className="words-page__header">
+        <Link to="/practice" search={search} className="words-page__back">
+          Back to Practice
+        </Link>
         <p className="words-page__eyebrow">Beginner vocabulary</p>
         <h1 className="words-page__title" id="words-title">
-          Words
+          Vocabulary
         </h1>
         <p className="words-page__intro">
           Browse kana, romaji, and English meanings for beginner words.

@@ -1,3 +1,4 @@
+import { normalizePracticeSearch } from "../../../app/practiceSearch";
 import { kanaCharacterCharts } from "@opennihongo/content";
 import { normalizeKanaAnswer } from "@opennihongo/core";
 import { describe, expect, it } from "vitest";
@@ -8,7 +9,13 @@ for (const script of ["hiragana", "katakana"] as const) {
     const tiles = section.rows.flatMap((row) =>
       row.filter((tile) => tile !== null),
     );
-    const options = { script, category: section.id, revision: 0 };
+    const options = {
+      ...normalizePracticeSearch({
+        scripts: [script],
+        categories: [section.id],
+      }),
+      revision: 0,
+    };
 
     describe(`${script} ${section.id} practice`, () => {
       it("creates distinct reading prompts with authored answers and stable identities", () => {
@@ -57,27 +64,31 @@ for (const script of ["hiragana", "katakana"] as const) {
           ...options,
           mode: "matching",
         });
-        expect(session.exercises).toHaveLength(1);
-        const exercise = session.exercises[0];
-        if (exercise?.type !== "matching")
-          throw new Error("Expected a matching exercise");
         const readings = new Set(
           tiles.map(({ romanization }) => normalizeKanaAnswer(romanization)),
         );
-        expect(exercise.config.pairCount).toBe(Math.min(5, readings.size));
         expect(
-          new Set(exercise.pairs.map(({ left }) => normalizeKanaAnswer(left)))
-            .size,
-        ).toBe(exercise.config.pairCount);
-        for (const pair of exercise.pairs) {
-          const tile = tiles.find(({ id }) => id === pair.sourceItemId);
-          expect(tile).toBeDefined();
-          expect(pair.left).toBe(tile?.romanization);
-          expect(pair.right).toBe(tile?.glyph);
-          expect(Object.isFrozen(pair)).toBe(true);
+          session.exercises.flatMap(({ sourceItemIds }) => sourceItemIds),
+        ).toHaveLength(Math.min(5, readings.size));
+        for (const exercise of session.exercises) {
+          if (exercise.type !== "matching")
+            throw new Error("Expected a matching exercise");
+          expect(exercise.config.pairCount).toBeGreaterThanOrEqual(2);
+          expect(exercise.config.pairCount).toBeLessThanOrEqual(4);
+          expect(
+            new Set(exercise.pairs.map(({ left }) => normalizeKanaAnswer(left)))
+              .size,
+          ).toBe(exercise.config.pairCount);
+          for (const pair of exercise.pairs) {
+            const tile = tiles.find(({ id }) => id === pair.sourceItemId);
+            expect(tile).toBeDefined();
+            expect(pair.left).toBe(tile?.romanization);
+            expect(pair.right).toBe(tile?.glyph);
+            expect(Object.isFrozen(pair)).toBe(true);
+          }
+          expect(Object.isFrozen(exercise.leftOrder)).toBe(true);
+          expect(Object.isFrozen(exercise.config)).toBe(true);
         }
-        expect(Object.isFrozen(exercise.leftOrder)).toBe(true);
-        expect(Object.isFrozen(exercise.config)).toBe(true);
         expect(
           createKanaPracticeSession({ ...options, mode: "matching" }),
         ).toEqual(session);
@@ -90,13 +101,16 @@ it("keeps shared readings unambiguous across replayed marked Kana boards", () =>
   for (let revision = 0; revision < 40; revision += 1) {
     const session = createKanaPracticeSession({
       mode: "matching",
-      script: "hiragana",
-      category: "dakuten",
+      ...normalizePracticeSearch({}),
+      scripts: ["hiragana"],
+      categories: ["dakuten"],
       revision,
     });
-    const exercise = session.exercises[0];
-    if (exercise?.type !== "matching")
-      throw new Error("Expected a matching exercise");
-    expect(new Set(exercise.pairs.map(({ left }) => left)).size).toBe(5);
+    const readings = session.exercises.flatMap((exercise) => {
+      if (exercise.type !== "matching")
+        throw new Error("Expected a matching exercise");
+      return exercise.pairs.map(({ left }) => left);
+    });
+    expect(new Set(readings).size).toBe(5);
   }
 });

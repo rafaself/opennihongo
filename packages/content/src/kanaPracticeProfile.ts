@@ -3,7 +3,7 @@ import {
   type SessionProfile,
 } from "@opennihongo/core";
 
-/** Maximum game sizes; smaller authored categories use their available items. */
+/** Base profiles; configurable games adapt their lengths and difficulty. */
 export const kanaPracticeSessionProfiles = {
   reading: {
     id: "kana.practice.reading",

@@ -1,6 +1,7 @@
 import { Link, Outlet, useRouterState } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
-import { appSections, navigationSections } from "../app/sections";
+import { appSections } from "../app/sections";
+import { useFocusNavigation } from "../app/useFocusNavigation";
 import { AppNavigation } from "./AppNavigation";
 import "./AppLayout.css";
 
@@ -24,6 +25,7 @@ function AppBrand({ compact = false }: { compact?: boolean }) {
 }
 
 export function AppLayout() {
+  useFocusNavigation();
   const [menuOpen, setMenuOpen] = useState(false);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const mainRef = useRef<HTMLElement>(null);
@@ -32,30 +34,46 @@ export function AppLayout() {
   });
   const activePath = pathname === "/" ? pathname : pathname.replace(/\/+$/, "");
   const lesson =
-    activePath === "/kana/lesson" ||
+    activePath === "/practice/kana/vowels" ||
     activePath === "/practice/kana/reading" ||
     activePath === "/practice/kana/matching" ||
     activePath === "/practice/kana/quiz" ||
+    activePath === "/practice/kana/cards" ||
+    activePath === "/practice/words/cards" ||
     activePath === "/practice/words/matching";
   const previousPath = useRef(pathname);
 
   useEffect(() => {
-    const section = navigationSections.find(({ path }) => path === activePath);
+    const section = Object.values(appSections).find(
+      ({ path }) => path === activePath,
+    );
     const pageTitle =
       activePath === "/acknowledgements"
         ? "Acknowledgements & licenses"
-        : activePath === "/kana/lesson"
-          ? appSections.kana.label
-          : activePath === "/practice/kana/reading"
-            ? "Kana reading"
-            : activePath === "/practice/kana/matching"
-              ? "Kana matching"
-              : activePath === "/practice/kana/quiz"
-                ? "Kana quiz"
-                : activePath === "/practice/words/matching"
-                  ? "Word matching"
-                  : (section?.label ?? "Page not found");
-    document.title = `${pageTitle} · OpenNihongo`;
+        : activePath === "/practice/kana/vowels"
+          ? "First vowels"
+          : activePath === "/practice/words/vocabulary"
+            ? "Vocabulary"
+            : activePath === "/practice/kana/reading"
+              ? "Kana reading"
+              : activePath === "/practice/kana/matching"
+                ? "Kana matching"
+                : activePath === "/practice/kana/quiz"
+                  ? "Kana quiz"
+                  : activePath === "/practice/words/matching"
+                    ? "Word matching"
+                    : (section?.label ?? "Page not found");
+    const setupGame = activePath.match(
+      /^\/practice\/kana\/(reading|matching|quiz|cards)\/setup$/,
+    )?.[1];
+    const title = setupGame
+      ? `Set up Kana ${setupGame}`
+      : activePath === "/practice/kana/cards"
+        ? "Kana cards"
+        : activePath === "/practice/words/cards"
+          ? "Word cards"
+          : pageTitle;
+    document.title = `${title} · OpenNihongo`;
 
     if (previousPath.current !== pathname) {
       previousPath.current = pathname;
@@ -118,11 +136,6 @@ export function AppLayout() {
       )}
 
       <div className="app-shell__body">
-        {activePath === "/kana/lesson" && (
-          <Link className="app-shell__lesson-exit" to="/">
-            Leave lesson
-          </Link>
-        )}
         <main
           className="app-shell__main"
           id="app-main"

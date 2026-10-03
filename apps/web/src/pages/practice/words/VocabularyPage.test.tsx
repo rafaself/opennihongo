@@ -3,21 +3,21 @@ import { cleanup, render, screen } from "@testing-library/react";
 import { RouterProvider } from "@tanstack/react-router";
 import userEvent from "@testing-library/user-event";
 import { afterEach, describe, expect, it } from "vitest";
-import { router } from "../../app/router";
+import { router } from "../../../app/router";
 
 afterEach(cleanup);
 
 async function renderWordsPage() {
   render(<RouterProvider router={router} />);
-  await router.navigate({ to: "/words" });
-  await screen.findByRole("heading", { name: "Words" });
+  await router.navigate({ to: "/practice/words/vocabulary" });
+  await screen.findByRole("heading", { name: "Vocabulary" });
 }
 
 describe("Words library", () => {
   it("shows the authored beginner words with readings and English meanings", async () => {
     await renderWordsPage();
 
-    expect(screen.getByRole("heading", { name: "Words" })).toBeTruthy();
+    expect(screen.getByRole("heading", { name: "Vocabulary" })).toBeTruthy();
     expect(screen.getByText("5 words")).toBeTruthy();
     expect(
       screen

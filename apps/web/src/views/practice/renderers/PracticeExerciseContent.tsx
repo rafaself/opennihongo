@@ -1,3 +1,4 @@
+import type { KanaPracticeDifficulty } from "@opennihongo/content";
 import { MultipleChoiceExercise } from "./MultipleChoiceExercise";
 import type {
   Exercise,
@@ -13,7 +14,9 @@ import {
 import { TypedAnswerExercise } from "./TypedAnswerExercise";
 
 type PracticeExerciseContentProps = Readonly<{
-  exercise: Exercise;
+  difficulty: KanaPracticeDifficulty;
+  onHintRequested: () => void;
+  exercise: Exclude<Exercise, { type: "flashcard" }>;
   selectedOptionId: string | null;
   onOptionSelected: (id: string) => void;
   scriptLabel: string;
@@ -30,6 +33,8 @@ type PracticeExerciseContentProps = Readonly<{
 
 export function PracticeExerciseContent({
   exercise,
+  difficulty,
+  onHintRequested,
   selectedOptionId,
   onOptionSelected,
   scriptLabel,
@@ -55,6 +60,9 @@ export function PracticeExerciseContent({
           </Text>
           <TypedAnswerExercise
             audioId={audioId}
+            audioAvailable={difficulty !== "hard" || disabled}
+            hintAvailable={difficulty === "easy"}
+            onHintRequested={onHintRequested}
             autoFocus={autoFocusTypedAnswer}
             disabled={disabled}
             exercise={exercise}
@@ -71,6 +79,7 @@ export function PracticeExerciseContent({
       return (
         <MultipleChoiceExercise
           exercise={exercise}
+          audioAvailable={difficulty !== "hard" || disabled}
           selectedOptionId={selectedOptionId}
           disabled={disabled}
           onSelect={onOptionSelected}
@@ -88,6 +97,7 @@ export function PracticeExerciseContent({
             Match the pairs:
           </Text>
           <MatchingBoard
+            key={exercise.id}
             disabled={disabled}
             exercise={exercise}
             leftLabel="Romaji readings"

@@ -15,8 +15,8 @@ export function WelcomeView() {
           Make steady progress, one step at a time.
         </Text>
         <Text className="max-w-xl" color="secondary">
-          Start with the five hiragana vowels. Each short session saves your
-          answers on this device.
+          Choose a short Kana or word exercise, or use the character chart to
+          explore Japanese sounds.
         </Text>
       </Stack>
 
@@ -28,15 +28,15 @@ export function WelcomeView() {
                 Getting started
               </Text>
               <Text as="p" variant="heading">
-                Your first kana session is ready.
+                Find your next exercise.
               </Text>
             </Stack>
             <Link
               className="ns-button w-full"
               data-variant="primary"
-              to="/kana/lesson"
+              to="/practice"
             >
-              Learn hiragana
+              Start practicing
             </Link>
           </Stack>
         </Surface>

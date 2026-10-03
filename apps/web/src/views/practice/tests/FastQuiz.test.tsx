@@ -9,7 +9,7 @@ import { audioCacheMock } from "./practiceTestHelpers";
 it("checks once and advances at one second, including the final results", async () => {
   const user = userEvent.setup();
   await openQuiz({ direction: "romaji", fast: true });
-  await user.click(screen.getByRole("button", { name: "Start quiz" }));
+  await user.click(screen.getByRole("button", { name: "Start Kana quiz" }));
   await screen.findByRole("heading", { name: "Choose the correct answer" });
   vi.useFakeTimers();
   for (const [index, exercise] of questions("romaji").entries()) {
@@ -47,7 +47,7 @@ it("checks once and advances at one second, including the final results", async 
   );
   vi.useRealTimers();
   await user.click(screen.getByRole("button", { name: "Change options" }));
-  await screen.findByRole("heading", { name: "Set up your Kana quiz" });
+  await screen.findByRole("heading", { name: "Set up Kana quiz" });
   expect(
     screen
       .getByRole("switch", { name: "Fast mode" })
@@ -58,7 +58,7 @@ it("checks once and advances at one second, including the final results", async 
 it("cancels queued advancement and disposes audio when leaving feedback", async () => {
   const user = userEvent.setup();
   await openQuiz({ direction: "character", fast: true });
-  await user.click(screen.getByRole("button", { name: "Start quiz" }));
+  await user.click(screen.getByRole("button", { name: "Start Kana quiz" }));
   await screen.findByRole("heading", { name: "Choose the correct answer" });
   vi.useFakeTimers();
   const exercise = question(0);
@@ -71,7 +71,7 @@ it("cancels queued advancement and disposes audio when leaving feedback", async 
   await act(() =>
     router.navigate({
       to: "/practice",
-      search: { script: "katakana", category: "small-tsu" },
+      search: { scripts: ["katakana"], categories: ["small-tsu"] },
     }),
   );
   const disposed = audioCacheMock.dispose.mock.calls.length;
@@ -83,15 +83,18 @@ it("cancels queued advancement and disposes audio when leaving feedback", async 
   expect(screen.queryByRole("status")).toBeNull();
   vi.useRealTimers();
   await router.navigate({
-    to: "/practice/kana/quiz",
+    to: "/practice/kana/$game/setup",
+    params: { game: "quiz" },
     search: {
-      script: "katakana",
-      category: "small-tsu",
+      scripts: ["katakana"],
+      categories: ["small-tsu"],
       direction: "character",
       fast: true,
     },
   });
-  await user.click(await screen.findByRole("button", { name: "Start quiz" }));
+  await user.click(
+    await screen.findByRole("button", { name: "Start Kana quiz" }),
+  );
   await screen.findByText(exercise.prompt.text);
   expect(screen.getByRole("progressbar").getAttribute("aria-valuenow")).toBe(
     "0",
@@ -101,7 +104,7 @@ it("cancels queued advancement and disposes audio when leaving feedback", async 
 it("selects with shortcuts and arrows while ignoring modified and repeated keys", async () => {
   const user = userEvent.setup();
   await openQuiz({ direction: "character" });
-  await user.click(screen.getByRole("button", { name: "Start quiz" }));
+  await user.click(screen.getByRole("button", { name: "Start Kana quiz" }));
   await screen.findByRole("heading", { name: "Choose the correct answer" });
   const buttons = within(
     screen.getByRole("group", { name: "Answer options" }),
@@ -130,7 +133,7 @@ it("selects with shortcuts and arrows while ignoring modified and repeated keys"
 it("uses Enter and Space to choose focused options before checking them", async () => {
   const user = userEvent.setup();
   await openQuiz({ direction: "character" });
-  await user.click(screen.getByRole("button", { name: "Start quiz" }));
+  await user.click(screen.getByRole("button", { name: "Start Kana quiz" }));
   await screen.findByRole("heading", { name: "Choose the correct answer" });
   const buttons = within(
     screen.getByRole("group", { name: "Answer options" }),

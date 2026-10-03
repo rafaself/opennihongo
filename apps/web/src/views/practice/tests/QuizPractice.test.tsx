@@ -13,7 +13,7 @@ import {
 it("starts with setup, validates URL choices, and stores direction and Fast mode", async () => {
   const user = userEvent.setup();
   await openQuiz({ direction: "invalid", fast: "invalid" });
-  expect(document.title).toBe("Kana quiz · OpenNihongo");
+  expect(document.title).toBe("Set up Kana quiz · OpenNihongo");
   expect(
     screen.getByRole("radio", { name: "Random" }).getAttribute("aria-checked"),
   ).toBe("true");
@@ -23,22 +23,22 @@ it("starts with setup, validates URL choices, and stores direction and Fast mode
       .getAttribute("aria-checked"),
   ).toBe("false");
   expect(
-    screen.queryByRole("navigation", { name: "Primary navigation" }),
-  ).toBeNull();
+    screen.getByRole("navigation", { name: "Primary navigation" }),
+  ).toBeTruthy();
   await user.click(screen.getByRole("radio", { name: "Romaji → Character" }));
   await user.click(screen.getByRole("switch", { name: "Fast mode" }));
   expect(router.state.location.search).toMatchObject({
     direction: "romaji",
     fast: true,
   });
-  await user.click(screen.getByRole("link", { name: "Leave practice" }));
+  await user.click(screen.getByRole("link", { name: "← Back to Practice" }));
   await screen.findByRole("heading", { name: "Practice", level: 1 });
-  expect(router.state.location.search).toEqual({
-    script: "katakana",
-    category: "small-tsu",
+  expect(router.state.location.search).toMatchObject({
+    scripts: ["katakana"],
+    categories: ["small-tsu"],
   });
   expect(
-    screen.getByRole("link", { name: "Play Kana quiz" }).getAttribute("href"),
+    screen.getByRole("link", { name: "Set up Kana quiz" }).getAttribute("href"),
   ).toContain("/practice/kana/quiz");
 });
 
@@ -57,7 +57,7 @@ it("preserves both settings when direction and Fast mode change together", async
 it("checks a changeable choice once, reveals wrong answers, skips, scores, and replays", async () => {
   const user = userEvent.setup();
   await openQuiz({ direction: "character" });
-  await user.click(screen.getByRole("button", { name: "Start quiz" }));
+  await user.click(screen.getByRole("button", { name: "Start Kana quiz" }));
   await screen.findByRole("heading", { name: "Choose the correct answer" });
   const exercise = question(0);
   const group = within(screen.getByRole("group", { name: "Answer options" }));
@@ -123,7 +123,7 @@ it("checks a changeable choice once, reveals wrong answers, skips, scores, and r
   }
   await screen.findByRole("heading", { name: "Practice complete!" });
   await user.click(screen.getByRole("button", { name: "Change options" }));
-  await screen.findByRole("heading", { name: "Set up your Kana quiz" });
+  await screen.findByRole("heading", { name: "Set up Kana quiz" });
   expect(
     screen
       .getByRole("radio", { name: "Character → Romaji" })
@@ -134,7 +134,7 @@ it("checks a changeable choice once, reveals wrong answers, skips, scores, and r
 it("plays prompt recordings and authored speech fallback without exposing the inverse answer", async () => {
   const user = userEvent.setup();
   await openQuiz({ direction: "romaji" });
-  await user.click(screen.getByRole("button", { name: "Start quiz" }));
+  await user.click(screen.getByRole("button", { name: "Start Kana quiz" }));
   const first = question(0, "romaji");
   await user.click(
     await screen.findByRole("button", {
@@ -145,10 +145,17 @@ it("plays prompt recordings and authored speech fallback without exposing the in
   await router.navigate({ to: "/practice" });
   chartAudioMock.mockReturnValue(undefined);
   await router.navigate({
-    to: "/practice/kana/quiz",
-    search: { script: "katakana", category: "small-tsu", direction: "romaji" },
+    to: "/practice/kana/$game/setup",
+    params: { game: "quiz" },
+    search: {
+      scripts: ["katakana"],
+      categories: ["small-tsu"],
+      direction: "romaji",
+    },
   });
-  await user.click(await screen.findByRole("button", { name: "Start quiz" }));
+  await user.click(
+    await screen.findByRole("button", { name: "Start Kana quiz" }),
+  );
   await user.click(
     await screen.findByRole("button", {
       name: `Play pronunciation for ${first.prompt.text}`,
@@ -171,7 +178,7 @@ it("cancels speech fallback when advancing and leaving the quiz", async () => {
   vi.stubGlobal("speechSynthesis", { cancel });
   chartAudioMock.mockReturnValue(undefined);
   await openQuiz({ direction: "romaji" });
-  await user.click(screen.getByRole("button", { name: "Start quiz" }));
+  await user.click(screen.getByRole("button", { name: "Start Kana quiz" }));
   await user.click(
     await screen.findByRole("button", {
       name: `Play pronunciation for ${question(0, "romaji").prompt.text}`,

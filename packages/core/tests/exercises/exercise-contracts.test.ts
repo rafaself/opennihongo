@@ -5,10 +5,12 @@ import type {
   MatchingExercise,
   MatchingPairId,
   TypedAnswerExercise,
+  FlashcardExercise,
 } from "../../src";
 
 function readExerciseType(exercise: Exercise): ExerciseType {
   switch (exercise.type) {
+    case "flashcard":
     case "multiple-choice":
     case "typed-answer":
       return exercise.type;
@@ -57,12 +59,25 @@ it("composes concrete exercises into an exhaustive union", () => {
     sourceItemIds: ["kana.hiragana.a"],
   } as const satisfies TypedAnswerExercise;
 
+  const flashcardExercise = {
+    id: "exercise.word-cat-card",
+    type: "flashcard",
+    sourceItemIds: ["word.cat"],
+    front: { text: "ねこ" },
+    back: { text: "cat" },
+  } as const satisfies FlashcardExercise;
+
   const exercises: readonly Exercise[] = [
     typedAnswerExercise,
     matchingExercise,
+    flashcardExercise,
   ];
 
-  expect(exercises.map(readExerciseType)).toEqual(["typed-answer", "matching"]);
+  expect(exercises.map(readExerciseType)).toEqual([
+    "typed-answer",
+    "matching",
+    "flashcard",
+  ]);
   expect(matchingExercise.config.pairCount).toBe(2);
   expect(
     matchingExercise.pairs.map(({ sourceItemId }) => sourceItemId),

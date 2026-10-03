@@ -13,6 +13,11 @@ import {
 import type { ProfilePart } from "./session-profile-plan";
 
 type PreparedProfilePart<TItem> =
+  | (Extract<ProfilePart, { type: "flashcard" }> &
+      Readonly<{
+        adapter: NonNullable<ExerciseSessionSourceAdapters<TItem>["flashcard"]>;
+        generator: NonNullable<ExerciseSessionGenerators["flashcard"]>;
+      }>)
   | (Extract<ProfilePart, { type: "typed-answer" }> &
       Readonly<{
         adapter: NonNullable<
@@ -42,6 +47,18 @@ export function prepareExerciseParts<TItem>(
 
   for (const part of parts) {
     switch (part.type) {
+      case "flashcard": {
+        const adapter = request.sourceAdapters["flashcard"];
+        const generator = request.generators["flashcard"];
+        if (adapter === undefined || generator === undefined) {
+          throw new ExerciseSessionBuildError(
+            "missing-generator",
+            "Flashcard exercises require a flashcard source adapter and generator.",
+          );
+        }
+        preparedParts.push({ ...part, adapter, generator });
+        break;
+      }
       case "typed-answer": {
         const adapter = request.sourceAdapters["typed-answer"];
         const generator = request.generators["typed-answer"];
@@ -91,6 +108,23 @@ export function buildExercise<TItem>(
   request: BuildExerciseSessionRequest<TItem>,
 ): Exercise {
   switch (part.type) {
+    case "flashcard": {
+      const sourceItems = selectedItems.map(part.adapter);
+      const sourceIds = validateSourceIds(sourceItems);
+      const exerciseId = createExerciseId(
+        request.sessionId,
+        request.profile.id,
+        part.type,
+        sourceIds,
+      );
+      const generated = part.generator(
+        sourceItems,
+        { exerciseId },
+        request.random,
+      );
+      assertGeneratedExercise(generated, exerciseId, part.type, sourceIds);
+      return freezeExercise(generated);
+    }
     case "typed-answer": {
       const sourceItems = selectedItems.map(part.adapter);
       const sourceIds = validateSourceIds(sourceItems);
@@ -221,6 +255,13 @@ function invalidGeneratedExercise(
 
 function freezeExercise(exercise: Exercise): Exercise {
   switch (exercise.type) {
+    case "flashcard":
+      return Object.freeze({
+        ...exercise,
+        front: Object.freeze({ ...exercise.front }),
+        back: Object.freeze({ ...exercise.back }),
+        sourceItemIds: Object.freeze([...exercise.sourceItemIds]),
+      });
     case "typed-answer":
       return Object.freeze({
         id: exercise.id,

@@ -1,0 +1,26 @@
+.words-practice .practice-session__body {
+  padding-block: 1rem;
+}
+
+.words-practice__content {
+  display: grid;
+  gap: 1rem;
+  justify-items: center;
+  margin-inline: auto;
+  max-width: 46rem;
+  text-align: center;
+  width: 100%;
+}
+
+.words-practice__content > p {
+  color: var(--ns-color-text-secondary);
+  margin: 0;
+  max-width: 38rem;
+}
+
+.words-practice__eyebrow {
+  font-size: var(--ns-text-label-size);
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}

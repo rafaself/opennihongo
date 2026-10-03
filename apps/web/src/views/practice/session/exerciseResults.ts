@@ -7,10 +7,11 @@ import type {
   MatchingPairId,
   TypedAnswerExercise,
   MultipleChoiceExercise,
+  FlashcardExercise,
 } from "@opennihongo/core";
 
 export function createSingleAnswerResult(
-  exercise: TypedAnswerExercise | MultipleChoiceExercise,
+  exercise: TypedAnswerExercise | MultipleChoiceExercise | FlashcardExercise,
   correct: boolean,
   attempts: number,
 ): ExerciseResult {

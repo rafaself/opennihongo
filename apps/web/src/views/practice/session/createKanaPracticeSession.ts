@@ -6,51 +6,56 @@ import {
   randomWithoutReplacementSelectionStrategy,
   SeededRandomSource,
   shuffle,
+  type Exercise,
   type ExerciseSession,
   type SessionProfile,
 } from "@opennihongo/core";
 import {
   kanaPracticeSessionProfiles,
-  type KanaChartScript,
-  type KanaChartSectionId,
-  type KanaChartTile,
   type KanaPracticeMode,
-  type KanaQuizDirection,
 } from "@opennihongo/content";
+import type { PracticeSearch } from "../../../app/practiceSearch";
 import {
-  getKanaPracticeItemCount,
+  getKanaPracticeSummary,
   getKanaPracticeTiles,
 } from "./kanaPracticeContent";
 import { createKanaQuizExercises } from "./createKanaQuizExercises";
 
-export type KanaPracticeOptions = Readonly<{
-  mode: KanaPracticeMode;
-  script: KanaChartScript;
-  category: KanaChartSectionId;
-  revision: number;
-  direction?: KanaQuizDirection;
-}>;
+export type KanaPracticeOptions = PracticeSearch &
+  Readonly<{ mode: KanaPracticeMode; revision: number }>;
+export type KanaPracticeExercise = Exclude<Exercise, { type: "flashcard" }>;
+export type KanaPracticeSession = Omit<ExerciseSession, "exercises"> &
+  Readonly<{ exercises: readonly KanaPracticeExercise[] }>;
 
-/** Builds generated exercise data before the practice view renders. */
-export function createKanaPracticeSession({
-  mode,
-  script,
-  category,
-  revision,
-  direction = "random",
-}: KanaPracticeOptions): ExerciseSession {
-  const sessionId = `kana-practice:${mode}:${script}:${category}:${String(revision)}${mode === "quiz" ? `:${direction}` : ""}`;
+export function kanaPracticeConfigurationId(options: PracticeSearch) {
+  return JSON.stringify({
+    scripts: [...options.scripts].sort(),
+    categories: [...options.categories].sort(),
+    characterIds:
+      options.characterIds === undefined
+        ? undefined
+        : [...options.characterIds].sort(),
+    difficulty: options.difficulty,
+    length: options.length,
+    direction: options.direction,
+  });
+}
+
+/** One seeded batch, with unique readings for answer-option games. */
+export function createKanaPracticeSession(
+  options: KanaPracticeOptions,
+): KanaPracticeSession {
+  const { mode, revision, direction } = options;
+  const summary = getKanaPracticeSummary(mode, options);
+  if (!summary.canStart) throw new Error(summary.error);
+  const sessionId = `kana-practice:${mode}:${kanaPracticeConfigurationId(options)}:${String(revision)}`;
   const random = new SeededRandomSource(sessionId);
-  const tiles = getKanaPracticeTiles(script, category);
+  const candidates = shuffle(getKanaPracticeTiles(options), random);
+  const eligible =
+    mode === "reading" ? candidates : selectDistinctReadings(candidates);
 
   if (mode === "quiz") {
-    // Quiz distractors and balanced directions depend on the full category pool.
-    const candidates = shuffle(tiles, random);
-    const eligible = selectDistinctReadings(candidates);
-    const selected = eligible.slice(
-      0,
-      getKanaPracticeItemCount(mode, script, category),
-    );
+    const selected = eligible.slice(0, summary.count);
     return Object.freeze({
       id: sessionId,
       profileId: kanaPracticeSessionProfiles[mode].id,
@@ -61,24 +66,14 @@ export function createKanaPracticeSession({
           direction,
           sessionId,
           random,
+          summary.choices,
         ),
       ),
     });
   }
 
-  const eligible = mode === "reading" ? tiles : selectDistinctReadings(tiles);
-  const itemCount = getKanaPracticeItemCount(mode, script, category);
-  const profile = createSessionProfile(mode, itemCount);
-
-  if (itemCount === 0) {
-    return Object.freeze({
-      id: sessionId,
-      profileId: profile.id,
-      exercises: Object.freeze([]),
-    });
-  }
-
-  return buildExerciseSession<KanaChartTile>({
+  const profile = createSessionProfile(mode, summary.count, summary.boards);
+  const session = buildExerciseSession<KanaPracticeTile>({
     sessionId,
     profile,
     eligibleItems: eligible,
@@ -105,7 +100,19 @@ export function createKanaPracticeSession({
         : { matching: generateMatchingExercise },
     random,
   });
+
+  return Object.freeze({
+    ...session,
+    exercises: Object.freeze(
+      session.exercises.filter(
+        (exercise): exercise is KanaPracticeExercise =>
+          exercise.type !== "flashcard",
+      ),
+    ),
+  });
 }
+
+type KanaPracticeTile = ReturnType<typeof getKanaPracticeTiles>[number];
 
 function selectDistinctReadings<Tile extends { romanization: string }>(
   tiles: readonly Tile[],
@@ -122,6 +129,7 @@ function selectDistinctReadings<Tile extends { romanization: string }>(
 function createSessionProfile(
   mode: "reading" | "matching",
   itemCount: number,
+  boardSizes: readonly number[],
 ): SessionProfile {
   if (mode === "reading") {
     return {
@@ -130,10 +138,14 @@ function createSessionProfile(
       exerciseMix: [{ type: "typed-answer", count: itemCount }],
     };
   }
+  const exerciseMix = boardSizes.map((pairCount) => ({
+    type: "matching" as const,
+    count: 1,
+    config: { pairCount },
+  }));
   return {
     ...kanaPracticeSessionProfiles.matching,
-    exerciseMix: [
-      { type: "matching", count: 1, config: { pairCount: itemCount } },
-    ],
+    targetSessionSize: exerciseMix.length,
+    exerciseMix,
   };
 }

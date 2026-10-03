@@ -33,7 +33,7 @@ export function UpcomingSectionPage({
               while this section is being prepared.
             </Text>
             <Link className="font-bold text-brand-text underline" to="/">
-              Back to Learn
+              Back to Home
             </Link>
           </Stack>
         </Surface>

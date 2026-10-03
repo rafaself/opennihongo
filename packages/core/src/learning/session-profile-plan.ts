@@ -2,6 +2,7 @@ import { ExerciseSessionBuildError } from "./session-builder-contracts";
 
 /** One declared exercise type and the source demand for a single instance. */
 export type ProfilePart =
+  | Readonly<{ type: "flashcard"; count: number; sourceItemCount: 1 }>
   | Readonly<{
       type: "typed-answer";
       count: number;
@@ -85,7 +86,8 @@ export function validateSessionProfile(profile: unknown): ValidatedProfile {
     let part: ProfilePart;
     if (
       entry["type"] === "typed-answer" ||
-      entry["type"] === "multiple-choice"
+      entry["type"] === "multiple-choice" ||
+      entry["type"] === "flashcard"
     ) {
       part = { type: entry["type"], count: rawCount, sourceItemCount: 1 };
     } else if (entry["type"] === "matching") {

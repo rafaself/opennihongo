@@ -135,3 +135,13 @@
     width: 100%;
   }
 }
+.words-page__back {
+  color: var(--ns-color-brand-text);
+  font-weight: 700;
+  text-underline-offset: 0.2em;
+}
+
+.words-page__back:focus-visible {
+  outline: var(--ns-border-width-focus) solid var(--ns-color-focus);
+  outline-offset: 3px;
+}

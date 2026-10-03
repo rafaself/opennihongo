@@ -1,4 +1,7 @@
-import { KanaQuizPage } from "../pages/practice/KanaQuizPage";
+import type { KanaPracticeGame } from "@opennihongo/content";
+import { CardStackPage } from "../pages/practice/CardStackPage";
+import { KanaPracticeSetupPage } from "../pages/practice/setup/KanaPracticeSetupPage";
+import { getKanaPracticeSummary } from "../views/practice/session/kanaPracticeContent";
 import {
   createRootRoute,
   createRoute,
@@ -9,19 +12,16 @@ import { AppLayout } from "../layouts/AppLayout";
 import { AcknowledgementsPage } from "../pages/AcknowledgementsPage";
 import { KanaChartPage } from "../pages/KanaChartPage";
 import { HomePage } from "../pages/HomePage";
-import { KanaPage } from "../pages/KanaPage";
+import { KanaVowelsPage } from "../pages/practice/KanaVowelsPage";
 import { NotFoundPage } from "../pages/NotFoundPage";
 import { SettingsPage } from "../pages/settings/SettingsPage";
 import { UpcomingSectionPage } from "../pages/UpcomingSectionPage";
-import { WordsPage } from "../pages/words/WordsPage";
+import { VocabularyPage } from "../pages/practice/words/VocabularyPage";
 import { PracticePage } from "../pages/practice/PracticePage";
 import { KanaPracticePage } from "../pages/practice/KanaPracticePage";
-import { WordsPracticeView } from "../views/words/WordsPracticeView";
+import { WordsPracticeView } from "../views/practice/words/WordsPracticeView";
 import { appSections } from "./sections";
-import {
-  validatePracticeSearch,
-  validateKanaQuizSearch,
-} from "./practiceSearch";
+import { validatePracticeSearch, type PracticeSearch } from "./practiceSearch";
 
 const rootRoute = createRootRoute({
   component: AppLayout,
@@ -30,7 +30,7 @@ const rootRoute = createRootRoute({
 
 const homeRoute = createRoute({
   getParentRoute: () => rootRoute,
-  path: appSections.learn.path,
+  path: appSections.home.path,
   component: HomePage,
 });
 
@@ -40,16 +40,17 @@ const kanaRoute = createRoute({
   component: KanaChartPage,
 });
 
-const kanaLessonRoute = createRoute({
+const kanaVowelsRoute = createRoute({
   getParentRoute: () => rootRoute,
-  path: "/kana/lesson",
-  component: KanaPage,
+  path: "/practice/kana/vowels",
+  component: KanaVowelsPage,
 });
 
-const wordsRoute = createRoute({
+const vocabularyRoute = createRoute({
   getParentRoute: () => rootRoute,
-  path: appSections.words.path,
-  component: WordsPage,
+  path: "/practice/words/vocabulary",
+  component: VocabularyPage,
+  validateSearch: validatePracticeSearch,
 });
 
 const wordsPracticeRoute = createRoute({
@@ -67,10 +68,32 @@ const practiceRoute = createRoute({
   validateSearch: validatePracticeSearch,
 });
 
+function ensureKanaSession(game: KanaPracticeGame, search: PracticeSearch) {
+  if (!getKanaPracticeSummary(game, search).canStart) {
+    redirect({
+      throw: true,
+      to: "/practice/kana/$game/setup",
+      params: { game },
+      search,
+      replace: true,
+    });
+  }
+}
+
+const kanaSetupRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/practice/kana/$game/setup",
+  validateSearch: validatePracticeSearch,
+  component: KanaPracticeSetupPage,
+});
+
 const kanaReadingRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/practice/kana/reading",
   validateSearch: validatePracticeSearch,
+  beforeLoad: ({ search }) => {
+    ensureKanaSession("reading", search);
+  },
   component: () => <KanaPracticePage mode="reading" />,
 });
 
@@ -78,14 +101,36 @@ const kanaMatchingRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/practice/kana/matching",
   validateSearch: validatePracticeSearch,
+  beforeLoad: ({ search }) => {
+    ensureKanaSession("matching", search);
+  },
   component: () => <KanaPracticePage mode="matching" />,
 });
 
 const kanaQuizRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/practice/kana/quiz",
-  validateSearch: validateKanaQuizSearch,
-  component: KanaQuizPage,
+  validateSearch: validatePracticeSearch,
+  beforeLoad: ({ search }) => {
+    ensureKanaSession("quiz", search);
+  },
+  component: () => <KanaPracticePage mode="quiz" />,
+});
+
+const kanaCardsRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/practice/kana/cards",
+  validateSearch: validatePracticeSearch,
+  beforeLoad: ({ search }) => {
+    ensureKanaSession("cards", search);
+  },
+  component: () => <CardStackPage subject="kana" />,
+});
+const wordCardsRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/practice/words/cards",
+  validateSearch: validatePracticeSearch,
+  component: () => <CardStackPage subject="words" />,
 });
 
 const wordMatchingRoute = createRoute({
@@ -127,14 +172,17 @@ const acknowledgementsRoute = createRoute({
 const routeTree = rootRoute.addChildren([
   homeRoute,
   kanaRoute,
-  kanaLessonRoute,
-  wordsRoute,
+  kanaVowelsRoute,
+  vocabularyRoute,
   wordsPracticeRoute,
   practiceRoute,
+  kanaSetupRoute,
   kanaReadingRoute,
   kanaMatchingRoute,
   kanaQuizRoute,
   wordMatchingRoute,
+  kanaCardsRoute,
+  wordCardsRoute,
   progressRoute,
   questsRoute,
   libraryRoute,

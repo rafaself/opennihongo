@@ -47,6 +47,10 @@ export {
   buildExerciseSession,
 } from "./learning/index";
 export type {
+  FlashcardFace,
+  FlashcardExercise,
+  FlashcardSourceItem,
+  FlashcardExerciseGenerationConfig,
   ExerciseBase,
   Exercise,
   ExerciseGenerationErrorCode,
@@ -71,6 +75,7 @@ export type {
 } from "./exercises/index";
 export {
   ExerciseGenerationError,
+  generateFlashcardExercise,
   generateMultipleChoiceExercise,
   generateMatchingExercise,
   generateTypedAnswerExercise,

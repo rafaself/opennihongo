@@ -11,7 +11,7 @@ import type { MatchingExercise, MatchingPairId } from "@opennihongo/core";
 import { useState } from "react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { MatchingBoard } from "../../components/matching/MatchingBoard";
+import { MatchingBoard } from "../../../components/matching/MatchingBoard";
 import { createWordsPracticeSession } from "./session/createWordsPracticeSession";
 
 function StatefulRollingRound({ exercise }: { exercise: MatchingExercise }) {

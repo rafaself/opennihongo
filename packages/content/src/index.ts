@@ -26,3 +26,13 @@ export type {
   KanaChartTile,
   KanaCharacterChart,
 } from "./kanaChart";
+
+export { cardStackSessionProfile } from "./cardStackProfile";
+export {
+  kanaPracticeLengths,
+  kanaPracticeDifficulties,
+  kanaPracticeGames,
+  type KanaPracticeGame,
+  type KanaPracticeDifficulty,
+  type KanaPracticeLength,
+} from "./kanaPracticeOptions";

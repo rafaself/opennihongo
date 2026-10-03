@@ -12,6 +12,7 @@ export function createKanaQuizExercises(
   direction: KanaQuizDirection,
   sessionId: string,
   random: RandomSource,
+  choiceCount: number,
 ) {
   const firstCharacter = random.next() < 0.5;
   const directions = shuffle(
@@ -29,7 +30,7 @@ export function createKanaQuizExercises(
       ...shuffle(
         pool.filter(({ id }) => id !== tile.id),
         random,
-      ).slice(0, 3),
+      ).slice(0, choiceCount - 1),
     ];
     const exercise = generateMultipleChoiceExercise(
       [

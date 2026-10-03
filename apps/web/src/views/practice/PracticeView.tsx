@@ -1,17 +1,15 @@
 import { usePracticeKeyboard } from "./interaction/usePracticeKeyboard";
-import { Link } from "@tanstack/react-router";
 import {
   normalizeKanaAnswer,
   type ExerciseResult,
-  type ExerciseSession,
   type MatchingPairId,
 } from "@opennihongo/core";
 import { Button } from "@opennihongo/ui";
-import { Icon } from "@opennihongo/ui/icons";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { PracticeFeedback } from "./PracticeFeedback";
+import { PracticeHeader } from "./layout/PracticeHeader";
+import { PracticeFeedback } from "./feedback/PracticeFeedback";
 import { PracticeExerciseContent } from "./renderers/PracticeExerciseContent";
-import { PracticeResults } from "./PracticeResults";
+import { PracticeResults } from "./results/PracticeResults";
 import {
   countExerciseItems,
   createMatchingResult,
@@ -21,6 +19,7 @@ import {
 import {
   createKanaPracticeSession,
   type KanaPracticeOptions,
+  type KanaPracticeSession,
 } from "./session/createKanaPracticeSession";
 import { getPracticeAudioIds } from "./session/practiceAudio";
 import { useExerciseAudio } from "./audio/useExerciseAudio";
@@ -28,7 +27,7 @@ import "./practice.css";
 
 type Practice = Readonly<{
   revision: number;
-  session: ExerciseSession;
+  session: KanaPracticeSession;
 }>;
 
 type Feedback = Readonly<{
@@ -38,22 +37,32 @@ type Feedback = Readonly<{
 
 export function PracticeView({
   mode,
-  script,
-  category,
-  direction = "random",
-  fast = false,
+  scripts,
+  categories,
+  characterIds,
+  difficulty,
+  length,
+  direction,
+  fast,
   onChangeOptions,
 }: Omit<KanaPracticeOptions, "revision"> & {
-  fast?: boolean;
   onChangeOptions?: () => void;
 }) {
+  const configuration = {
+    scripts,
+    categories,
+    ...(characterIds === undefined ? {} : { characterIds }),
+    difficulty,
+    ...(length === undefined ? {} : { length }),
+    direction,
+    fast,
+  };
+  const [hintsUsed, setHintsUsed] = useState(0);
   const [practice, setPractice] = useState<Practice>(() => ({
     revision: 0,
     session: createKanaPracticeSession({
       mode,
-      script,
-      category,
-      direction,
+      ...configuration,
       revision: 0,
     }),
   }));
@@ -84,8 +93,11 @@ export function PracticeView({
       : exercise?.type === "matching"
         ? matchedPairIds.length === exercise.config.pairCount
         : exercise?.type === "multiple-choice" && selectedOptionId !== null;
+  const completedItems =
+    countExerciseItems(exercises.slice(0, index)) +
+    (feedback && exercise ? countExerciseItems([exercise]) : 0);
   const progress = Math.round(
-    ((index + Number(feedback !== null)) / exercises.length) * 100,
+    (completedItems / countExerciseItems(exercises)) * 100,
   );
 
   useEffect(() => {
@@ -172,14 +184,13 @@ export function PracticeView({
       revision,
       session: createKanaPracticeSession({
         mode,
-        script,
-        category,
-        direction,
+        ...configuration,
         revision,
       }),
     });
     setIndex(0);
     setResults([]);
+    setHintsUsed(0);
     resetExerciseState();
   }
 
@@ -211,41 +222,22 @@ export function PracticeView({
       }
       className="practice-session"
     >
-      <header className="practice-session__header">
-        <Link
-          aria-label="Leave practice"
-          className="practice-session__exit"
-          title="Leave practice"
-          to="/practice"
-          search={{ script, category }}
-        >
-          <Icon name="close" />
-        </Link>
-        <div
-          aria-label="Practice progress"
-          aria-valuemax={100}
-          aria-valuemin={0}
-          aria-valuenow={progress}
-          className="practice-session__progress"
-          role="progressbar"
-        >
-          <span
-            className="practice-session__progress-fill"
-            style={{ width: `${String(progress)}%` }}
-          />
-        </div>
-        <span className="practice-session__step">
-          {complete ? exercises.length : index + 1}/{exercises.length}
-        </span>
-      </header>
+      <PracticeHeader
+        progress={progress}
+        search={configuration}
+        step={`${String(complete ? exercises.length : index + 1)}/${String(exercises.length)}`}
+      />
 
       {complete ? (
         <PracticeResults
           score={scoreExerciseResults(results)}
           total={countExerciseItems(exercises)}
+          hintsUsed={
+            difficulty === "easy" && mode === "reading" ? hintsUsed : undefined
+          }
           onRestart={restartPractice}
           onChangeOptions={onChangeOptions}
-          search={{ script, category }}
+          search={configuration}
         />
       ) : !exerciseAudio.isReady ? (
         <div className="practice-session__body">
@@ -257,6 +249,10 @@ export function PracticeView({
         <>
           <div className="practice-session__body">
             <PracticeExerciseContent
+              difficulty={difficulty}
+              onHintRequested={() => {
+                setHintsUsed((count) => count + 1);
+              }}
               selectedOptionId={selectedOptionId}
               onOptionSelected={(id) => {
                 if (submitted.current) return;
@@ -266,7 +262,13 @@ export function PracticeView({
               autoFocusTypedAnswer={index > 0 || practice.revision > 0}
               disabled={feedback !== null}
               exercise={exercise}
-              scriptLabel={script === "hiragana" ? "Hiragana" : "Katakana"}
+              scriptLabel={
+                scripts.length === 2
+                  ? "Kana"
+                  : scripts[0] === "hiragana"
+                    ? "Hiragana"
+                    : "Katakana"
+              }
               loadedAudioIds={exerciseAudio.loadedAudioIds}
               matchedPairIds={matchedPairIds}
               onPairAttempt={(matchedPairId) => {

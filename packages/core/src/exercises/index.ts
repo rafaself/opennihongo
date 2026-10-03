@@ -1,9 +1,13 @@
+import type { FlashcardExercise } from "./flashcards/flashcard";
 import type { MultipleChoiceExercise } from "./multiple-choice";
 import type { MatchingExercise } from "./matching";
 import type { TypedAnswerExercise } from "./typed-answer";
 
 export type Exercise =
-  MatchingExercise | TypedAnswerExercise | MultipleChoiceExercise;
+  | MatchingExercise
+  | TypedAnswerExercise
+  | MultipleChoiceExercise
+  | FlashcardExercise;
 export type { ExerciseBase, ExerciseType } from "./base";
 export { ExerciseGenerationError } from "./generation-error";
 export type { ExerciseGenerationErrorCode } from "./generation-error";
@@ -40,3 +44,11 @@ export type {
   MultipleChoiceSourceItem,
   MultipleChoiceExerciseGenerationConfig,
 } from "./multiple-choice-generator";
+
+export type {
+  FlashcardFace,
+  FlashcardExercise,
+  FlashcardSourceItem,
+  FlashcardExerciseGenerationConfig,
+} from "./flashcards/flashcard";
+export { generateFlashcardExercise } from "./flashcards/generateFlashcardExercise";

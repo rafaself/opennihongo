@@ -15,7 +15,7 @@ export function NotFoundPage() {
           The address may have changed, or there may be a typo in the URL.
         </Text>
         <Link className="font-bold text-brand-text underline" to="/">
-          Back to Learn
+          Back to Home
         </Link>
       </Stack>
     </section>

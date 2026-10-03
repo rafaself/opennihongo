@@ -107,6 +107,9 @@ it is not an MVP merge gate initially.
 HTTP mocking with **MSW** may be introduced when the application gains HTTP
 integration. It is not required for the local-first MVP.
 
+The web component suite limits concurrency to four workers to keep DOM-heavy
+walkthroughs reliable without changing assertions, timeouts, or coverage gates.
+
 ## Coverage policy
 
 The MVP has a global minimum coverage gate of **95%** for every primary metric:

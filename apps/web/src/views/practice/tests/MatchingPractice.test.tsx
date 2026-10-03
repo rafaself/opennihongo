@@ -134,7 +134,7 @@ it("checks with Enter only when ready and leaves typing, links, and other contro
 });
 
 it("supports either matching direction and ignores unavailable or already matched shortcut positions", async () => {
-  const options = { ...matchingOptions, category: "small-tsu" } as const;
+  const options = { ...matchingOptions, categories: ["small-tsu"] } as const;
   const session = await renderPractice(options);
   const exercise = session.exercises[0];
   if (exercise?.type !== "matching")

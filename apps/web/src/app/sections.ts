@@ -9,9 +9,9 @@ type AppSection = {
 };
 
 export const appSections = {
-  learn: {
+  home: {
     path: "/",
-    label: "Learn",
+    label: "Home",
     icon: "learn",
     status: "available",
   },
@@ -19,12 +19,6 @@ export const appSections = {
     path: "/kana",
     label: "Kana",
     icon: "kana",
-    status: "available",
-  },
-  words: {
-    path: "/words",
-    label: "Words",
-    icon: "words",
     status: "available",
   },
   practice: {
@@ -63,4 +57,10 @@ export const appSections = {
   },
 } as const satisfies Record<string, AppSection>;
 
-export const navigationSections = Object.values(appSections);
+export const navigationSections = [
+  appSections.home,
+  appSections.kana,
+  appSections.practice,
+  appSections.progress,
+  appSections.settings,
+];
