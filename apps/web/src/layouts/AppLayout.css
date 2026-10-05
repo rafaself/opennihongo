@@ -21,9 +21,9 @@
 
 .app-sidebar {
   align-self: start;
-  background: #142126;
-  border-right: 2px solid #304148;
-  color: #f1f7fb;
+  background: var(--ns-color-surface);
+  border-right: 2px solid var(--ns-color-border-subtle);
+  color: var(--ns-color-text-primary);
   grid-column: 1;
   grid-row: 1;
   height: 100vh;
@@ -68,7 +68,7 @@
   align-items: center;
   border: 2px solid transparent;
   border-radius: var(--ns-radius-lg);
-  color: #e0ebef;
+  color: var(--ns-color-text-primary);
   display: flex;
   gap: 1.25rem;
   min-height: 3.25rem;
@@ -77,13 +77,13 @@
 }
 
 .app-navigation a.app-navigation__item:hover {
-  background: #22343a;
+  background: var(--ns-color-surface-subtle);
 }
 
 .app-navigation a.app-navigation__item[aria-current="page"] {
-  background: #203039;
-  border-color: var(--ns-primitive-color-blue-500);
-  color: var(--ns-primitive-color-blue-300);
+  background: var(--ns-color-selection);
+  border-color: var(--ns-color-brand-text);
+  color: var(--ns-color-brand-text);
 }
 
 .app-navigation__item:focus-visible,
@@ -107,7 +107,7 @@
 }
 
 .app-navigation__soon {
-  color: #aebdc3;
+  color: var(--ns-color-text-secondary);
   font-size: 0.625rem;
   font-weight: 700;
   letter-spacing: 0.04em;
@@ -225,7 +225,7 @@
 
   .app-sidebar {
     align-self: stretch;
-    border-bottom: 2px solid #304148;
+    border-bottom: 2px solid var(--ns-color-border-subtle);
     border-right: 0;
     display: none;
     flex: none;

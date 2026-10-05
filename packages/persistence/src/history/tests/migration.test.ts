@@ -33,7 +33,7 @@ describe("v1 Kana totals migration", () => {
     );
     expect(await loadLearningHistory()).toEqual(history);
     const db = await openDatabase();
-    expect(db.version).toBe(2);
+    expect(db.version).toBe(3);
     expect(db.objectStoreNames.contains("kanaProgress")).toBe(false);
     db.close();
     await appendLearningRecord(resultRecord);

@@ -10,7 +10,10 @@ export function AppNavigation({ onNavigate }: { onNavigate: () => void }) {
           <li key={path}>
             <Link
               activeOptions={{
-                exact: path !== appSections.practice.path,
+                exact:
+                  path !== appSections.practice.path &&
+                  path !== appSections.writingHistory.path &&
+                  path !== appSections.particles.path,
                 includeSearch: false,
               }}
               activeProps={{ "aria-current": "page" }}

@@ -21,6 +21,18 @@ export const appSections = {
     icon: "kana",
     status: "available",
   },
+  writingHistory: {
+    path: "/writing-history",
+    label: "Writing history",
+    icon: "library",
+    status: "available",
+  },
+  particles: {
+    path: "/particles",
+    label: "Particles",
+    icon: "words",
+    status: "available",
+  },
   practice: {
     path: "/practice",
     label: "Practice",
@@ -59,7 +71,9 @@ export const appSections = {
 
 export const navigationSections = [
   appSections.home,
+  appSections.writingHistory,
   appSections.kana,
+  appSections.particles,
   appSections.practice,
   appSections.progress,
   appSections.settings,

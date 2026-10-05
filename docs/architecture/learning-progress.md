@@ -30,20 +30,28 @@ write already in flight, but uncommitted records are not durably queued.
 
 ## Local schema and migration
 
-IndexedDB database `opennihongo` is version 2. `learningRecords` stores version-1
+IndexedDB database `opennihongo` is version 3. `learningRecords` stores version-1
 envelopes keyed by `record.id`, with session and multi-entry source-item indexes.
 `itemProgressBaselines` stores version-1 imported baselines keyed by item ID and
 tagged with `kana-progress-v1` provenance. Runtime readers validate both envelope
 versions and domain invariants. IDs are opaque; persistence does not import the
 content catalog to validate them.
 
-The upgrade from database version 1 copies `kanaProgress` rows into generic
+The history upgrade stage for databases below version 2 copies `kanaProgress` rows into generic
 initial baselines and removes the old store in the same version-change
 transaction. A successfully committed database version is the migration marker.
 An invalid row aborts the entire upgrade, preserving the v1 database for recovery.
 The old counts and `lastAnsweredAt` values are preserved, with the latter mapped
 to `lastPracticedAt`. No historical exercise or session records are fabricated:
 those details were never stored and cannot be recovered.
+
+The version-3 upgrade adds `writingHistoryProgress`, a separate version-1
+envelope containing the last history chapter and explicitly completed chapter
+IDs. Existing learning-record and baseline stores are retained when upgrading
+from v2; they are not recreated. Fresh and v1 databases run both upgrade stages
+in the same atomic transaction. Reading does not fabricate exercise evidence.
+The [Writing history guide](writing-history.md) describes the public APIs,
+resume rules and retry behavior.
 
 ## Derived progress
 

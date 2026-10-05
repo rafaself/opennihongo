@@ -50,6 +50,19 @@ export function AcknowledgementsPage() {
                     files in the repository.
                   </li>
                   <li>
+                    The{" "}
+                    <a
+                      className="font-bold text-brand-text underline"
+                      href="https://cid.ninjal.ac.jp/kana/font/"
+                    >
+                      NINJAL hentaigana font
+                    </a>{" "}
+                    by the National Institute for Japanese Language and
+                    Linguistics is used under the Apache License 2.0. The
+                    unmodified font, license, and source notice are bundled with
+                    the writing history feature.
+                  </li>
+                  <li>
                     React and React DOM, TanStack Router, Radix UI Primitives,
                     and Floating UI are used under the MIT License.
                   </li>

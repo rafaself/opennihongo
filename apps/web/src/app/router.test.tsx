@@ -26,7 +26,7 @@ async function renderHome() {
   render(<RouterProvider router={router} />);
   await router.navigate({ to: "/" });
   await screen.findByRole("heading", {
-    name: "Make steady progress, one step at a time.",
+    name: "A little Japanese. A little every day.",
   });
 }
 
@@ -301,7 +301,7 @@ describe("web application routes", () => {
 
     await user.click(screen.getByRole("link", { name: "Home" }));
     await screen.findByRole("heading", {
-      name: "Make steady progress, one step at a time.",
+      name: "A little Japanese. A little every day.",
     });
     await user.click(screen.getByRole("link", { name: /Progress/ }));
     await screen.findByRole("heading", { name: "Progress" });

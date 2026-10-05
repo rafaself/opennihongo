@@ -125,6 +125,10 @@ navigation from action shortcuts and pointer input. `styles/app.css` retains
 navigation focus outlines without highlighting controls after Enter or number
 shortcuts. Logical focus and editable-field focus remain available.
 
+The sidebar's solid surfaces, borders, text, hover and selected states use shared
+semantic theme colors in `layouts/AppLayout.css`. Its original layout, typography
+and decorative navigation artwork are retained.
+
 ## Source directory and file size
 
 Keep hand-written source under `apps/` and `packages/` organized by feature,
@@ -186,8 +190,25 @@ app/main.tsx -> app/router.tsx -> layouts/AppLayout.tsx
                                   -> pages/NotFoundPage.tsx
 ```
 
-The Home route is `/` and points learners to Practice. The primary navigation
-contains Home, Kana, Practice, Progress, and Settings. Kana at `/kana` is the
+The Home route is `/`. Its Japanese greeting, kitsune illustration and stationery
+motifs use existing assets and semantic theme tokens. An optional three-card
+path suggests Writing history first, then offers direct access to the Kana chart
+and Practice. On small screens the illustration becomes a compact greeting
+and the cards stack. Presentation stays in `views/home/WelcomeView`.
+The primary
+navigation contains Home, Writing history, Kana, Particles, Practice, Progress, and
+Settings. The optional overview at `/writing-history` and chapters at
+`/writing-history/$chapterId` retain normal navigation and device-local reading
+progress. Authored chapters, origins and source provenance belong to `content`;
+the reader and its declarative unit renderers belong to the web feature. See the
+[Writing history guide](writing-history.md) for authoring and storage.
+
+Home also offers a link to the beginner Particles section at `/particles`.
+Lessons at `/particles/$particleId` keep normal navigation, provide interactive
+sentence examples and optional explained checks, and use reusable typed content.
+These checks keep transient state and do not write exercise results or reading
+progress. See the [Particles guide](particles.md) for content authoring and scope.
+Kana at `/kana` is the
 character and pronunciation reference; its section shortcuts open Practice
 with the selected script and category. Practice at `/practice` is the single
 home for exercises, grouped into Kana and Words. The first five-vowel lesson

@@ -4,6 +4,10 @@ import { appSections } from "../app/sections";
 import { useFocusNavigation } from "../app/useFocusNavigation";
 import { AppNavigation } from "./AppNavigation";
 import "./AppLayout.css";
+import {
+  getParticleLesson,
+  getWritingHistoryChapter,
+} from "@opennihongo/content";
 
 function AppBrand({ compact = false }: { compact?: boolean }) {
   return (
@@ -73,7 +77,17 @@ export function AppLayout() {
         : activePath === "/practice/words/cards"
           ? "Word cards"
           : pageTitle;
-    document.title = `${title} · OpenNihongo`;
+    const historyChapterId = activePath.match(
+      /^\/writing-history\/([^/]+)$/,
+    )?.[1];
+    const historyTitle = historyChapterId
+      ? getWritingHistoryChapter(historyChapterId)?.title
+      : undefined;
+    const particleId = activePath.match(/^\/particles\/([^/]+)$/)?.[1];
+    const particleTitle = particleId
+      ? getParticleLesson(particleId)?.title
+      : undefined;
+    document.title = `${particleTitle ?? historyTitle ?? title} · OpenNihongo`;
 
     if (previousPath.current !== pathname) {
       previousPath.current = pathname;

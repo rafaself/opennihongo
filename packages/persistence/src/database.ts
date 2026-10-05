@@ -1,6 +1,7 @@
 import { upgradeHistory } from "./history/upgrade";
+import { WRITING_HISTORY_STORE } from "./writing-history/schema";
 const DATABASE_NAME = "opennihongo";
-const DATABASE_VERSION = 2;
+const DATABASE_VERSION = 3;
 
 export function openDatabase(): Promise<IDBDatabase> {
   if (typeof indexedDB === "undefined") {
@@ -12,16 +13,20 @@ export function openDatabase(): Promise<IDBDatabase> {
     let blocked = false;
     let upgradeError: unknown;
 
-    request.onupgradeneeded = () => {
+    request.onupgradeneeded = (event) => {
       const transaction = request.transaction;
       if (transaction === null) {
         reject(new Error("Local storage upgrade transaction is unavailable."));
         return;
       }
-      upgradeHistory(request.result, transaction, (error) => {
-        upgradeError = error;
-        transaction.abort();
-      });
+      if (event.oldVersion < 2) {
+        upgradeHistory(request.result, transaction, (error) => {
+          upgradeError = error;
+          transaction.abort();
+        });
+      }
+      if (event.oldVersion < 3)
+        request.result.createObjectStore(WRITING_HISTORY_STORE);
     };
     request.onsuccess = () => {
       const database = request.result;

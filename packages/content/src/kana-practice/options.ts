@@ -1,4 +1,4 @@
-import type { KanaPracticeMode } from "./kanaPracticeProfile";
+import type { KanaPracticeMode } from "./profiles";
 
 export type KanaPracticeGame = KanaPracticeMode | "cards";
 export type KanaPracticeDifficulty = "easy" | "standard" | "hard";

@@ -1,4 +1,8 @@
-import type { KanaPracticeGame } from "@opennihongo/content";
+import {
+  getParticleLesson,
+  getWritingHistoryChapter,
+  type KanaPracticeGame,
+} from "@opennihongo/content";
 import { CardStackPage } from "../pages/practice/CardStackPage";
 import { KanaPracticeSetupPage } from "../pages/practice/setup/KanaPracticeSetupPage";
 import { getKanaPracticeSummary } from "../views/practice/session/kanaPracticeContent";
@@ -7,6 +11,7 @@ import {
   createRoute,
   createRouter,
   redirect,
+  notFound,
 } from "@tanstack/react-router";
 import { AppLayout } from "../layouts/AppLayout";
 import { AcknowledgementsPage } from "../pages/AcknowledgementsPage";
@@ -22,6 +27,16 @@ import { KanaPracticePage } from "../pages/practice/KanaPracticePage";
 import { WordsPracticeView } from "../views/practice/words/WordsPracticeView";
 import { appSections } from "./sections";
 import { validatePracticeSearch, type PracticeSearch } from "./practiceSearch";
+import {
+  WritingHistorySectionPage,
+  WritingHistoryOverviewPage,
+  WritingHistoryChapterPage,
+} from "../pages/writing-history/WritingHistoryPages";
+import {
+  ParticlesSectionPage,
+  ParticlesOverviewPage,
+  ParticleLessonPage,
+} from "../pages/particles/ParticlesPages";
 
 const rootRoute = createRootRoute({
   component: AppLayout,
@@ -34,10 +49,50 @@ const homeRoute = createRoute({
   component: HomePage,
 });
 
+const writingHistoryRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: appSections.writingHistory.path,
+  component: WritingHistorySectionPage,
+  notFoundComponent: NotFoundPage,
+});
+const writingHistoryOverviewRoute = createRoute({
+  getParentRoute: () => writingHistoryRoute,
+  path: "/",
+  component: WritingHistoryOverviewPage,
+});
+const writingHistoryChapterRoute = createRoute({
+  getParentRoute: () => writingHistoryRoute,
+  path: "$chapterId",
+  beforeLoad: ({ params }) => {
+    if (!getWritingHistoryChapter(params.chapterId)) notFound({ throw: true });
+  },
+  component: WritingHistoryChapterPage,
+});
+
 const kanaRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: appSections.kana.path,
   component: KanaChartPage,
+});
+
+const particlesRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: appSections.particles.path,
+  component: ParticlesSectionPage,
+  notFoundComponent: NotFoundPage,
+});
+const particlesOverviewRoute = createRoute({
+  getParentRoute: () => particlesRoute,
+  path: "/",
+  component: ParticlesOverviewPage,
+});
+const particleLessonRoute = createRoute({
+  getParentRoute: () => particlesRoute,
+  path: "$particleId",
+  beforeLoad: ({ params }) => {
+    if (!getParticleLesson(params.particleId)) notFound({ throw: true });
+  },
+  component: ParticleLessonPage,
 });
 
 const kanaVowelsRoute = createRoute({
@@ -171,7 +226,12 @@ const acknowledgementsRoute = createRoute({
 
 const routeTree = rootRoute.addChildren([
   homeRoute,
+  writingHistoryRoute.addChildren([
+    writingHistoryOverviewRoute,
+    writingHistoryChapterRoute,
+  ]),
   kanaRoute,
+  particlesRoute.addChildren([particlesOverviewRoute, particleLessonRoute]),
   kanaVowelsRoute,
   vocabularyRoute,
   wordsPracticeRoute,

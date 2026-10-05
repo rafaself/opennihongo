@@ -7,4 +7,21 @@ vi.mock("@opennihongo/persistence", () => ({
   loadLearningHistory: vi
     .fn()
     .mockResolvedValue({ records: [], baselines: [] }),
+  loadWritingHistoryProgress: vi
+    .fn()
+    .mockResolvedValue({ lastChapterId: null, completedChapterIds: [] }),
+  saveWritingHistoryPosition: vi.fn().mockImplementation((chapterId: string) =>
+    Promise.resolve({
+      lastChapterId: chapterId,
+      completedChapterIds: [],
+    }),
+  ),
+  completeWritingHistoryChapter: vi
+    .fn()
+    .mockImplementation((chapterId: string) =>
+      Promise.resolve({
+        lastChapterId: chapterId,
+        completedChapterIds: [chapterId],
+      }),
+    ),
 }));

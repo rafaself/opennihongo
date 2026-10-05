@@ -17,7 +17,7 @@ export {
   kanaPracticeSessionProfiles,
   type KanaPracticeMode,
   type KanaQuizDirection,
-} from "./kanaPracticeProfile";
+} from "./kana-practice/profiles";
 export type {
   KanaChartRow,
   KanaChartScript,
@@ -37,4 +37,6 @@ export {
   type KanaPracticeGame,
   type KanaPracticeDifficulty,
   type KanaPracticeLength,
-} from "./kanaPracticeOptions";
+} from "./kana-practice/options";
+export * from "./writing-history";
+export * from "./particles";

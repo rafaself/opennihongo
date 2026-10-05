@@ -1,0 +1,51 @@
+.history-sentence {
+  font-size: clamp(1.75rem, 5vw, 2.5rem);
+  text-align: center;
+  padding: 1.5rem 0.5rem;
+  border-radius: var(--ns-radius-card);
+  background: var(--ns-color-surface-subtle);
+  overflow-wrap: anywhere;
+}
+.history-sentence span {
+  color: var(--ns-color-text-secondary);
+  border-bottom: 3px solid transparent;
+}
+.history-sentence [data-highlighted="true"][data-script="kanji"] {
+  color: var(--ns-color-brand-text);
+  border-bottom-color: currentColor;
+}
+.history-sentence [data-highlighted="true"][data-script="hiragana"] {
+  color: var(--ns-color-feedback-success);
+  border-bottom-color: currentColor;
+}
+.history-sentence [data-highlighted="true"][data-script="katakana"],
+.history-sentence [data-highlighted="true"][data-script="romaji"] {
+  color: var(--ns-color-feedback-info);
+  border-bottom-color: currentColor;
+}
+.history-translation {
+  text-align: center;
+}
+.history-script-legend {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  gap: 0.7rem;
+}
+.history-script-legend li {
+  display: grid;
+  grid-template-columns: 4.5rem minmax(0, 1fr);
+  gap: 1rem;
+  align-items: start;
+}
+.history-token {
+  text-align: center;
+  border-radius: var(--ns-radius-md);
+  background: var(--ns-color-surface-subtle);
+  padding: 0.5rem;
+  font-size: 1.2rem;
+  overflow-wrap: anywhere;
+}
+.history-script-legend p {
+  font-size: 0.9rem;
+}

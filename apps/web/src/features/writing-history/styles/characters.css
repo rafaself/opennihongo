@@ -1,0 +1,82 @@
+.history-comparison,
+.history-comparison-detail,
+.history-script-example {
+  display: grid;
+  gap: 1.25rem;
+}
+.history-comparison-detail {
+  animation: history-comparison-reveal var(--ns-motion-duration-slow)
+    var(--ns-motion-easing-enter) both;
+}
+@keyframes history-comparison-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(0.25rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+:root[data-motion="reduced"] .history-comparison-detail {
+  animation: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .history-comparison-detail {
+    animation: none;
+  }
+}
+.history-comparison .ns-segmented-control,
+.history-script-example .ns-segmented-control {
+  max-width: 100%;
+  overflow-x: auto;
+}
+.history-character-pair {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center;
+  gap: 1rem;
+  border-radius: var(--ns-radius-card);
+  background: var(--ns-color-surface-subtle);
+  padding: 1.5rem 1rem;
+  text-align: center;
+}
+.history-glyph {
+  display: block;
+  font-family: serif;
+  font-size: clamp(4rem, 12vw, 7rem);
+  line-height: 1.25;
+  color: var(--ns-color-text-primary);
+}
+.history-hentaigana,
+.history-choice-glyph {
+  font-family: "NINJAL Hentaigana", serif;
+}
+.history-character-arrow {
+  font-size: 2rem;
+  color: var(--ns-color-brand-text);
+}
+.history-usage-result strong {
+  font-size: clamp(1.2rem, 4vw, 2rem);
+}
+.history-usage-result p {
+  font-size: 0.9rem;
+}
+.history-origin-note {
+  border-inline-start: 3px solid var(--ns-color-brand-text);
+  padding-inline-start: 1rem;
+  font-size: 0.9rem;
+}
+.history-origin-note strong {
+  color: var(--ns-color-brand-text);
+}
+@media (max-width: 40rem) {
+  .history-comparison
+    .ns-radio-group.ns-segmented-control[data-orientation="horizontal"] {
+    flex-wrap: wrap;
+  }
+  .history-character-pair {
+    gap: 0.5rem;
+    padding-inline: 0.5rem;
+  }
+}

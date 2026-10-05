@@ -1,0 +1,12 @@
+@import "./styles/reader.css";
+@import "./styles/overview.css";
+@import "./styles/characters.css";
+@import "./styles/diagrams.css";
+@import "./styles/scripts.css";
+
+@font-face {
+  font-family: "NINJAL Hentaigana";
+  src: url("./assets/ninjal_hentaigana.woff2") format("woff2");
+  font-display: swap;
+  unicode-range: U+1B001-1B11E;
+}

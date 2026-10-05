@@ -1,0 +1,102 @@
+.history-flow {
+  display: block;
+  width: 100%;
+  max-width: 38rem;
+  margin-inline: auto;
+  overflow: visible;
+}
+.history-flow rect {
+  fill: var(--ns-color-surface-subtle);
+  stroke: var(--ns-color-border-subtle);
+}
+.history-flow text {
+  fill: var(--ns-color-text-primary);
+  text-anchor: middle;
+  dominant-baseline: central;
+  font-size: 22px;
+  font-weight: 800;
+}
+.history-flow marker path {
+  fill: var(--ns-color-brand-text);
+}
+.history-flow-edge {
+  fill: none;
+  stroke: var(--ns-color-brand-text);
+  stroke-width: 2;
+}
+.history-diagram-details {
+  margin-top: 1rem;
+}
+.history-diagram-details summary {
+  cursor: pointer;
+  font-weight: 800;
+  margin-bottom: 1rem;
+}
+.history-diagram-nodes {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr));
+  gap: 1rem;
+}
+.history-diagram-node {
+  border-radius: var(--ns-radius-lg);
+  background: var(--ns-color-surface-subtle);
+  padding: 1.2rem;
+}
+.history-diagram-node h3 {
+  margin-block: 0.4rem;
+}
+.history-diagram-node p {
+  font-size: 0.9rem;
+}
+.history-connections {
+  list-style: none;
+  padding: 0;
+  margin-top: 1.2rem;
+  display: grid;
+  gap: 0.6rem;
+}
+.history-connections li {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr);
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.75rem;
+  border-bottom: 1px solid var(--ns-color-border-subtle);
+  font-size: 0.9rem;
+}
+.history-connection-label {
+  color: var(--ns-color-brand-text);
+}
+.history-timeline {
+  list-style: none;
+  border-inline-start: 3px solid var(--ns-color-brand-text);
+  padding: 0 0 0 1.5rem;
+  margin-left: 0.5rem;
+  display: grid;
+  gap: 1.5rem;
+}
+.history-timeline li {
+  position: relative;
+}
+.history-timeline li::before {
+  content: "";
+  position: absolute;
+  top: 0.4rem;
+  left: -1.95rem;
+  width: 0.7rem;
+  height: 0.7rem;
+  border-radius: 50%;
+  background: var(--ns-color-brand-text);
+}
+.history-timeline p {
+  margin-top: 0.4rem;
+}
+@media (max-width: 40rem) {
+  .history-flow text {
+    font-size: 28px;
+  }
+  .history-connections li {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.25rem;
+  }
+}
