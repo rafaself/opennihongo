@@ -142,6 +142,21 @@ export function WelcomeView() {
           ))}
         </ol>
       </section>
+      <Surface className="welcome-kanji">
+        <span className="welcome-kanji__glyph" lang="ja" aria-hidden="true">
+          漢
+        </span>
+        <Stack gap="2">
+          <Text variant="heading">Find meaning in the characters</Text>
+          <Text color="secondary">
+            Meet 30 beginner Kanji through their shapes, readings, and everyday
+            words.
+          </Text>
+        </Stack>
+        <Link className="ns-button" data-variant="secondary" to="/kanji">
+          Explore Kanji
+        </Link>
+      </Surface>
       <Surface className="welcome-particles">
         <span className="welcome-particles__glyph" lang="ja" aria-hidden="true">
           は

@@ -6,6 +6,7 @@ import { AppNavigation } from "./AppNavigation";
 import "./AppLayout.css";
 import {
   getParticleLesson,
+  getKanjiTheoryCharacter,
   getWritingHistoryChapter,
 } from "@opennihongo/content";
 
@@ -93,7 +94,14 @@ export function AppLayout() {
     const particleTitle = particleId
       ? getParticleLesson(particleId)?.title
       : undefined;
-    document.title = `${particleTitle ?? historyTitle ?? title} · OpenNihongo`;
+    const kanjiId = activePath.match(/^\/kanji\/([^/]+)$/)?.[1];
+    const kanjiCharacter = kanjiId
+      ? getKanjiTheoryCharacter(kanjiId)?.character
+      : undefined;
+    const kanjiTitle = kanjiCharacter
+      ? `${kanjiCharacter.glyph} · ${kanjiCharacter.meaning}`
+      : undefined;
+    document.title = `${kanjiTitle ?? particleTitle ?? historyTitle ?? title} · OpenNihongo`;
 
     if (previousPath.current !== pathname) {
       previousPath.current = pathname;

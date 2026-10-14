@@ -306,17 +306,20 @@
     font-size: var(--ns-text-label-size);
   }
 }
-.welcome-particles {
+.welcome-particles,
+.welcome-kanji {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: 1.25rem;
   padding: clamp(1.25rem, 3vw, 2rem);
 }
-.welcome-particles > .ns-stack {
+.welcome-particles > .ns-stack,
+.welcome-kanji > .ns-stack {
   flex: 1 1 16rem;
 }
-.welcome-particles__glyph {
+.welcome-particles__glyph,
+.welcome-kanji__glyph {
   font: 2.5rem serif;
   color: var(--ns-color-brand-text);
 }

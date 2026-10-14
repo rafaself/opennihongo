@@ -6,6 +6,7 @@ import {
 } from "../features/kanji/session/options";
 import {
   getParticleLesson,
+  getKanjiTheoryCharacter,
   getWritingHistoryChapter,
   type KanaPracticeGame,
 } from "@opennihongo/content";
@@ -32,6 +33,11 @@ import { PracticePage } from "../pages/practice/PracticePage";
 import { KanaPracticePage } from "../pages/practice/KanaPracticePage";
 import { WordsPracticeView } from "../views/practice/words/WordsPracticeView";
 import { appSections } from "./sections";
+import {
+  KanjiSectionPage,
+  KanjiOverviewPage,
+  KanjiCharacterPage,
+} from "../pages/kanji/KanjiTheoryPages";
 import { validatePracticeSearch, type PracticeSearch } from "./practiceSearch";
 import {
   WritingHistorySectionPage,
@@ -86,6 +92,26 @@ const particlesRoute = createRoute({
   path: appSections.particles.path,
   component: ParticlesSectionPage,
   notFoundComponent: NotFoundPage,
+});
+
+const kanjiRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: appSections.kanji.path,
+  component: KanjiSectionPage,
+  notFoundComponent: NotFoundPage,
+});
+const kanjiOverviewRoute = createRoute({
+  getParentRoute: () => kanjiRoute,
+  path: "/",
+  component: KanjiOverviewPage,
+});
+const kanjiCharacterRoute = createRoute({
+  getParentRoute: () => kanjiRoute,
+  path: "$kanjiId",
+  beforeLoad: ({ params }) => {
+    if (!getKanjiTheoryCharacter(params.kanjiId)) notFound({ throw: true });
+  },
+  component: KanjiCharacterPage,
 });
 const particlesOverviewRoute = createRoute({
   getParentRoute: () => particlesRoute,
@@ -293,6 +319,7 @@ const routeTree = rootRoute.addChildren([
     writingHistoryChapterRoute,
   ]),
   kanaRoute,
+  kanjiRoute.addChildren([kanjiOverviewRoute, kanjiCharacterRoute]),
   particlesRoute.addChildren([particlesOverviewRoute, particleLessonRoute]),
   kanaVowelsRoute,
   vocabularyRoute,

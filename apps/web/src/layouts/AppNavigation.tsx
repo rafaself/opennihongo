@@ -13,7 +13,8 @@ export function AppNavigation({ onNavigate }: { onNavigate: () => void }) {
                 exact:
                   path !== appSections.practice.path &&
                   path !== appSections.writingHistory.path &&
-                  path !== appSections.particles.path,
+                  path !== appSections.particles.path &&
+                  path !== appSections.kanji.path,
                 includeSearch: false,
               }}
               activeProps={{ "aria-current": "page" }}

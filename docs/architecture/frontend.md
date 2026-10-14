@@ -173,6 +173,14 @@ suggestions.
 
 ## Kanji practice
 
+Kanji theory lives at `/kanji`, with 30 references at `/kanji/$kanjiId`.
+`features/kanji/theory` presents the themed catalog, common reading lists, and
+contextual words from the canonical content package. Home and primary navigation
+link to the section. Character pages preserve the app shell, romaji preference,
+previous/next navigation, and a link to Reading setup with that character selected.
+Unknown character IDs use the not-found page. References link to learning sources
+and treat reading lists as common examples rather than universal pronunciation rules.
+
 Practice includes Reading, Matching, Quiz, and Cards for 30 authored beginner
 Kanji. `content/kanji` owns three themes, stable character IDs, English meanings,
 common on/kun readings, one contextual example per character, and session profiles.

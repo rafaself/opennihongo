@@ -21,6 +21,7 @@ export const appSections = {
     icon: "kana",
     status: "available",
   },
+  kanji: { path: "/kanji", label: "Kanji", icon: "kanji", status: "available" },
   writingHistory: {
     path: "/writing-history",
     label: "Writing history",
@@ -73,6 +74,7 @@ export const navigationSections = [
   appSections.home,
   appSections.writingHistory,
   appSections.kana,
+  appSections.kanji,
   appSections.particles,
   appSections.practice,
   appSections.progress,

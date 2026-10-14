@@ -1,6 +1,7 @@
 export type AppNavIconName =
   | "learn"
   | "kana"
+  | "kanji"
   | "words"
   | "practice"
   | "progress"
@@ -28,7 +29,7 @@ export function AppNavIcon({ name }: { name: AppNavIconName }) {
           <circle cx="16" cy="14" r="2" fill="#bc002d" />
         </>
       )}
-      {name === "kana" && (
+      {(name === "kana" || name === "kanji") && (
         <>
           <rect x="3" y="4" width="26" height="24" rx="9" fill="#f58a9e" />
           <path d="m9 27 1 4 6-4" fill="#f58a9e" />
@@ -41,7 +42,7 @@ export function AppNavIcon({ name }: { name: AppNavIconName }) {
             x="16"
             y="22"
           >
-            あ
+            {name === "kanji" ? "漢" : "あ"}
           </text>
         </>
       )}
