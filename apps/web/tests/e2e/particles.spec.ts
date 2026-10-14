@@ -44,7 +44,10 @@ test("explores particles, reloads a direct lesson, and continues without mandato
     ).toBeVisible();
   }
   await page.getByRole("link", { name: "Explore character practice" }).click();
-  await expect(page).toHaveURL(/\/practice$/);
+  await expect(page).toHaveURL(/\/practice(?:\?[^#]*)?$/);
+  await expect(
+    page.getByRole("heading", { name: "Practice", level: 1 }),
+  ).toBeVisible();
   await page.goto("/particles/not-a-particle");
   await expect(
     page.getByRole("heading", { name: "This page doesn't exist." }),
