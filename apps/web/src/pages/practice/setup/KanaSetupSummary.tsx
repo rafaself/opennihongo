@@ -28,13 +28,17 @@ export function KanaSetupSummary({
           : "answers";
   const distinct = game === "quiz" || game === "matching";
   return (
-    <section className="kana-setup__summary" aria-label="Your session">
-      <div className="kana-setup__summary-content">
-        <span aria-hidden="true" className="kana-setup__summary-art" lang="ja">
+    <section className="practice-setup__summary" aria-label="Your session">
+      <div className="practice-setup__summary-content">
+        <span
+          aria-hidden="true"
+          className="practice-setup__summary-art"
+          lang="ja"
+        >
           {kanaPracticeGames[game].illustration}
         </span>
         <h2>Your session</h2>
-        <p className="kana-setup__session-count">
+        <p className="practice-setup__session-count">
           {summary.count} {units}
         </p>
         <p>
@@ -52,25 +56,25 @@ export function KanaSetupSummary({
         )}
         {game === "quiz" && <p>{summary.choices} choices per question</p>}
         {summary.count < summary.requested && (
-          <p className="kana-setup__notice">
+          <p className="practice-setup__notice">
             Your selection has {summary.available}{" "}
             {distinct ? "distinct readings" : "characters"}. This session uses
             all available items.
           </p>
         )}
         {game === "quiz" && summary.choices < preset.quizChoices && (
-          <p className="kana-setup__notice">
+          <p className="practice-setup__notice">
             Only {summary.distinct} distinct readings are available, so each
             question has {summary.choices} choices.
           </p>
         )}
         {!summary.canStart && (
-          <p role="alert" className="kana-setup__error">
+          <p role="alert" className="practice-setup__error">
             {summary.error}
           </p>
         )}
       </div>
-      <div className="kana-setup__start">
+      <div className="practice-setup__start">
         <Button disabled={!summary.canStart} onClick={onStart}>
           Start {kanaPracticeGames[game].title}
         </Button>

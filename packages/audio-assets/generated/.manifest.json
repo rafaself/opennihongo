@@ -581,6 +581,186 @@
       "generation_fingerprint": "c0ed560ed5ca198745e6aafa47758dcc3b3c68e3b2b8db853264b8751278ea48",
       "metadata_file": "kana.word.soto.json",
       "sha256": "c9f5cd44bca47336e61fa0a700e8b799a100bfbc7c4bac652076c668e6475e22"
+    },
+    "kanji.character.u4e00": {
+      "audio_file": "kanji.character.u4e00.opus",
+      "generation_fingerprint": "efa32dc2b6599fce3fe328eed47fbbc51f06ce2bfa52097d2cee59c6f9c2ed6a",
+      "metadata_file": "kanji.character.u4e00.json",
+      "sha256": "bc09283d26dd875c0fd43473c6f96824c7c22a4f670882928bfe463383b1df08"
+    },
+    "kanji.character.u4e03": {
+      "audio_file": "kanji.character.u4e03.opus",
+      "generation_fingerprint": "23881b84e78157583e3413d8eafd4d74e738abe23d4f1541435f6e189ea4c21c",
+      "metadata_file": "kanji.character.u4e03.json",
+      "sha256": "f7871712eca473f42f103cfd68f59052459491d4d9635b1fb3d289b5dda62993"
+    },
+    "kanji.character.u4e09": {
+      "audio_file": "kanji.character.u4e09.opus",
+      "generation_fingerprint": "ec5c09ed37d0ab92f33d803605bfb12e47f78dc86f421124074896ff5d785c5e",
+      "metadata_file": "kanji.character.u4e09.json",
+      "sha256": "412118dce4ee856a6b51754c5fb27f0580b1a9570e10f1d8854684a37587ee55"
+    },
+    "kanji.character.u4e0a": {
+      "audio_file": "kanji.character.u4e0a.opus",
+      "generation_fingerprint": "813d020d8561aff20d6e0f406c45190e143760b232da17f1b8219dbfb55ba878",
+      "metadata_file": "kanji.character.u4e0a.json",
+      "sha256": "15503427933c050f7c256416d383eb78e6ff27589880e9a560296f54e5492391"
+    },
+    "kanji.character.u4e0b": {
+      "audio_file": "kanji.character.u4e0b.opus",
+      "generation_fingerprint": "79effab03104fab4e769b1623f0a33781cf4223a1e87654997840202911ece4e",
+      "metadata_file": "kanji.character.u4e0b.json",
+      "sha256": "8a38b5bf103988a30800ec81bc197613d5fa72746e7ae662bd6ab087d6ac48d1"
+    },
+    "kanji.character.u4e5d": {
+      "audio_file": "kanji.character.u4e5d.opus",
+      "generation_fingerprint": "1d8fc4cfb5c54ebd2e19c47c77c325fd63610646fe5bcfcfe2feff865db66758",
+      "metadata_file": "kanji.character.u4e5d.json",
+      "sha256": "f1e9606f9e7562a3cb41a364b1cd348be73db92f271197cf5ea98b3a4f22e7df"
+    },
+    "kanji.character.u4e8c": {
+      "audio_file": "kanji.character.u4e8c.opus",
+      "generation_fingerprint": "12d7d02f99fc37c2c923a31325a8b1882957d9cdbc28153349e4f55cf787bf42",
+      "metadata_file": "kanji.character.u4e8c.json",
+      "sha256": "86ead613abca2d843ce93cc23704ec49180f58e0d6ecd293e5b2e93d7f408dbf"
+    },
+    "kanji.character.u4e94": {
+      "audio_file": "kanji.character.u4e94.opus",
+      "generation_fingerprint": "90fb60fb102b529a4ec011e3ba2e6e4ad729b80e3988322a0b57c82675c200e8",
+      "metadata_file": "kanji.character.u4e94.json",
+      "sha256": "0fae996e8b5e03ed133c6cd0c089103172a29ec3f6db154ab6ad1f828972959f"
+    },
+    "kanji.character.u4eba": {
+      "audio_file": "kanji.character.u4eba.opus",
+      "generation_fingerprint": "fe542f1b9a0487106cc8325fe35a6407b3283327847b70dcecac19f8217e3977",
+      "metadata_file": "kanji.character.u4eba.json",
+      "sha256": "8ae2beed9ec050b00a2fdc18ecc3ab41fb786f77023870b80a17f6f822d74023"
+    },
+    "kanji.character.u516b": {
+      "audio_file": "kanji.character.u516b.opus",
+      "generation_fingerprint": "90ed06886ea48ca48dbbcd0e79f50ed90b8ef7ea321a0bf46d0416bbff62ce1e",
+      "metadata_file": "kanji.character.u516b.json",
+      "sha256": "81959a67313a5405ee2aa8db3e8664e4febe0fcdc0dd168eeb0abfb0bb87f6cd"
+    },
+    "kanji.character.u516d": {
+      "audio_file": "kanji.character.u516d.opus",
+      "generation_fingerprint": "c4b420533f0de05dfa7ff2356cbb755e458dc1c2a03d7d153ec4a65975b9729d",
+      "metadata_file": "kanji.character.u516d.json",
+      "sha256": "14a8899513063835900b617e7f0b73e4e0c8acbdf74b4a76ccf0eb937e000247"
+    },
+    "kanji.character.u5341": {
+      "audio_file": "kanji.character.u5341.opus",
+      "generation_fingerprint": "598b4e5f9f5ac714bf514fd3c1d6b15ce491efc20a1d47f4a14c8290d4d487c6",
+      "metadata_file": "kanji.character.u5341.json",
+      "sha256": "371d4055e6b3d5e280124d311551e74781dc704fb7aec4d1563f538e868ee868"
+    },
+    "kanji.character.u53e3": {
+      "audio_file": "kanji.character.u53e3.opus",
+      "generation_fingerprint": "a694feaeaa607125f54a6eb99cfd9bcf6015d6bcbdbcb85fe0c78336847c5303",
+      "metadata_file": "kanji.character.u53e3.json",
+      "sha256": "cb22a060f360f275710721d9ea956fc32fa5774bcdbc9d0e4811389821caaccd"
+    },
+    "kanji.character.u56db": {
+      "audio_file": "kanji.character.u56db.opus",
+      "generation_fingerprint": "84f03116c951b7ec2faa6777acaa2c30cb5537b767bf493b66ca454c06659c81",
+      "metadata_file": "kanji.character.u56db.json",
+      "sha256": "1629bb8162d6e1a8c246e4f3a778f1765dd972b11dd13f1fc96c699c1d06ed11"
+    },
+    "kanji.character.u571f": {
+      "audio_file": "kanji.character.u571f.opus",
+      "generation_fingerprint": "de173703de3c8aac0f61cde13efbc167be96feb76ab59bfac5f705d07150a1ad",
+      "metadata_file": "kanji.character.u571f.json",
+      "sha256": "78805a3cbe5c84dc06c9b79983d9624d4833d0e696df3056c2c7b003c6291719"
+    },
+    "kanji.character.u5927": {
+      "audio_file": "kanji.character.u5927.opus",
+      "generation_fingerprint": "e60d3f1319e346d6595674180d3aab49a065d76caaace1d783b0bb7da289da40",
+      "metadata_file": "kanji.character.u5927.json",
+      "sha256": "ad51277bd9ba16e932e073a25b54266de1198fa96d81f5287753fd4960f29776"
+    },
+    "kanji.character.u5c0f": {
+      "audio_file": "kanji.character.u5c0f.opus",
+      "generation_fingerprint": "fea02876ac44c09cf6195a85ecd955ba502bb40126db08d8853555f1538a3c16",
+      "metadata_file": "kanji.character.u5c0f.json",
+      "sha256": "a4547c41037f821c03cd822821cc332523d26fd4a4b80d7bcf884aa5ff54ab7c"
+    },
+    "kanji.character.u5c71": {
+      "audio_file": "kanji.character.u5c71.opus",
+      "generation_fingerprint": "a19b4bbab6a411e1f1b31ca6db8e5ca237efccaa46c03895d59ed1c8ad440f9b",
+      "metadata_file": "kanji.character.u5c71.json",
+      "sha256": "63b818767005b2e02a9b563af3b419f7ab844263c15ac20ae1bb3ca0dbaed5a3"
+    },
+    "kanji.character.u5ddd": {
+      "audio_file": "kanji.character.u5ddd.opus",
+      "generation_fingerprint": "fff793006047fceeda16871ae1f82bfe518ba8b34f6f147ceb4d76e62ce1c2a9",
+      "metadata_file": "kanji.character.u5ddd.json",
+      "sha256": "2c4e8468e7d91172e1a8eb5327632e6a66557858010d1f026481bc522284bd7f"
+    },
+    "kanji.character.u624b": {
+      "audio_file": "kanji.character.u624b.opus",
+      "generation_fingerprint": "cdfae5bb28ab511ebd7b58ebc80b0d27a950f756d06f58a87be40d79c6392f13",
+      "metadata_file": "kanji.character.u624b.json",
+      "sha256": "60ac4c0634dd73a1424e1b58e9845bdde77bf525d20c8f460904848f2cf36541"
+    },
+    "kanji.character.u65e5": {
+      "audio_file": "kanji.character.u65e5.opus",
+      "generation_fingerprint": "717375983ded116d2013d6a42dde653230f2189c4d2c52898a34f81c705dd339",
+      "metadata_file": "kanji.character.u65e5.json",
+      "sha256": "0ec0e800d67f8d4e0c1f8b7cf7e2bc560dfcf578aac65d32dcd51e2cebd9627c"
+    },
+    "kanji.character.u6708": {
+      "audio_file": "kanji.character.u6708.opus",
+      "generation_fingerprint": "e17a764c68c8e76a76d71e1d6a786138f4aa88cfd43ededec02660d77b4945fc",
+      "metadata_file": "kanji.character.u6708.json",
+      "sha256": "cca6dfd69af3369ac374dabaccdef9a724a629bd1a0b4fd9250982db608714ce"
+    },
+    "kanji.character.u6728": {
+      "audio_file": "kanji.character.u6728.opus",
+      "generation_fingerprint": "8e2836fa1c07a90424dd5d3fea62574c5153e24e5cb0f81a66f24835f02c5234",
+      "metadata_file": "kanji.character.u6728.json",
+      "sha256": "c264ef2e6311b8d7a67a5874138f35c1632034935728c32f912aa4381f6d08f8"
+    },
+    "kanji.character.u6c34": {
+      "audio_file": "kanji.character.u6c34.opus",
+      "generation_fingerprint": "07b2effd030176baa9c3da4da6644c594d9b1da430e76b5e5f82a1336ec3e7ce",
+      "metadata_file": "kanji.character.u6c34.json",
+      "sha256": "e7b99435641c77c30d27908c94d52a918726886b2008b221a4d14f3aaae18c07"
+    },
+    "kanji.character.u706b": {
+      "audio_file": "kanji.character.u706b.opus",
+      "generation_fingerprint": "03470f404b5f3ec65cfc71f6b52a19b60774be9c3c046d913c4593674f551a46",
+      "metadata_file": "kanji.character.u706b.json",
+      "sha256": "32a59555cda1b760c00bbe3b6428373434a5d1b440cb778fabe265129c2c3353"
+    },
+    "kanji.character.u7530": {
+      "audio_file": "kanji.character.u7530.opus",
+      "generation_fingerprint": "483dc4ae578a4f712ad0c2d395a1dad4d7075afd60c0e803b6cca3328978d4f3",
+      "metadata_file": "kanji.character.u7530.json",
+      "sha256": "711fe1eec3064b39b1840d9b2204ef06455545264047e47cc66955df1b1dcc61"
+    },
+    "kanji.character.u76ee": {
+      "audio_file": "kanji.character.u76ee.opus",
+      "generation_fingerprint": "1611b4bf9f957e89cf553cd26ac55987430913290e7c6a9329d91bc1183968e2",
+      "metadata_file": "kanji.character.u76ee.json",
+      "sha256": "ebd898eeda1dc39f657fdf57e187268ad3ac49edb3ff051a6e28e4d817013ba8"
+    },
+    "kanji.character.u8033": {
+      "audio_file": "kanji.character.u8033.opus",
+      "generation_fingerprint": "58cec3cddfd7b0656731104d300e09fe60533c1640f49db8fa95d0a9bd74d35c",
+      "metadata_file": "kanji.character.u8033.json",
+      "sha256": "9a5b185d6996c76cc695fc738aa8d48223006062e863e04477e12a7120b24dca"
+    },
+    "kanji.character.u8db3": {
+      "audio_file": "kanji.character.u8db3.opus",
+      "generation_fingerprint": "29714aca324d3723dd3c74b9764c9180165cc485caa58e327574ba11fd6ad2ff",
+      "metadata_file": "kanji.character.u8db3.json",
+      "sha256": "b057fbc236d58b388416ea79ce2ed7dc5366ba94c1b47be6f2f9117adac6c271"
+    },
+    "kanji.character.u91d1": {
+      "audio_file": "kanji.character.u91d1.opus",
+      "generation_fingerprint": "75ca2239a6c7e3d70e4ce7394746246e280b8acb2ce3ffb9376dee932bd8a866",
+      "metadata_file": "kanji.character.u91d1.json",
+      "sha256": "962c1f9c623c075a45e88646ad0f075c971183f05e6cc600d7adf44adc40444a"
     }
   },
   "manifest_version": 1

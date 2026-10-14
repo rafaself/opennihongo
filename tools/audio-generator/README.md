@@ -57,7 +57,7 @@ batch generation:
 ]
 ```
 
-The generator has two canonical inputs and one separate chart voice collection:
+The generator has three canonical inputs and one separate chart voice collection:
 
 - [`inputs/kana-syllabary.json`](inputs/kana-syllabary.json) contains the 46
   basic Hiragana and 46 basic Katakana characters. Its stable IDs and glyphs
@@ -65,6 +65,10 @@ The generator has two canonical inputs and one separate chart voice collection:
   `packages/core/src/kana/katakana.ts`.
 - [`inputs/kana-practice.json`](inputs/kana-practice.json) contains the seeded
   Hiragana vowels and beginner vocabulary from `packages/core/src/kana/`.
+- [`inputs/kanji-beginner.json`](inputs/kanji-beginner.json) contains all 30
+  starter Kanji example words. Its stable character IDs, display words, and
+  explicit Kana readings mirror `packages/content/src/kanji`. Each character
+  has one contextual recording, reused by reading, quiz, and card practice.
 - [`inputs/kana-chart-hiragana-voice10000.json`](inputs/kana-chart-hiragana-voice10000.json)
   contains all 115 tiles from the Hiragana chart: basic characters, dakuten,
   combinations, small っ examples, and long vowels. It uses the chart's speech
@@ -73,7 +77,7 @@ The generator has two canonical inputs and one separate chart voice collection:
   is generated.
 
 Keep IDs, display text, and Japanese readings aligned with the core content.
-With the VOICEVOX container running, generate both inputs from the repository
+With the VOICEVOX container running, generate the canonical inputs from the repository
 root:
 
 ```sh
@@ -81,6 +85,8 @@ PYTHONPATH=tools/audio-generator/src python3 -m audio_generator \
   --input tools/audio-generator/inputs/kana-syllabary.json
 PYTHONPATH=tools/audio-generator/src python3 -m audio_generator \
   --input tools/audio-generator/inputs/kana-practice.json
+PYTHONPATH=tools/audio-generator/src python3 -m audio_generator \
+  --input tools/audio-generator/inputs/kanji-beginner.json
 ```
 
 For the Hiragana chart voice set, use its separate 男声2 / ノーマル

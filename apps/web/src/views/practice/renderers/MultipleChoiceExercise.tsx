@@ -9,6 +9,8 @@ import { PronunciationButton } from "../audio/PronunciationButton";
 import "./multipleChoice.css";
 
 type Props = {
+  instruction?: string | undefined;
+  supportingText?: string | undefined;
   exercise: Exercise;
   selectedOptionId: string | null;
   disabled: boolean;
@@ -20,6 +22,8 @@ type Props = {
 };
 
 export function MultipleChoiceExercise({
+  instruction,
+  supportingText,
   exercise,
   selectedOptionId,
   disabled,
@@ -73,12 +77,13 @@ export function MultipleChoiceExercise({
   return (
     <div className="practice-session__question kana-quiz">
       <Text as="h1" id="practice-title" variant="display">
-        Choose the correct answer
+        {instruction ?? "Choose the correct answer"}
       </Text>
       <div className="practice-session__prompt kana-quiz__prompt">
         <span className="practice-session__prompt-kana">
           {exercise.prompt.text}
         </span>
+        {supportingText && <Text color="secondary">{supportingText}</Text>}
         {audioAvailable && (
           <PronunciationButton
             audioId={audioId}

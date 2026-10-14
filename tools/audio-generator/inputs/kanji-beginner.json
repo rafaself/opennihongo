@@ -1,0 +1,152 @@
+[
+  {
+    "id": "kanji.character.u4e00",
+    "text": "一つ",
+    "reading": "ひとつ"
+  },
+  {
+    "id": "kanji.character.u4e8c",
+    "text": "二つ",
+    "reading": "ふたつ"
+  },
+  {
+    "id": "kanji.character.u4e09",
+    "text": "三つ",
+    "reading": "みっつ"
+  },
+  {
+    "id": "kanji.character.u56db",
+    "text": "四つ",
+    "reading": "よっつ"
+  },
+  {
+    "id": "kanji.character.u4e94",
+    "text": "五つ",
+    "reading": "いつつ"
+  },
+  {
+    "id": "kanji.character.u516d",
+    "text": "六つ",
+    "reading": "むっつ"
+  },
+  {
+    "id": "kanji.character.u4e03",
+    "text": "七つ",
+    "reading": "ななつ"
+  },
+  {
+    "id": "kanji.character.u516b",
+    "text": "八つ",
+    "reading": "やっつ"
+  },
+  {
+    "id": "kanji.character.u4e5d",
+    "text": "九つ",
+    "reading": "ここのつ"
+  },
+  {
+    "id": "kanji.character.u5341",
+    "text": "十日",
+    "reading": "とおか"
+  },
+  {
+    "id": "kanji.character.u65e5",
+    "text": "日曜日",
+    "reading": "にちようび"
+  },
+  {
+    "id": "kanji.character.u6708",
+    "text": "月",
+    "reading": "つき"
+  },
+  {
+    "id": "kanji.character.u706b",
+    "text": "火",
+    "reading": "ひ"
+  },
+  {
+    "id": "kanji.character.u6c34",
+    "text": "水",
+    "reading": "みず"
+  },
+  {
+    "id": "kanji.character.u6728",
+    "text": "木",
+    "reading": "き"
+  },
+  {
+    "id": "kanji.character.u91d1",
+    "text": "お金",
+    "reading": "おかね"
+  },
+  {
+    "id": "kanji.character.u571f",
+    "text": "土",
+    "reading": "つち"
+  },
+  {
+    "id": "kanji.character.u5c71",
+    "text": "山",
+    "reading": "やま"
+  },
+  {
+    "id": "kanji.character.u5ddd",
+    "text": "川",
+    "reading": "かわ"
+  },
+  {
+    "id": "kanji.character.u7530",
+    "text": "田んぼ",
+    "reading": "たんぼ"
+  },
+  {
+    "id": "kanji.character.u4eba",
+    "text": "人",
+    "reading": "ひと"
+  },
+  {
+    "id": "kanji.character.u53e3",
+    "text": "口",
+    "reading": "くち"
+  },
+  {
+    "id": "kanji.character.u76ee",
+    "text": "目",
+    "reading": "め"
+  },
+  {
+    "id": "kanji.character.u8033",
+    "text": "耳",
+    "reading": "みみ"
+  },
+  {
+    "id": "kanji.character.u624b",
+    "text": "手",
+    "reading": "て"
+  },
+  {
+    "id": "kanji.character.u8db3",
+    "text": "足",
+    "reading": "あし"
+  },
+  {
+    "id": "kanji.character.u5927",
+    "text": "大きい",
+    "reading": "おおきい"
+  },
+  {
+    "id": "kanji.character.u5c0f",
+    "text": "小さい",
+    "reading": "ちいさい"
+  },
+  {
+    "id": "kanji.character.u4e0a",
+    "text": "上",
+    "reading": "うえ"
+  },
+  {
+    "id": "kanji.character.u4e0b",
+    "text": "下",
+    "reading": "した"
+  }
+]

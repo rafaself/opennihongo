@@ -171,6 +171,41 @@ suggestions.
   The web app maps those tokens into Tailwind's theme and uses utilities to
   compose its application layout.
 
+## Kanji practice
+
+Practice includes Reading, Matching, Quiz, and Cards for 30 authored beginner
+Kanji. `content/kanji` owns three themes, stable character IDs, English meanings,
+common on/kun readings, one contextual example per character, and session profiles.
+The examples have explicit Kana readings and authored romaji variants. Core's
+`normalizeJapaneseReading` compares width, case, whitespace, and equivalent
+Hiragana/Katakana without discarding long vowels, small Kana, or voiced sounds.
+
+The web app composes Kanji-specific setup and session adapters under
+`features/kanji` and route pages under `pages/practice/kanji`. Every game has a
+setup route at `/practice/kanji/$game/setup`; active games use fullscreen routes
+at `/practice/kanji/reading`, `/matching`, `/quiz`, and `/cards` under that prefix.
+The existing practice URL search adds a namespaced `kanji` object with themes,
+optional selected IDs, difficulty, optional length, quiz focus, and Fast mode.
+Defaults select all 30 characters, Standard difficulty, five graded items or ten
+cards, Mixed quiz focus, and Fast mode off. Options remain URL-local and survive
+exit, refresh, replay, and Change options alongside the existing Kana choices.
+
+Reading asks for the complete example-word reading in Kana or authored romaji.
+Matching pairs characters with their meanings. Quizzes offer meanings, word
+readings, or a balanced mix; each target appears once and choices have distinct
+answers. Cards show the character and example, then reveal meaning, common
+readings, and the example pronunciation, respecting the romaji preference.
+Small pools clamp session sizes and choice counts. Reading/cards need one item;
+matching/quizzes need two distinct answers. The existing difficulty presets,
+feedback, keyboard interactions, card animation, and local learning history are
+shared. `interaction/ExercisePracticeView` owns the graded session runner;
+subject-specific composition supplies generation, normalization, and presentation.
+Setup styles live under `views/practice/layout` and are shared with Kana.
+
+All 30 examples have static VOICEVOX Nemo recordings in the canonical catalog.
+No live synthesis service, storage migration, handwriting, stroke-order practice,
+or SRS is introduced. The content notes are in [Kanji authoring](../content/kanji.md).
+
 ## Current composition
 
 The web app registers its routes in `app/router.tsx`. `app/sections.ts` is the
@@ -211,7 +246,7 @@ progress. See the [Particles guide](particles.md) for content authoring and scop
 Kana at `/kana` is the
 character and pronunciation reference; its section shortcuts open Practice
 with the selected script and category. Practice at `/practice` is the single
-home for exercises, grouped into Kana and Words. The first five-vowel lesson
+home for exercises, grouped into Kana, Kanji, and Words. The first five-vowel lesson
 is at `/practice/kana/vowels`, retaining device-local Kana progress. Vocabulary
 browsing lives at `/practice/words/vocabulary`, accessible from the Words
 group with hub selections preserved. Its route and word review components
@@ -303,7 +338,7 @@ belongs to `views/practice/audio`, alongside the recording cache and preload
 hook. Card pronunciations reuse chart/word assets and authored speech fallback;
 changing cards, restarting, completing, and leaving dispose playback resources.
 Stacks use the fullscreen header and existing results component, with circular
-shortcut badges and responsive controls. Session ratings remain transient.
+shortcut badges and responsive controls. Card ratings and skips are saved through the generic learning recorder; the current session state resets on replay.
 Rating or skipping retains an inert, unannounced snapshot of the departing card
 for a 320 ms discard animation while the next card settles into the stack.
 The departing content fades from right to left with a soft gradient mask before

@@ -9,6 +9,10 @@ import {
 } from "@opennihongo/content";
 import type { SearchSchemaInput } from "@tanstack/react-router";
 import {
+  normalizeKanjiSearch,
+  type KanjiPracticeSearch,
+} from "../features/kanji/session/options";
+import {
   getKanaPracticeTiles,
   type KanaPracticeSelection,
 } from "../views/practice/session/kanaPracticeSelection";
@@ -19,6 +23,7 @@ export type PracticeSearch = KanaPracticeSelection &
     length?: KanaPracticeLength;
     direction: KanaQuizDirection;
     fast: boolean;
+    kanji?: KanjiPracticeSearch;
   }>;
 
 type PracticeSearchInput = {
@@ -29,6 +34,7 @@ type PracticeSearchInput = {
   length?: unknown;
   direction?: unknown;
   fast?: unknown;
+  kanji?: unknown;
 };
 
 function choices<T extends string>(
@@ -87,5 +93,8 @@ export function normalizePracticeSearch(
         ? search.direction
         : "random",
     fast: search.fast === true,
+    ...(search.kanji === undefined
+      ? {}
+      : { kanji: normalizeKanjiSearch(search.kanji) }),
   };
 }

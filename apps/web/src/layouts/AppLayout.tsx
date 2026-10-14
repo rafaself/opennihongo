@@ -38,6 +38,7 @@ export function AppLayout() {
   });
   const activePath = pathname === "/" ? pathname : pathname.replace(/\/+$/, "");
   const lesson =
+    /^\/practice\/kanji\/(reading|matching|quiz|cards)$/.test(activePath) ||
     activePath === "/practice/kana/vowels" ||
     activePath === "/practice/kana/reading" ||
     activePath === "/practice/kana/matching" ||
@@ -70,13 +71,18 @@ export function AppLayout() {
     const setupGame = activePath.match(
       /^\/practice\/kana\/(reading|matching|quiz|cards)\/setup$/,
     )?.[1];
-    const title = setupGame
-      ? `Set up Kana ${setupGame}`
-      : activePath === "/practice/kana/cards"
-        ? "Kana cards"
-        : activePath === "/practice/words/cards"
-          ? "Word cards"
-          : pageTitle;
+    const kanjiPage = activePath.match(
+      /^\/practice\/kanji\/(reading|matching|quiz|cards)(\/setup)?$/,
+    );
+    const title = kanjiPage
+      ? `${kanjiPage[2] ? "Set up " : ""}Kanji ${kanjiPage[1] ?? ""}`
+      : setupGame
+        ? `Set up Kana ${setupGame}`
+        : activePath === "/practice/kana/cards"
+          ? "Kana cards"
+          : activePath === "/practice/words/cards"
+            ? "Word cards"
+            : pageTitle;
     const historyChapterId = activePath.match(
       /^\/writing-history\/([^/]+)$/,
     )?.[1];

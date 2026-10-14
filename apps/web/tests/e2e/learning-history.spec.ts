@@ -1,5 +1,5 @@
 import { expect, test, type Page } from "@playwright/test";
-import type { ItemProgressBaseline, LearningRecord } from "@opennihongo/core";
+import { history } from "./history";
 
 async function seedV1(page: Page, lastAnsweredAt = "2026-09-26T00:00:00.000Z") {
   await page.goto("/");
@@ -35,50 +35,6 @@ async function seedV1(page: Page, lastAnsweredAt = "2026-09-26T00:00:00.000Z") {
       db.close();
     }
   }, lastAnsweredAt);
-}
-
-async function history(page: Page) {
-  return page.evaluate(async () => {
-    const db = await new Promise<IDBDatabase>((resolve, reject) => {
-      const request = indexedDB.open("opennihongo");
-      request.onsuccess = () => {
-        resolve(request.result);
-      };
-      request.onerror = () => {
-        reject(request.error ?? new Error("Database request failed"));
-      };
-    });
-    try {
-      return await new Promise<{
-        records: LearningRecord[];
-        baselines: ItemProgressBaseline[];
-        stores: string[];
-      }>((resolve, reject) => {
-        const tx = db.transaction(
-          ["learningRecords", "itemProgressBaselines"],
-          "readonly",
-        );
-        const recordsRequest = tx
-          .objectStore("learningRecords")
-          .getAll() as IDBRequest<{ record: LearningRecord }[]>;
-        const baselinesRequest = tx
-          .objectStore("itemProgressBaselines")
-          .getAll() as IDBRequest<{ baseline: ItemProgressBaseline }[]>;
-        tx.oncomplete = () => {
-          resolve({
-            records: recordsRequest.result.map(({ record }) => record),
-            baselines: baselinesRequest.result.map(({ baseline }) => baseline),
-            stores: [...db.objectStoreNames],
-          });
-        };
-        tx.onabort = () => {
-          reject(tx.error ?? new Error("Database transaction failed"));
-        };
-      });
-    } finally {
-      db.close();
-    }
-  });
 }
 
 test("migrates vowel totals and preserves correct/incorrect records across reload and a new run", async ({

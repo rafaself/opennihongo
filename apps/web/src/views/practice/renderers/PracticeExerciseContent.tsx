@@ -13,7 +13,17 @@ import {
 } from "../session/practiceAudio";
 import { TypedAnswerExercise } from "./TypedAnswerExercise";
 
+export type ExercisePresentation = Readonly<{
+  instruction?: string;
+  inputLabel?: string;
+  supportingText?: string;
+  speechText?: string;
+  leftLabel?: string;
+  rightLabel?: string;
+}>;
+
 type PracticeExerciseContentProps = Readonly<{
+  presentation?: ExercisePresentation | undefined;
   difficulty: KanaPracticeDifficulty;
   onHintRequested: () => void;
   exercise: Exclude<Exercise, { type: "flashcard" }>;
@@ -32,6 +42,7 @@ type PracticeExerciseContentProps = Readonly<{
 }>;
 
 export function PracticeExerciseContent({
+  presentation,
   exercise,
   difficulty,
   onHintRequested,
@@ -56,7 +67,7 @@ export function PracticeExerciseContent({
       return (
         <div className="practice-session__question">
           <Text as="h1" id="practice-title" variant="display">
-            What is the corresponding sound?
+            {presentation?.instruction ?? "What is the corresponding sound?"}
           </Text>
           <TypedAnswerExercise
             audioId={audioId}
@@ -66,7 +77,11 @@ export function PracticeExerciseContent({
             autoFocus={autoFocusTypedAnswer}
             disabled={disabled}
             exercise={exercise}
-            speechText={getPracticePronunciationText(exercise)}
+            inputLabel={presentation?.inputLabel}
+            supportingText={presentation?.supportingText}
+            speechText={
+              presentation?.speechText ?? getPracticePronunciationText(exercise)
+            }
             onChange={onTypedAnswerChanged}
             onPlayAudio={onPlayAudio}
             onSubmit={onTypedAnswerSubmit}
@@ -79,6 +94,8 @@ export function PracticeExerciseContent({
       return (
         <MultipleChoiceExercise
           exercise={exercise}
+          instruction={presentation?.instruction}
+          supportingText={presentation?.supportingText}
           audioAvailable={difficulty !== "hard" || disabled}
           selectedOptionId={selectedOptionId}
           disabled={disabled}
@@ -87,7 +104,9 @@ export function PracticeExerciseContent({
           audioId={getPracticeAudioIds(exercise).find((id) =>
             loadedAudioIds.has(id),
           )}
-          speechText={getPracticePronunciationText(exercise)}
+          speechText={
+            presentation?.speechText ?? getPracticePronunciationText(exercise)
+          }
         />
       );
     case "matching":
@@ -100,10 +119,13 @@ export function PracticeExerciseContent({
             key={exercise.id}
             disabled={disabled}
             exercise={exercise}
-            leftLabel="Romaji readings"
+            leftLabel={presentation?.leftLabel ?? "Romaji readings"}
             matchedPairIds={matchedPairIds}
             onPairAttempt={onPairAttempt}
-            rightLabel={`${scriptLabel} characters and patterns`}
+            rightLabel={
+              presentation?.rightLabel ??
+              `${scriptLabel} characters and patterns`
+            }
           />
         </div>
       );

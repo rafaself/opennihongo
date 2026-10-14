@@ -1,0 +1,23 @@
+.kanji-selection__group {
+  display: grid;
+  grid-template-columns: 1.25rem minmax(0, 1fr);
+  align-items: center;
+  gap: 0.65rem;
+  padding-top: 0.75rem;
+}
+.kanji-selection small {
+  text-align: center;
+  overflow-wrap: anywhere;
+}
+.kanji-setup .practice-setup__summary-art,
+.practice-hub__art--kanji {
+  font-size: clamp(1.1rem, 2.5vw, 1.75rem);
+}
+.kanji-setup .practice-setup__summary-art {
+  text-align: center;
+  overflow-wrap: anywhere;
+}
+.kanji-session .kana-quiz__option {
+  font-size: clamp(1.125rem, 3vw, 1.5rem);
+  padding: 1.75rem 1rem 1rem;
+}

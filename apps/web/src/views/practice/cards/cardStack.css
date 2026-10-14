@@ -205,3 +205,6 @@
 .card-stack .practice-session__body {
   overflow-x: hidden;
 }
+.card-stack__supporting {
+  white-space: pre-line;
+}

@@ -1,13 +1,45 @@
 import {
   kanaCharacterCharts,
+  type KanjiId,
   type KanaChartSectionId,
   type KanaChartScript,
 } from "@opennihongo/content";
 import type { KanaAudioId } from "@opennihongo/core";
 
-export type AudioAssetId = KanaAudioId;
+export type AudioAssetId = KanaAudioId | KanjiId;
 
 export const audioManifest = {
+  "kanji.character.u4e00": "./generated/kanji.character.u4e00.opus",
+  "kanji.character.u4e8c": "./generated/kanji.character.u4e8c.opus",
+  "kanji.character.u4e09": "./generated/kanji.character.u4e09.opus",
+  "kanji.character.u56db": "./generated/kanji.character.u56db.opus",
+  "kanji.character.u4e94": "./generated/kanji.character.u4e94.opus",
+  "kanji.character.u516d": "./generated/kanji.character.u516d.opus",
+  "kanji.character.u4e03": "./generated/kanji.character.u4e03.opus",
+  "kanji.character.u516b": "./generated/kanji.character.u516b.opus",
+  "kanji.character.u4e5d": "./generated/kanji.character.u4e5d.opus",
+  "kanji.character.u5341": "./generated/kanji.character.u5341.opus",
+  "kanji.character.u65e5": "./generated/kanji.character.u65e5.opus",
+  "kanji.character.u6708": "./generated/kanji.character.u6708.opus",
+  "kanji.character.u706b": "./generated/kanji.character.u706b.opus",
+  "kanji.character.u6c34": "./generated/kanji.character.u6c34.opus",
+  "kanji.character.u6728": "./generated/kanji.character.u6728.opus",
+  "kanji.character.u91d1": "./generated/kanji.character.u91d1.opus",
+  "kanji.character.u571f": "./generated/kanji.character.u571f.opus",
+  "kanji.character.u5c71": "./generated/kanji.character.u5c71.opus",
+  "kanji.character.u5ddd": "./generated/kanji.character.u5ddd.opus",
+  "kanji.character.u7530": "./generated/kanji.character.u7530.opus",
+  "kanji.character.u4eba": "./generated/kanji.character.u4eba.opus",
+  "kanji.character.u53e3": "./generated/kanji.character.u53e3.opus",
+  "kanji.character.u76ee": "./generated/kanji.character.u76ee.opus",
+  "kanji.character.u8033": "./generated/kanji.character.u8033.opus",
+  "kanji.character.u624b": "./generated/kanji.character.u624b.opus",
+  "kanji.character.u8db3": "./generated/kanji.character.u8db3.opus",
+  "kanji.character.u5927": "./generated/kanji.character.u5927.opus",
+  "kanji.character.u5c0f": "./generated/kanji.character.u5c0f.opus",
+  "kanji.character.u4e0a": "./generated/kanji.character.u4e0a.opus",
+  "kanji.character.u4e0b": "./generated/kanji.character.u4e0b.opus",
+
   "kana.hiragana.a": "./generated/kana.hiragana.a.opus",
   "kana.hiragana.chi": "./generated/kana.hiragana.chi.opus",
   "kana.hiragana.e": "./generated/kana.hiragana.e.opus",
@@ -232,7 +264,7 @@ export function getAudioAsset(id: string): string | undefined {
     return undefined;
   }
 
-  return generatedAudioUrls[audioManifest[id as AudioAssetId]];
+  return generatedAudioUrls[audioManifest[id as keyof typeof audioManifest]];
 }
 
 export function getKanaChartAudioAsset(

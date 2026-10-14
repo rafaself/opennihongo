@@ -12,6 +12,20 @@ export {
   katakanaSyllabary,
 } from "./kanaSyllabary";
 export { kanaBeginnerWords } from "./kanaWords";
+export {
+  beginnerKanji,
+  kanjiCollections,
+  kanjiThemes,
+  type KanjiCharacterContent,
+  type KanjiThemeId,
+  type KanjiId,
+} from "./kanji/content";
+export {
+  kanjiPracticeGames,
+  kanjiPracticeProfiles,
+  type KanjiPracticeGame,
+  type KanjiQuizFocus,
+} from "./kanji/practice";
 export { kanaCharacterCharts } from "./kanaChart";
 export {
   kanaPracticeSessionProfiles,

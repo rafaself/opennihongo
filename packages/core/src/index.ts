@@ -1,4 +1,5 @@
 export { normalizeKanaAnswer } from "./kana/index";
+export { normalizeJapaneseReading } from "./kanji/reading";
 export type { KanaAudioId, KanaId, KanaWordId } from "./kana/index";
 export type {
   ExerciseId,

@@ -1,9 +1,10 @@
-import { kanaPracticeGames } from "@opennihongo/content";
+import { kanaPracticeGames, kanjiPracticeGames } from "@opennihongo/content";
 import { Card } from "@opennihongo/ui";
 import { Link, useSearch } from "@tanstack/react-router";
 import { CardStackGameCard } from "../../views/practice/cards/CardStackGameCard";
 import { getWordCards } from "../../views/practice/cards/cardStackContent";
 import "./PracticePage.css";
+import "../../features/kanji/kanji.css";
 
 export function PracticePage() {
   const search = useSearch({ from: "/practice" });
@@ -64,6 +65,45 @@ export function PracticePage() {
                 className="ns-button practice-hub__play"
                 data-variant="primary"
                 to="/practice/kana/$game/setup"
+                params={{ game }}
+                search={search}
+              >
+                Set up {details.title}
+              </Link>
+            </Card>
+          ))}
+        </div>
+      </section>
+      <section
+        aria-labelledby="practice-kanji-title"
+        className="practice-hub__section"
+      >
+        <header className="practice-hub__section-header">
+          <h2 id="practice-kanji-title">Kanji</h2>
+          <p>
+            Build confidence with 30 beginner Kanji, their meanings, and
+            readings in words.
+          </p>
+        </header>
+        <div className="practice-hub__games">
+          {Object.entries(kanjiPracticeGames).map(([game, details]) => (
+            <Card as="article" className="practice-hub__game" key={game}>
+              <span
+                aria-hidden="true"
+                className={`practice-hub__art practice-hub__art--kanji practice-hub__art--${game}`}
+                lang="ja"
+              >
+                {details.illustration}
+              </span>
+              <h3>{details.title}</h3>
+              <p>{details.description}</p>
+              <p className="practice-hub__eyebrow">
+                Numbers · Nature · People and basics
+              </p>
+              <Link
+                className="ns-button practice-hub__play"
+                data-variant="primary"
+                to="/practice/kanji/$game/setup"
                 params={{ game }}
                 search={search}
               >

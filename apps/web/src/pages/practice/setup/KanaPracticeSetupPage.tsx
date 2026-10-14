@@ -9,7 +9,7 @@ import { NotFoundPage } from "../../NotFoundPage";
 import { KanaCharacterSelection } from "./KanaCharacterSelection";
 import { KanaSetupOptions, type KanaSetupChange } from "./KanaSetupOptions";
 import { KanaSetupSummary } from "./KanaSetupSummary";
-import "./kanaPracticeSetup.css";
+import "../../../views/practice/layout/practiceSetup.css";
 
 function isGame(value: string): value is KanaPracticeGame {
   return (
@@ -32,20 +32,22 @@ function KanaSetup({ game }: { game: KanaPracticeGame }) {
     void navigate({ search: change, replace: true, resetScroll: false });
   };
   return (
-    <section className="kana-setup" aria-labelledby="kana-setup-title">
-      <header className="kana-setup__header">
-        <Link to="/practice" search={search} className="kana-setup__back">
+    <section className="practice-setup" aria-labelledby="practice-setup-title">
+      <header className="practice-setup__header">
+        <Link to="/practice" search={search} className="practice-setup__back">
           ← Back to Practice
         </Link>
         <p className="practice-hub__eyebrow">Your practice, your pace</p>
-        <h1 id="kana-setup-title">Set up {kanaPracticeGames[game].title}</h1>
+        <h1 id="practice-setup-title">
+          Set up {kanaPracticeGames[game].title}
+        </h1>
         <p>
           {kanaPracticeGames[game].description} Choose what you want to work on
           today.
         </p>
       </header>
-      <div className="kana-setup__layout">
-        <div className="kana-setup__form">
+      <div className="practice-setup__layout">
+        <div className="practice-setup__form">
           <KanaSetupOptions game={game} search={search} onChange={onChange} />
           <KanaCharacterSelection search={search} onChange={onChange} />
         </div>

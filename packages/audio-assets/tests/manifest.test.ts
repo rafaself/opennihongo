@@ -1,6 +1,7 @@
 import { existsSync, readFileSync } from "node:fs";
 import {
   kanaCharacterCharts,
+  beginnerKanji,
   hiraganaSyllabary,
   kanaBeginnerWords,
   katakanaSyllabary,
@@ -15,6 +16,11 @@ import {
 
 describe("audio manifest", () => {
   const content = [
+    ...beginnerKanji.map(({ example }) => ({
+      id: example.pronunciation.audioId,
+      text: example.text,
+      reading: example.pronunciation.text,
+    })),
     ...hiraganaSyllabary.map(({ id, glyph }) => ({
       id,
       text: glyph,
@@ -89,7 +95,9 @@ describe("audio manifest", () => {
     expect(Object.keys(audioManifest).sort()).toEqual([...audioIds].sort());
 
     for (const id of audioIds) {
-      expect(audioManifest[id]).toBe(`./generated/${id}.opus`);
+      expect(audioManifest[id as keyof typeof audioManifest]).toBe(
+        `./generated/${id}.opus`,
+      );
     }
   });
 
@@ -186,7 +194,20 @@ describe("audio manifest", () => {
       ),
     ) as { id: string; text: string; reading: string }[];
 
-    expect(generatorInput).toEqual(content.slice(0, 92));
+    expect(generatorInput).toEqual(content.slice(30, 122));
+  });
+
+  it("keeps Kanji synthesis input aligned with contextual readings", () => {
+    const input = JSON.parse(
+      readFileSync(
+        new URL(
+          "../../../tools/audio-generator/inputs/kanji-beginner.json",
+          import.meta.url,
+        ),
+        "utf-8",
+      ),
+    ) as { id: string; text: string; reading: string }[];
+    expect(input).toEqual(content.slice(0, 30));
   });
 
   it("keeps the chart voice input aligned with every Hiragana chart tile", () => {

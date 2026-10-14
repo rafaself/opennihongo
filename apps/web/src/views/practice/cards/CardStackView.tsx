@@ -217,7 +217,7 @@ export function CardStackView({
                             audioId={audioIds.find((id) =>
                               audio.loadedAudioIds.has(id),
                             )}
-                            text={card.front.text}
+                            text={source.pronunciationLabel ?? card.front.text}
                             speechText={source.pronunciationText}
                             onPlay={audio.playAudio}
                           />

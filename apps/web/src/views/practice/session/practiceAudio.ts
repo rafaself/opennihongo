@@ -2,7 +2,7 @@ import {
   getAudioAsset,
   getKanaChartAudioAsset,
 } from "@opennihongo/audio-assets";
-import { kanaCharacterCharts } from "@opennihongo/content";
+import { beginnerKanji, kanaCharacterCharts } from "@opennihongo/content";
 import type {
   Exercise,
   LearningItemId,
@@ -21,6 +21,8 @@ const pronunciationById = new Map(
     ),
   ),
 );
+for (const item of beginnerKanji)
+  pronunciationById.set(item.id, item.example.pronunciation.text);
 
 export function getPracticeAudioAsset(id: LearningItemId): string | undefined {
   return getAudioAsset(id) ?? getKanaChartAudioAsset(id);

@@ -1,3 +1,9 @@
+import { KanjiSetupPage } from "../pages/practice/kanji/KanjiSetupPage";
+import { KanjiPracticePage } from "../pages/practice/kanji/KanjiPracticePage";
+import {
+  getKanjiSummary,
+  normalizeKanjiSearch,
+} from "../features/kanji/session/options";
 import {
   getParticleLesson,
   getWritingHistoryChapter,
@@ -194,6 +200,62 @@ const wordMatchingRoute = createRoute({
   component: WordsPracticeView,
 });
 
+const kanjiSetupRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/practice/kanji/$game/setup",
+  validateSearch: validatePracticeSearch,
+  component: KanjiSetupPage,
+});
+function ensureKanjiSession(
+  game: "reading" | "matching" | "quiz" | "cards",
+  search: PracticeSearch,
+) {
+  if (!getKanjiSummary(game, normalizeKanjiSearch(search.kanji)).canStart)
+    redirect({
+      throw: true,
+      to: "/practice/kanji/$game/setup",
+      params: { game },
+      search,
+      replace: true,
+    });
+}
+const kanjiReadingRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/practice/kanji/reading",
+  validateSearch: validatePracticeSearch,
+  beforeLoad: ({ search }) => {
+    ensureKanjiSession("reading", search);
+  },
+  component: () => <KanjiPracticePage game="reading" />,
+});
+const kanjiMatchingRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/practice/kanji/matching",
+  validateSearch: validatePracticeSearch,
+  beforeLoad: ({ search }) => {
+    ensureKanjiSession("matching", search);
+  },
+  component: () => <KanjiPracticePage game="matching" />,
+});
+const kanjiQuizRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/practice/kanji/quiz",
+  validateSearch: validatePracticeSearch,
+  beforeLoad: ({ search }) => {
+    ensureKanjiSession("quiz", search);
+  },
+  component: () => <KanjiPracticePage game="quiz" />,
+});
+const kanjiCardsRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/practice/kanji/cards",
+  validateSearch: validatePracticeSearch,
+  beforeLoad: ({ search }) => {
+    ensureKanjiSession("cards", search);
+  },
+  component: () => <KanjiPracticePage game="cards" />,
+});
+
 const progressRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: appSections.progress.path,
@@ -243,6 +305,11 @@ const routeTree = rootRoute.addChildren([
   wordMatchingRoute,
   kanaCardsRoute,
   wordCardsRoute,
+  kanjiSetupRoute,
+  kanjiReadingRoute,
+  kanjiMatchingRoute,
+  kanjiQuizRoute,
+  kanjiCardsRoute,
   progressRoute,
   questsRoute,
   libraryRoute,

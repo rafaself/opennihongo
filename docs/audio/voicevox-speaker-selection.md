@@ -32,7 +32,8 @@ Keep the credit with the audio wherever the application presents its audio and l
 
 ## Production status
 
-The canonical pronunciation catalog and word audio continue to use 女声1 /
+The canonical pronunciation catalog, beginner word audio, and 30 Kanji
+example-word recordings use 女声1 /
 ノーマル (10005), configured in [voice.json](../../tools/audio-generator/voice.json).
 Every tile in the Hiragana chart uses VOICEVOX Nemo 男声2 / ノーマル (10000)
 audio. The Katakana chart reuses the corresponding clips, including matching

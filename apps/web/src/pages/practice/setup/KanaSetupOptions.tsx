@@ -40,7 +40,10 @@ export function KanaSetupOptions({
 }) {
   return (
     <>
-      <section className="kana-setup__panel" aria-labelledby="difficulty-title">
+      <section
+        className="practice-setup__panel"
+        aria-labelledby="difficulty-title"
+      >
         <h2 id="difficulty-title">Choose your challenge</h2>
         <p>
           Difficulty changes the help and choices, while you choose the
@@ -48,7 +51,7 @@ export function KanaSetupOptions({
         </p>
         <RadioGroup
           aria-labelledby="difficulty-title"
-          className="kana-setup__difficulty"
+          className="practice-setup__difficulty"
           value={search.difficulty}
           onValueChange={(difficulty) => {
             if (
@@ -70,7 +73,7 @@ export function KanaSetupOptions({
               <strong>{preset.label}</strong>
               <span
                 id={`difficulty-${key}`}
-                className="kana-setup__option-description"
+                className="practice-setup__option-description"
               >
                 {difficultyDescription(
                   game,
@@ -81,12 +84,12 @@ export function KanaSetupOptions({
           ))}
         </RadioGroup>
       </section>
-      <section className="kana-setup__panel" aria-labelledby="length-title">
+      <section className="practice-setup__panel" aria-labelledby="length-title">
         <h2 id="length-title">Session length</h2>
         <p>Smaller selections use their available characters.</p>
         <RadioGroup
           aria-labelledby="length-title"
-          className="kana-setup__length"
+          className="practice-setup__length"
           value={String(search.length ?? kanaPracticeGames[game].defaultLength)}
           onValueChange={(value) => {
             const length = kanaPracticeLengths.find(
@@ -105,13 +108,13 @@ export function KanaSetupOptions({
       </section>
       {game === "quiz" && (
         <section
-          className="kana-setup__panel"
+          className="practice-setup__panel"
           aria-labelledby="quiz-options-title"
         >
           <h2 id="quiz-options-title">Quiz options</h2>
           <RadioGroup
             aria-label="Question direction"
-            className="kana-setup__directions"
+            className="practice-setup__directions"
             value={search.direction}
             onValueChange={(direction) => {
               if (
@@ -132,7 +135,7 @@ export function KanaSetupOptions({
               Romaji → Character
             </Radio>
           </RadioGroup>
-          <div className="kana-setup__fast">
+          <div className="practice-setup__fast">
             <div>
               <label htmlFor="quiz-fast">Fast mode</label>
               <p>Check each choice immediately and move on after one second.</p>

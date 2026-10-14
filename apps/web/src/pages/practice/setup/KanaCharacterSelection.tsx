@@ -21,18 +21,21 @@ export function KanaCharacterSelection({
     categories: search.categories,
   });
   return (
-    <section className="kana-setup__panel" aria-labelledby="characters-title">
+    <section
+      className="practice-setup__panel"
+      aria-labelledby="characters-title"
+    >
       <h2 id="characters-title">Choose your characters</h2>
       <p>
         Mix writing systems and groups, or focus on the characters you need.
       </p>
-      <fieldset className="kana-setup__fieldset">
+      <fieldset className="practice-setup__fieldset">
         <legend>Writing systems</legend>
-        <div className="kana-setup__chips">
+        <div className="practice-setup__chips">
           {(["hiragana", "katakana"] as const).map((script) => (
             <label
               key={script}
-              className="kana-setup__chip"
+              className="practice-setup__chip"
               data-checked={search.scripts.includes(script)}
             >
               <Checkbox
@@ -54,13 +57,13 @@ export function KanaCharacterSelection({
           ))}
         </div>
       </fieldset>
-      <fieldset className="kana-setup__fieldset">
+      <fieldset className="practice-setup__fieldset">
         <legend>Character groups</legend>
-        <div className="kana-setup__chips">
+        <div className="practice-setup__chips">
           {kanaCharacterCharts.hiragana.sections.map((section) => (
             <label
               key={section.id}
-              className="kana-setup__chip"
+              className="practice-setup__chip"
               data-checked={search.categories.includes(section.id)}
             >
               <Checkbox
@@ -82,7 +85,7 @@ export function KanaCharacterSelection({
           ))}
         </div>
       </fieldset>
-      <div className="kana-setup__selection-actions">
+      <div className="practice-setup__selection-actions">
         <strong>
           {selected.size} of {pool.length} characters selected
         </strong>
@@ -118,18 +121,18 @@ export function KanaCharacterSelection({
               <details
                 open
                 key={`${script}:${section.id}`}
-                className="kana-setup__character-group"
+                className="practice-setup__character-group"
               >
                 <summary>
                   {scriptLabel} · {section.title}
                 </summary>
-                <div className="kana-setup__rows">
+                <div className="practice-setup__rows">
                   {section.rows.map((row, index) => {
                     const tiles = row.filter((tile) => tile !== null);
                     const ids = tiles.map(({ id }) => id);
                     const count = ids.filter((id) => selected.has(id)).length;
                     return (
-                      <div key={ids.join(":")} className="kana-setup__row">
+                      <div key={ids.join(":")} className="practice-setup__row">
                         <Checkbox
                           aria-label={`Select ${scriptLabel} ${section.title} row ${String(index + 1)}`}
                           checked={count === ids.length}
@@ -141,14 +144,14 @@ export function KanaCharacterSelection({
                             );
                           }}
                         />
-                        <div className="kana-setup__tiles">
+                        <div className="practice-setup__tiles">
                           {row.map((tile, column) =>
                             tile === null ? (
                               <span key={`empty:${String(column)}`} />
                             ) : (
                               <label
                                 key={tile.id}
-                                className="kana-setup__tile"
+                                className="practice-setup__tile"
                                 data-checked={selected.has(tile.id)}
                               >
                                 <Checkbox

@@ -4,7 +4,7 @@ import type { KanaPracticeSelection } from "../session/kanaPracticeSelection";
 import { getKanaPracticeTiles } from "../session/kanaPracticeContent";
 
 export type CardStackItem = FlashcardSourceItem &
-  Readonly<{ pronunciationText?: string }>;
+  Readonly<{ pronunciationText?: string; pronunciationLabel?: string }>;
 
 export function getKanaCards(
   selection: KanaPracticeSelection,

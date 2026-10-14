@@ -7,6 +7,8 @@ import { Input, Surface, Text } from "@opennihongo/ui";
 import { PronunciationButton } from "../audio/PronunciationButton";
 
 type TypedAnswerExerciseProps = Readonly<{
+  inputLabel?: string | undefined;
+  supportingText?: string | undefined;
   exercise: TypedAnswerExerciseModel;
   speechText: string;
   value: string;
@@ -22,6 +24,8 @@ type TypedAnswerExerciseProps = Readonly<{
 }>;
 
 export function TypedAnswerExercise({
+  inputLabel,
+  supportingText,
   exercise,
   speechText,
   value,
@@ -45,6 +49,7 @@ export function TypedAnswerExercise({
         <Text className="practice-session__prompt-kana practice-session__prompt-kana--compact">
           {exercise.prompt.text}
         </Text>
+        {supportingText && <Text color="secondary">{supportingText}</Text>}
         {audioAvailable && (
           <PronunciationButton
             audioId={audioId}
@@ -64,7 +69,9 @@ export function TypedAnswerExercise({
           />
         )}
         <Input
-          aria-label={`Type the romaji reading for ${exercise.prompt.text}`}
+          aria-label={
+            inputLabel ?? `Type the romaji reading for ${exercise.prompt.text}`
+          }
           autoFocus={autoFocus}
           autoCapitalize="none"
           autoComplete="off"
