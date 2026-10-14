@@ -34,7 +34,11 @@ it("discovers Kanji theory from Home and keeps the section active on character p
       .getAttribute("aria-current"),
   ).toBe("page");
   expect(screen.getByText("一つ", { selector: "span" })).toBeTruthy();
-  expect(screen.getByText("ひとつ")).toBeTruthy();
+  expect(
+    within(
+      screen.getByRole("region", { name: "A word to remember" }),
+    ).getByText("ひとつ"),
+  ).toBeTruthy();
   await user.click(screen.getByRole("link", { name: "Next: 二" }));
   await screen.findByRole("heading", { name: "二 · two", level: 1 });
   await user.click(screen.getByRole("link", { name: "Previous: 一" }));
@@ -92,7 +96,11 @@ it("shows the word reading with the learner's romaji preference and links to lea
     params: { kanjiId: "kanji.character.u5341" },
   });
   await screen.findByRole("heading", { name: "十 · ten", level: 1 });
-  expect(screen.getByText("とおか")).toBeTruthy();
+  expect(
+    within(
+      screen.getByRole("region", { name: "A word to remember" }),
+    ).getByText("とおか"),
+  ).toBeTruthy();
   expect(screen.getByText("tooka")).toBeTruthy();
   await user.click(screen.getByText("Learning sources"));
   expect(
@@ -112,5 +120,9 @@ it("shows the word reading with the learner's romaji preference and links to lea
   });
   await screen.findByRole("heading", { name: "一 · one", level: 1 });
   expect(screen.queryByText("hitotsu")).toBeNull();
-  expect(screen.getByText("ひとつ")).toBeTruthy();
+  expect(
+    within(
+      screen.getByRole("region", { name: "A word to remember" }),
+    ).getByText("ひとつ"),
+  ).toBeTruthy();
 });

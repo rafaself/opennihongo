@@ -6,6 +6,7 @@ import { Stack, Surface, Text } from "@opennihongo/ui";
 import { Link } from "@tanstack/react-router";
 import { readAppPreferences } from "../../../app/preferences";
 import { KanjiSources } from "./KanjiSources";
+import { KanjiCheck } from "./KanjiCheck";
 
 export function KanjiReader({ lesson }: { lesson: KanjiTheoryCharacter }) {
   const { character } = lesson;
@@ -75,6 +76,21 @@ export function KanjiReader({ lesson }: { lesson: KanjiTheoryCharacter }) {
             </Text>
           </Stack>
         </Surface>
+      </section>
+      <section aria-labelledby="kanji-checks-title">
+        <Stack gap="5">
+          <div>
+            <Text variant="heading" id="kanji-checks-title">
+              Try the idea
+            </Text>
+            <Text variant="caption" color="secondary" as="p">
+              Optional · No scores or saved results
+            </Text>
+          </div>
+          {lesson.checks.map((check) => (
+            <KanjiCheck key={check.kind} check={check} />
+          ))}
+        </Stack>
       </section>
       <Link
         className="ns-button"

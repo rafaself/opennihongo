@@ -180,6 +180,11 @@ link to the section. Character pages preserve the app shell, romaji preference,
 previous/next navigation, and a link to Reading setup with that character selected.
 Unknown character IDs use the not-found page. References link to learning sources
 and treat reading lists as common examples rather than universal pronunciation rules.
+Each reference offers two optional checks with explained meaning and word-reading
+choices. Answers and retries are local to the page, reset on character navigation,
+and do not create scored learning records. Retry returns keyboard focus to a choice;
+reading choices use Japanese language attributes. Practice remains the place for
+saved learning results.
 
 Practice includes Reading, Matching, Quiz, and Cards for 30 authored beginner
 Kanji. `content/kanji` owns three themes, stable character IDs, English meanings,

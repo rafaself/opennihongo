@@ -95,6 +95,30 @@
   justify-content: space-between;
   gap: 1rem;
 }
+.kanji-theory__choices {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+.kanji-theory__choices button {
+  min-width: min(100%, 7rem);
+  max-width: 100%;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+.kanji-theory__choices button[aria-pressed="true"] {
+  background: var(--ns-color-selection);
+  border-color: var(--ns-color-brand-text);
+}
+.kanji-theory__feedback {
+  padding: 1rem;
+  border-radius: var(--ns-radius-lg);
+  background: var(--ns-color-selection);
+  border-inline-start: 3px solid var(--ns-color-brand-text);
+}
+.kanji-theory__feedback p {
+  margin-top: 0.5rem;
+}
 .kanji-theory__card:focus-visible,
 .kanji-theory__sources summary:focus-visible {
   outline: var(--ns-border-width-focus) solid var(--ns-color-brand-text);
