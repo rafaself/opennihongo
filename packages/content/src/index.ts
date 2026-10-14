@@ -26,6 +26,14 @@ export {
   type KanjiPracticeGame,
   type KanjiQuizFocus,
 } from "./kanji/practice";
+export {
+  kanjiTheoryCharacters,
+  kanjiTheoryIntroduction,
+  kanjiTheorySources,
+  getKanjiTheoryCharacter,
+  type KanjiTheoryCharacter,
+  type KanjiTheoryCheck,
+} from "./kanji/theory";
 export { kanaCharacterCharts } from "./kanaChart";
 export {
   kanaPracticeSessionProfiles,

@@ -35,3 +35,19 @@ credit in Acknowledgements and each generated sidecar.
 For content changes, update the example, accepted variants, synthesis input,
 recording, and reference tests together. Use the existing generator's validation
 and intentional replacement workflow when an audio fingerprint changes.
+
+## Theory references and checks
+
+`kanji/theory.ts` composes a reference for each starter character from the same
+canonical collection used by Practice. Its two optional checks connect the glyph
+with its meaning and the contextual word with its complete Kana reading. Each
+check has one correct choice and two distinct distractors from the same theme,
+with an explanation for every choice. Keep this content aligned when changing
+character meanings or word readings.
+
+The introduction follows the Japan Foundation's
+[Marugoto vocabulary approach](https://marugoto.jpf.go.jp/en/teacher/resource/pre_intermediate/):
+learn Kanji through complete words. The common on/kun lists are reference
+examples, not exhaustive lists or universal pronunciation rules. The original
+English explanations and prompts are authored for OpenNihongo; external
+reference material is linked, not bundled.
