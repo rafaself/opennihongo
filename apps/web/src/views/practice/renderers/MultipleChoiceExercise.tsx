@@ -15,6 +15,7 @@ type Props = {
   selectedOptionId: string | null;
   disabled: boolean;
   onSelect: (id: string) => void;
+  onAudioRequested?: (() => void) | undefined;
   onPlayAudio: (id: LearningItemId) => void;
   audioId?: LearningItemId | undefined;
   speechText: string;
@@ -30,6 +31,7 @@ export function MultipleChoiceExercise({
   onSelect,
   audioId,
   speechText,
+  onAudioRequested,
   onPlayAudio,
   audioAvailable,
 }: Props) {
@@ -89,6 +91,7 @@ export function MultipleChoiceExercise({
             audioId={audioId}
             text={exercise.prompt.text}
             speechText={speechText}
+            onRequested={onAudioRequested}
             onPlay={onPlayAudio}
           />
         )}

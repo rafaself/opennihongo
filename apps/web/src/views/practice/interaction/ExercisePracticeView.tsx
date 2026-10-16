@@ -1,47 +1,27 @@
-import { usePracticeKeyboard } from "./usePracticeKeyboard";
-import { useLearningRecorder } from "./history/useLearningRecorder";
-import { LearningSaveStatus } from "./history/LearningSaveStatus";
-import {
-  evaluateTypedAnswer,
-  advanceExerciseSession,
-  createExerciseSessionState,
-  recordExerciseSessionResult,
-  type ExerciseResult,
-  type MatchingPairId,
-} from "@opennihongo/core";
+import { ReadingFeedback } from "../../../features/practice-review/ReadingFeedback";
+import { ReadingResults } from "../../../features/practice-review/ReadingResults";
 import { Button } from "@opennihongo/ui";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { PracticeHeader } from "../layout/PracticeHeader";
-import { PracticeFeedback } from "../feedback/PracticeFeedback";
-import { PracticeExerciseContent } from "../renderers/PracticeExerciseContent";
-import { PracticeResults } from "../results/PracticeResults";
 import {
   countExerciseItems,
-  createMatchingResult,
-  createSingleAnswerResult,
   scoreExerciseResults,
+  type Exercise,
 } from "@opennihongo/core";
-import type { Exercise, ExerciseSession } from "@opennihongo/core";
 import type { KanaPracticeDifficulty } from "@opennihongo/content";
 import type { PracticeSearch } from "../../../app/practiceSearch";
-import type { ExercisePresentation } from "../renderers/PracticeExerciseContent";
-
-export type GradedPracticeSession = Omit<ExerciseSession, "exercises"> &
-  Readonly<{ exercises: readonly Exclude<Exercise, { type: "flashcard" }>[] }>;
-import { getPracticeAudioIds } from "../session/practiceAudio";
-import { useExerciseAudio } from "../audio/useExerciseAudio";
+import { PracticeHeader } from "../layout/PracticeHeader";
+import { PracticeFeedback } from "../feedback/PracticeFeedback";
+import {
+  PracticeExerciseContent,
+  type ExercisePresentation,
+} from "../renderers/PracticeExerciseContent";
+import { PracticeResults } from "../results/PracticeResults";
+import { LearningSaveStatus } from "./history/LearningSaveStatus";
+import {
+  usePracticeSession,
+  type GradedPracticeSession,
+} from "./usePracticeSession";
+export type { GradedPracticeSession } from "./usePracticeSession";
 import "../practice.css";
-
-type Practice = Readonly<{
-  revision: number;
-  session: GradedPracticeSession;
-}>;
-
-type Feedback = Readonly<{
-  result: ExerciseResult;
-  message: string;
-}>;
-
 export function ExercisePracticeView({
   className,
   reading,
@@ -67,155 +47,34 @@ export function ExercisePracticeView({
   ) => ExercisePresentation;
   onChangeOptions?: (() => void) | undefined;
 }) {
-  const [hintsUsed, setHintsUsed] = useState(0);
-  const recorder = useLearningRecorder();
-  const [practice, setPractice] = useState<Practice>(() => ({
-    revision: 0,
-    session: createSession(0, crypto.randomUUID()),
-  }));
-  const [state, setState] = useState(() =>
-    createExerciseSessionState(practice.session),
-  );
-  const { index, results } = state;
-  const [selectedOptionId, setSelectedOptionId] = useState<string | null>(null);
-  const submitted = useRef(false);
-  const [typedAnswer, setTypedAnswer] = useState("");
-  const [matchedPairIds, setMatchedPairIds] = useState<MatchingPairId[]>([]);
-  const [matchingAttempts, setMatchingAttempts] = useState(0);
-  const [feedback, setFeedback] = useState<Feedback | null>(null);
-
-  const exercises = practice.session.exercises;
-  const complete = index >= exercises.length;
-  const exercise = complete ? undefined : exercises[index];
-  const exerciseAudioIds = useMemo(
-    () => getPracticeAudioIds(exercise),
-    [exercise],
-  );
-  const exerciseAudio = useExerciseAudio(
-    exerciseAudioIds,
-    `${practice.session.id}:${exercise?.id ?? "complete"}`,
-    !complete,
-  );
-  const readyToCheck =
-    exercise?.type === "typed-answer"
-      ? typedAnswer.trim() !== ""
-      : exercise?.type === "matching"
-        ? matchedPairIds.length === exercise.config.pairCount
-        : exercise?.type === "multiple-choice" && selectedOptionId !== null;
-  const completedItems =
-    countExerciseItems(exercises.slice(0, index)) +
-    (feedback && exercise ? countExerciseItems([exercise]) : 0);
-  const progress = Math.round(
-    (completedItems / countExerciseItems(exercises)) * 100,
-  );
-
-  useEffect(() => {
-    if (complete) {
-      document.getElementById("practice-complete-title")?.focus();
-    }
-  }, [complete]);
-
-  const resetExerciseState = useCallback(() => {
-    submitted.current = false;
-    setSelectedOptionId(null);
-    setTypedAnswer("");
-    setMatchedPairIds([]);
-    setMatchingAttempts(0);
-    setFeedback(null);
-  }, []);
-
-  const continuePractice = useCallback(() => {
-    setState(advanceExerciseSession);
-    resetExerciseState();
-  }, [resetExerciseState]);
-
-  function checkAnswer(choiceId = selectedOptionId) {
-    if (!exercise || submitted.current || feedback) {
-      return;
-    }
-
-    if (exercise.type === "multiple-choice") {
-      if (!exercise.options.some(({ id }) => id === choiceId)) return;
-      submitted.current = true;
-      const correct = choiceId === exercise.correctOptionId;
-      const result = createSingleAnswerResult(exercise, correct, 1);
-      void recorder.recordResult(practice.session, result);
-      setState((current) => recordExerciseSessionResult(current, result));
-      setFeedback({
-        result,
-        message: correct
-          ? "Your answer is correct."
-          : `The correct answer is ${exercise.options.find(({ id }) => id === exercise.correctOptionId)?.text ?? ""}.`,
-      });
-      return;
-    }
-    submitted.current = true;
-    if (exercise.type === "typed-answer") {
-      const result = evaluateTypedAnswer(
-        exercise,
-        typedAnswer,
-        normalizeAnswer,
-      );
-      const correct = result.outcome === "correct";
-      void recorder.recordResult(practice.session, result);
-      setState((current) => recordExerciseSessionResult(current, result));
-      setFeedback({
-        result,
-        message: correct
-          ? "Your reading is correct."
-          : `The correct reading is ${exercise.acceptedAnswers[0] ?? ""}.`,
-      });
-      return;
-    }
-
-    const result = createMatchingResult(
-      exercise,
-      matchedPairIds,
-      matchingAttempts,
-    );
-    void recorder.recordResult(practice.session, result);
-    setState((current) => recordExerciseSessionResult(current, result));
-    setFeedback({ result, message: "All pairs matched." });
-  }
-
-  function skipExercise() {
-    if (!exercise || submitted.current || feedback) {
-      return;
-    }
-
-    const result =
-      exercise.type !== "matching"
-        ? createSingleAnswerResult(exercise, false, 0)
-        : createMatchingResult(exercise, matchedPairIds, matchingAttempts);
-    void recorder.recordResult(practice.session, result);
-    setState((current) =>
-      advanceExerciseSession(recordExerciseSessionResult(current, result)),
-    );
-    resetExerciseState();
-  }
-
-  function restartPractice() {
-    const revision = practice.revision + 1;
-    const session = createSession(revision, crypto.randomUUID());
-    setPractice({ revision, session });
-    setState(createExerciseSessionState(session));
-    setHintsUsed(0);
-    resetExerciseState();
-  }
-
-  usePracticeKeyboard({
+  const {
+    hintsUsed,
+    requestHelp,
+    completions,
+    recorder,
+    practice,
+    index,
+    results,
+    selectedOptionId,
+    submitted,
+    typedAnswer,
+    setTypedAnswer,
+    matchedPairIds,
+    setMatchedPairIds,
+    setMatchingAttempts,
+    feedback,
+    exercises,
+    complete,
     exercise,
-    hasFeedback: feedback !== null,
+    exerciseAudio,
     readyToCheck,
+    progress,
+    continuePractice,
     checkAnswer,
-  });
-  useEffect(() => {
-    if (!fast || feedback === null) return;
-    const timer = window.setTimeout(continuePractice, 1000);
-    return () => {
-      window.clearTimeout(timer);
-    };
-  }, [fast, feedback, continuePractice]);
+    skipExercise,
+    restartPractice,
+    setSelectedOptionId,
+  } = usePracticeSession({ createSession, normalizeAnswer, fast });
 
   return (
     <section
@@ -229,7 +88,7 @@ export function ExercisePracticeView({
             ? "practice-title"
             : undefined
       }
-      className={`practice-session${className ? ` ${className}` : ""}`}
+      className={`practice-session${reading ? " practice-session--reading" : ""}${className ? ` ${className}` : ""}`}
     >
       <PracticeHeader
         progress={progress}
@@ -243,10 +102,23 @@ export function ExercisePracticeView({
           score={scoreExerciseResults(results)}
           total={countExerciseItems(exercises)}
           hintsUsed={difficulty === "easy" && reading ? hintsUsed : undefined}
-          onRestart={restartPractice}
+          onRestart={() => {
+            restartPractice();
+          }}
           onChangeOptions={onChangeOptions}
           search={search}
-        />
+        >
+          {reading && (
+            <ReadingResults
+              key={practice.session.id}
+              completions={completions}
+              onRetry={restartPractice}
+              savedReviewAvailable={
+                !recorder.saving && recorder.failedCount === 0
+              }
+            />
+          )}
+        </PracticeResults>
       ) : !exerciseAudio.isReady ? (
         <div className="practice-session__body">
           <div className="practice-session__audio-loading" role="status">
@@ -259,7 +131,10 @@ export function ExercisePracticeView({
             <PracticeExerciseContent
               difficulty={difficulty}
               onHintRequested={() => {
-                setHintsUsed((count) => count + 1);
+                requestHelp("hint");
+              }}
+              onAudioRequested={() => {
+                requestHelp("audio");
               }}
               selectedOptionId={selectedOptionId}
               onOptionSelected={(id) => {
@@ -294,7 +169,9 @@ export function ExercisePracticeView({
               typedAnswer={typedAnswer}
             />
           </div>
-          <div className="practice-session__action-slot">
+          <div
+            className={`practice-session__action-slot${reading && feedback ? " practice-session__action-slot--reading-feedback" : ""}`}
+          >
             {feedback ? (
               <PracticeFeedback
                 automatic={fast}
@@ -302,7 +179,11 @@ export function ExercisePracticeView({
                 finalExercise={index === exercises.length - 1}
                 message={feedback.message}
                 onContinue={continuePractice}
-              />
+              >
+                {reading && exercise.type === "typed-answer" && (
+                  <ReadingFeedback exercise={exercise} />
+                )}
+              </PracticeFeedback>
             ) : (
               <footer className="practice-session__actions">
                 <div className="practice-session__actions-inner">

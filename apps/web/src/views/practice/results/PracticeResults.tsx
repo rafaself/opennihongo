@@ -1,9 +1,11 @@
+import type { ReactNode } from "react";
 import { Link } from "@tanstack/react-router";
 import { Button, Text } from "@opennihongo/ui";
 import "./practiceResults.css";
 import type { PracticeSearch } from "../../../app/practiceSearch";
 
 type PracticeResultsProps = {
+  children?: ReactNode;
   score: number;
   total: number;
   onRestart: () => void;
@@ -81,6 +83,7 @@ function CelebrationArt() {
 }
 
 export function PracticeResults({
+  children,
   score,
   total,
   onRestart,
@@ -128,6 +131,7 @@ export function PracticeResults({
             <strong>{accuracy}%</strong>
           </div>
         </div>
+        {children}
       </div>
       <div
         className={`practice-session__action-slot${onChangeOptions ? " practice-results__action-slot--options" : ""}`}

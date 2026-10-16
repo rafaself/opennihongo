@@ -1,5 +1,6 @@
 import type { LearningRecord } from "./types";
 import { assertLearningRecord } from "./validation";
+import { snapshotEvidence } from "./evidence";
 
 /** Snapshot once at completion; callers provide identity and time, never the UI state. */
 export function createLearningRecord(input: LearningRecord): LearningRecord {
@@ -9,6 +10,7 @@ export function createLearningRecord(input: LearningRecord): LearningRecord {
     sessionId: input.sessionId,
     profileId: input.profileId,
     occurredAt: new Date(input.occurredAt).toISOString(),
+    ...(input.evidence ? { evidence: snapshotEvidence(input.evidence) } : {}),
     result: Object.freeze({
       exerciseId: input.result.exerciseId,
       outcome: input.result.outcome,

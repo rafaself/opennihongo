@@ -228,6 +228,10 @@ it("reveals Kanji recall details and saves ratings and skips through the shared 
   await user.click(screen.getByRole("button", { name: "Skip" }));
   await screen.findByRole("heading", { name: "Practice complete!" });
   expect(save).toHaveBeenCalledTimes(2);
+  expect(save.mock.calls[0]?.[0].evidence?.items[0]?.response).toBe(
+    "self-reported",
+  );
+  expect(save.mock.calls[1]?.[0].evidence?.items[0]?.response).toBe("skipped");
   expect(screen.getByText("Remembered")).toBeTruthy();
   await user.click(screen.getByRole("button", { name: "Change options" }));
   expect(router.state.location.pathname).toBe("/practice/kanji/cards/setup");

@@ -56,19 +56,21 @@ export function AppLayout() {
     const pageTitle =
       activePath === "/acknowledgements"
         ? "Acknowledgements & licenses"
-        : activePath === "/practice/kana/vowels"
-          ? "First vowels"
-          : activePath === "/practice/words/vocabulary"
-            ? "Vocabulary"
-            : activePath === "/practice/kana/reading"
-              ? "Kana reading"
-              : activePath === "/practice/kana/matching"
-                ? "Kana matching"
-                : activePath === "/practice/kana/quiz"
-                  ? "Kana quiz"
-                  : activePath === "/practice/words/matching"
-                    ? "Word matching"
-                    : (section?.label ?? "Page not found");
+        : activePath === "/practice/review"
+          ? "Review saved readings"
+          : activePath === "/practice/kana/vowels"
+            ? "First vowels"
+            : activePath === "/practice/words/vocabulary"
+              ? "Vocabulary"
+              : activePath === "/practice/kana/reading"
+                ? "Kana reading"
+                : activePath === "/practice/kana/matching"
+                  ? "Kana matching"
+                  : activePath === "/practice/kana/quiz"
+                    ? "Kana quiz"
+                    : activePath === "/practice/words/matching"
+                      ? "Word matching"
+                      : (section?.label ?? "Page not found");
     const setupGame = activePath.match(
       /^\/practice\/kana\/(reading|matching|quiz|cards)\/setup$/,
     )?.[1];

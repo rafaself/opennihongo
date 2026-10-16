@@ -1,4 +1,5 @@
 export { normalizeKanaAnswer } from "./kana/index";
+export { selectReadingReview, type ReadingReviewItem } from "./review/reading";
 export { normalizeJapaneseReading } from "./kanji/reading";
 export type { KanaAudioId, KanaId, KanaWordId } from "./kana/index";
 export type {
@@ -84,6 +85,9 @@ export {
 } from "./progress/index";
 export type {
   LearningRecord,
+  PracticeEvidence,
+  PracticeItemEvidence,
+  PracticeAssistance,
   ItemProgressBaseline,
   ItemProgress,
 } from "./progress/index";

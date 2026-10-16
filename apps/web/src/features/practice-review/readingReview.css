@@ -1,0 +1,140 @@
+.reading-feedback {
+  display: grid;
+  gap: 0.35rem;
+  max-width: 48rem;
+}
+.reading-feedback p {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+.reading-results,
+.reading-review {
+  width: min(100%, 58rem);
+  margin: 0 auto;
+  padding: 1.5rem;
+}
+.reading-results h2,
+.reading-review h1 {
+  color: var(--ns-color-text-primary);
+}
+.reading-results ul,
+.reading-review ul {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  gap: 0.75rem;
+}
+.reading-results li,
+.reading-review li {
+  border: 1px solid var(--ns-color-border-subtle);
+  background: var(--ns-color-surface);
+  border-radius: 1rem;
+}
+.reading-results label,
+.reading-review label {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  cursor: pointer;
+  min-height: 4.5rem;
+}
+.reading-results label > span,
+.reading-review label > span {
+  display: grid;
+  gap: 0.35rem;
+}
+.reading-results input,
+.reading-review input {
+  width: 1.25rem;
+  height: 1.25rem;
+  flex-shrink: 0;
+  accent-color: var(--ns-color-action-primary);
+}
+.reading-results strong,
+.reading-review strong {
+  font-size: 1.4rem;
+}
+.reading-review__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin: 1rem 0;
+}
+.reading-review__note,
+.reading-results small,
+.reading-review small {
+  color: var(--ns-color-text-secondary);
+  line-height: 1.6;
+}
+.practice-hub__presets {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+}
+.practice-hub__presets article {
+  display: grid;
+  gap: 0.75rem;
+  padding: 1.5rem;
+  align-content: start;
+}
+.practice-hub__presets p {
+  margin: 0;
+}
+@media (max-width: 40rem) {
+  .reading-results,
+  .reading-review {
+    padding: 1rem;
+  }
+  .reading-review__actions > * {
+    width: 100%;
+  }
+}
+
+.practice-session--reading {
+  grid-template-rows: auto auto minmax(0, 1fr) auto;
+}
+.practice-session--reading > .practice-session__header {
+  grid-row: 1;
+}
+.practice-session--reading > .practice-session__save-status {
+  grid-row: 2;
+}
+.practice-session--reading > .practice-session__body,
+.practice-session--reading > .practice-results {
+  grid-row: 3;
+}
+.practice-session--reading > .practice-session__action-slot {
+  grid-row: 4;
+}
+.practice-session--reading > .practice-session__action-slot--reading-feedback {
+  height: auto;
+  max-height: 55dvh;
+  overflow-y: auto;
+}
+.practice-session__action-slot--reading-feedback .practice-feedback {
+  height: auto;
+  position: static;
+}
+.practice-session__action-slot--reading-feedback .practice-feedback__inner {
+  height: auto;
+}
+.reading-results {
+  text-align: start;
+  padding-inline: 0;
+}
+
+.reading-results h2 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin: 1rem 0 0.5rem;
+}
+.reading-review h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+.practice-results:has(.reading-results) .practice-results__art {
+  max-width: 11rem;
+}

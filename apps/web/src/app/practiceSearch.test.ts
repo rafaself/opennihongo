@@ -52,3 +52,20 @@ it("canonicalizes choices and prunes character identities outside the selected p
     normalizePracticeSearch({ characterIds: ["unknown"] }).characterIds,
   ).toEqual([]);
 });
+
+it("preserves an explicit empty review selection and normalizes reloadable item IDs", () => {
+  expect(normalizePracticeSearch({ reviewIds: [] }).reviewIds).toEqual([]);
+  expect(
+    normalizePracticeSearch({
+      reviewIds: [
+        "hiragana.basic.あ",
+        1,
+        "hiragana.basic.あ",
+        "kanji.character.u4e00",
+      ],
+    }).reviewIds,
+  ).toEqual(["hiragana.basic.あ", "kanji.character.u4e00"]);
+  expect(
+    normalizePracticeSearch({ reviewIds: "bad" }).reviewIds,
+  ).toBeUndefined();
+});

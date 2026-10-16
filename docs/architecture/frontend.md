@@ -383,3 +383,18 @@ file.
 
 Run `pnpm storybook` to work on UI components in isolation, or `pnpm ui-gallery`
 to browse the standalone component and token catalog.
+
+## Reading feedback and targeted review
+
+Kana and Kanji reading share the graded session runner. Its session hook owns
+interaction state and help requests; feature-owned reading presentation uses
+canonical chart descriptions and Kanji theory explanations. Existing evaluators
+and scoring remain authoritative. Results show per-item correctness, skips, and
+requested help and can retry an exact selected subset with a fresh session ID.
+
+`/practice/review` composes local history with the core reading-review policy.
+Selection survives reload through validated search parameters. Record envelopes
+version explicit completion evidence without rewriting historical records or
+imported totals. Flashcard ratings are self-reported, and historical assistance
+is unknown. See the [release contract and validation audit](../engineering/practice-review-release.md)
+for evidence semantics, storage compatibility, and remaining learner research.

@@ -20,6 +20,7 @@ type TypedAnswerExerciseProps = Readonly<{
   onHintRequested: () => void;
   onChange: (value: string) => void;
   onSubmit: () => void;
+  onAudioRequested?: (() => void) | undefined;
   onPlayAudio: (audioId: LearningItemId) => void;
 }>;
 
@@ -37,6 +38,7 @@ export function TypedAnswerExercise({
   onHintRequested,
   onChange,
   onSubmit,
+  onAudioRequested,
   onPlayAudio,
 }: TypedAnswerExerciseProps) {
   return (
@@ -53,6 +55,7 @@ export function TypedAnswerExercise({
         {audioAvailable && (
           <PronunciationButton
             audioId={audioId}
+            onRequested={onAudioRequested}
             onPlay={onPlayAudio}
             speechText={speechText}
             text={exercise.prompt.text}
