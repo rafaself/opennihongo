@@ -1,6 +1,7 @@
 import {
   createLearningRecord,
   type ExerciseResult,
+  type PracticeEvidence,
   type ExerciseSession,
   type LearningRecord,
 } from "@opennihongo/core";
@@ -57,6 +58,7 @@ export function useLearningRecorder() {
   function recordResult(
     session: Pick<ExerciseSession, "id" | "profileId">,
     result: ExerciseResult,
+    evidence?: PracticeEvidence,
   ): Promise<void> {
     const key = JSON.stringify([session.id, result.exerciseId]);
     let record = records.current.get(key);
@@ -67,6 +69,7 @@ export function useLearningRecorder() {
         profileId: session.profileId,
         occurredAt: new Date().toISOString(),
         result,
+        ...(evidence ? { evidence } : {}),
       });
       records.current.set(key, record);
     }

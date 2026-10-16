@@ -35,6 +35,7 @@ type PracticeExerciseContentProps = Readonly<{
   disabled: boolean;
   autoFocusTypedAnswer: boolean;
   loadedAudioIds: ReadonlySet<LearningItemId>;
+  onAudioRequested?: (() => void) | undefined;
   onPlayAudio: (audioId: LearningItemId) => void;
   onTypedAnswerChanged: (value: string) => void;
   onTypedAnswerSubmit: () => void;
@@ -54,6 +55,7 @@ export function PracticeExerciseContent({
   disabled,
   autoFocusTypedAnswer,
   loadedAudioIds,
+  onAudioRequested,
   onPlayAudio,
   onTypedAnswerChanged,
   onTypedAnswerSubmit,
@@ -83,6 +85,7 @@ export function PracticeExerciseContent({
               presentation?.speechText ?? getPracticePronunciationText(exercise)
             }
             onChange={onTypedAnswerChanged}
+            onAudioRequested={onAudioRequested}
             onPlayAudio={onPlayAudio}
             onSubmit={onTypedAnswerSubmit}
             value={typedAnswer}
@@ -100,6 +103,7 @@ export function PracticeExerciseContent({
           selectedOptionId={selectedOptionId}
           disabled={disabled}
           onSelect={onOptionSelected}
+          onAudioRequested={onAudioRequested}
           onPlayAudio={onPlayAudio}
           audioId={getPracticeAudioIds(exercise).find((id) =>
             loadedAudioIds.has(id),

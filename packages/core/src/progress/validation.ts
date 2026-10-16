@@ -1,5 +1,6 @@
 import type { ExerciseResult } from "../exercises/result";
 import type { ItemProgressBaseline, LearningRecord } from "./types";
+import { isPracticeEvidence } from "./evidence";
 
 function isObject(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null;
@@ -53,7 +54,9 @@ export function assertLearningRecord(
     !isId(value["sessionId"]) ||
     !isId(value["profileId"]) ||
     !isTimestamp(value["occurredAt"]) ||
-    !isResult(value["result"])
+    !isResult(value["result"]) ||
+    (value["evidence"] !== undefined &&
+      !isPracticeEvidence(value["evidence"], value["result"]))
   ) {
     throw new Error("Invalid learning record.");
   }

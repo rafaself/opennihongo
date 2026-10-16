@@ -31,12 +31,14 @@ function SpeakerIcon() {
 
 type PronunciationButtonProps = Readonly<{
   audioId?: LearningItemId | undefined;
+  onRequested?: (() => void) | undefined;
   text: string;
   speechText: string;
   onPlay: (audioId: LearningItemId) => void;
 }>;
 
 export function PronunciationButton({
+  onRequested,
   audioId,
   text,
   speechText,
@@ -54,6 +56,7 @@ export function PronunciationButton({
       aria-label={`Play pronunciation for ${text}`}
       className="practice-session__audio"
       onClick={() => {
+        onRequested?.();
         if (audioId) {
           onPlay(audioId);
         } else {

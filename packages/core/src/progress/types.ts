@@ -1,4 +1,5 @@
 import type { ExerciseResult } from "../exercises/result";
+import type { ExerciseType } from "../exercises/index";
 import type {
   ExerciseSessionId,
   LearningItemId,
@@ -13,6 +14,19 @@ export type LearningRecord = Readonly<{
   profileId: SessionProfileId;
   occurredAt: string;
   result: ExerciseResult;
+  evidence?: PracticeEvidence;
+}>;
+
+/** Help requested before completion; this does not assert that audio was heard. */
+export type PracticeAssistance = "none" | "hint" | "audio" | "hint-and-audio";
+export type PracticeItemEvidence = Readonly<{
+  sourceItemId: LearningItemId;
+  response: "answered" | "skipped" | "self-reported";
+  assistance: PracticeAssistance;
+}>;
+export type PracticeEvidence = Readonly<{
+  exerciseType: ExerciseType;
+  items: readonly PracticeItemEvidence[];
 }>;
 
 /** Irrecoverable historical totals imported once; not fabricated exercise history. */

@@ -23,6 +23,7 @@ export type PracticeSearch = KanaPracticeSelection &
     length?: KanaPracticeLength;
     direction: KanaQuizDirection;
     fast: boolean;
+    reviewIds?: readonly string[];
     kanji?: KanjiPracticeSearch;
   }>;
 
@@ -34,6 +35,7 @@ type PracticeSearchInput = {
   length?: unknown;
   direction?: unknown;
   fast?: unknown;
+  reviewIds?: unknown;
   kanji?: unknown;
 };
 
@@ -93,6 +95,17 @@ export function normalizePracticeSearch(
         ? search.direction
         : "random",
     fast: search.fast === true,
+    ...(Array.isArray(search.reviewIds)
+      ? {
+          reviewIds: [
+            ...new Set(
+              search.reviewIds.filter(
+                (id): id is string => typeof id === "string",
+              ),
+            ),
+          ],
+        }
+      : {}),
     ...(search.kanji === undefined
       ? {}
       : { kanji: normalizeKanjiSearch(search.kanji) }),

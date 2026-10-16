@@ -1,3 +1,4 @@
+import { PracticePresets } from "../../features/practice-review/PracticePresets";
 import { kanaPracticeGames, kanjiPracticeGames } from "@opennihongo/content";
 import { Card } from "@opennihongo/ui";
 import { Link, useSearch } from "@tanstack/react-router";
@@ -18,6 +19,7 @@ export function PracticePage() {
           time.
         </p>
       </header>
+      <PracticePresets />
       <section
         aria-labelledby="practice-kana-title"
         className="practice-hub__section"

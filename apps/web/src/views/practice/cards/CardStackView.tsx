@@ -53,6 +53,7 @@ export function CardStackView({
   }));
   const [hintsUsed, setHintsUsed] = useState(0);
   const recorder = useLearningRecorder();
+  const help = useRef({ hint: false, audio: false });
   const [index, setIndex] = useState(0);
   const [revealed, setRevealed] = useState(false);
   const [results, setResults] = useState<ExerciseResult[]>([]);
@@ -95,7 +96,21 @@ export function CardStackView({
       attempts === 0 ? "down" : remembered ? "right" : "left",
     );
     const result = createSingleAnswerResult(card, remembered, attempts);
-    void recorder.recordResult(practice.session, result);
+    void recorder.recordResult(practice.session, result, {
+      exerciseType: "flashcard",
+      items: result.sourceItemResults.map((item) => ({
+        sourceItemId: item.sourceItemId,
+        response: attempts === 0 ? "skipped" : "self-reported",
+        assistance: help.current.hint
+          ? help.current.audio
+            ? "hint-and-audio"
+            : "hint"
+          : help.current.audio
+            ? "audio"
+            : "none",
+      })),
+    });
+    help.current = { hint: false, audio: false };
     setResults((current) => [...current, result]);
     setRevealed(false);
     setIndex((current) => current + 1);
@@ -117,6 +132,7 @@ export function CardStackView({
       ),
     });
     ratedId.current = null;
+    help.current = { hint: false, audio: false };
     setIndex(0);
     setResults([]);
     setHintsUsed(0);
@@ -176,6 +192,7 @@ export function CardStackView({
                   reading={card.back.text}
                   disabled={!audio.isReady}
                   onRequested={() => {
+                    help.current.hint = true;
                     setHintsUsed((count) => count + 1);
                   }}
                 />
@@ -219,6 +236,9 @@ export function CardStackView({
                             )}
                             text={source.pronunciationLabel ?? card.front.text}
                             speechText={source.pronunciationText}
+                            onRequested={() => {
+                              help.current.audio = true;
+                            }}
                             onPlay={audio.playAudio}
                           />
                         )}

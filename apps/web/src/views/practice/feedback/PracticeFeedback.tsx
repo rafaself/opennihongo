@@ -1,8 +1,10 @@
+import type { ReactNode } from "react";
 import { Button } from "@opennihongo/ui";
 import { useEffect } from "react";
 import "./practiceFeedback.css";
 
 type PracticeFeedbackProps = {
+  children?: ReactNode;
   automatic?: boolean;
   correct: boolean;
   message: string;
@@ -11,6 +13,7 @@ type PracticeFeedbackProps = {
 };
 
 export function PracticeFeedback({
+  children,
   automatic = false,
   correct,
   message,
@@ -59,6 +62,7 @@ export function PracticeFeedback({
         >
           <strong>{correct ? "That’s right!" : "Not quite yet"}</strong>
           <span>{message}</span>
+          {children}
         </div>
         {automatic ? (
           <span>{finalExercise ? "Opening results…" : "Next question…"}</span>

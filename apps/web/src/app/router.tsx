@@ -1,3 +1,4 @@
+import { ReviewPage } from "../features/practice-review/ReviewPage";
 import { KanjiSetupPage } from "../pages/practice/kanji/KanjiSetupPage";
 import { KanjiPracticePage } from "../pages/practice/kanji/KanjiPracticePage";
 import {
@@ -148,6 +149,13 @@ const wordsPracticeRoute = createRoute({
   beforeLoad: (): void => {
     redirect({ to: "/practice/words/matching", replace: true, throw: true });
   },
+});
+
+const readingReviewRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/practice/review",
+  validateSearch: validatePracticeSearch,
+  component: ReviewPage,
 });
 
 const practiceRoute = createRoute({
@@ -327,6 +335,7 @@ const routeTree = rootRoute.addChildren([
   vocabularyRoute,
   wordsPracticeRoute,
   practiceRoute,
+  readingReviewRoute,
   kanaSetupRoute,
   kanaReadingRoute,
   kanaMatchingRoute,
