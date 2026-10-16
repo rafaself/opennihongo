@@ -111,9 +111,18 @@ export function AppLayout() {
 
   return (
     <div className={`app-shell${lesson ? " app-shell--lesson" : ""}`}>
-      <a className="app-skip-link" href="#app-main">
+      <Link
+        className="app-skip-link"
+        to="."
+        hash="app-main"
+        search
+        replace
+        onClick={() => {
+          mainRef.current?.focus();
+        }}
+      >
         Skip to content
-      </a>
+      </Link>
 
       {!lesson && (
         <header className="app-mobile-header">

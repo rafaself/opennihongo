@@ -19,6 +19,34 @@ for public imports, Storybook and Gallery responsibilities, and local validation
 See the [local VOICEVOX generation guide](tools/audio-generator/README.md) to
 run the development-only audio engine.
 
+## Public website and deployment
+
+The public app is hosted at <https://rafaself.github.io/opennihongo/>.
+GitHub Pages serves the static frontend, including generated pronunciation
+audio. Learning progress and preferences stay in each visitor's browser.
+
+The `Deploy GitHub Pages` workflow validates and deploys pushes to `main`.
+It can also be started manually from the Actions tab. Repository Settings →
+Pages must use **GitHub Actions** as the publishing source. The repository is
+public so Pages hosting and standard GitHub-hosted Actions runners are free.
+
+Build and verify the same deployment locally:
+
+```sh
+pnpm install --frozen-lockfile
+pnpm --filter @opennihongo/web build:pages
+pnpm --filter @opennihongo/web exec playwright install chromium
+pnpm --filter @opennihongo/web test:pages
+pnpm --filter @opennihongo/web preview --base=/opennihongo/
+```
+
+Only `apps/web/dist` is published. The Pages build uses `/opennihongo/` as
+Vite's asset base. Production builds use hash routing, such as
+`/opennihongo/#/kanji`, so shared links and page refreshes work on static hosting.
+The development server retains browser-history routing. Changing the repository
+name or publishing under a custom domain requires updating the build base and
+the production browser-test configuration.
+
 ## Contributing
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for repository conventions and

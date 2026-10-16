@@ -6,10 +6,12 @@
     "dev": "vite --host 127.0.0.1",
     "lint": "eslint . --no-error-on-unmatched-pattern --max-warnings=0",
     "build": "pnpm typecheck && vite build",
+    "build:pages": "pnpm build --base=/opennihongo/",
     "preview": "vite preview --host 127.0.0.1",
     "typecheck": "tsc -p tsconfig.json",
     "test": "vitest run",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "test:pages": "playwright test --config playwright.pages.config.ts"
   },
   "dependencies": {
     "@opennihongo/audio-assets": "workspace:*",

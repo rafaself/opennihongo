@@ -64,8 +64,7 @@ primary commit message that enters `main`.
 
 `commitlint.config.mjs` is the source of truth for the commit message format.
 Since pull requests are squash-merged, use the same format for pull request
-titles. GitHub Actions checks are currently disabled, so titles are not
-validated automatically.
+titles. Pull request titles are not validated automatically.
 
 Intermediate branch commits are encouraged to follow the same convention but
 are not enforced. This keeps work-in-progress history flexible without
@@ -78,7 +77,9 @@ Prettier formats supported source, configuration, and Markdown files. Run
 check them without changing files. ESLint applies recommended JavaScript rules,
 strict type-aware TypeScript rules, and Nx module-boundary checks. Before a
 pull request, run `pnpm lint`, `pnpm format:check`, and `pnpm typecheck` locally.
-GitHub Actions is disabled to avoid CI costs. Avoid `any` and TypeScript
+The Pages workflow validates and deploys pushes to `main` using standard
+GitHub-hosted runners, which are free for this public repository. Pull requests
+still require local validation before merging. Avoid `any` and TypeScript
 suppression comments.
 
 For ownership, contribution, and promotion rules for shared UI, see the
