@@ -85,7 +85,7 @@ storage compatibility, and important interactions.
 - [x] Verify the complete flow with keyboard, mobile, and reduced motion.
 - [x] Pass relevant package coverage, lint, formatting, type checks, build, and
       existing and new browser checks, including the production Pages build.
-- [ ] Capture screenshots and prepare a draft PR with validation evidence.
+- [x] Capture screenshots and prepare a draft PR with validation evidence.
 
 ## Remaining learner validation
 
@@ -166,3 +166,8 @@ The production build reports Vite's non-blocking bundle-size advisory.
 
 The draft PR is for review. Hosted deployment and human learner research are
 separate from these local validation results.
+
+Published for review as [draft PR #142](https://github.com/rafaself/opennihongo/pull/142).
+GitHub applied the repository's existing administrator bypass when creating the
+feature branch; repository rules were not changed. The release has not been
+merged into `main` or deployed.
