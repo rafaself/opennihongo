@@ -107,9 +107,15 @@ export function SettingsPage() {
           <Surface className="settings-page__card" elevation="card">
             <h2>Settings</h2>
             <nav aria-label="Settings sections">
-              <a href="#experience">Experience</a>
-              <a href="#visual">Visual</a>
-              <a href="#japanese">Japanese</a>
+              <Link to="/settings" hash="experience">
+                Experience
+              </Link>
+              <Link to="/settings" hash="visual">
+                Visual
+              </Link>
+              <Link to="/settings" hash="japanese">
+                Japanese
+              </Link>
             </nav>
           </Surface>
           <Surface className="settings-page__card" elevation="card">

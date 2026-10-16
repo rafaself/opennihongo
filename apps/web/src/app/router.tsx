@@ -17,6 +17,8 @@ import {
   createRootRoute,
   createRoute,
   createRouter,
+  createHashHistory,
+  createBrowserHistory,
   redirect,
   notFound,
 } from "@tanstack/react-router";
@@ -344,7 +346,10 @@ const routeTree = rootRoute.addChildren([
   acknowledgementsRoute,
 ]);
 
-export const router = createRouter({ routeTree });
+export const router = createRouter({
+  routeTree,
+  history: import.meta.env.PROD ? createHashHistory() : createBrowserHistory(),
+});
 
 declare module "@tanstack/react-router" {
   interface Register {

@@ -6,6 +6,7 @@ storybook-static/
 /packages/ui/test-results/
 /apps/web/test-results/
 /apps/web/playwright-report/
+/apps/web/test-results-pages/
 *.tsbuildinfo
 
 .env
