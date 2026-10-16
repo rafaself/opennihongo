@@ -37,7 +37,8 @@ jobs:
           pnpm format:check
           pnpm typecheck
       - name: Test the web app with coverage
-        run: pnpm --filter @opennihongo/web test
+        # DOM-heavy tests share the hosted runner's CPU; avoid contention.
+        run: pnpm --filter @opennihongo/web test --maxWorkers=1
       - name: Build the Pages site
         run: pnpm --filter @opennihongo/web build:pages
       - name: Install Chromium
